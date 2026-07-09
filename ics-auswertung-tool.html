@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICS-Auswertung</title>
+<style>
+  :root{
+    --cream:#f6f1e7;
+    --cream-soft:#efe7d8;
+    --black:#1a1815;
+    --black-soft:#2a2622;
+    --gold:#b8924f;
+    --gold-light:#d9bd85;
+    --gold-dark:#8f6f36;
+    --line:#e2d7c0;
+    --text-muted:#6f6659;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--cream);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--black);
+    padding:32px 16px 80px;
+  }
+  .wrap{max-width:720px;margin:0 auto;}
+
+  /* Header */
+  .header{text-align:center;margin-bottom:36px;}
+  .eyebrow{
+    letter-spacing:3px;
+    text-transform:uppercase;
+    font-size:11px;
+    color:var(--gold-dark);
+    font-weight:600;
+    margin-bottom:14px;
+  }
+  h1{
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:32px;
+    line-height:1.25;
+    margin:0 0 16px;
+    font-weight:400;
+    color:var(--black);
+  }
+  .subtitle{
+    font-size:15px;
+    line-height:1.6;
+    color:var(--text-muted);
+    max-width:520px;
+    margin:0 auto;
+  }
+
+  /* Textarea section */
+  .input-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:22px;
+    margin-bottom:20px;
+    box-shadow:0 6px 24px rgba(26,24,21,0.05);
+  }
+  textarea{
+    width:100%;
+    min-height:150px;
+    border:none;
+    outline:none;
+    resize:vertical;
+    font-family:inherit;
+    font-size:15.5px;
+    line-height:1.65;
+    color:var(--black);
+    background:transparent;
+  }
+  textarea::placeholder{color:#b3a996; line-height:1.7;}
+
+  /* Chips */
+  .chips-label{
+    font-size:12px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--text-muted);
+    margin:4px 0 12px;
+  }
+  .chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:24px;
+  }
+  .chip{
+    border:1px solid var(--line);
+    background:var(--cream-soft);
+    color:var(--black-soft);
+    font-size:13px;
+    padding:8px 14px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:all .18s ease;
+    user-select:none;
+  }
+  .chip:hover{
+    background:var(--gold);
+    border-color:var(--gold);
+    color:#fff;
+    transform:translateY(-1px);
+  }
+
+  /* Info box */
+  .info-box{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    background:var(--cream-soft);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:14px 16px;
+    margin-bottom:28px;
+  }
+  .info-icon{
+    flex-shrink:0;
+    width:22px;height:22px;
+    border-radius:50%;
+    background:var(--gold);
+    color:#fff;
+    font-size:13px;
+    font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .info-box p{
+    margin:0;
+    font-size:13px;
+    line-height:1.6;
+    color:var(--text-muted);
+  }
+  .info-box p + p{margin-top:4px;}
+
+  /* Button */
+  .cta-wrap{text-align:center;margin-bottom:44px;}
+  .cta{
+    background:var(--black);
+    color:var(--cream);
+    border:none;
+    font-size:16px;
+    font-weight:600;
+    padding:17px 38px;
+    border-radius:999px;
+    cursor:pointer;
+    letter-spacing:.3px;
+    transition:all .2s ease;
+    box-shadow:0 8px 22px rgba(26,24,21,0.22);
+  }
+  .cta:hover{background:var(--black-soft); transform:translateY(-2px);}
+  .cta:active{transform:translateY(0);}
+
+  /* Explainer cards */
+  .section-label{
+    text-align:center;
+    font-size:12px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--text-muted);
+    margin-bottom:16px;
+  }
+  .cards-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+    gap:12px;
+    margin-bottom:48px;
+  }
+  .mini-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px 12px;
+    text-align:center;
+  }
+  .mini-card .icon{font-size:22px; margin-bottom:8px; display:block;}
+  .mini-card .title{font-size:13.5px; font-weight:700; margin-bottom:4px; color:var(--black);}
+  .mini-card .desc{font-size:11.5px; line-height:1.4; color:var(--text-muted);}
+
+  /* Results */
+  #results{display:none; margin-top:8px;}
+  .divider{
+    border:none;
+    border-top:1px solid var(--line);
+    margin:44px 0 32px;
+  }
+  .results-header{text-align:center; margin-bottom:28px;}
+  .results-header .eyebrow{margin-bottom:10px;}
+  .results-header h2{
+    font-family:Georgia,'Times New Roman',serif;
+    font-weight:400;
+    font-size:24px;
+    margin:0 0 6px;
+  }
+  .tags-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    justify-content:center;
+    margin-top:14px;
+  }
+  .tag{
+    background:var(--black);
+    color:var(--cream);
+    font-size:11.5px;
+    padding:5px 12px;
+    border-radius:999px;
+  }
+
+  /* Gauge */
+  .gauge-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:24px;
+    margin-bottom:24px;
+    text-align:center;
+  }
+  .gauge-labels{
+    display:flex;
+    justify-content:space-between;
+    font-size:11px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--text-muted);
+    margin-bottom:8px;
+  }
+  .gauge-track{
+    position:relative;
+    height:10px;
+    border-radius:999px;
+    background:linear-gradient(90deg,var(--gold-light),var(--gold-dark) 45%,var(--black) 100%);
+    margin-bottom:14px;
+  }
+  .gauge-marker{
+    position:absolute;
+    top:-5px;
+    width:20px;height:20px;
+    border-radius:50%;
+    background:#fff;
+    border:3px solid var(--black);
+    transform:translateX(-50%);
+    transition:left .6s cubic-bezier(.4,0,.2,1);
+    box-shadow:0 2px 8px rgba(0,0,0,0.25);
+  }
+  .gauge-text{font-size:14.5px; line-height:1.6; color:var(--black-soft); max-width:480px; margin:0 auto;}
+
+  /* Gegenüberstellung als Zuordnung */
+  .polarity-section{margin-bottom:16px;}
+  .polarity-title{
+    text-align:center;
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:20px;
+    font-weight:400;
+    margin:0 0 18px;
+    color:var(--black);
+  }
+  .polarity-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:8px 20px;
+    margin-bottom:16px;
+  }
+  .pair-row{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    padding:14px 0;
+    border-top:1px solid var(--line);
+    flex-wrap:wrap;
+  }
+  .pair-row:first-child{border-top:none;}
+  .pair-left{
+    background:var(--black);
+    color:var(--cream);
+    font-size:13.5px;
+    font-weight:600;
+    padding:6px 14px;
+    border-radius:999px;
+    min-width:110px;
+    text-align:center;
+  }
+  .pair-arrow{
+    color:var(--gold-dark);
+    font-size:16px;
+    font-weight:700;
+  }
+  .pair-right{
+    background:var(--gold);
+    color:#fff;
+    font-size:13.5px;
+    font-weight:700;
+    padding:6px 14px;
+    border-radius:999px;
+    min-width:110px;
+    text-align:center;
+  }
+  .polarity-quote{
+    text-align:center;
+    font-family:Georgia,'Times New Roman',serif;
+    font-style:italic;
+    font-size:14.5px;
+    line-height:1.7;
+    color:var(--black-soft);
+    max-width:520px;
+    margin:0 auto 32px;
+    padding:0 8px;
+  }
+
+  @media(max-width:420px){
+    .pair-row{gap:8px;}
+    .pair-left, .pair-right{min-width:90px; font-size:12.5px; padding:6px 10px;}
+  }
+
+  /* Entscheidung für heute */
+  .decision-section{
+    background:#fff;
+    border:1.5px solid var(--gold);
+    border-radius:16px;
+    padding:24px;
+    margin-bottom:32px;
+  }
+  .decision-title{
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:19px;
+    font-weight:400;
+    margin:0 0 10px;
+    text-align:center;
+  }
+  .decision-intro{
+    font-size:14px;
+    line-height:1.65;
+    color:var(--text-muted);
+    text-align:center;
+    max-width:460px;
+    margin:0 auto 20px;
+  }
+  .decision-options{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    justify-content:center;
+    margin-bottom:20px;
+  }
+  .decision-option{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    border:1px solid var(--line);
+    background:var(--cream-soft);
+    padding:9px 15px;
+    border-radius:999px;
+    font-size:13.5px;
+    cursor:pointer;
+    transition:all .18s ease;
+    user-select:none;
+  }
+  .decision-option .box{font-size:14px;}
+  .decision-option.selected{
+    background:var(--black);
+    border-color:var(--black);
+    color:var(--cream);
+  }
+  .decision-input-row{
+    text-align:center;
+  }
+  .decision-input-row label{
+    display:block;
+    font-size:13px;
+    color:var(--text-muted);
+    margin-bottom:8px;
+  }
+  .decision-input-row input{
+    width:100%;
+    max-width:360px;
+    border:none;
+    border-bottom:2px solid var(--gold);
+    background:transparent;
+    text-align:center;
+    font-family:Georgia,'Times New Roman',serif;
+    font-style:italic;
+    font-size:16px;
+    padding:6px 4px;
+    outline:none;
+    color:var(--black);
+  }
+
+  /* Result blocks */
+  .result-block{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:22px;
+    margin-bottom:16px;
+  }
+  .result-block .block-head{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:12px;
+  }
+  .result-block .block-head .icon{font-size:19px;}
+  .result-block .block-head .name{font-weight:700; font-size:15px;}
+  .result-block ul{margin:0; padding-left:20px;}
+  .result-block li{font-size:14px; line-height:1.65; color:var(--black-soft); margin-bottom:6px;}
+  .result-block p.single{font-size:14.5px; line-height:1.7; color:var(--black-soft); margin:0;}
+  .result-block.reflection{
+    background:var(--black);
+    color:var(--cream);
+  }
+  .result-block.reflection .name{color:var(--cream);}
+  .result-block.reflection p.single{color:var(--cream); font-style:italic; font-family:Georgia,'Times New Roman',serif; font-size:16.5px;}
+
+  /* Neuer Code */
+  .newcode-block{
+    background:var(--black);
+    color:var(--cream);
+    border-radius:16px;
+    padding:28px 24px;
+    margin-bottom:16px;
+    text-align:center;
+  }
+  .newcode-block .name{
+    color:var(--gold-light);
+    font-weight:700;
+    font-size:15px;
+    margin-bottom:14px;
+    display:block;
+  }
+  .newcode-quote{
+    font-family:Georgia,'Times New Roman',serif;
+    font-style:italic;
+    font-size:18px;
+    line-height:1.6;
+    margin:0 0 20px;
+  }
+  .triad{list-style:none; margin:0; padding:0;}
+  .triad li{
+    font-size:13.5px;
+    line-height:1.9;
+    color:var(--gold-light);
+    opacity:.9;
+  }
+
+  /* CTA-Sektion */
+  .cta-section{
+    text-align:center;
+    padding-top:8px;
+  }
+  .cta-section h3{
+    font-family:Georgia,'Times New Roman',serif;
+    font-weight:400;
+    font-size:21px;
+    margin:0 0 10px;
+  }
+  .cta-section p{
+    font-size:14px;
+    line-height:1.65;
+    color:var(--text-muted);
+    max-width:460px;
+    margin:0 auto 22px;
+  }
+  .cta-buttons{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    justify-content:center;
+  }
+  .cta-btn{
+    display:inline-block;
+    text-decoration:none;
+    font-size:13.5px;
+    font-weight:600;
+    padding:13px 20px;
+    border-radius:999px;
+    border:1.5px solid var(--black);
+    color:var(--black);
+    background:transparent;
+    transition:all .2s ease;
+  }
+  .cta-btn:hover{background:var(--black); color:var(--cream);}
+  .cta-btn.primary{
+    background:var(--black);
+    color:var(--cream);
+  }
+  .cta-btn.primary:hover{background:var(--gold); border-color:var(--gold); color:#fff;}
+
+  @media(max-width:480px){
+    h1{font-size:26px;}
+    .cards-grid{grid-template-columns:repeat(2,1fr);}
+    .cta-buttons{flex-direction:column;}
+    .cta-btn{width:100%;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <div class="eyebrow">Inner Code Systems</div>
+    <h1>Was ist gerade in dir aktiv?</h1>
+    <p class="subtitle">Beschreibe deine Gedanken, Gefühle oder aktuelle Situation. Du kannst einzelne Begriffe oder ganze Sätze eingeben. Die ICS-Auswertung erkennt Muster und erstellt daraus eine persönliche Analyse.</p>
+  </div>
+
+  <div class="input-card">
+    <textarea id="userInput" placeholder="z. B.
+• Ich habe Angst vor der Zukunft.
+• Ich fühle mich blockiert.
+• Ich zweifle an mir.
+• Ich bin ständig gestresst.
+• Ich weiß nicht weiter.
+• Ich fühle mich wertlos.
+• Ich bin wütend.
+• Ich verliere die Kontrolle."></textarea>
+  </div>
+
+  <div class="chips-label">Oder wähle ein Thema</div>
+  <div class="chips" id="chips"></div>
+
+  <div class="info-box">
+    <div class="info-icon">i</div>
+    <div>
+      <p>Je genauer deine Beschreibung, desto persönlicher wird deine ICS-Auswertung.</p>
+      <p>Alle Eingaben bleiben ausschließlich in diesem Tool.</p>
+    </div>
+  </div>
+
+  <div class="cta-wrap">
+    <button class="cta" id="analyzeBtn">✨ ICS-Auswertung erstellen</button>
+  </div>
+
+  <div class="section-label">So funktioniert deine Auswertung</div>
+  <div class="cards-grid">
+    <div class="mini-card"><span class="icon">🧠</span><div class="title">Inner Code</div><div class="desc">Erkenne deine Gedankenmuster.</div></div>
+    <div class="mini-card"><span class="icon">❤️</span><div class="title">Body Code</div><div class="desc">Verstehe die Signale deines Körpers.</div></div>
+    <div class="mini-card"><span class="icon">🔥</span><div class="title">Action Code</div><div class="desc">Entdecke deinen nächsten sinnvollen Schritt.</div></div>
+    <div class="mini-card"><span class="icon">🔄</span><div class="title">RESET</div><div class="desc">Erhalte einen kurzen Perspektivwechsel.</div></div>
+    <div class="mini-card"><span class="icon">➡</span><div class="title">Nächster Schritt</div><div class="desc">Eine konkrete Handlung für heute.</div></div>
+  </div>
+
+  <!-- 1. ERGEBNIS -->
+  <div id="results">
+    <hr class="divider">
+    <div class="results-header">
+      <div class="eyebrow">Deine ICS-Auswertung</div>
+      <h2 id="resultsTitle">Analyse</h2>
+      <div class="tags-row" id="tagsRow"></div>
+    </div>
+
+    <!-- 2. BALKEN -->
+    <div class="gauge-card">
+      <div class="gauge-labels"><span>Gestaltungsmodus</span><span>Überlebensmodus</span></div>
+      <div class="gauge-track"><div class="gauge-marker" id="gaugeMarker"></div></div>
+      <p class="gauge-text" id="gaugeText"></p>
+    </div>
+
+    <!-- 3. GEGENÜBERSTELLUNG -->
+    <div class="polarity-section" id="polaritySection">
+      <h3 class="polarity-title">Von Überlebensmodus zu Gestaltungsmodus</h3>
+      <div class="polarity-card">
+        <div id="pairRows"></div>
+      </div>
+      <p class="polarity-quote">„Veränderung beginnt, wenn du erkennst, aus welchem Feld du gerade handelst – und welches neue Feld du bewusst wählen kannst.“</p>
+    </div>
+
+    <!-- 4. ENTSCHEIDUNG FÜR HEUTE -->
+    <div class="decision-section" id="decisionSection">
+      <h3 class="decision-title">✨ Deine Entscheidung für heute</h3>
+      <p class="decision-intro">Du musst heute nicht alles verändern. Wähle bewusst einen Begriff aus dem Gestaltungsmodus, den du heute leben möchtest.</p>
+      <div class="decision-options" id="decisionOptions"></div>
+      <div class="decision-input-row">
+        <label>Heute entscheide ich mich für:</label>
+        <input type="text" id="decisionInput" placeholder="…………………………">
+      </div>
+    </div>
+
+    <!-- 5. INNER CODE -->
+    <div class="result-block">
+      <div class="block-head"><span class="icon">🧠</span><span class="name">Inner Code – aktive Gedankenmuster</span></div>
+      <ul id="innerCodeList"></ul>
+    </div>
+
+    <!-- 6. BODY CODE -->
+    <div class="result-block">
+      <div class="block-head"><span class="icon">❤️</span><span class="name">Body Code – mögliche Körpersignale</span></div>
+      <ul id="bodyCodeList"></ul>
+    </div>
+
+    <!-- 7. ACTION CODE -->
+    <div class="result-block">
+      <div class="block-head"><span class="icon">🔥</span><span class="name">Action Code</span></div>
+      <p class="single" id="actionCodeText"></p>
+    </div>
+
+    <!-- 8. RESET -->
+    <div class="result-block">
+      <div class="block-head"><span class="icon">🔄</span><span class="name">RESET-Impuls</span></div>
+      <p class="single" id="resetText"></p>
+    </div>
+
+    <!-- 9. REFLEXIONSFRAGE -->
+    <div class="result-block reflection">
+      <div class="block-head"><span class="icon">➡</span><span class="name">Reflexionsfrage – dein nächster Schritt</span></div>
+      <p class="single" id="reflectionText"></p>
+    </div>
+
+    <!-- 10. NEUER CODE -->
+    <div class="newcode-block">
+      <span class="name">✨ Dein neuer Code</span>
+      <p class="newcode-quote">Veränderung beginnt nicht morgen.<br>Sie beginnt mit deiner nächsten bewussten Entscheidung.</p>
+      <ul class="triad">
+        <li>Erkennen schafft Klarheit.</li>
+        <li>Bewusstsein verändert den Code.</li>
+        <li>Handlung erschafft neue Erfahrung.</li>
+      </ul>
+    </div>
+
+    <!-- 11. CALL TO ACTION -->
+    <div class="cta-section">
+      <h3>Nächster Schritt</h3>
+      <p>Wenn du tiefer in deinen persönlichen Inner Code eintauchen möchtest, begleite ich dich gerne.</p>
+      <div class="cta-buttons">
+        <a href="#" class="cta-btn primary">RESET entdecken</a>
+        <a href="#" class="cta-btn">Klarheitsgespräch</a>
+        <a href="#" class="cta-btn">Transformationsmassage</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const DB = {
+  angst:{label:"Angst",weight:3,gegenpol:"Vertrauen",keywords:["angst","ängstlich","furcht","zukunftsangst"],
+    innerCode:"Dein Verstand ist ins Worst-Case-Denken gerutscht und simuliert ungeschützte Zukunftsszenarien, um dich vermeintlich zu schützen.",
+    bodyCode:"Enger Brustkorb, flacher Atem, angespannter Kiefer oder Nacken.",
+    actionCode:"Schreibe die drei größten Sorgen auf – und daneben, was du heute tatsächlich beeinflussen kannst.",
+    reset:"60 Sekunden bewusst durch die Nase einatmen und doppelt so lang durch den Mund ausatmen.",
+    reflection:"Wovor genau fürchtest du dich – und ist es wirklich die Zukunft oder ein Gefühl von Kontrollverlust?"},
+  stress:{label:"Stress",weight:2,gegenpol:"Ruhe",keywords:["stress","gestresst","unter druck","überlastet"],
+    innerCode:"Dein System befindet sich im Dauer-Alarmmodus – zu viele offene Aufgaben laufen gleichzeitig im Hintergrund.",
+    bodyCode:"Verspannte Schultern, Kopfschmerzen, innere Unruhe oder Schlafprobleme.",
+    actionCode:"Wähle eine einzige Aufgabe, die heute wirklich zählt – und verschiebe den Rest bewusst.",
+    reset:"Stelle zwei Minuten einen Timer und tue absolut nichts Produktives – lass den Kopf leerlaufen.",
+    reflection:"Welche Aufgabe ist wirklich dringend – und welche fühlt sich nur dringend an?"},
+  traurigkeit:{label:"Traurigkeit",weight:2,gegenpol:"Freude",keywords:["traurig","niedergeschlagen"],
+    innerCode:"Ein Verlust oder eine unerfüllte Erwartung wird gerade verarbeitet – ein natürlicher, wichtiger Prozess.",
+    bodyCode:"Schwere in der Brust, Energielosigkeit, Rückzugsbedürfnis.",
+    actionCode:"Erlaube dir bewusst 10 Minuten Traurigkeit, statt sie wegzudrücken – danach eine kleine, sanfte Aktivität.",
+    reset:"Lege eine Hand aufs Herz und atme dreimal tief – ein Signal von Sicherheit an dein Nervensystem.",
+    reflection:"Was genau ist verloren gegangen – und was bräuchtest du gerade, um das anzuerkennen?"},
+  wut:{label:"Wut",weight:2,gegenpol:"Verständnis",keywords:["wut","wütend","zorn","genervt"],
+    innerCode:"Eine Grenze wurde überschritten – Wut zeigt dir, wo dir etwas wichtig ist.",
+    bodyCode:"Hitze im Körper, angespannte Fäuste oder Kiefer, schnellerer Puls.",
+    actionCode:"Formuliere schriftlich, welche Grenze verletzt wurde, bevor du reagierst.",
+    reset:"Zehn kräftige Ausatmungen durch den Mund, um körperliche Energie abzubauen.",
+    reflection:"Welche Grenze wurde überschritten – und wie könntest du sie nächstes Mal früher setzen?"},
+  kontrolle:{label:"Kontrolle",weight:3,gegenpol:"Loslassen",keywords:["kontrolle","kontrollverlust"],
+    innerCode:"Zu viele Variablen gleichzeitig – dein Verstand versucht, Unkontrollierbares zu kontrollieren.",
+    bodyCode:"Innere Unruhe, Zittern, das Gefühl, keinen festen Boden zu haben.",
+    actionCode:"Liste alles auf, was du gerade nicht beeinflussen kannst – und lege es bewusst zur Seite.",
+    reset:"Beide Füße fest auf den Boden stellen und den Kontakt 30 Sekunden bewusst spüren.",
+    reflection:"Was würde sich lösen, wenn du für einen Moment akzeptierst, dass du nicht alles kontrollieren kannst?"},
+  selbstzweifel:{label:"Selbstzweifel",weight:2,gegenpol:"Selbstvertrauen",keywords:["selbstzweifel","zweifle an mir","zweifel an mir"],
+    innerCode:"Eine innere kritische Stimme vergleicht dich mit einem unerreichbaren Maßstab.",
+    bodyCode:"Zusammengesunkene Haltung, gesenkter Blick, angehaltener Atem.",
+    actionCode:"Schreibe drei Dinge auf, die dir in der Vergangenheit tatsächlich gelungen sind.",
+    reset:"Richte die Wirbelsäule 30 Sekunden bewusst auf – Haltung beeinflusst Denken.",
+    reflection:"Wessen Stimme ist das eigentlich, die gerade an dir zweifelt?"},
+  ueberforderung:{label:"Überforderung",weight:2,gegenpol:"Klarheit",keywords:["überforderung","überfordert"],
+    innerCode:"Zu viele Anforderungen treffen gleichzeitig ein, ohne klare Priorität.",
+    bodyCode:"Enge im Kopf, das Gefühl, nicht mehr klar denken zu können.",
+    actionCode:"Schreibe alles auf, was ansteht – und streiche, was nicht heute passieren muss.",
+    reset:"Ein Glas Wasser bewusst und langsam trinken, um im Körper anzukommen.",
+    reflection:"Was würde passieren, wenn du heute nur eine einzige Sache erledigst?"},
+  schuld:{label:"Schuld",weight:2,gegenpol:"Selbstverzeihung",keywords:["schuld","schuldig","schuldgefühl"],
+    innerCode:"Ein innerer Maßstab wurde – aus deiner Sicht – nicht erfüllt.",
+    bodyCode:"Enge im Magen, Rückzug, vermiedener Blickkontakt.",
+    actionCode:"Kläre: Ist das Schuldgefühl berechtigt oder ein alter, übernommener Maßstab?",
+    reset:"Schultern dreimal bewusst nach hinten kreisen, um Anspannung zu lösen.",
+    reflection:"Wessen Erwartung versuchst du gerade zu erfüllen – deine eigene oder eine fremde?"},
+  scham:{label:"Scham",weight:2,gegenpol:"Selbstannahme",keywords:["scham","schäme","beschämt"],
+    innerCode:"Die Angst, in den Augen anderer nicht zu genügen, ist gerade aktiv.",
+    bodyCode:"Erröten, das Bedürfnis, sich klein zu machen oder zu verschwinden.",
+    actionCode:"Sprich mit einer vertrauten Person darüber – Scham verliert Kraft im Licht.",
+    reset:"Schultern öffnen, Kinn leicht anheben – 20 Sekunden bewusst Raum einnehmen.",
+    reflection:"Wer genau würde dich verurteilen – und stimmt das wirklich?"},
+  neid:{label:"Neid",weight:1,gegenpol:"Wertschätzung",keywords:["neid","neidisch"],
+    innerCode:"Neid zeigt oft sehr präzise, was du dir eigentlich selbst wünschst.",
+    bodyCode:"Ein Ziehen im Bauch, Anspannung beim Vergleichen.",
+    actionCode:"Frage dich, was am anderen dich berührt – und wie du dir einen kleinen Teil davon selbst geben könntest.",
+    reset:"Dreimal tief durchatmen und den Vergleich für einen Moment bewusst loslassen.",
+    reflection:"Was sagt dieser Neid über einen unerfüllten Wunsch in dir?"},
+  mangel:{label:"Mangel",weight:1,gegenpol:"Fülle",keywords:["mangel","nicht genug"],
+    innerCode:"Ein Gefühl von „zu wenig“ steht gerade im Vordergrund – an Zeit, Geld, Anerkennung oder Energie.",
+    bodyCode:"Enge in der Brust, ein Gefühl von Knappheit im Körper.",
+    actionCode:"Schreibe drei Dinge auf, die gerade tatsächlich ausreichend oder vorhanden sind.",
+    reset:"Hand aufs Herz legen und bewusst spüren, was jetzt gerade da ist.",
+    reflection:"Woran fehlt es dir wirklich – oder fühlt es sich nur so an?"},
+  unsicherheit:{label:"Unsicherheit",weight:1,gegenpol:"Zuversicht",keywords:["unsicher"],
+    innerCode:"Fehlende Klarheit über den nächsten Schritt erzeugt inneres Schwanken.",
+    bodyCode:"Zögerliche Bewegungen, flacher Atem, Unruhe in den Händen.",
+    actionCode:"Triff eine kleine, umkehrbare Entscheidung – Klarheit entsteht oft durchs Handeln.",
+    reset:"Beide Hände dreimal fest ineinander verschränken und wieder lösen.",
+    reflection:"Welche Entscheidung schiebst du gerade vor dir her?"},
+  blockiert:{label:"Blockiert",weight:2,gegenpol:"Fluss",keywords:["blockiert","blockade","festgefahren"],
+    innerCode:"Ein innerer Widerstand hält dich davon ab, den nächsten Schritt zu gehen.",
+    bodyCode:"Steifheit im Körper, das Gefühl, wie eingefroren zu sein.",
+    actionCode:"Mache eine winzige körperliche Bewegung – aufstehen, Fenster öffnen, ein paar Schritte gehen.",
+    reset:"Kurz die Position wechseln – aufstehen, wenn du sitzt, oder umgekehrt.",
+    reflection:"Wovor genau schützt dich diese Blockade gerade?"},
+  schaffenicht:{label:"„Ich schaffe das nicht“",weight:2,gegenpol:"Zuversicht",keywords:["schaffe das nicht","schaffe das alles nicht"],
+    innerCode:"Eine Aufgabe wirkt gerade größer als deine wahrgenommenen Ressourcen.",
+    bodyCode:"Enge, Schwere, ein Gefühl von Erschöpfung im ganzen Körper.",
+    actionCode:"Teile die Aufgabe in den kleinstmöglichen ersten Schritt – nicht mehr.",
+    reset:"Ein Glas Wasser trinken und bewusst fünf Atemzüge zählen.",
+    reflection:"Was müsste wahr sein, damit du das Gefühl hättest, es zu schaffen?"},
+  weissnichtweiter:{label:"„Ich weiß nicht weiter“",weight:2,gegenpol:"Orientierung",keywords:["weiß nicht weiter","weiss nicht weiter"],
+    innerCode:"Der nächste Schritt ist gerade nicht sichtbar – kein Zeichen von Schwäche, sondern von Übergang.",
+    bodyCode:"Innehalten, ein Gefühl von Leere oder Stillstand.",
+    actionCode:"Sprich aus oder schreibe auf, was du gerade weißt – auch wenn es wenig erscheint.",
+    reset:"Kurz aufstehen, Wasser trinken, den Ort wechseln – neue Perspektive durch neue Umgebung.",
+    reflection:"Wo genau steckst du fest – am Ziel, am Weg dorthin, oder an der Entscheidung selbst?"},
+  wertlos:{label:"Wertlosigkeit",weight:3,gegenpol:"Selbstwert",keywords:["wertlos","nichts wert"],
+    innerCode:"Ein sehr strenger innerer Maßstab bewertet dich gerade als „nicht genug“.",
+    bodyCode:"Schwere, Rückzug, gesenkte Schultern, wenig Energie.",
+    actionCode:"Erinnere dich an eine Situation, in der du jemandem wirklich wichtig warst.",
+    reset:"Hand aufs Herz, ein tiefer Atemzug – und dir selbst sagen: „Ich bin hier.“",
+    reflection:"Wessen Maßstab legst du gerade an dich an – und ist er fair?"}
+};
+
+const CHIP_ORDER = ["angst","stress","traurigkeit","wut","kontrolle","selbstzweifel","ueberforderung","schuld","scham","neid","mangel","unsicherheit","blockiert","schaffenicht","weissnichtweiter"];
+
+const chipsEl = document.getElementById('chips');
+CHIP_ORDER.forEach(key=>{
+  const c = document.createElement('div');
+  c.className='chip';
+  c.textContent = DB[key].label.replace(/„|"/g,'');
+  c.addEventListener('click',()=>{
+    const ta = document.getElementById('userInput');
+    ta.value = ta.value.trim().length ? ta.value.trim()+", "+c.textContent : c.textContent;
+    ta.focus();
+  });
+  chipsEl.appendChild(c);
+});
+
+function normalize(t){
+  return t.toLowerCase().replace(/[.,!?;:„"]/g,' ').replace(/\s+/g,' ').trim();
+}
+
+function analyze(text){
+  const n = normalize(text);
+  const matches = [];
+  Object.keys(DB).forEach(key=>{
+    const entry = DB[key];
+    if(entry.keywords.some(k=>n.includes(k))){
+      matches.push({key, ...entry});
+    }
+  });
+  matches.sort((a,b)=>b.weight-a.weight);
+  return matches;
+}
+
+document.getElementById('analyzeBtn').addEventListener('click',()=>{
+  const text = document.getElementById('userInput').value;
+  const results = document.getElementById('results');
+  const matches = analyze(text);
+
+  const tagsRow = document.getElementById('tagsRow');
+  const innerList = document.getElementById('innerCodeList');
+  const bodyList = document.getElementById('bodyCodeList');
+  const pairRows = document.getElementById('pairRows');
+  const polaritySection = document.getElementById('polaritySection');
+  const decisionSection = document.getElementById('decisionSection');
+  const decisionOptions = document.getElementById('decisionOptions');
+  const decisionInput = document.getElementById('decisionInput');
+  tagsRow.innerHTML=''; innerList.innerHTML=''; bodyList.innerHTML='';
+  pairRows.innerHTML=''; decisionOptions.innerHTML=''; decisionInput.value='';
+
+  if(matches.length===0){
+    document.getElementById('resultsTitle').textContent = "Noch nicht genug erkannt";
+    document.getElementById('gaugeMarker').style.left = '40%';
+    document.getElementById('gaugeText').textContent = "Deine Beschreibung war zu kurz oder zu allgemein, um klare Muster zu erkennen. Versuche es mit einem konkreten Satz, z. B. „Ich fühle mich blockiert“ oder „Ich bin ständig gestresst“.";
+    polaritySection.style.display='none';
+    decisionSection.style.display='none';
+    innerList.innerHTML = '<li>Noch keine klaren Gedankenmuster erkannt.</li>';
+    bodyList.innerHTML = '<li>Noch keine klaren Körpersignale erkannt.</li>';
+    document.getElementById('actionCodeText').textContent = "Beschreibe deine Situation etwas genauer – ein bis zwei Sätze reichen bereits.";
+    document.getElementById('resetText').textContent = "Nimm dir einen bewussten, tiefen Atemzug, bevor du es erneut versuchst.";
+    document.getElementById('reflectionText').textContent = "Was beschäftigt dich gerade wirklich am meisten?";
+    results.style.display='block';
+    results.scrollIntoView({behavior:'smooth', block:'start'});
+    return;
+  }
+
+  polaritySection.style.display='block';
+  decisionSection.style.display='block';
+
+  const totalWeight = matches.reduce((s,m)=>s+m.weight,0);
+  const percent = Math.max(20, Math.min(92, 32 + totalWeight*7));
+
+  let modeLabel, modeText;
+  if(percent>=65){
+    modeLabel="Überlebensmodus aktiv";
+    modeText="Du befindest dich aktuell überwiegend im Überlebensmodus. Das ist keine Schwäche, sondern ein Schutzmechanismus – die folgende Auswertung zeigt dir, wie du bewusst zurück in den Gestaltungsmodus findest.";
+  } else if(percent>=45){
+    modeLabel="Zwischen den Modi";
+    modeText="Du bewegst dich gerade zwischen Überlebens- und Gestaltungsmodus. Ein kleiner bewusster Impuls kann bereits reichen, um mehr Klarheit zu gewinnen.";
+  } else {
+    modeLabel="Nah am Gestaltungsmodus";
+    modeText="Du bist bereits nah am Gestaltungsmodus. Die folgenden Impulse helfen dir, diesen Zustand zu stabilisieren.";
+  }
+
+  document.getElementById('resultsTitle').textContent = modeLabel;
+  document.getElementById('gaugeMarker').style.left = percent+'%';
+  document.getElementById('gaugeText').textContent = modeText;
+
+  matches.forEach(m=>{
+    const tag = document.createElement('div');
+    tag.className='tag';
+    tag.textContent = m.label;
+    tagsRow.appendChild(tag);
+  });
+
+  // 3. Gegenüberstellung als direkte Zuordnung (nur erkannte Begriffe mit Gegenpol in der DB)
+  matches.forEach(m=>{
+    if(!m.gegenpol) return;
+    const row = document.createElement('div');
+    row.className='pair-row';
+    row.innerHTML = '<span class="pair-left">'+m.label.replace(/„|"/g,'')+'</span>'
+                   + '<span class="pair-arrow">→</span>'
+                   + '<span class="pair-right">'+m.gegenpol+'</span>';
+    pairRows.appendChild(row);
+  });
+
+  // 4. Entscheidung für heute – einzigartige Gegenpole als Auswahl
+  const uniqueGrowth = [];
+  matches.forEach(m=>{
+    if(m.gegenpol && !uniqueGrowth.includes(m.gegenpol)) uniqueGrowth.push(m.gegenpol);
+  });
+  uniqueGrowth.forEach(term=>{
+    const opt = document.createElement('div');
+    opt.className='decision-option';
+    opt.innerHTML = '<span class="box">☐</span><span class="label">'+term+'</span>';
+    opt.addEventListener('click',()=>{
+      const alreadySelected = opt.classList.contains('selected');
+      decisionOptions.querySelectorAll('.decision-option').forEach(o=>{
+        o.classList.remove('selected');
+        o.querySelector('.box').textContent='☐';
+      });
+      if(!alreadySelected){
+        opt.classList.add('selected');
+        opt.querySelector('.box').textContent='☑';
+        decisionInput.value = term;
+      } else {
+        decisionInput.value = '';
+      }
+    });
+    decisionOptions.appendChild(opt);
+  });
+
+  const seenInner = new Set(), seenBody = new Set();
+  matches.slice(0,5).forEach(m=>{
+    if(!seenInner.has(m.innerCode)){
+      const li = document.createElement('li'); li.textContent = m.innerCode;
+      innerList.appendChild(li); seenInner.add(m.innerCode);
+    }
+    if(!seenBody.has(m.bodyCode)){
+      const li = document.createElement('li'); li.textContent = m.bodyCode;
+      bodyList.appendChild(li); seenBody.add(m.bodyCode);
+    }
+  });
+
+  const primary = matches[0];
+  const secondary = matches[1];
+  document.getElementById('actionCodeText').textContent = primary.actionCode;
+  document.getElementById('resetText').textContent = primary.reset;
+  document.getElementById('reflectionText').textContent = secondary ? secondary.reflection : primary.reflection;
+
+  results.style.display='block';
+  results.scrollIntoView({behavior:'smooth', block:'start'});
+});
+</script>
+</body>
+</html>
