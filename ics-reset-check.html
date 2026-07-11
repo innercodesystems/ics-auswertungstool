@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICS RESET-Check</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+  /* ============================================================
+     ICS RESET-CHECK — KONFIGURATION
+     Diese Werte können angepasst werden, ohne die Logik zu berühren.
+     ============================================================ */
+  :root{
+    --ics-cream:      #f6f1e7;
+    --ics-cream-2:    #efe8d9;
+    --ics-black:      #1a1815;
+    --ics-black-soft: #2b2723;
+    --ics-gold:       #b8924f;
+    --ics-gold-light: #d4b483;
+    --ics-gold-dark:  #93733a;
+    --ics-line:       rgba(26,24,21,0.10);
+    --ics-shadow:     0 10px 30px rgba(26,24,21,0.08);
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background: var(--ics-cream);
+    color: var(--ics-black);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    line-height:1.55;
+  }
+
+  .ics-root{
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 28px 20px 60px;
+    min-height: 100vh;
+  }
+
+  .ics-eyebrow{
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--ics-gold-dark);
+    text-align:center;
+    margin-bottom: 10px;
+  }
+
+  h1.ics-title{
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(28px, 7vw, 36px);
+    text-align: center;
+    margin: 0 0 12px;
+    letter-spacing: -0.01em;
+  }
+
+  p.ics-lead{
+    text-align:center;
+    font-size: 15.5px;
+    color: rgba(26,24,21,0.72);
+    max-width: 420px;
+    margin: 0 auto 26px;
+  }
+
+  .ics-card{
+    background: #fffdf9;
+    border: 1px solid var(--ics-line);
+    border-radius: 20px;
+    box-shadow: var(--ics-shadow);
+    padding: 28px 24px;
+    margin-bottom: 18px;
+  }
+
+  .ics-preface{
+    padding: 26px 24px 24px;
+  }
+  .ics-preface-title{
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    margin: 0 0 16px;
+    color: var(--ics-black);
+  }
+  .ics-preface-text{
+    font-size: 14.5px;
+    color: rgba(26,24,21,0.78);
+    text-align: center;
+    margin: 0 0 14px;
+  }
+  .ics-preface-text:last-of-type{ margin-bottom: 0; }
+  .ics-preface-strong{
+    color: var(--ics-gold-dark);
+    font-weight: 700;
+  }
+  .ics-preface-sub{
+    font-size: 12.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(26,24,21,0.5);
+    text-align: center;
+    margin: 22px 0 14px;
+  }
+  .ics-preface-list{
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+  }
+  .ics-preface-list li{
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14.5px;
+    font-weight: 500;
+    color: var(--ics-black);
+    line-height: 1.4;
+  }
+  .ics-preface-list li::before{
+    content: '✔';
+    color: var(--ics-gold-dark);
+    font-weight: 700;
+    flex-shrink: 0;
+    line-height: 1.5;
+  }
+  .ics-preface-footer{
+    font-size: 13px;
+    font-style: italic;
+    color: rgba(26,24,21,0.6);
+    text-align: center;
+    border-top: 1px solid var(--ics-line);
+    padding-top: 14px;
+    margin: 0;
+  }
+
+  .ics-disclaimer{
+    font-size: 12.5px;
+    color: rgba(26,24,21,0.55);
+    text-align:center;
+    border-top: 1px solid var(--ics-line);
+    margin-top: 22px;
+    padding-top: 16px;
+    line-height:1.6;
+  }
+
+  .ics-btn{
+    display:block;
+    width:100%;
+    text-align:center;
+    background: var(--ics-black);
+    color: var(--ics-cream);
+    border: none;
+    border-radius: 14px;
+    padding: 16px 20px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 15.5px;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.2s ease;
+    text-decoration:none;
+  }
+  .ics-btn:hover{ background: var(--ics-black-soft); transform: translateY(-1px); }
+  .ics-btn:active{ transform: translateY(0px) scale(0.99); }
+
+  .ics-btn-gold{
+    background: var(--ics-gold);
+    color: var(--ics-black);
+  }
+  .ics-btn-gold:hover{ background: var(--ics-gold-light); }
+
+  .ics-btn-ghost{
+    background: transparent;
+    color: var(--ics-black);
+    border: 1.5px solid var(--ics-line);
+  }
+  .ics-btn-ghost:hover{ background: rgba(26,24,21,0.04); transform:none; }
+
+  /* ---------- Progress ---------- */
+  .ics-progress-wrap{
+    display:flex;
+    align-items:center;
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+  .ics-progress-track{
+    flex:1;
+    height: 6px;
+    background: var(--ics-cream-2);
+    border-radius: 4px;
+    overflow:hidden;
+  }
+  .ics-progress-fill{
+    height:100%;
+    background: linear-gradient(90deg, var(--ics-gold-dark), var(--ics-gold-light));
+    border-radius: 4px;
+    transition: width 0.4s ease;
+    width:0%;
+  }
+  .ics-progress-label{
+    font-size: 12.5px;
+    color: rgba(26,24,21,0.55);
+    font-weight:600;
+    white-space:nowrap;
+  }
+
+  .ics-cat-tag{
+    display:inline-block;
+    font-size: 11px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color: var(--ics-gold-dark);
+    background: rgba(184,146,79,0.12);
+    padding: 5px 12px;
+    border-radius: 999px;
+    margin-bottom: 16px;
+  }
+
+  .ics-question{
+    font-family: var(--font-display);
+    font-size: clamp(19px, 5vw, 22px);
+    font-weight: 600;
+    margin: 0 0 24px;
+    line-height:1.4;
+  }
+
+  .ics-options{
+    display:flex;
+    flex-direction:column;
+    gap: 10px;
+  }
+
+  .ics-option{
+    display:flex;
+    align-items:center;
+    gap: 14px;
+    width:100%;
+    text-align:left;
+    background: var(--ics-cream);
+    border: 1.5px solid var(--ics-line);
+    border-radius: 14px;
+    padding: 14px 16px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ics-black);
+    cursor:pointer;
+    transition: border-color 0.15s ease, background 0.15s ease, transform 0.1s ease;
+  }
+  .ics-option:hover{ border-color: var(--ics-gold); background: #fffdf9; }
+  .ics-option:active{ transform: scale(0.99); }
+  .ics-option.selected{
+    border-color: var(--ics-gold-dark);
+    background: rgba(184,146,79,0.14);
+  }
+  .ics-option-dot{
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 1.5px solid var(--ics-gold-dark);
+    flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .ics-option-dot::after{
+    content:'';
+    width: 10px; height:10px;
+    border-radius:50%;
+    background: var(--ics-gold-dark);
+    opacity:0;
+    transition: opacity 0.15s ease;
+  }
+  .ics-option.selected .ics-option-dot::after{ opacity:1; }
+
+  .ics-nav{
+    display:flex;
+    justify-content: space-between;
+    margin-top: 22px;
+    gap: 12px;
+  }
+  .ics-nav button{
+    flex:1;
+  }
+
+  /* ---------- Results ---------- */
+  .ics-result-hero{
+    text-align:center;
+    padding: 6px 0 4px;
+  }
+  .ics-result-number{
+    font-family: var(--font-display);
+    font-size: clamp(48px, 16vw, 64px);
+    font-weight: 700;
+    color: var(--ics-gold-dark);
+    line-height:1;
+    margin: 6px 0 2px;
+  }
+  .ics-result-caption{
+    font-size: 13px;
+    text-transform:uppercase;
+    letter-spacing:0.12em;
+    font-weight:600;
+    color: rgba(26,24,21,0.55);
+  }
+
+  .ics-bar-row{
+    margin: 16px 0;
+  }
+  .ics-bar-label{
+    display:flex;
+    justify-content:space-between;
+    font-size: 13.5px;
+    font-weight:600;
+    margin-bottom: 6px;
+  }
+  .ics-bar-track{
+    height: 12px;
+    background: var(--ics-cream-2);
+    border-radius: 8px;
+    overflow:hidden;
+  }
+  .ics-bar-fill{
+    height:100%;
+    border-radius:8px;
+    width:0%;
+    transition: width 1.1s cubic-bezier(.22,.9,.34,1);
+  }
+  .ics-bar-fill.gold{ background: linear-gradient(90deg, var(--ics-gold-dark), var(--ics-gold-light)); }
+  .ics-bar-fill.dark{ background: linear-gradient(90deg, var(--ics-black-soft), var(--ics-black)); }
+
+  .ics-polarity{
+    display:flex;
+    gap: 14px;
+    margin-top: 4px;
+  }
+  .ics-polarity > div{ flex:1; }
+
+  .ics-analysis-text{
+    font-size: 15px;
+    color: rgba(26,24,21,0.85);
+    margin-top: 4px;
+  }
+
+  .ics-focus-eyebrow{
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 11.5px;
+    font-weight:700;
+    color: var(--ics-gold-dark);
+    text-align:center;
+    margin-bottom: 14px;
+  }
+  .ics-focus-main{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .ics-focus-icon{ font-size: 30px; line-height:1; }
+  .ics-focus-label{
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight:600;
+  }
+  .ics-focus-sentence{
+    text-align:center;
+    font-size: 14.5px;
+    color: rgba(26,24,21,0.75);
+    margin: 0 0 18px;
+  }
+  .ics-focus-divider{
+    height:1px;
+    background: var(--ics-line);
+    margin: 0 0 16px;
+  }
+  .ics-focus-next-label{
+    text-align:center;
+    font-size: 11.5px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color: rgba(26,24,21,0.5);
+    margin-bottom: 8px;
+  }
+  .ics-focus-impulse{
+    text-align:center;
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-style: italic;
+    font-weight:500;
+    color: var(--ics-black);
+    margin: 0;
+    padding: 0 6px;
+  }
+
+  h2.ics-section-title{
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight:600;
+    text-align:center;
+    margin: 8px 0 4px;
+  }
+  p.ics-section-sub{
+    text-align:center;
+    font-size: 14px;
+    color: rgba(26,24,21,0.6);
+    margin: 0 0 20px;
+  }
+
+  .ics-reset-step{
+    display:flex;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--ics-line);
+  }
+  .ics-reset-step:last-child{ border-bottom:none; }
+  .ics-reset-letter{
+    flex-shrink:0;
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    background: var(--ics-black);
+    color: var(--ics-gold-light);
+    font-family: var(--font-display);
+    font-weight:700;
+    font-size: 19px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .ics-reset-body h3{
+    margin: 2px 0 4px;
+    font-family: var(--font-display);
+    font-size: 16.5px;
+    font-weight:600;
+  }
+  .ics-reset-body p{
+    margin: 0;
+    font-size: 14px;
+    color: rgba(26,24,21,0.75);
+  }
+  .ics-reset-impulse{
+    margin-top: 6px !important;
+    font-size: 13.5px !important;
+    font-style: italic;
+    color: var(--ics-gold-dark) !important;
+  }
+
+  .ics-cta-card{
+    text-align:center;
+    background: var(--ics-black);
+    color: var(--ics-cream);
+    border-radius: 20px;
+    padding: 30px 24px;
+    box-shadow: var(--ics-shadow);
+  }
+  .ics-cta-eyebrow{
+    text-transform:uppercase;
+    letter-spacing:0.14em;
+    font-size: 11px;
+    font-weight:700;
+    color: var(--ics-gold-light);
+    margin-bottom: 10px;
+  }
+  .ics-cta-title{
+    font-family: var(--font-display);
+    font-size: 23px;
+    font-weight:600;
+    margin: 0 0 10px;
+  }
+  .ics-cta-text{
+    font-size: 14.5px;
+    color: rgba(246,241,231,0.8);
+    margin: 0 0 22px;
+  }
+
+  .ics-restart{
+    text-align:center;
+    margin-top: 18px;
+  }
+  .ics-restart button{
+    background:none;
+    border:none;
+    color: rgba(26,24,21,0.55);
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    text-decoration: underline;
+    cursor:pointer;
+  }
+
+  .ics-footer{
+    text-align:center;
+    margin-top: 34px;
+    padding-top: 20px;
+    border-top: 1px solid var(--ics-line);
+  }
+  .ics-footer-version{
+    font-size: 12px;
+    font-weight:600;
+    letter-spacing: 0.06em;
+    color: rgba(26,24,21,0.45);
+    margin-bottom: 8px;
+  }
+  .ics-footer-note{
+    font-size: 12.5px;
+    color: rgba(26,24,21,0.55);
+    line-height:1.6;
+    margin: 0;
+  }
+
+  [data-screen]{ display:none; }
+  [data-screen].active{ display:block; }
+
+  @media (prefers-reduced-motion: reduce){
+    .ics-bar-fill, .ics-progress-fill{ transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="ics-root" id="icsRoot">
+
+  <!-- ============ SCREEN 1: INTRO ============ -->
+  <section data-screen="intro" class="active">
+    <div class="ics-eyebrow">Inner Code Systems</div>
+    <h1 class="ics-title">🔄 ICS RESET-Check</h1>
+    <p class="ics-lead">In wenigen Minuten bekommst du eine ehrliche Standortbestimmung: Wo befindest du dich gerade zwischen Überlebensmodus und Gestaltungsmodus – und was ist dein nächster kleiner Schritt?</p>
+
+    <div class="ics-card ics-preface">
+      <h2 class="ics-preface-title">Willkommen zum ICS RESET-Check</h2>
+      <p class="ics-preface-text">Dieser Check ist keine Prüfung, die du bestehen oder nicht bestehen kannst.<br>Er ist eine ehrliche Momentaufnahme deiner aktuellen Situation.</p>
+      <p class="ics-preface-text">Mit 15 kurzen Fragen erhältst du einen Überblick darüber, wie stark du dich momentan im <span class="ics-preface-strong">Überlebensmodus</span> oder bereits im <span class="ics-preface-strong">Gestaltungsmodus</span> befindest.</p>
+
+      <p class="ics-preface-sub">Am Ende erhältst du</p>
+      <ul class="ics-preface-list">
+        <li>Dein persönliches RESET-Level</li>
+        <li>Deinen aktuellen Schwerpunkt</li>
+        <li>Einen konkreten nächsten Schritt</li>
+        <li>Eine individuelle Empfehlung für deinen weiteren Weg</li>
+      </ul>
+
+      <p class="ics-preface-footer">Antworte möglichst spontan und ehrlich. Es gibt keine richtigen oder falschen Antworten – nur deine aktuelle Wahrheit.</p>
+    </div>
+
+    <div class="ics-card">
+      <p style="margin:0 0 18px; font-size:14.5px; color:rgba(26,24,21,0.75);">
+        15 kurze Fragen aus fünf Lebensbereichen:<br>
+        <strong>Gedanken · Körper · Gefühle · Handeln · Energie</strong>
+      </p>
+      <button class="ics-btn ics-btn-gold" onclick="ICS.start()">RESET-Check starten</button>
+    </div>
+
+    <p class="ics-disclaimer">Der ICS RESET-Check ist keine Diagnose und ersetzt keine medizinische oder psychotherapeutische Behandlung. Er dient ausschließlich als Reflexions- und Orientierungshilfe.</p>
+  </section>
+
+  <!-- ============ SCREEN 2: FRAGEN ============ -->
+  <section data-screen="quiz">
+    <div class="ics-progress-wrap">
+      <div class="ics-progress-track"><div class="ics-progress-fill" id="progressFill"></div></div>
+      <div class="ics-progress-label" id="progressLabel">1 / 15</div>
+    </div>
+
+    <div class="ics-card">
+      <div class="ics-cat-tag" id="catTag">Gedanken</div>
+      <p class="ics-question" id="questionText">—</p>
+      <div class="ics-options" id="optionsWrap"></div>
+    </div>
+
+    <div class="ics-nav">
+      <button class="ics-btn ics-btn-ghost" id="backBtn" onclick="ICS.back()">Zurück</button>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN 3: ERGEBNIS ============ -->
+  <section data-screen="results">
+    <div class="ics-eyebrow">Deine Auswertung</div>
+    <h1 class="ics-title" style="font-size:26px;">Dein RESET-Ergebnis</h1>
+
+    <div class="ics-card ics-result-hero">
+      <div class="ics-result-caption">RESET-Level</div>
+      <div class="ics-result-number" id="resetLevelNumber">0%</div>
+      <p style="font-size:13.5px; color:rgba(26,24,21,0.6); max-width:340px; margin:4px auto 0;">
+        Zeigt, wie weit du aktuell schon im Gestaltungsmodus angekommen bist.
+      </p>
+    </div>
+
+    <div class="ics-card">
+      <div class="ics-polarity">
+        <div>
+          <div class="ics-bar-label"><span>Überlebensmodus</span><span id="survivalPct">0%</span></div>
+          <div class="ics-bar-track"><div class="ics-bar-fill dark" id="survivalBar"></div></div>
+        </div>
+        <div>
+          <div class="ics-bar-label"><span>Gestaltungsmodus</span><span id="growthPct">0%</span></div>
+          <div class="ics-bar-track"><div class="ics-bar-fill gold" id="growthBar"></div></div>
+        </div>
+      </div>
+      <p class="ics-analysis-text" id="analysisText" style="margin-top:20px;"></p>
+    </div>
+
+    <div class="ics-card">
+      <div class="ics-focus-eyebrow">Dein Schwerpunkt</div>
+      <div class="ics-focus-main">
+        <span class="ics-focus-icon" id="focusIcon">🌿</span>
+        <span class="ics-focus-label" id="focusLabel">Körper</span>
+      </div>
+      <p class="ics-focus-sentence" id="focusSentence"></p>
+      <div class="ics-focus-divider"></div>
+      <div class="ics-focus-next-label">Dein nächster Schritt</div>
+      <p class="ics-focus-impulse" id="focusImpulse"></p>
+    </div>
+
+    <h2 class="ics-section-title">Das RESET-System</h2>
+    <p class="ics-section-sub">Dein Weg zurück in den Gestaltungsmodus</p>
+    <div class="ics-card" id="resetSteps"></div>
+
+    <div class="ics-cta-card" id="ctaCard">
+      <div class="ics-cta-eyebrow">Dein nächster Schritt</div>
+      <div class="ics-cta-title" id="ctaTitle"></div>
+      <p class="ics-cta-text" id="ctaText"></p>
+      <a class="ics-btn ics-btn-gold" id="ctaButton" href="#" target="_blank" rel="noopener">Weiter</a>
+    </div>
+
+    <p class="ics-disclaimer">Der ICS RESET-Check ist keine Diagnose. Er dient ausschließlich als Reflexions- und Orientierungshilfe auf deinem Weg vom Überlebens- in den Gestaltungsmodus.</p>
+
+    <div class="ics-restart">
+      <button onclick="ICS.restart()">RESET-Check erneut starten</button>
+    </div>
+  </section>
+
+  <footer class="ics-footer">
+    <div class="ics-footer-version">ICS RESET-Check – Version 1.0</div>
+    <p class="ics-footer-note">💡 Dieses Tool entwickelt sich kontinuierlich weiter.<br>Ich freue mich über jedes Feedback und jede Idee zur Verbesserung.</p>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+
+  /* ============================================================
+     KONFIGURATION
+     ============================================================ */
+  const CONFIG = {
+    ctaUrls: {
+      resetGuide:     'https://innercodesystems.com/reset-guide',
+      resetProgramm:  'https://innercodesystems.com/inner-code-reset',   // war: /reset-programm (404) — vorläufig auf bestehende Seite umgeleitet
+      massage:        'https://innercodesystems.com/transformation-durch-beruehrung',
+      akademie:       'https://innercodesystems.com/inner-code-reset'   // war: /akademie (nicht vorhanden) — vorläufig auf bestehende Seite umgeleitet
+    },
+    // Schwellenwerte für die vierstufige Empfehlung, basierend auf Gestaltungsmodus %
+    thresholds: { t1: 35, t2: 60, t3: 85 }
+  };
+
+  const CATEGORIES = {
+    gedanken: { label: 'Gedanken', icon: '🧠' },
+    koerper:  { label: 'Körper',   icon: '🌿' },
+    gefuehle: { label: 'Gefühle',  icon: '💛' },
+    handeln:  { label: 'Handeln',  icon: '🔥' },
+    energie:  { label: 'Energie',  icon: '⚡' }
+  };
+
+  const QUESTIONS = [
+    { cat:'gedanken', text:'Ich beobachte meine Gedanken, statt mich von ihnen mitreißen zu lassen.' },
+    { cat:'gedanken', text:'Ich kann zwischen hilfreichen und einschränkenden Gedanken unterscheiden.' },
+    { cat:'gedanken', text:'Meine innere Stimme ist aktuell eher unterstützend als kritisch.' },
+
+    { cat:'koerper', text:'Ich spüre Anspannung in meinem Körper, bevor sie überhandnimmt.' },
+    { cat:'koerper', text:'Ich nehme mir bewusst Zeit, um wirklich zur Ruhe zu kommen.' },
+    { cat:'koerper', text:'Mein Körper fühlt sich aktuell eher entspannt als angespannt an.' },
+
+    { cat:'gefuehle', text:'Ich kann meine Gefühle benennen, ohne von ihnen überwältigt zu werden.' },
+    { cat:'gefuehle', text:'Ich erlaube mir, Gefühle zuzulassen, statt sie zu unterdrücken.' },
+    { cat:'gefuehle', text:'Ich fühle mich in schwierigen Momenten emotional stabil.' },
+
+    { cat:'handeln', text:'Ich treffe Entscheidungen bewusst, statt nur aus Reflex zu reagieren.' },
+    { cat:'handeln', text:'Ich setze Dinge um, die mir wichtig sind, statt sie aufzuschieben.' },
+    { cat:'handeln', text:'Ich übernehme Verantwortung für meine nächsten Schritte.' },
+
+    { cat:'energie', text:'Ich habe im Alltag ausreichend Energie für das, was mir wichtig ist.' },
+    { cat:'energie', text:'Ich erhole mich gut nach anstrengenden Phasen.' },
+    { cat:'energie', text:'Ich fühle mich aktuell eher kraftvoll als erschöpft.' }
+  ];
+
+  const OPTIONS = [
+    { label:'Trifft gar nicht zu', value:0 },
+    { label:'Trifft eher nicht zu', value:25 },
+    { label:'Teils teils', value:50 },
+    { label:'Trifft eher zu', value:75 },
+    { label:'Trifft völlig zu', value:100 }
+  ];
+
+  const RESET_STEPS = [
+    { letter:'R', title:'Realisieren', desc:'Ehrlich wahrnehmen, in welchem Modus du gerade wirklich bist – ohne Bewertung.',
+      impulse:'Halte heute für einen Moment inne und beobachte ehrlich, was gerade wirklich in dir aktiv ist.' },
+    { letter:'E', title:'Erkennen', desc:'Die Muster in deinen Gedanken sehen, die dich aktuell im Überlebensmodus halten.',
+      impulse:'Welcher Gedanke oder welches Muster begleitet dich heute am häufigsten?' },
+    { letter:'S', title:'Selbst wahrnehmen', desc:'Zurück in den Körper spüren: Was ist gerade wirklich da, jenseits der Gedanken?',
+      impulse:'Lenke deine Aufmerksamkeit für eine Minute bewusst auf deinen Körper. Was nimmst du wahr?' },
+    { letter:'E', title:'Entscheiden', desc:'Bewusst wählen, welcher nächste Schritt dich wirklich weiterbringt.',
+      impulse:'Welche kleine Entscheidung kannst du heute bewusst anders treffen?' },
+    { letter:'T', title:'Transformieren', desc:'Die Entscheidung in eine kleine, konkrete Handlung im Alltag übersetzen.',
+      impulse:'Setze innerhalb der nächsten 24 Stunden eine kleine Handlung um – egal wie klein sie ist.' }
+  ];
+
+  /* ============================================================
+     STATE
+     ============================================================ */
+  const state = {
+    current: 0,
+    answers: new Array(QUESTIONS.length).fill(null)
+  };
+
+  const $ = (sel) => document.querySelector(sel);
+  const screens = document.querySelectorAll('[data-screen]');
+
+  function showScreen(name){
+    screens.forEach(s => s.classList.toggle('active', s.dataset.screen === name));
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  /* ============================================================
+     QUIZ FLOW
+     ============================================================ */
+  function renderQuestion(){
+    const q = QUESTIONS[state.current];
+    const cat = CATEGORIES[q.cat];
+
+    $('#catTag').textContent = cat.icon + '  ' + cat.label;
+    $('#questionText').textContent = q.text;
+
+    $('#progressLabel').textContent = (state.current+1) + ' / ' + QUESTIONS.length;
+    $('#progressFill').style.width = ((state.current) / QUESTIONS.length * 100) + '%';
+
+    const wrap = $('#optionsWrap');
+    wrap.innerHTML = '';
+    OPTIONS.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'ics-option' + (state.answers[state.current] === opt.value ? ' selected' : '');
+      btn.innerHTML = '<span class="ics-option-dot"></span><span>' + opt.label + '</span>';
+      btn.onclick = () => selectAnswer(opt.value);
+      wrap.appendChild(btn);
+    });
+
+    $('#backBtn').style.visibility = state.current === 0 ? 'hidden' : 'visible';
+  }
+
+  function selectAnswer(value){
+    state.answers[state.current] = value;
+    renderQuestion();
+    setTimeout(() => {
+      if (state.current < QUESTIONS.length - 1){
+        state.current++;
+        renderQuestion();
+      } else {
+        finish();
+      }
+    }, 220);
+  }
+
+  function back(){
+    if (state.current > 0){
+      state.current--;
+      renderQuestion();
+    }
+  }
+
+  function start(){
+    state.current = 0;
+    state.answers = new Array(QUESTIONS.length).fill(null);
+    showScreen('quiz');
+    renderQuestion();
+  }
+
+  function restart(){
+    start();
+  }
+
+  /* ============================================================
+     AUSWERTUNG
+     ============================================================ */
+  function average(arr){
+    if (!arr.length) return 0;
+    return arr.reduce((a,b) => a+b, 0) / arr.length;
+  }
+
+  function catAverage(catKey){
+    const vals = QUESTIONS
+      .map((q,i) => ({q,i}))
+      .filter(o => o.q.cat === catKey)
+      .map(o => state.answers[o.i]);
+    return average(vals);
+  }
+
+  function finish(){
+    const overall = Math.round(average(state.answers)); // Gestaltungsmodus %
+    const survival = 100 - overall;
+
+    const catAverages = {};
+    Object.keys(CATEGORIES).forEach(k => catAverages[k] = catAverage(k));
+
+    // RESET-Level entspricht bewusst dem Gestaltungsmodus-Anteil, damit die
+    // Zahlen nie widersprüchlich wirken (z.B. 75% Gestaltungsmodus, aber 50% RESET-Level).
+    const resetLevel = overall;
+
+    // Schwächster Bereich = größter Hebel / aktueller Schwerpunkt
+    let weakestKey = Object.keys(catAverages)[0];
+    Object.keys(catAverages).forEach(k => {
+      if (catAverages[k] < catAverages[weakestKey]) weakestKey = k;
+    });
+
+    renderResults({ overall, survival, resetLevel, weakestKey, catAverages });
+    showScreen('results');
+  }
+
+  function modeText(overall){
+    if (overall < 34){
+      return 'Aktuell zeigt sich bei dir überwiegend der Überlebensmodus – dein System ist stark auf Absicherung und Kontrolle ausgerichtet. Das ist keine Schwäche, sondern ein Schutzmuster, das gerade viel Energie bindet.';
+    } else if (overall < 67){
+      return 'Du befindest dich gerade in einer Übergangsphase zwischen Überlebens- und Gestaltungsmodus. Manche Bereiche fühlen sich schon stabil an, andere ziehen dich noch zurück in alte Muster.';
+    } else {
+      return 'Du bewegst dich überwiegend im Gestaltungsmodus – du triffst bewusste Entscheidungen und bist gut mit dir selbst verbunden. Jetzt geht es darum, diesen Zustand zu vertiefen und zu stabilisieren.';
+    }
+  }
+
+  function catFocusText(key){
+    const map = {
+      gedanken: 'Besonders im Bereich Gedanken zeigt sich aktuell Potenzial: einschränkende Denkmuster halten dich häufiger fest, als dir guttut.',
+      koerper:  'Besonders im Bereich Körper zeigt sich aktuell Potenzial: dein Nervensystem bekommt derzeit zu wenig echte Erholung.',
+      gefuehle: 'Besonders im Bereich Gefühle zeigt sich aktuell Potenzial: Emotionen werden eher verdrängt oder überrollen dich, statt bewusst wahrgenommen zu werden.',
+      handeln:  'Besonders im Bereich Handeln zeigt sich aktuell Potenzial: Entscheidungen und Umsetzung fallen dir gerade schwerer als sonst.',
+      energie:  'Besonders im Bereich Energie zeigt sich aktuell Potenzial: deine Kraftreserven sind aktuell knapper, als dir bewusst ist.'
+    };
+    return map[key];
+  }
+
+  function catNextStep(key){
+    const map = {
+      gedanken: 'Beobachte heute deine Gedanken, ohne sie zu bewerten.',
+      koerper:  'Nimm dir heute 10 Minuten bewusst Zeit für deinen Körper.',
+      gefuehle: 'Nimm dir heute einen Moment, um ehrlich zu fühlen, was da ist – ohne es wegzuschieben.',
+      handeln:  'Triff heute eine kleine Entscheidung bewusst anders als sonst.',
+      energie:  'Plane dir heute bewusst eine Pause ein, um neue Energie zu tanken.'
+    };
+    return map[key];
+  }
+
+  function renderResults({overall, survival, resetLevel, weakestKey, catAverages}){
+    // Zahlen setzen
+    $('#resetLevelNumber').textContent = resetLevel + '%';
+    $('#survivalPct').textContent = survival + '%';
+    $('#growthPct').textContent = overall + '%';
+
+    // Analysetext
+    const text = modeText(overall) + ' ' + catFocusText(weakestKey);
+    $('#analysisText').textContent = text;
+
+    // Schwerpunkt-Karte
+    const focusCat = CATEGORIES[weakestKey];
+    $('#focusIcon').textContent = focusCat.icon;
+    $('#focusLabel').textContent = focusCat.label;
+    $('#focusSentence').textContent = 'Dein aktueller Schwerpunkt liegt im Bereich ' + focusCat.label + '.';
+    $('#focusImpulse').textContent = catNextStep(weakestKey);
+
+    // RESET-Schritte mit persönlichem Impuls
+    const stepsWrap = $('#resetSteps');
+    stepsWrap.innerHTML = '';
+    RESET_STEPS.forEach(step => {
+      const el = document.createElement('div');
+      el.className = 'ics-reset-step';
+      el.innerHTML =
+        '<div class="ics-reset-letter">' + step.letter + '</div>' +
+        '<div class="ics-reset-body">' +
+          '<h3>' + step.title + '</h3>' +
+          '<p>' + step.desc + '</p>' +
+          '<p class="ics-reset-impulse">Impuls: ' + step.impulse + '</p>' +
+        '</div>';
+      stepsWrap.appendChild(el);
+    });
+
+    // CTA-Logik: 4 Stufen je nach Ergebnis
+    let cta;
+    if (overall < CONFIG.thresholds.t1){
+      cta = {
+        title: 'Starte mit dem RESET Guide',
+        text: 'Dein System ist gerade stark im Überlebensmodus. Der RESET Guide gibt dir einen sanften, strukturierten Einstieg zurück in mehr Klarheit.',
+        label: 'Zum RESET Guide',
+        url: CONFIG.ctaUrls.resetGuide
+      };
+    } else if (overall < CONFIG.thresholds.t2){
+      cta = {
+        title: 'Vertiefe mit dem RESET-Programm',
+        text: 'Du stehst an einem Übergangspunkt. Das RESET-Programm begleitet dich strukturiert dabei, dauerhaft mehr in den Gestaltungsmodus zu finden.',
+        label: 'Zum RESET-Programm',
+        url: CONFIG.ctaUrls.resetProgramm
+      };
+    } else if (overall < CONFIG.thresholds.t3){
+      cta = {
+        title: 'Vertiefe mit der Transformationsmassage',
+        text: 'Du bist bereits gut im Gestaltungsmodus verankert. Die Transformationsmassage hilft dir, diesen Zustand körperlich zu vertiefen und zu stabilisieren.',
+        label: 'Mehr zur Transformationsmassage',
+        url: CONFIG.ctaUrls.massage
+      };
+    } else {
+      cta = {
+        title: 'Entdecke die ICS Akademie',
+        text: 'Du lebst bereits sehr stark im Gestaltungsmodus. In der ICS Akademie findest du weiterführende Tools und Vertiefungen, um diesen Weg konsequent weiterzugehen.',
+        label: 'Zur ICS Akademie',
+        url: CONFIG.ctaUrls.akademie
+      };
+    }
+    $('#ctaTitle').textContent = cta.title;
+    $('#ctaText').textContent = cta.text;
+    const btn = $('#ctaButton');
+    btn.textContent = cta.label;
+    btn.href = cta.url;
+
+    // Animation der Balken nach Render-Frame
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        $('#survivalBar').style.width = survival + '%';
+        $('#growthBar').style.width = overall + '%';
+      });
+    });
+  }
+
+  window.ICS = { start, back, restart };
+})();
+</script>
+</body>
+</html>
