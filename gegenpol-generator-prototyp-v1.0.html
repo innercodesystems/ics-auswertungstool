@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICS Gegenpol-Generator — Interner Prototyp</title>
+<style>
+  :root {
+    --cream: #f6f1e7;
+    --cream-dark: #ede5d5;
+    --black: #1a1815;
+    --gold: #b8924f;
+    --gold-light: #dec8a0;
+    --gold-soft: #f0e3ca;
+    --gray: #605a52;
+    --white: #ffffff;
+    --danger: #9a4b3f;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--black);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 24px 18px 80px; }
+  header.top {
+    text-align: center;
+    padding: 28px 0 20px;
+    border-bottom: 1px solid var(--gold-light);
+    margin-bottom: 28px;
+  }
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 26px;
+    margin: 8px 0 4px;
+    font-weight: 700;
+  }
+  .sub { font-size: 14px; color: var(--gray); margin: 0; }
+  .badge-intern {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: var(--black);
+    color: var(--cream);
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+  section.card {
+    background: var(--white);
+    border: 1px solid var(--gold-light);
+    border-radius: 16px;
+    padding: 18px 18px 20px;
+    margin-bottom: 16px;
+  }
+  section.card h2 {
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0 0 14px;
+    font-weight: 700;
+  }
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--black);
+  }
+  .field { margin-bottom: 14px; }
+  input[type="number"], input[type="text"], textarea, select {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid #d8cdb8;
+    background: var(--cream);
+    font-size: 15px;
+    color: var(--black);
+    font-family: inherit;
+  }
+  input:focus, textarea:focus, select:focus {
+    outline: 2px solid var(--gold);
+    outline-offset: 1px;
+  }
+  textarea { min-height: 100px; resize: vertical; }
+  .hint {
+    font-size: 12px;
+    color: var(--gray);
+    margin-top: 4px;
+  }
+  .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .muster-row {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr auto;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .muster-row select, .muster-row input { margin: 0; }
+  button.remove-muster {
+    background: none;
+    border: none;
+    color: var(--gray);
+    font-size: 18px;
+    cursor: pointer;
+    padding: 4px 8px;
+  }
+  button.secondary {
+    background: var(--cream);
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .session-ref {
+    font-family: monospace;
+    font-size: 13px;
+    background: var(--cream-dark);
+    padding: 8px 10px;
+    border-radius: 8px;
+    color: var(--gray);
+    word-break: break-all;
+  }
+  .cta-wrap { text-align: center; margin: 24px 0; }
+  button.primary {
+    background: var(--black);
+    color: var(--cream);
+    border: none;
+    border-radius: 14px;
+    padding: 16px 28px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    max-width: 400px;
+  }
+  button.primary:active { background: var(--gold); }
+  button.primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  #ergebnis { display: none; }
+  .teil {
+    background: var(--white);
+    border: 1px solid var(--gold-light);
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 14px;
+  }
+  .teil .label {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .teil p { margin: 0; font-size: 15px; }
+  .teil ol { margin: 0; padding-left: 20px; }
+  .teil.gold { background: var(--gold); color: var(--white); }
+  .teil.gold .label { color: var(--cream); }
+  .teil.safety {
+    background: var(--gold-soft);
+    border-color: var(--gold);
+  }
+  .safety-banner {
+    background: var(--gold-soft);
+    border: 1px solid var(--gold);
+    border-radius: 14px;
+    padding: 14px 16px;
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+  .abort-banner {
+    background: #f4e9e6;
+    border: 1px solid var(--danger);
+    border-radius: 14px;
+    padding: 18px;
+    font-size: 15px;
+    color: var(--black);
+  }
+  .error-banner {
+    background: #f4e9e6;
+    border: 1px solid var(--danger);
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 13px;
+    color: var(--danger);
+    margin-bottom: 16px;
+  }
+  .debug-toggle {
+    text-align: center;
+    margin-top: 30px;
+  }
+  .debug-toggle button {
+    background: none;
+    border: none;
+    color: var(--gray);
+    font-size: 12px;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  #debug-panel {
+    display: none;
+    background: var(--black);
+    color: #d8e6d0;
+    border-radius: 12px;
+    padding: 14px;
+    font-family: monospace;
+    font-size: 12px;
+    white-space: pre-wrap;
+    margin-top: 14px;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  footer.foot {
+    text-align: center;
+    font-size: 12px;
+    color: var(--gray);
+    margin-top: 30px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="eyebrow">Inner Code Systems</div>
+    <h1>Gegenpol-Generator</h1>
+    <p class="sub">Interner Test-Prototyp — bedient die Engine mit Testdaten</p>
+    <span class="badge-intern">Intern · Nicht öffentlich</span>
+  </header>
+
+  <div id="error-container"></div>
+
+  <section class="card">
+    <h2>1 · RESET-Check-Werte</h2>
+    <div class="row3">
+      <div class="field">
+        <label for="inner-prozent">Inner Code %</label>
+        <input type="number" id="inner-prozent" min="0" max="100" value="50">
+      </div>
+      <div class="field">
+        <label for="body-prozent">Body Code %</label>
+        <input type="number" id="body-prozent" min="0" max="100" value="50">
+      </div>
+      <div class="field">
+        <label for="action-prozent">Action Code %</label>
+        <input type="number" id="action-prozent" min="0" max="100" value="50">
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>2 · Erkannte Muster (max. 3)</h2>
+    <div id="muster-liste"></div>
+    <button type="button" class="secondary" id="btn-add-muster">+ Muster hinzufügen</button>
+  </section>
+
+  <section class="card">
+    <h2>3 · Freitext</h2>
+    <div class="field">
+      <textarea id="freitext" placeholder="In eigenen Worten: Was beschäftigt dich gerade?"></textarea>
+      <p class="hint">Dieser Text wird nicht dauerhaft gespeichert. Der Generator erstellt keine medizinische oder therapeutische Diagnose.</p>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>4 · Session-Referenz</h2>
+    <div class="session-ref" id="session-ref">wird erzeugt…</div>
+    <p class="hint">Rein technische, nicht personenbezogene Kennung für reproduzierbare Ergebnisse.</p>
+  </section>
+
+  <div class="cta-wrap">
+    <button type="button" class="primary" id="btn-generate">Meinen Gestaltungsmodus anzeigen</button>
+  </div>
+
+  <div id="ergebnis"></div>
+
+  <div class="debug-toggle">
+    <button type="button" id="btn-debug-toggle">Debug-Modus ein-/ausblenden</button>
+  </div>
+  <div id="debug-panel"></div>
+
+  <footer class="foot">Inner Code Systems · interner Prototyp, keine Veröffentlichung</footer>
+</div>
+
+<script>
+/* ============================================================
+   SCHICHT 1 — INHALTSDATEN (Datenbasis v1.1, unverändert)
+   Wird von der Engine nur gelesen, nie verändert.
+   ============================================================ */
+const DATENBASIS = {"version": "1.1", "meta": {"system": "ICS Gegenpol-Generator", "beschreibung": "Datenbasis für das Visionstool von Inner Code Systems — erzeugt aus RESET-Check und KI-Auswertung ein individuelles, glaubwürdiges Zukunftsbild.", "grundprinzip": "Spiegeln statt motivieren. Jede Ausgabe unterscheidet Vision (emotional, Präsens erlaubt), glaubwürdig nächsten Zustand (beginnende Bewegung, keine bereits vollzogene Entwicklung) und Mikro-Handlung (heute konkret ausführbar).", "anzahl_muster": 8, "intensitaeten_pro_muster": 3, "sprachbuendel_pro_intensitaet": 3, "assemblierungsregeln": {"teil1_uebergang": "Teil 1 verbindet ein verarbeitetes Echo und die Vision niemals mit Formulierungen, die eine bereits begonnene Veränderung behaupten (z.B. 'genau da beginnt sich etwas zu verschieben', 'jetzt beginnt sich etwas zu verändern'). Stattdessen wird eine Möglichkeitsform verwendet (z.B. 'Genau hier zeigt sich eine Möglichkeit:', 'Das könnte der Ausgangspunkt sein für:')."}}, "einladungen": {"reset_direkt": "Direkter, automatisierter Hinweis auf das RESET-Programm.", "reset_oder_gespraech": "Hinweis auf RESET-Programm UND Klarheitsgespräch als gleichwertige Optionen.", "gespraech_sanft": "Keine automatisierte Direkteinladung zu RESET. Stattdessen ein persönliches, unaufdringliches Angebot zum Klarheitsgespräch — reserviert für Intensität 'stark'."}, "sicherheit": {"regeln": ["Body Code beschreibt ausschließlich Wahrnehmung, nie eine behauptete oder versprochene körperliche Veränderung.", "Keine medizinisch deutenden, diagnostischen oder kausalen Formulierungen (z.B. 'Krankheitszeichen', 'Symptome verschwinden', 'X bedeutet, dass...').", "Keine konkreten Maßnahmen (Wasser trinken, Koffeinverzicht, Atemtechnik, Körperübungen) als dargestellte Lösung für ein körperliches Signal.", "Erlaubt sind ausschließlich: Wahrnehmung beschreiben, zum neutralen Innehalten einladen, zur Beobachtung eines Signals anregen, einen sicheren kleinen Handlungsspielraum eröffnen.", "Keine Heilversprechen, keine Garantien, keine Angstmache.", "Intensität 'stark' wird vorsichtig-beschreibend formuliert, nie diagnostisch/pathologisierend."], "fallback_koerperliche_beschwerden": {"bedingung": "Eingabe (Freitext oder Kombination mit RESET-Check) weist auf anhaltende, starke, unklare oder plötzlich auftretende körperliche Beschwerden hin.", "verhalten": "Keine Ursache benennen, keine Lösung versprechen. Sowohl der reguläre Body-Code-Satz als auch die drei regulären Mikro-Handlungen werden durch die neutrale Formulierung bzw. die sicheren Mikro-Handlungen ersetzt.", "text": "Dein Körper zeigt dir etwas, das Aufmerksamkeit verdient. Wenn Beschwerden anhalten, stärker werden oder dich verunsichern, ist es sinnvoll, sie medizinisch abklären zu lassen.", "greift_bevorzugt_bei": ["koerpersignale_ignorieren", "dauerfunktionieren:stark"], "sichere_mikro_handlungen": ["Nimm dir einen Moment Zeit, ohne sofort etwas verändern zu müssen.", "Sprich mit einer Person deines Vertrauens über das, was du gerade wahrnimmst, wenn dir das guttut.", "Wenn dich die Beschwerden beunruhigen, ist eine ärztliche Einschätzung ein sinnvoller nächster Schritt."]}, "grundsatz": "Der Gegenpol-Generator begleitet Wahrnehmung und Selbstreflexion. Er ersetzt keine medizinische, psychologische oder therapeutische Abklärung."}, "echo_verarbeitung": {"schritte": ["Kernaussage extrahieren (kürzester inhaltlicher Kern, max. 8-10 Wörter)", "Sensible oder ungeeignete Bestandteile entfernen (medizinische Aussagen, Diagnosen, Namen Dritter, Aussagen zu Selbstverletzung/Suizidalität, extreme Inhalte)", "In kurze natürliche Spiegelung umformulieren (Ich- zu Du-Form, neutralisierte Wortwahl)", "Klarheits-Check: bei zu kurzem (<3 sinntragende Wörter), widersprüchlichem oder unklarem Freitext kein Echo verwenden"]}, "muster": [{"id": "dauerfunktionieren", "name": "Dauerfunktionieren", "auslöser": ["Nach Feierabend beginnt ohne Übergang die nächste Aufgabe", "Wochenenden fühlen sich an wie Ausfallzeit, die aufgeholt werden muss", "Pausen lösen ein leises schlechtes Gewissen aus", "Stillstand fühlt sich schneller an wie Rückschritt als wie Erholung"], "intensitaeten": {"leicht": {"ist_zustand": {"innerer_gedanke": "Ich mach eben schnell noch das hier fertig.", "koerperreaktion": "Leichte Unruhe, wenn gerade nichts zu tun ist", "beobachtbares_verhalten": "Prüft auch in freien Momenten kurz E-Mails oder Nachrichten"}, "gegenpol": {"langfristiges_entwicklungsbild": "Du lebst in einem Rhythmus aus Handeln und bewusstem Innehalten — Leistung entsteht aus Energie, nicht aus Druck.", "glaubwuerdig_naechster_zustand": "Du bemerkst früher, wann eine Pause fällig wäre, und erlaubst sie dir bewusster."}, "sprachbuendel": [{"inner_code": "Ich beginne, von selbst zu merken, wann genug ist.", "body_code": "Du beginnst, Momente wahrzunehmen, in denen eine Entspannung möglich wäre.", "action_code": "Du beginnst, Pausen bewusster einzuplanen."}, {"inner_code": "Pausen dürfen genauso zu meinem Tag gehören wie Aufgaben.", "body_code": "Deine Atmung in vollen Momenten fällt dir bewusster auf.", "action_code": "Du beginnst, eine zusätzliche Aufgabe öfter bewusst abzusagen."}, {"inner_code": "Ich darf aufhören, auch wenn noch etwas offen ist.", "body_code": "Eine vorhandene Spannung in deinen Schultern fällt dir über den Tag früher auf.", "action_code": "Du beendest häufiger eine Aufgabe, bevor die Erschöpfung einsetzt."}], "mikro_handlungen": ["Trage dir für morgen zwei feste Pausenzeiten ein.", "Beende heute eine Aufgabe fünf Minuten früher als eigentlich geplant.", "Lege dir für den Nachmittag einen Moment fest, in dem du bewusst nichts tust."], "einladung": "reset_direkt"}, "mittel": {"ist_zustand": {"innerer_gedanke": "Wenn ich nicht funktioniere, falle ich auf.", "koerperreaktion": "Dauerspannung in Nacken und Kiefer, spürbar flachere Atmung", "beobachtbares_verhalten": "Springt ohne Pause von einer Aufgabe zur nächsten"}, "gegenpol": {"langfristiges_entwicklungsbild": "Du lebst in einem Rhythmus aus Handeln und bewusstem Innehalten — Leistung entsteht aus Energie, nicht aus Druck.", "glaubwuerdig_naechster_zustand": "Du beginnst, dir eine bewusste Pause am Tag zu erlauben, ohne sie dir zu rechtfertigen."}, "sprachbuendel": [{"inner_code": "Ich darf innehalten, ohne mir das zu erklären.", "body_code": "Du nimmst wahr, wie sich deine Schultern während der Pause anfühlen.", "action_code": "Du legst eine Aufgabe bewusst zur Seite, bevor du erschöpft bist."}, {"inner_code": "Ich muss aus einer Pause keine Leistung machen.", "body_code": "Du nimmst wahr, wie sich dein Atem anfühlt, wenn du bewusst nichts tust.", "action_code": "Du beendest deinen Arbeitstag versuchsweise zu einer festen Uhrzeit, auch wenn noch etwas offen ist."}, {"inner_code": "Mein Wert hängt nicht davon ab, wie viel ich heute erledige.", "body_code": "Eine vorhandene Spannung in deinem Nacken fällt dir eher auf, wenn du pausierst.", "action_code": "Du lässt versuchsweise eine Nachricht liegen, bis du wirklich bereit bist zu antworten."}], "mikro_handlungen": ["Stelle dir für die nächste Pause einen Fünf-Minuten-Timer, ohne Bildschirm.", "Halte vor der nächsten Aufgabe kurz inne und nimm bewusst drei Atemzüge wahr.", "Schreibe dir einen Satz auf, der dir die Pause erlaubt, und lies ihn einmal laut."], "einladung": "reset_oder_gespraech"}, "stark": {"ist_zustand": {"innerer_gedanke": "Wenn ich aufhöre, bricht alles zusammen.", "koerperreaktion": "Anhaltende Anspannung, die über den Tag kaum nachlässt", "beobachtbares_verhalten": "Arbeitet häufig über die eigenen Grenzen hinaus und findet auch in freien Momenten schwer aus dem Tun heraus"}, "gegenpol": {"langfristiges_entwicklungsbild": "Irgendwann könnte sich dieses Funktionieren wieder wie eigene Wahl anfühlen, nicht wie Zwang.", "glaubwuerdig_naechster_zustand": "Du nimmst für einen Moment wahr, dass du gerade eine Pause überspringst und direkt weiterarbeitest."}, "sprachbuendel": [{"inner_code": "Ich darf bemerken, dass ich gerade nicht aufhöre.", "body_code": "Du nimmst wahr, wie sich die Anspannung anfühlt, während du weiterarbeitest.", "action_code": "Du nimmst den Moment wahr, in dem du eine Pause überspringst — ohne ihn zu verändern."}, {"inner_code": "Weitermachen ist gerade der einzige Weg, den ich kenne — das darf so sein.", "body_code": "Du bemerkst, wie sich dein Körper anfühlt, kurz bevor du die nächste Aufgabe beginnst.", "action_code": "Du registrierst, wenn du eine Aufgabe direkt an die nächste anschließt."}, {"inner_code": "Ich muss das Weitermachen gerade nicht stoppen, um es zu bemerken.", "body_code": "Du nimmst wahr, wie sich dein Atem anfühlt, während du funktionierst.", "action_code": "Du bemerkst, an welcher Stelle im Tag eine Pause eigentlich vorgesehen war."}], "mikro_handlungen": ["Beobachte heute einmal bewusst den Moment, in dem du eine Pause überspringst.", "Halte kurz inne, bevor du eine Aufgabe direkt an die nächste anschließt, und nimm wahr, was gerade da ist.", "Frage dich einmal: Was würde jetzt eine Pause bedeuten?"], "einladung": "gespraech_sanft"}}}, {"id": "koerpersignale_ignorieren", "name": "Körpersignale ignorieren", "auslöser": ["Körperliche Signale werden häufig übergangen, statt ihnen Raum zu geben", "Hunger oder Erschöpfung werden erst spät bemerkt", "Der Körper meldet sich oft erst sehr deutlich, bevor er wahrgenommen wird"], "intensitaeten": {"leicht": {"ist_zustand": {"innerer_gedanke": "Das ist bestimmt nicht so wichtig.", "koerperreaktion": "Kurze Anspannung, schnell wieder vergessen", "beobachtbares_verhalten": "Arbeitet trotz leichtem Unwohlsein normal weiter"}, "gegenpol": {"langfristiges_entwicklungsbild": "Dein Körper ist dir ein vertrauter Ratgeber — du reagierst auf seine Signale, bevor sie laut werden müssen.", "glaubwuerdig_naechster_zustand": "Du beginnst, ein Körpersignal öfter noch am selben Tag wahrzunehmen."}, "sprachbuendel": [{"inner_code": "Ich beginne, meinem Körper früher zuzuhören.", "body_code": "Ein Körpersignal fällt dir früher auf.", "action_code": "Du beginnst, kurz innezuhalten, wenn du ein Signal spürst."}, {"inner_code": "Ein Körpersignal darf ich ernst nehmen, auch wenn es klein ist.", "body_code": "Du beginnst, kleine Anspannungen häufiger wahrzunehmen.", "action_code": "Du unterbrichst versuchsweise für einen Moment, wenn du ein Signal bemerkst, und prüfst, was du gerade brauchst."}, {"inner_code": "Mein Körper darf mitreden, auch bei kleinen Dingen.", "body_code": "Deine Atmung bei Anspannung fällt dir bewusster auf.", "action_code": "Du legst eine Aufgabe kurz beiseite, wenn dein Körper sich meldet."}], "mikro_handlungen": ["Zweimal am Tag innehalten und fragen: Wie fühlt sich mein Körper gerade an?", "Sobald du ein Signal bemerkst, kurz innehalten und prüfen, was du gerade brauchst.", "Abends ein wahrgenommenes Körpersignal notieren."], "einladung": "reset_direkt"}, "mittel": {"ist_zustand": {"innerer_gedanke": "Das hat jetzt keine Zeit, ich mach das später.", "koerperreaktion": "Spürbare Anspannung im Nacken, die erst abends bewusst wird", "beobachtbares_verhalten": "Arbeitet über spürbare Erschöpfung hinaus weiter"}, "gegenpol": {"langfristiges_entwicklungsbild": "Dein Körper ist dir ein vertrauter Ratgeber — du reagierst auf seine Signale, bevor sie laut werden müssen.", "glaubwuerdig_naechster_zustand": "Du beginnst, ein Körpersignal noch am selben Tag wahrzunehmen, statt es zu übergehen."}, "sprachbuendel": [{"inner_code": "Mein Körper sagt mir etwas Wichtiges — ich beginne, hinzuhören.", "body_code": "Eine vorhandene Spannung im Nacken fällt dir früher auf.", "action_code": "Du beginnst, kurz zu unterbrechen, wenn ein Signal spürbar wird."}, {"inner_code": "Ich muss ein Signal nicht ignorieren, um zu funktionieren.", "body_code": "Anspannung in deinen Schultern fällt dir schneller auf.", "action_code": "Du hältst versuchsweise einmal am Tag inne, um zu spüren, wie es dir geht."}, {"inner_code": "Mein Körper verdient dieselbe Aufmerksamkeit wie meine Aufgaben.", "body_code": "Du beginnst, Erschöpfung früher wahrzunehmen, statt erst abends.", "action_code": "Du unterbrichst versuchsweise, wenn ein Signal spürbar wird, statt es wegzuarbeiten."}], "mikro_handlungen": ["Zweimal am Tag innehalten und fragen: Wie fühlt sich mein Körper gerade an?", "Sobald du ein Signal bemerkst, kurz innehalten und prüfen, was du gerade brauchst.", "Abends ein wahrgenommenes Körpersignal notieren."], "einladung": "reset_oder_gespraech"}, "stark": {"ist_zustand": {"innerer_gedanke": "Ich hab jetzt keine Zeit, auf mich zu achten.", "koerperreaktion": "Körperliche Signale werden über längere Zeit häufig übergangen", "beobachtbares_verhalten": "Arbeitet häufig weiter, auch bei deutlichen Signalen, und bemerkt das oft erst im Nachhinein"}, "gegenpol": {"langfristiges_entwicklungsbild": "Irgendwann könnte dein Körper wieder eine vertraute Stimme sein, der du folgst, statt sie zu übergehen.", "glaubwuerdig_naechster_zustand": "Du nimmst für einen Moment ein Körpersignal wahr, bevor du es zur Seite schiebst."}, "sprachbuendel": [{"inner_code": "Ich darf ein Signal bemerken, auch wenn ich es gleich wieder beiseiteschiebe.", "body_code": "Du nimmst wahr, dass sich etwas in deinem Körper meldet.", "action_code": "Du bemerkst den Moment, in dem du ein Signal übergehst."}, {"inner_code": "Es ist in Ordnung, ein Signal wahrzunehmen, ohne sofort zu reagieren.", "body_code": "Du registrierst eine Empfindung, ohne sie einzuordnen.", "action_code": "Du nimmst wahr, welche Tätigkeit du einem Körpersignal gerade vorziehst."}, {"inner_code": "Ich muss ein Signal nicht deuten, um es zu bemerken.", "body_code": "Du nimmst wahr, dass eine Empfindung da ist, ohne sie zu bewerten.", "action_code": "Du registrierst, wie oft du ein Signal heute bereits übergangen hast."}], "mikro_handlungen": ["Nimm dir einmal einen Moment und beobachte, welches Körpersignal du gerade übergehst.", "Halte kurz inne, wenn du merkst, dass du ein Signal beiseiteschiebst, ohne etwas zu verändern.", "Frage dich einmal: Was nehme ich gerade wahr, ohne darauf zu reagieren?"], "einladung": "gespraech_sanft"}}, "sicherheitshinweis": "Dieses Muster ist am engsten mit dem systemweiten Sicherheits-Fallback verknüpft — vor jeder Ausgabe wird geprüft, ob die Eingabe auf anhaltende, starke, unklare oder plötzlich auftretende Beschwerden hinweist."}, {"id": "entscheidungen_aus_druck", "name": "Entscheidungen aus Druck", "auslöser": ["Antwortet auf Nachrichten sofort, aus Unwohlsein mit Wartezeit", "Trifft Entscheidungen, um ein unangenehmes Gefühl schnell zu beenden", "Empfindet Unentschlossenheit als persönliches Versagen"], "intensitaeten": {"leicht": {"ist_zustand": {"innerer_gedanke": "Ich klär das lieber gleich.", "koerperreaktion": "Leichte Unruhe bei offenen Fragen", "beobachtbares_verhalten": "Antwortet meist zügig, auch ohne echten Zeitdruck"}, "gegenpol": {"langfristiges_entwicklungsbild": "Du triffst Entscheidungen aus innerer Ruhe — Zeit zu haben fühlt sich nicht mehr riskant an.", "glaubwuerdig_naechster_zustand": "Du beginnst, dir vor einer Antwort einen kurzen Moment zu nehmen."}, "sprachbuendel": [{"inner_code": "Ich darf mir einen Moment Zeit nehmen.", "body_code": "Dein Atem vor einer Entscheidung fällt dir bewusster auf.", "action_code": "Du wartest versuchsweise einen Moment, bevor du antwortest."}, {"inner_code": "Eine offene Frage darf auch mal offen bleiben.", "body_code": "Eine vorhandene Unruhe bei offenen Fragen fällt dir eher auf.", "action_code": "Du lässt eine Entscheidung versuchsweise über Nacht liegen."}, {"inner_code": "Nicht jede Antwort muss sofort kommen.", "body_code": "Du beginnst, die Anspannung in deinen Schultern bei Wartezeit bewusster wahrzunehmen.", "action_code": "Du beginnst, kleinere Entscheidungen bewusst zu verschieben."}], "mikro_handlungen": ["Zähle innerlich bis fünf, bevor du auf eine Nachricht antwortest.", "Schreibe eine anstehende Entscheidung auf, statt sie sofort zu treffen.", "Leg dein Telefon einmal für 10 Minuten bewusst außer Reichweite."], "einladung": "reset_direkt"}, "mittel": {"ist_zustand": {"innerer_gedanke": "Ich muss das jetzt sofort klären.", "koerperreaktion": "Enge im Brustkorb, bis eine Entscheidung gefallen ist", "beobachtbares_verhalten": "Antwortet oder entscheidet, bevor er/sie eigentlich bereit ist"}, "gegenpol": {"langfristiges_entwicklungsbild": "Du triffst Entscheidungen aus innerer Ruhe — Zeit zu haben fühlt sich nicht mehr riskant an.", "glaubwuerdig_naechster_zustand": "Du beginnst, vor einer Antwort einen bewussten Moment einzulegen, auch wenn der Drang zur sofortigen Reaktion noch da ist."}, "sprachbuendel": [{"inner_code": "Ich darf mir Zeit nehmen, bevor ich entscheide.", "body_code": "Dein Atem während des Innehaltens fällt dir bewusster auf.", "action_code": "Du legst eine Nachricht versuchsweise einmal beiseite, bevor du antwortest."}, {"inner_code": "Eine Entscheidung muss nicht sofort fallen, um richtig zu sein.", "body_code": "Eine vorhandene Enge im Brustkorb fällt dir eher auf, wenn du dir Zeit nimmst.", "action_code": "Du schreibst eine Entscheidung versuchsweise auf, statt sie sofort zu treffen."}, {"inner_code": "Ich darf unsicher sein, ohne das schnell auflösen zu müssen.", "body_code": "Du beginnst, deine Reaktion auf Wartezeit bewusster wahrzunehmen.", "action_code": "Du legst dein Telefon versuchsweise für einige Minuten außer Reichweite."}], "mikro_handlungen": ["Zähle innerlich bis fünf, bevor du auf eine Nachricht antwortest.", "Schreibe eine anstehende Entscheidung auf, statt sie sofort zu treffen.", "Leg dein Telefon einmal für 10 Minuten bewusst außer Reichweite."], "einladung": "reset_oder_gespraech"}, "stark": {"ist_zustand": {"innerer_gedanke": "Wenn ich nicht sofort entscheide, passiert etwas Schlimmes.", "koerperreaktion": "Deutliche Anspannung bei offenen Entscheidungen, die lange anhält", "beobachtbares_verhalten": "Trifft häufig überstürzte Entscheidungen, um die Anspannung zu beenden, und bemerkt das oft erst danach"}, "gegenpol": {"langfristiges_entwicklungsbild": "Irgendwann könnte eine offene Frage wieder aushaltbar werden, statt bedrohlich.", "glaubwuerdig_naechster_zustand": "Du nimmst für einen Moment den Impuls wahr, sofort entscheiden zu müssen — bevor du ihm folgst."}, "sprachbuendel": [{"inner_code": "Ich darf den Drang zur sofortigen Entscheidung bemerken.", "body_code": "Du nimmst wahr, wie sich die Dringlichkeit in dir anfühlt.", "action_code": "Du bemerkst den Moment, kurz bevor du überstürzt entscheidest."}, {"inner_code": "Es ist in Ordnung, dass der Drang zu entscheiden gerade stark ist.", "body_code": "Du registrierst die Unruhe, ohne sofort zu handeln.", "action_code": "Du nimmst wahr, welche Entscheidung du gerade beschleunigst."}, {"inner_code": "Ich muss den Druck gerade nicht auflösen, um ihn zu bemerken.", "body_code": "Du nimmst wahr, wie sich der Druck vor einer Entscheidung anfühlt.", "action_code": "Du registrierst, wie viel Zeit zwischen Impuls und Entscheidung heute vergeht."}], "mikro_handlungen": ["Beobachte einmal bewusst den Moment, kurz bevor du eine schnelle Entscheidung triffst.", "Halte inne, wenn du den Drang zur sofortigen Antwort bemerkst, ohne ihn sofort zu verändern.", "Frage dich einmal: Muss das jetzt sofort entschieden werden?"], "einladung": "gespraech_sanft"}}}, {"id": "grenzen_nicht_setzen", "name": "Grenzen nicht setzen", "auslöser": ["Sagt zu, bevor geprüft wird, ob Zeit oder Kraft da ist", "Entschuldigt ein Nein noch bevor es ausgesprochen wird", "Merkt Unbehagen erst, wenn die Grenze bereits überschritten ist"], "intensitaeten": {"leicht": {"ist_zustand": {"innerer_gedanke": "Ich kann da schlecht nein sagen.", "koerperreaktion": "Leichtes Unbehagen bei der Vorstellung abzulehnen", "beobachtbares_verhalten": "Sagt meist zu, auch wenn es eng wird"}, "gegenpol": {"langfristiges_entwicklungsbild": "Du setzt Grenzen aus Klarheit, nicht aus Härte — ein Nein fühlt sich nicht mehr riskant an.", "glaubwuerdig_naechster_zustand": "Du beginnst, vor einem Ja kurz zu prüfen, ob es wirklich stimmt."}, "sprachbuendel": [{"inner_code": "Ich darf kurz prüfen, bevor ich zusage.", "body_code": "Eine Reaktion in deinem Bauch bei einer unpassenden Bitte fällt dir eher auf.", "action_code": "Du beginnst, eine Antwort versuchsweise zu verzögern."}, {"inner_code": "Ein Nein darf auch mal unbequem sein.", "body_code": "Eine vorhandene Anspannung bei einer Bitte fällt dir früher auf.", "action_code": "Du sagst versuchsweise einmal 'ich melde mich', statt sofort zuzusagen."}, {"inner_code": "Meine Zeit ist genauso wichtig wie die Bitte eines anderen.", "body_code": "Du beginnst, ein Zeichen deines Körpers bei einem unpassenden Ja wahrzunehmen.", "action_code": "Du lehnst versuchsweise eine kleine Bitte ab, die dir eigentlich zu viel ist."}], "mikro_handlungen": ["Antworte auf eine Bitte heute mit 'ich melde mich', statt sofort zuzusagen.", "Spüre vor einem Ja bewusst nach: Will ich das wirklich?", "Sag heute einmal bewusst nein zu einer kleinen Sache."], "einladung": "reset_direkt"}, "mittel": {"ist_zustand": {"innerer_gedanke": "Wenn ich nein sage, mag man mich nicht mehr.", "koerperreaktion": "Enge im Bauch, wenn eine Absage ansteht", "beobachtbares_verhalten": "Sagt regelmäßig zu, auch wenn es eigentlich zu viel ist"}, "gegenpol": {"langfristiges_entwicklungsbild": "Du setzt Grenzen aus Klarheit, nicht aus Härte — ein Nein fühlt sich nicht mehr riskant an.", "glaubwuerdig_naechster_zustand": "Du beginnst, eine Bitte kurz zu prüfen, bevor du automatisch zusagst."}, "sprachbuendel": [{"inner_code": "Ein Nein darf ich aussprechen, auch wenn es unbequem ist.", "body_code": "Eine vorhandene Enge im Bauch fällt dir früher auf.", "action_code": "Du verzögerst versuchsweise eine Antwort, statt sofort zuzusagen."}, {"inner_code": "Ich muss nicht jede Bitte erfüllen, um gemocht zu werden.", "body_code": "Du beginnst, ein unpassendes Ja früher an deinem Körper wahrzunehmen.", "action_code": "Du sagst versuchsweise einmal 'das passt gerade nicht'."}, {"inner_code": "Meine Grenze ist so wichtig wie die Bitte eines anderen.", "body_code": "Du beginnst, deine Anspannung bewusster wahrzunehmen, wenn du eine Grenze aussprichst.", "action_code": "Du lehnst versuchsweise eine Aufgabe ab, die eigentlich zu viel ist."}], "mikro_handlungen": ["Antworte auf eine Bitte heute mit 'ich melde mich', statt sofort zuzusagen.", "Spüre vor einem Ja bewusst nach: Will ich das wirklich?", "Sag heute einmal bewusst nein zu einer kleinen Sache."], "einladung": "reset_oder_gespraech"}, "stark": {"ist_zustand": {"innerer_gedanke": "Ein Nein würde die Beziehung gefährden.", "koerperreaktion": "Deutliche Anspannung, wenn eine eigene Grenze gebraucht würde, die oft übergangen wird", "beobachtbares_verhalten": "Sagt fast durchgehend zu, auch bei deutlicher eigener Überlastung, und bemerkt die Erschöpfung oft erst im Nachhinein"}, "gegenpol": {"langfristiges_entwicklungsbild": "Irgendwann könnte eine eigene Grenze wieder sicher sein, statt gefährlich.", "glaubwuerdig_naechster_zustand": "Du nimmst für einen Moment den Impuls zur sofortigen Zustimmung wahr, bevor du ihm folgst."}, "sprachbuendel": [{"inner_code": "Ich darf den Impuls zum Ja-Sagen bemerken.", "body_code": "Du nimmst wahr, wie sich die Zustimmung schon anfühlt, bevor du sie ausgesprochen hast.", "action_code": "Du bemerkst den Moment, kurz bevor du automatisch zusagst."}, {"inner_code": "Es ist in Ordnung, dass Zustimmen gerade automatisch passiert.", "body_code": "Du registrierst eine Anspannung, ohne sie sofort aufzulösen.", "action_code": "Du nimmst wahr, wie oft du heute bereits zugesagt hast, ohne zu prüfen."}, {"inner_code": "Ich muss den Impuls gerade nicht stoppen, um ihn zu bemerken.", "body_code": "Du nimmst wahr, wie sich dein Körper anfühlt, kurz bevor du ja sagst.", "action_code": "Du registrierst, an welcher Stelle ein Nein eigentlich näherläge."}], "mikro_handlungen": ["Beobachte heute einmal den Moment, kurz bevor du automatisch zusagst.", "Halte inne, wenn du den Impuls zum Ja-Sagen bemerkst, ohne ihn zu verändern.", "Frage dich einmal: Sage ich gerade zu, weil ich es will, oder weil es automatisch geht?"], "einladung": "gespraech_sanft"}}}, {"id": "gruebeln_und_kontrollieren", "name": "Grübeln und Kontrollieren", "auslöser": ["Geht Situationen im Kopf immer wieder durch, auch wenn sie längst vorbei sind", "Will Abläufe im Voraus durchdenken, um nichts zu übersehen", "Unsicherheit fühlt sich gefährlicher an als Erschöpfung durchs Nachdenken"], "intensitaeten": {"leicht": {"ist_zustand": {"innerer_gedanke": "Ich muss das nochmal genau durchdenken.", "koerperreaktion": "Leichte gedankliche Unruhe abends", "beobachtbares_verhalten": "Denkt Situationen öfter nach als nötig durch"}, "gegenpol": {"langfristiges_entwicklungsbild": "Deine Gedanken dürfen zur Ruhe kommen — Klarheit entsteht auch ohne ständiges Durchdenken.", "glaubwuerdig_naechster_zustand": "Du beginnst zu bemerken, wenn ein Gedanke sich im Kreis dreht."}, "sprachbuendel": [{"inner_code": "Ich darf einen Gedanken auch mal loslassen.", "body_code": "Du nimmst eher wahr, wann dein Kopf abends zur Ruhe kommt.", "action_code": "Du beginnst, einen Gedanken bewusst zu unterbrechen, wenn er sich wiederholt."}, {"inner_code": "Nicht jede Situation muss ich zu Ende durchdenken.", "body_code": "Eine vorhandene gedankliche Unruhe fällt dir an manchen Abenden eher auf.", "action_code": "Du schreibst einen kreisenden Gedanken versuchsweise auf, statt ihn weiterzudenken."}, {"inner_code": "Unsicherheit darf da sein, ohne sofort aufgelöst zu werden.", "body_code": "Du beginnst, deine Reaktion auf offene Fragen bewusster wahrzunehmen.", "action_code": "Du lässt eine offene Frage versuchsweise einmal unbeantwortet stehen."}], "mikro_handlungen": ["Schreibe einen kreisenden Gedanken heute Abend auf, statt ihn weiterzudenken.", "Setze dir für eine Überlegung bewusst ein Zeitlimit von 5 Minuten.", "Lege dir heute bewusst eine offene Frage zur Seite."], "einladung": "reset_direkt"}, "mittel": {"ist_zustand": {"innerer_gedanke": "Wenn ich nicht alles durchdenke, übersehe ich etwas Wichtiges.", "koerperreaktion": "Gedankliche Unruhe, die bis in den Schlaf hineinreicht", "beobachtbares_verhalten": "Geht Situationen wiederholt im Kopf durch, auch wenn sie bereits erledigt sind"}, "gegenpol": {"langfristiges_entwicklungsbild": "Deine Gedanken dürfen zur Ruhe kommen — Klarheit entsteht auch ohne ständiges Durchdenken.", "glaubwuerdig_naechster_zustand": "Du beginnst, einen kreisenden Gedanken früher zu bemerken, statt ihm zu folgen."}, "sprachbuendel": [{"inner_code": "Ich darf einen Gedanken bemerken, ohne ihm zu folgen.", "body_code": "Du nimmst eher wahr, wann dein Kopf zur Ruhe kommt.", "action_code": "Du unterbrichst versuchsweise einen Gedanken, wenn er sich zum zweiten Mal wiederholt."}, {"inner_code": "Vollständige Kontrolle ist nicht die Voraussetzung für Sicherheit.", "body_code": "Eine vorhandene Anspannung im Kopf fällt dir bei einer Unterbrechung eher auf.", "action_code": "Du schreibst einen Gedanken versuchsweise auf, statt ihn im Kopf weiterzudrehen."}, {"inner_code": "Ich darf eine Unsicherheit aushalten, ohne sie sofort aufzulösen.", "body_code": "Du beginnst, deine Reaktion auf offene Fragen bewusster wahrzunehmen.", "action_code": "Du lässt eine Entscheidung versuchsweise über Nacht offen, statt sie sofort zu klären."}], "mikro_handlungen": ["Schreibe einen kreisenden Gedanken heute Abend auf, statt ihn weiterzudenken.", "Setze dir für eine Überlegung bewusst ein Zeitlimit von 5 Minuten.", "Lege dir heute bewusst eine offene Frage zur Seite."], "einladung": "reset_oder_gespraech"}, "stark": {"ist_zustand": {"innerer_gedanke": "Wenn ich aufhöre nachzudenken, verliere ich die Kontrolle.", "koerperreaktion": "Anhaltende gedankliche Anspannung, die sich kaum unterbrechen lässt", "beobachtbares_verhalten": "Durchdenkt Situationen wiederholt, auch wenn sie längst abgeschlossen sind, und bemerkt die Erschöpfung oft erst danach"}, "gegenpol": {"langfristiges_entwicklungsbild": "Irgendwann könnte Nichtwissen wieder aushaltbar werden, statt bedrohlich.", "glaubwuerdig_naechster_zustand": "Du erkennst für einen Moment, dass ein Gedanke erneut dieselbe Schleife beginnt."}, "sprachbuendel": [{"inner_code": "Ich darf bemerken, dass ein Gedanke sich wiederholt, ohne ihn zu stoppen.", "body_code": "Du nimmst wahr, wie sich die gedankliche Anspannung anfühlt.", "action_code": "Du registrierst den Moment, in dem der Gedanke erneut von vorne beginnt."}, {"inner_code": "Es ist in Ordnung, dass die Schleife sich gerade wiederholt.", "body_code": "Du nimmst die Anspannung im Kopf wahr, ohne sie aufzulösen.", "action_code": "Du bemerkst, zum wievielten Mal du diesen Gedanken heute schon gedacht hast."}, {"inner_code": "Ich muss die Schleife gerade nicht durchbrechen, um sie zu bemerken.", "body_code": "Du nimmst wahr, wie sich dein Kopf während des Grübelns anfühlt.", "action_code": "Du registrierst, welche Frage sich hinter dem wiederkehrenden Gedanken verbirgt."}], "mikro_handlungen": ["Beobachte heute einmal den Moment, in dem ein Gedanke erneut von vorne beginnt.", "Halte inne, sobald du merkst, dass sich ein Gedanke wiederholt, ohne ihn zu verändern.", "Frage dich einmal: Ist das ein neuer Gedanke oder derselbe wie vorhin?"], "einladung": "gespraech_sanft"}}}, {"id": "beduerfnisse_zurueckstellen", "name": "Eigene Bedürfnisse zurückstellen", "auslöser": ["Eigene Wünsche werden erst berücksichtigt, wenn alle anderen versorgt sind", "Hunger, Müdigkeit oder Ruhebedürfnis wird häufig übergangen", "Auf die Frage 'was möchtest du eigentlich' gibt es oft keine schnelle Antwort"], "intensitaeten": {"leicht": {"ist_zustand": {"innerer_gedanke": "Das kann ich später noch machen.", "koerperreaktion": "Eigenes Bedürfnis wird bemerkt, aber meist verschoben", "beobachtbares_verhalten": "Kümmert sich zuerst um andere, dann um sich selbst"}, "gegenpol": {"langfristiges_entwicklungsbild": "Deine eigenen Bedürfnisse haben selbstverständlich Platz — nicht erst, wenn alles andere erledigt ist.", "glaubwuerdig_naechster_zustand": "Ein eigenes Bedürfnis fällt dir früher auf."}, "sprachbuendel": [{"inner_code": "Mein Bedürfnis darf genauso zählen wie das der anderen.", "body_code": "Ein eigenes Bedürfnis fällt dir früher auf.", "action_code": "Du beginnst, ein eigenes Bedürfnis versuchsweise sofort zu berücksichtigen."}, {"inner_code": "Ich muss nicht erst fertig sein, um an mich zu denken.", "body_code": "Eine vorhandene Anspannung fällt dir eher auf, wenn ein Bedürfnis übergangen wird.", "action_code": "Du fragst dich versuchsweise zwischendurch: Was brauche ich gerade?"}, {"inner_code": "Für mich zu sorgen ist kein Egoismus.", "body_code": "Du beginnst wahrzunehmen, wie sich ein beachtetes Bedürfnis anfühlt.", "action_code": "Du erfüllst versuchsweise ein kleines eigenes Bedürfnis, bevor du weitermachst."}], "mikro_handlungen": ["Frage dich heute zweimal bewusst: Was brauche ich gerade?", "Erfülle ein kleines eigenes Bedürfnis, bevor du die nächste Aufgabe beginnst.", "Nimm dir heute bewusst Zeit für ein Bedürfnis, sobald du es bemerkst."], "einladung": "reset_direkt"}, "mittel": {"ist_zustand": {"innerer_gedanke": "Die anderen brauchen das gerade mehr als ich.", "koerperreaktion": "Eigenes Bedürfnis wird bemerkt, aber meist übergangen", "beobachtbares_verhalten": "Kümmert sich regelmäßig zuerst um andere, bevor an sich selbst gedacht wird"}, "gegenpol": {"langfristiges_entwicklungsbild": "Deine eigenen Bedürfnisse haben selbstverständlich Platz — nicht erst, wenn alles andere erledigt ist.", "glaubwuerdig_naechster_zustand": "Du beginnst, ein eigenes Bedürfnis wahrzunehmen, bevor es dringend wird."}, "sprachbuendel": [{"inner_code": "Mein Bedürfnis darf ich wahrnehmen, auch wenn andere auch etwas brauchen.", "body_code": "Du bemerkst früher, dass dir gerade etwas fehlt.", "action_code": "Du berücksichtigst versuchsweise ein eigenes Bedürfnis, bevor du dich um andere kümmerst."}, {"inner_code": "Ich muss meine Bedürfnisse nicht rechtfertigen.", "body_code": "Du beginnst, Erschöpfung früher wahrzunehmen, wenn du auf dich achtest.", "action_code": "Du fragst versuchsweise zwischendurch nach, was du selbst gerade brauchst."}, {"inner_code": "Für mich zu sorgen macht mich nicht weniger verlässlich für andere.", "body_code": "Du beginnst wahrzunehmen, wie sich ein erfülltes Bedürfnis anfühlt.", "action_code": "Du erfüllst versuchsweise ein kleines eigenes Bedürfnis, auch wenn noch etwas für andere ansteht."}], "mikro_handlungen": ["Frage dich heute zweimal bewusst: Was brauche ich gerade?", "Erfülle ein kleines eigenes Bedürfnis, bevor du die nächste Aufgabe beginnst.", "Nimm dir heute bewusst Zeit für ein Bedürfnis, sobald du es bemerkst."], "einladung": "reset_oder_gespraech"}, "stark": {"ist_zustand": {"innerer_gedanke": "Meine Bedürfnisse sind gerade nicht wichtig.", "koerperreaktion": "Eigene Bedürfnisse werden über längere Zeit übergangen, bis sie kaum noch spürbar sind", "beobachtbares_verhalten": "Kümmert sich fast durchgehend um andere und bemerkt eigene Erschöpfung oft erst, wenn es kaum noch anders geht"}, "gegenpol": {"langfristiges_entwicklungsbild": "Irgendwann könnte dein eigenes Bedürfnis wieder genauso selbstverständlich sein wie das der anderen.", "glaubwuerdig_naechster_zustand": "Du bemerkst für einen Moment ein eigenes Bedürfnis, bevor du es erneut verschiebst."}, "sprachbuendel": [{"inner_code": "Ich darf ein Bedürfnis bemerken, auch wenn ich es gleich wieder zurückstelle.", "body_code": "Du nimmst wahr, dass sich etwas in dir meldet.", "action_code": "Du bemerkst den Moment, in dem du ein Bedürfnis erneut verschiebst."}, {"inner_code": "Es ist in Ordnung, dass ein Bedürfnis gerade zurücktritt.", "body_code": "Du registrierst eine Regung, ohne ihr sofort nachzugehen.", "action_code": "Du nimmst wahr, wie oft du heute ein Bedürfnis bereits verschoben hast."}, {"inner_code": "Ich muss ein Bedürfnis gerade nicht erfüllen, um es zu bemerken.", "body_code": "Du nimmst wahr, wie sich das Übergehen eines Bedürfnisses anfühlt.", "action_code": "Du registrierst, welches Bedürfnis gerade am längsten wartet."}], "mikro_handlungen": ["Beobachte heute einmal den Moment, in dem du ein eigenes Bedürfnis verschiebst.", "Halte inne, sobald du ein Bedürfnis bemerkst, ohne es sofort zu erfüllen oder zu verwerfen.", "Frage dich einmal: Was brauche ich gerade, das ich gerade übergehe?"], "einladung": "gespraech_sanft"}}}, {"id": "handeln_aufschieben", "name": "Handeln aufschieben", "auslöser": ["Wichtige Aufgaben werden mit kleineren Dingen aufgeschoben", "Der Beginn einer Sache fühlt sich schwerer an als die Sache selbst", "Aufschub wird abends zum zusätzlich belastenden Thema"], "intensitaeten": {"leicht": {"ist_zustand": {"innerer_gedanke": "Ich fang gleich damit an.", "koerperreaktion": "Leichte Unruhe bei einer aufgeschobenen Aufgabe", "beobachtbares_verhalten": "Beginnt eine wichtige Aufgabe meist etwas später als geplant"}, "gegenpol": {"langfristiges_entwicklungsbild": "Du gehst Dinge an, wenn sie dran sind — nicht erst, wenn der Druck zu groß wird.", "glaubwuerdig_naechster_zustand": "Du beginnst, eine aufgeschobene Aufgabe früher wieder aufzugreifen."}, "sprachbuendel": [{"inner_code": "Ich darf einfach anfangen, auch unvorbereitet.", "body_code": "Eine vorhandene Unruhe vor dem Start fällt dir eher auf.", "action_code": "Du beginnst, eine Aufgabe mit einem kleinen ersten Schritt zu starten."}, {"inner_code": "Der Anfang muss nicht perfekt sein.", "body_code": "Du nimmst wahr, wie sich ein erster kleiner Schritt anfühlt.", "action_code": "Du setzt dir versuchsweise ein festes Zeitfenster für den Beginn."}, {"inner_code": "Aufschieben bedeutet nicht, dass ich es nicht schaffe.", "body_code": "Du beginnst, die Anspannung vor dem ersten Schritt bewusster wahrzunehmen.", "action_code": "Du beginnst eine aufgeschobene Aufgabe versuchsweise mit nur fünf Minuten."}], "mikro_handlungen": ["Beginne eine aufgeschobene Aufgabe heute mit nur fünf Minuten.", "Lege dir ein festes Zeitfenster für den Anfang fest.", "Schreibe den ersten, kleinsten Schritt einer Aufgabe auf."], "einladung": "reset_direkt"}, "mittel": {"ist_zustand": {"innerer_gedanke": "Ich mach das, wenn ich bereit bin.", "koerperreaktion": "Unruhe, die mit der aufgeschobenen Aufgabe wächst", "beobachtbares_verhalten": "Schiebt wichtige Aufgaben regelmäßig zugunsten kleinerer Dinge auf"}, "gegenpol": {"langfristiges_entwicklungsbild": "Du gehst Dinge an, wenn sie dran sind — nicht erst, wenn der Druck zu groß wird.", "glaubwuerdig_naechster_zustand": "Du beginnst, eine aufgeschobene Aufgabe mit einem kleinen Schritt anzugehen, auch ohne dich bereit zu fühlen."}, "sprachbuendel": [{"inner_code": "Ich muss mich nicht bereit fühlen, um zu beginnen.", "body_code": "Eine vorhandene Unruhe vor dem ersten Schritt fällt dir eher auf.", "action_code": "Du beginnst versuchsweise mit dem kleinsten Teil einer Aufgabe."}, {"inner_code": "Ein unperfekter Anfang zählt auch.", "body_code": "Der Unterschied zwischen Beginnen und Aufschieben fällt dir körperlich eher auf.", "action_code": "Du setzt dir versuchsweise ein festes Zeitfenster für den Anfang."}, {"inner_code": "Aufschieben ist kein Zeichen von Versagen.", "body_code": "Du beginnst, die Anspannung vor dem Beginnen bewusster wahrzunehmen.", "action_code": "Du beginnst eine aufgeschobene Aufgabe versuchsweise mit nur fünf Minuten."}], "mikro_handlungen": ["Beginne eine aufgeschobene Aufgabe heute mit nur fünf Minuten.", "Lege dir ein festes Zeitfenster für den Anfang fest.", "Schreibe den ersten, kleinsten Schritt einer Aufgabe auf."], "einladung": "reset_oder_gespraech"}, "stark": {"ist_zustand": {"innerer_gedanke": "Wenn ich anfange, merke ich vielleicht, dass ich es nicht schaffe.", "koerperreaktion": "Anhaltende Anspannung rund um eine aufgeschobene Aufgabe, die kaum noch losgelassen werden kann", "beobachtbares_verhalten": "Schiebt eine wichtige Aufgabe über längere Zeit auf und bemerkt die zusätzliche Belastung oft erst abends"}, "gegenpol": {"langfristiges_entwicklungsbild": "Irgendwann könnte ein Anfang wieder leicht genug sein, um ihn zu wagen.", "glaubwuerdig_naechster_zustand": "Du nimmst für einen Moment wahr, dass du eine Ersatzaufgabe wählst, statt zu beginnen."}, "sprachbuendel": [{"inner_code": "Ich darf bemerken, dass ich gerade ausweiche, ohne mich sofort zu ändern.", "body_code": "Du nimmst wahr, wie sich der Gedanke an die Aufgabe anfühlt.", "action_code": "Du registrierst den Moment, in dem du zu einer Ersatzaufgabe wechselst."}, {"inner_code": "Es ist in Ordnung, dass Ausweichen gerade leichter fällt.", "body_code": "Du nimmst die Unruhe wahr, ohne sie aufzulösen.", "action_code": "Du bemerkst, wie viele Ersatzaufgaben du heute bereits gewählt hast."}, {"inner_code": "Ich muss die Aufgabe gerade nicht beginnen, um das Ausweichen zu bemerken.", "body_code": "Du nimmst wahr, wie sich der Gedanke an die anstehende Aufgabe anfühlt.", "action_code": "Du registrierst, welche Aufgabe gerade am längsten wartet."}], "mikro_handlungen": ["Beobachte heute einmal den Moment, in dem du eine Ersatzaufgabe wählst.", "Halte inne, sobald du merkst, dass du ausweichst, ohne sofort etwas zu verändern.", "Frage dich einmal: Was mache ich gerade, statt das Eigentliche zu beginnen?"], "einladung": "gespraech_sanft"}}}, {"id": "sich_im_aussen_verlieren", "name": "Sich im Außen verlieren", "auslöser": ["Die eigene Meinung passt sich häufig der Umgebung an", "Die Stimmung anderer bestimmt oft die eigene", "Eigene Wünsche sind schwer zu benennen, wenn niemand sonst dabei ist"], "intensitaeten": {"leicht": {"ist_zustand": {"innerer_gedanke": "Was denken die anderen wohl?", "koerperreaktion": "Leichte Unsicherheit über die eigene Meinung in der Gruppe", "beobachtbares_verhalten": "Richtet sich beim Entscheiden öfter nach anderen als nach sich selbst"}, "gegenpol": {"langfristiges_entwicklungsbild": "Du bleibst bei dir, auch im Kontakt mit anderen — deine eigene Stimme bleibt hörbar.", "glaubwuerdig_naechster_zustand": "Du beginnst, deine eigene Meinung früher wahrzunehmen, bevor du dich anpasst."}, "sprachbuendel": [{"inner_code": "Meine Meinung darf auch mal anders sein.", "body_code": "Eine Anpassung an andere fällt dir früher auf.", "action_code": "Du sprichst versuchsweise eine eigene Meinung aus, bevor du dich anpasst."}, {"inner_code": "Ich darf spüren, was ich will, auch wenn andere dabei sind.", "body_code": "Du bemerkst früher, wenn deine Aufmerksamkeit vollständig bei anderen liegt.", "action_code": "Du fragst dich versuchsweise kurz: Was denke eigentlich ich dazu?"}, {"inner_code": "Ich bleibe ich, auch in der Gruppe.", "body_code": "Du nimmst wahr, wie es sich anfühlt, bei dir zu bleiben.", "action_code": "Du triffst versuchsweise eine kleine Entscheidung allein, ohne nachzufragen."}], "mikro_handlungen": ["Frage dich heute zweimal bewusst: Was denke eigentlich ich dazu?", "Sprich eine eigene Meinung aus, bevor du dich der Gruppe anpasst.", "Triff heute eine kleine Entscheidung allein, ohne nachzufragen."], "einladung": "reset_direkt"}, "mittel": {"ist_zustand": {"innerer_gedanke": "Ich pass mich lieber an, das ist einfacher.", "koerperreaktion": "Eigene Meinung wird bemerkt, aber häufig zurückgehalten", "beobachtbares_verhalten": "Richtet sich regelmäßig nach der Stimmung oder Meinung anderer"}, "gegenpol": {"langfristiges_entwicklungsbild": "Du bleibst bei dir, auch im Kontakt mit anderen — deine eigene Stimme bleibt hörbar.", "glaubwuerdig_naechster_zustand": "Du beginnst, deine eigene Meinung wahrzunehmen, bevor du dich automatisch anpasst."}, "sprachbuendel": [{"inner_code": "Ich darf meine Meinung wahrnehmen, bevor ich mich anpasse.", "body_code": "Eine automatische Anpassung fällt dir früher auf.", "action_code": "Du sprichst versuchsweise eine eigene Meinung aus, auch wenn sie von der Gruppe abweicht."}, {"inner_code": "Zustimmung von außen macht meine Meinung nicht richtiger oder falscher.", "body_code": "Du bemerkst früher, wenn deine Aufmerksamkeit stark nach außen gerichtet ist.", "action_code": "Du fragst dich versuchsweise vor einer Entscheidung: Ist das meine Meinung oder die der anderen?"}, {"inner_code": "Ich darf anders sein als die Gruppe, ohne mich zu erklären.", "body_code": "Du nimmst wahr, wie es sich anfühlt, bei dir zu bleiben.", "action_code": "Du triffst versuchsweise eine Entscheidung, ohne vorher andere zu fragen."}], "mikro_handlungen": ["Frage dich heute zweimal bewusst: Was denke eigentlich ich dazu?", "Sprich eine eigene Meinung aus, bevor du dich der Gruppe anpasst.", "Triff heute eine kleine Entscheidung allein, ohne nachzufragen."], "einladung": "reset_oder_gespraech"}, "stark": {"ist_zustand": {"innerer_gedanke": "Ich weiß gar nicht mehr, was ich eigentlich will.", "koerperreaktion": "Die eigene Wahrnehmung ist über längere Zeit hinter der Anpassung an andere zurückgetreten", "beobachtbares_verhalten": "Richtet sich fast durchgehend nach der Umgebung und bemerkt die eigene Erschöpfung oft erst im Rückzug"}, "gegenpol": {"langfristiges_entwicklungsbild": "Irgendwann könnte deine eigene Stimme wieder leichter zu finden sein.", "glaubwuerdig_naechster_zustand": "Du nimmst für einen Moment deine eigene erste Reaktion wahr, bevor du die Meinung anderer übernimmst."}, "sprachbuendel": [{"inner_code": "Ich darf meine erste Reaktion bemerken, auch wenn ich sie gleich wieder anpasse.", "body_code": "Du nimmst wahr, was in dir entsteht, bevor du reagierst.", "action_code": "Du registrierst den Moment, in dem du deine Meinung anpasst."}, {"inner_code": "Es ist in Ordnung, dass die eigene Reaktion gerade schnell verschwindet.", "body_code": "Du nimmst eine Regung wahr, bevor sie von außen überschrieben wird.", "action_code": "Du bemerkst, wie oft du heute deine erste Reaktion bereits angepasst hast."}, {"inner_code": "Ich muss meine erste Reaktion gerade nicht behaupten, um sie zu bemerken.", "body_code": "Du nimmst wahr, was sich zeigt, bevor du dich anpasst.", "action_code": "Du registrierst, welche Meinung gerade deine eigene war, bevor sie sich änderte."}], "mikro_handlungen": ["Beobachte heute einmal deine erste Reaktion, bevor du sie anpasst.", "Halte inne, sobald du merkst, dass du eine fremde Meinung übernimmst, ohne es sofort zu ändern.", "Frage dich einmal: Was war meine erste Reaktion, bevor ich sie angepasst habe?"], "einladung": "gespraech_sanft"}}}], "abschluesse": {"reset_direkt": "Jeder kleine Schritt kann eine neue Erfahrung ermöglichen. Wenn du diesen Weg nicht allein gehen möchtest, begleitet dich das RESET-System Schritt für Schritt vom Überlebensmodus in den Gestaltungsmodus.", "reset_oder_gespraech": "Jeder kleine Schritt kann eine neue Erfahrung ermöglichen. Wenn du diesen Weg nicht allein gehen möchtest, begleitet dich das RESET-System Schritt für Schritt vom Überlebensmodus in den Gestaltungsmodus. Wenn dir ein persönliches Gespräch gerade lieber wäre, ist auch das Klarheitsgespräch jederzeit ein guter erster Schritt.", "gespraech_sanft": "Jeder kleine Schritt kann eine neue Erfahrung ermöglichen. Dieser Weg muss nicht allein gegangen werden — im persönlichen Klarheitsgespräch ist auch Raum für das, was du gerade wahrgenommen hast."}, "widerspruchshinweis": "Deine Angaben zeigen zwei unterschiedliche Signale: Der Check wirkt in diesem Bereich eher ausgeglichen, während deine eigenen Worte auf eine stärkere Belastung hindeuten.", "kein_muster_fallback": {"teil_1_gestaltungsmodus": "Aus den aktuellen Angaben lässt sich noch kein eindeutiges Muster ableiten. Das ist kein Fehler, sondern ein möglicher Ausgangspunkt: Der Gestaltungsmodus zeigt sich unterschiedlich, je nachdem, wo du gerade stehst — Klarheit darüber kann sich mit mehr Angaben entwickeln.", "teil_2_inner_code": "Ich muss nicht schon jetzt genau wissen, wo ich stehe, um weiterzugehen.", "teil_4_action_code": "Du kannst jederzeit weitere Angaben ergänzen oder es in einem Gespräch vertiefen.", "mikro_handlungen": ["Nimm dir einen Moment, um in eigenen Worten zu beschreiben, was dich gerade beschäftigt.", "Wiederhole den RESET-Check, wenn sich seit der letzten Einschätzung etwas verändert hat.", "Wenn du magst, sprich in einem Klarheitsgespräch über das, was gerade unklar ist."], "einladung": "reset_oder_gespraech"}, "konfiguration": {"status": "provisorisch — Startwerte vor Kalibrierung durch Praxistest, siehe Engine-Spezifikation Abschnitt 4/5", "musterscore_gewichtung": {"gewicht_a_uebereinstimmungsgrad": 0.5, "gewicht_b_reset_check_abweichung": 0.5}, "intensitaets_schwellenwerte": {"t1_leicht_mittel": 0.4, "t2_mittel_stark": 0.7}}};
+
+/* ============================================================
+   SCHICHT 2 — ENGINE
+   Reine Logik. Kennt keine DOM-Elemente, nur Daten rein/raus.
+   ============================================================ */
+const ENGINE = (function () {
+
+  const FEHLER = {
+    E01: "Eingabedaten unvollständig",
+    E02: "Eingabewerte außerhalb des gültigen Bereichs",
+    E03: "Kein erkennbares Muster",
+    E05: "Kritischer Inhalt erkannt",
+    E07: "Echo nicht verwendbar",
+    E08: "Datenbasis-Validierungsfehler",
+    E09: "Ausgabeprüfung fehlgeschlagen"
+  };
+
+  const MUSTER_CODE_MAP = {
+    "dauerfunktionieren": "action_code_prozent",
+    "koerpersignale_ignorieren": "body_code_prozent",
+    "entscheidungen_aus_druck": "action_code_prozent",
+    "grenzen_nicht_setzen": "action_code_prozent",
+    "gruebeln_und_kontrollieren": "inner_code_prozent",
+    "beduerfnisse_zurueckstellen": "body_code_prozent",
+    "handeln_aufschieben": "action_code_prozent",
+    "sich_im_aussen_verlieren": "inner_code_prozent"
+  };
+
+  // vereinfachte Heuristik für den Prototyp — vor Praxiseinsatz durch echte
+  // Klassifikation zu ersetzen (siehe Engine-Spezifikation, offene Punkte)
+  const KRITISCH_KEYWORDS = [
+    "nicht mehr leben", "umbringen", "suizid", "selbstverletzung", "ritzen",
+    "keinen sinn mehr", "schluss machen mit allem", "verletze mich"
+  ];
+  const KOERPER_SIGNAL_WORTE = [
+    "kopfschmerzen", "schmerzen", "schwindel", "brustschmerz", "atemnot",
+    "übelkeit", "herzrasen", "taubheit"
+  ];
+  const DAUER_WORTE = [
+    "seit wochen", "seit tagen", "seit monaten", "andauernd", "ständig",
+    "wird schlimmer", "immer schlimmer", "weiß nicht mehr, was normal ist",
+    "keine ahnung mehr, was normal ist"
+  ];
+  const HAEUFIGKEITS_WORTE = ["immer", "ständig", "jedes mal", "nie", "dauernd", "andauernd"];
+
+  function fnv1a(str) {
+    let hash = 0x811c9dc5;
+    for (let i = 0; i < str.length; i++) {
+      hash ^= str.charCodeAt(i);
+      hash = Math.imul(hash, 0x01000193);
+    }
+    return hash >>> 0;
+  }
+
+  function enthaeltEines(text, liste) {
+    const t = text.toLowerCase();
+    return liste.some(w => t.includes(w));
+  }
+
+  // ---------- Abschnitt 2: Normalisierung und Prüfung ----------
+  function normalisiereUndPruefe(input) {
+    const fehler = [];
+    if (!input.reset_check ||
+        typeof input.reset_check.inner_code_prozent !== "number" ||
+        typeof input.reset_check.body_code_prozent !== "number" ||
+        typeof input.reset_check.action_code_prozent !== "number") {
+      fehler.push("E01");
+      return { fehler };
+    }
+    const rc = input.reset_check;
+    for (const k of ["inner_code_prozent", "body_code_prozent", "action_code_prozent"]) {
+      if (rc[k] < 0 || rc[k] > 100 || isNaN(rc[k])) fehler.push("E02");
+    }
+    if (fehler.length) return { fehler };
+
+    let freitext = (input.freitext || "").normalize("NFC").trim();
+    if (freitext.length === 0) freitext = null;
+
+    const erkannteThemen = (input.erkannte_themen || []).filter(t =>
+      t && DATENBASIS.muster.some(m => m.id === t.muster_id)
+    );
+
+    const sessionReferenz = input.session_referenz && input.session_referenz.length > 0
+      ? input.session_referenz
+      : ("anon-" + fnv1a(String(Math.random())).toString(16));
+
+    return {
+      fehler: [],
+      input: {
+        reset_check: rc,
+        erkannte_themen: erkannteThemen,
+        freitext,
+        session_referenz: sessionReferenz
+      }
+    };
+  }
+
+  // ---------- Abschnitt 3: Sicherheitsprüfung ----------
+  function pruefeSicherheit(freitext) {
+    if (!freitext) return "keins";
+    if (enthaeltEines(freitext, KRITISCH_KEYWORDS)) return "kritischer_inhalt";
+    const hatSignalwort = enthaeltEines(freitext, KOERPER_SIGNAL_WORTE);
+    const hatDauerwort = enthaeltEines(freitext, DAUER_WORTE);
+    if (hatSignalwort && hatDauerwort) return "koerperlich_kritisch";
+    return "keins";
+  }
+
+  // ---------- Abschnitt 4: Mustererkennung und Bewertung ----------
+  function erkenneMuster(erkannteThemen, resetCheck) {
+    const cfg = DATENBASIS.konfiguration.musterscore_gewichtung;
+    return erkannteThemen.map(t => {
+      const codeFeld = MUSTER_CODE_MAP[t.muster_id];
+      const prozent = resetCheck[codeFeld];
+      const abweichung = Math.abs(prozent - 50) / 50; // 0 = ausgeglichen, 1 = maximal abweichend
+      const score = cfg.gewicht_a_uebereinstimmungsgrad * t.uebereinstimmungsgrad
+                  + cfg.gewicht_b_reset_check_abweichung * abweichung;
+      return { muster_id: t.muster_id, score, abweichung, uebereinstimmungsgrad: t.uebereinstimmungsgrad };
+    }).sort((a, b) => b.score - a.score);
+  }
+
+  // ---------- Abschnitt 5: Intensität ----------
+  function bestimmeIntensitaet(eintrag, freitext) {
+    const thresholds = DATENBASIS.konfiguration.intensitaets_schwellenwerte;
+    const haeufigkeit = freitext ? (HAEUFIGKEITS_WORTE.filter(w => freitext.toLowerCase().includes(w)).length / HAEUFIGKEITS_WORTE.length) : 0;
+    const score = 0.5 * eintrag.abweichung + 0.5 * haeufigkeit;
+    if (score < thresholds.t1_leicht_mittel) return { intensitaet: "leicht", score };
+    if (score < thresholds.t2_mittel_stark) return { intensitaet: "mittel", score };
+    return { intensitaet: "stark", score };
+  }
+
+  // ---------- Abschnitt 6: Widerspruch ----------
+  function pruefeWiderspruch(eintrag, freitext) {
+    if (!freitext) return false;
+    const haeufigTreffer = HAEUFIGKEITS_WORTE.filter(w => freitext.toLowerCase().includes(w)).length;
+    return eintrag.abweichung < 0.15 && haeufigTreffer >= 2;
+  }
+
+  // ---------- Abschnitt 7: Priorisierung ----------
+  function priorisiere(musterliste) {
+    if (musterliste.length === 0) return { leit: null, sekundaer: null, dritt: null };
+    // Tie-Break: bei Score-Gleichstand gewinnt die höhere Abweichung, dann alphabetisch
+    const sortiert = [...musterliste].sort((a, b) => {
+      if (Math.abs(a.score - b.score) > 1e-9) return b.score - a.score;
+      if (Math.abs(a.abweichung - b.abweichung) > 1e-9) return b.abweichung - a.abweichung;
+      return a.muster_id.localeCompare(b.muster_id);
+    });
+    return {
+      leit: sortiert[0] || null,
+      sekundaer: sortiert[1] || null,
+      dritt: sortiert[2] || null
+    };
+  }
+
+  // ---------- Abschnitt 8: Deterministische Bündel-Auswahl ----------
+  function waehleBundle(sessionReferenz, musterId, intensitaet) {
+    const idx = fnv1a(sessionReferenz + "|" + musterId + "|" + intensitaet) % 3;
+    return DATENBASIS.muster.find(m => m.id === musterId).intensitaeten[intensitaet].sprachbuendel[idx];
+  }
+
+  // ---------- Abschnitt 9: Echo ----------
+  function verarbeiteEcho(freitext) {
+    if (!freitext) return { verwendet: false };
+    let kern = freitext.split(/[.!?]/)[0].trim();
+    const woerter = kern.split(/\s+/).filter(w => w.length > 0);
+    if (woerter.length < 3) return { verwendet: false };
+
+    // Schritt 2: sensible Bestandteile grob entfernen (vereinfachte Heuristik)
+    const sensibleMuster = [/seit (wochen|tagen|monaten)[^.,;]*/gi, /kopfschmerzen/gi, /schmerzen/gi];
+    let bereinigt = kern;
+    sensibleMuster.forEach(re => { bereinigt = bereinigt.replace(re, "").trim(); });
+    const bereinigteWoerter = bereinigt.split(/\s+/).filter(w => w.length > 0);
+    if (bereinigteWoerter.length < 3) return { verwendet: false };
+
+    // Schritt 3: einfache Ich->Du Spiegelung (Platzhalter-Heuristik)
+    let spiegelung = bereinigt
+      .replace(/\bIch\b/g, "Du")
+      .replace(/\bich\b/g, "du")
+      .replace(/\bmein(e|en|em|er)?\b/gi, "dein$1")
+      .replace(/\bmir\b/gi, "dir")
+      .replace(/\bmich\b/gi, "dich");
+
+    if (bereinigteWoerter.length < 3) return { verwendet: false };
+
+    return {
+      verwendet: true,
+      text: "Du hast beschrieben: " + spiegelung.charAt(0).toUpperCase() + spiegelung.slice(1) + "."
+    };
+  }
+
+  // ---------- Abschnitt 10/11: Assemblierung + Stil-Nachkontrolle ----------
+  function assembliereTeile(leit, sekundaer, dritt, echo, widerspruch, intensitaet, safetyFlag) {
+    const m = DATENBASIS.muster.find(x => x.id === leit.muster_id);
+    const block = m.intensitaeten[intensitaet];
+    const bundle = waehleBundle(leit.session_referenz, leit.muster_id, intensitaet);
+
+    let teil1 = "";
+    if (widerspruch) teil1 += DATENBASIS.widerspruchshinweis + " ";
+    if (echo && echo.verwendet) teil1 += echo.text + " ";
+    teil1 += DATENBASIS.meta.assemblierungsregeln.teil1_uebergang.match(/„([^“]+)“|'([^']+)'/) ?
+      "" : ""; // Übergangsformulierung wird als feste Phrase unten direkt verwendet
+    teil1 += "Darin liegt ein möglicher Ausgangspunkt: " + block.gegenpol.langfristiges_entwicklungsbild + " " + block.gegenpol.glaubwuerdig_naechster_zustand;
+
+    let teil2 = bundle.inner_code;
+    let teil3 = bundle.body_code;
+    let teil4 = bundle.action_code;
+
+    // Sekundärmuster als eingewobener Halbsatz (vereinfachte, aber deterministische Einwebung in Teil 2)
+    if (sekundaer) {
+      const mSek = DATENBASIS.muster.find(x => x.id === sekundaer.muster_id);
+      const bundleSek = waehleBundle(leit.session_referenz, sekundaer.muster_id, intensitaet in mSek.intensitaeten ? intensitaet : "mittel");
+      teil2 = teil2.replace(/\.$/, "") + " — besonders dann, wenn " + bundleSek.inner_code.charAt(0).toLowerCase() + bundleSek.inner_code.slice(1).replace(/\.$/, "") + ".";
+    }
+
+    let mikro = [...block.mikro_handlungen];
+    if (dritt) {
+      const mDritt = DATENBASIS.muster.find(x => x.id === dritt.muster_id);
+      const blockDritt = mDritt.intensitaeten[intensitaet in mDritt.intensitaeten ? intensitaet : "mittel"];
+      mikro[2] = blockDritt.mikro_handlungen[0];
+    }
+
+    return { teil1, teil2, teil3, teil4, mikro };
+  }
+
+  // ---------- Abschnitt 12: Medizinischer Fallback ----------
+  function wendeMedizinischenFallbackAn(teile) {
+    const fb = DATENBASIS.sicherheit.fallback_koerperliche_beschwerden;
+    return {
+      ...teile,
+      teil3: fb.text,
+      mikro: [...fb.sichere_mikro_handlungen]
+    };
+  }
+
+  // ---------- Abschnitt 13: Einladung ----------
+  function leiteEinladungAb(intensitaet, safetyFlag) {
+    if (safetyFlag === "koerperlich_kritisch") return "gespraech_sanft";
+    if (intensitaet === "leicht") return "reset_direkt";
+    if (intensitaet === "mittel") return "reset_oder_gespraech";
+    return "gespraech_sanft"; // stark, unklar
+  }
+
+  // ---------- Abschnitt 14: Ausgabeprüfung ----------
+  const VERBOTENE_BEGRIFFE = ["Krankheitszeichen", "Symptome verschwinden", "Der Körper heilt", "Nervensystem reguliert sich"];
+  function pruefeAusgabe(ausgabe) {
+    const alleTexte = [ausgabe.teil_1_gestaltungsmodus, ausgabe.teil_2_inner_code, ausgabe.teil_3_body_code,
+                        ausgabe.teil_4_action_code, ...ausgabe.teil_5_mikro_handlungen, ausgabe.teil_6_abschluss].join(" ");
+    if (!ausgabe.teil_1_gestaltungsmodus || !ausgabe.teil_2_inner_code || !ausgabe.teil_3_body_code ||
+        !ausgabe.teil_4_action_code || ausgabe.teil_5_mikro_handlungen.length !== 3 || !ausgabe.teil_6_abschluss) {
+      return false;
+    }
+    if (VERBOTENE_BEGRIFFE.some(b => alleTexte.includes(b))) return false;
+    return true;
+  }
+
+  // ---------- Hauptfunktion ----------
+  function generiere(rohInput) {
+    if (!DATENBASIS || !DATENBASIS.muster || DATENBASIS.muster.length !== 8) {
+      return { status: "abgebrochen", fehlercode: "E08", fehlerText: FEHLER.E08 };
+    }
+
+    const norm = normalisiereUndPruefe(rohInput);
+    if (norm.fehler.length) {
+      return { status: "abgebrochen", fehlercode: norm.fehler[0], fehlerText: FEHLER[norm.fehler[0]] };
+    }
+    const input = norm.input;
+
+    const safetyFlag = pruefeSicherheit(input.freitext);
+    if (safetyFlag === "kritischer_inhalt") {
+      return {
+        status: "abgebrochen",
+        fehlercode: "E05",
+        fehlerText: FEHLER.E05,
+        safety_flag: safetyFlag
+      };
+    }
+
+    let musterliste = erkenneMuster(input.erkannte_themen, input.reset_check);
+    let keinMusterFallback = false;
+    if (musterliste.length === 0) {
+      if (!input.freitext) {
+        keinMusterFallback = true;
+      } else {
+        // ohne KI-Auswertungs-Themen kann der Prototyp kein Muster ableiten —
+        // fällt technisch auf denselben neutralen Fallback zurück (E03)
+        keinMusterFallback = true;
+      }
+    }
+
+    if (keinMusterFallback) {
+      const fb = DATENBASIS.kein_muster_fallback;
+      const ausgabe = {
+        teil_1_gestaltungsmodus: fb.teil_1_gestaltungsmodus,
+        teil_2_inner_code: fb.teil_2_inner_code,
+        teil_3_body_code: "—",
+        teil_4_action_code: fb.teil_4_action_code,
+        teil_5_mikro_handlungen: fb.mikro_handlungen,
+        teil_6_abschluss: DATENBASIS.abschluesse[fb.einladung]
+      };
+      return {
+        status: "ok",
+        fehlercode: "E03",
+        fehlerText: FEHLER.E03,
+        safety_flag: safetyFlag,
+        intensitaet: null,
+        einladung: fb.einladung,
+        leitmuster_id: null,
+        sekundaermuster_id: null,
+        drittmuster_id: null,
+        echo_verwendet: false,
+        ausgabe
+      };
+    }
+
+    musterliste.forEach(e => { e.session_referenz = input.session_referenz; });
+    const { leit, sekundaer, dritt } = priorisiere(musterliste);
+    leit.session_referenz = input.session_referenz;
+
+    const intensRes = bestimmeIntensitaet(leit, input.freitext);
+    let intensitaet = intensRes.intensitaet;
+    const widerspruch = pruefeWiderspruch(leit, input.freitext);
+    if (widerspruch) intensitaet = "unklar";
+
+    const intensitaetFuerDaten = intensitaet === "unklar" ? "stark" : intensitaet;
+
+    const echo = verarbeiteEcho(input.freitext);
+
+    let teile = assembliereTeile(leit, sekundaer, dritt, echo, widerspruch, intensitaetFuerDaten, safetyFlag);
+
+    if (safetyFlag === "koerperlich_kritisch") {
+      teile = wendeMedizinischenFallbackAn(teile);
+    }
+
+    const einladung = leiteEinladungAb(intensitaet, safetyFlag);
+
+    const ausgabe = {
+      teil_1_gestaltungsmodus: teile.teil1,
+      teil_2_inner_code: teile.teil2,
+      teil_3_body_code: teile.teil3,
+      teil_4_action_code: teile.teil4,
+      teil_5_mikro_handlungen: teile.mikro,
+      teil_6_abschluss: DATENBASIS.abschluesse[einladung]
+    };
+
+    if (!pruefeAusgabe(ausgabe)) {
+      return { status: "abgebrochen", fehlercode: "E09", fehlerText: FEHLER.E09 };
+    }
+
+    return {
+      status: "ok",
+      fehlercode: (echo.verwendet === false && input.freitext) ? "E07" : null,
+      fehlerText: null,
+      safety_flag: safetyFlag,
+      intensitaet: intensitaet,
+      einladung: einladung,
+      leitmuster_id: leit.muster_id,
+      sekundaermuster_id: sekundaer ? sekundaer.muster_id : null,
+      drittmuster_id: dritt ? dritt.muster_id : null,
+      echo_verwendet: echo.verwendet,
+      widerspruch: widerspruch,
+      debug_scores: musterliste,
+      ausgabe
+    };
+  }
+
+  return { generiere, FEHLER, fnv1a };
+})();
+
+
+/* ============================================================
+   SCHICHT 3 — UI
+   Liest Formulareingaben, ruft ENGINE.generiere() auf, rendert Ergebnis.
+   Enthält selbst keine inhaltlichen Textbausteine.
+   ============================================================ */
+const MUSTER_OPTIONEN = DATENBASIS.muster.map(m => ({ id: m.id, name: m.name }));
+let musterRowCount = 0;
+
+function neueMusterZeile() {
+  if (musterRowCount >= 3) return;
+  musterRowCount++;
+  const container = document.getElementById("muster-liste");
+  const row = document.createElement("div");
+  row.className = "muster-row";
+  const options = MUSTER_OPTIONEN.map(m => `<option value="${m.id}">${m.name}</option>`).join("");
+  row.innerHTML = `
+    <select class="muster-id">${options}</select>
+    <input type="number" class="muster-score" min="0" max="1" step="0.05" value="0.7" placeholder="0.0–1.0">
+    <button type="button" class="remove-muster" title="Entfernen">×</button>
+  `;
+  row.querySelector(".remove-muster").addEventListener("click", () => {
+    row.remove();
+    musterRowCount--;
+    document.getElementById("btn-add-muster").disabled = false;
+  });
+  container.appendChild(row);
+  if (musterRowCount >= 3) document.getElementById("btn-add-muster").disabled = true;
+}
+
+function leseMusterEingaben() {
+  return Array.from(document.querySelectorAll(".muster-row")).map(row => ({
+    muster_id: row.querySelector(".muster-id").value,
+    uebereinstimmungsgrad: parseFloat(row.querySelector(".muster-score").value)
+  })).filter(m => !isNaN(m.uebereinstimmungsgrad));
+}
+
+function erzeugeSessionReferenz() {
+  const ref = "sess-" + ENGINE.fnv1a(String(Date.now()) + String(Math.random())).toString(16);
+  document.getElementById("session-ref").textContent = ref;
+  return ref;
+}
+
+let aktuelleSessionReferenz = erzeugeSessionReferenz();
+
+document.getElementById("btn-add-muster").addEventListener("click", neueMusterZeile);
+neueMusterZeile(); // eine Zeile als Startpunkt
+
+function zeigeFehler(text) {
+  document.getElementById("error-container").innerHTML =
+    `<div class="error-banner">${text}</div>`;
+}
+function leereFehler() {
+  document.getElementById("error-container").innerHTML = "";
+}
+
+function nameFuer(musterId) {
+  if (!musterId) return null;
+  const m = DATENBASIS.muster.find(x => x.id === musterId);
+  return m ? m.name : musterId;
+}
+
+function renderErgebnis(result) {
+  const el = document.getElementById("ergebnis");
+  el.style.display = "block";
+  leereFehler();
+
+  if (result.status === "abgebrochen" && result.fehlercode === "E05") {
+    el.innerHTML = `
+      <div class="abort-banner">
+        <strong>Wir sind für dich da.</strong><br><br>
+        Was du beschrieben hast, klingt nach mehr, als ein automatisches Zukunftsbild
+        gerade beantworten kann oder sollte. Bitte wende dich an einen Menschen, dem du
+        vertraust, oder an eine Beratungsstelle in deiner Nähe.<br><br>
+        <em>Dieser Prototyp erzeugt in diesem Fall bewusst keine personalisierte Ausgabe.</em>
+      </div>`;
+    return;
+  }
+
+  if (result.status === "abgebrochen") {
+    el.innerHTML = `<div class="error-banner">Abbruch (${result.fehlercode}): ${result.fehlerText}</div>`;
+    return;
+  }
+
+  const a = result.ausgabe;
+  let safetyBanner = "";
+  if (result.safety_flag === "koerperlich_kritisch") {
+    safetyBanner = `<div class="safety-banner">⚠️ Sicherheits-Fallback aktiv: Body Code, Mikro-Handlungen und Abschluss wurden durch sichere, neutrale Formulierungen ersetzt.</div>`;
+  }
+  if (result.fehlercode === "E03") {
+    safetyBanner += `<div class="safety-banner">Kein eindeutiges Muster erkannt — neutrale Ausgabe ohne erfundene Personalisierung.</div>`;
+  }
+
+  el.innerHTML = `
+    ${safetyBanner}
+    <div class="teil"><div class="label">1 · Dein zukünftiger Gestaltungsmodus</div><p>${a.teil_1_gestaltungsmodus}</p></div>
+    <div class="teil"><div class="label">2 · Inner Code</div><p>${a.teil_2_inner_code}</p></div>
+    <div class="teil ${result.safety_flag === 'koerperlich_kritisch' ? 'safety' : ''}"><div class="label">3 · Body Code</div><p>${a.teil_3_body_code}</p></div>
+    <div class="teil"><div class="label">4 · Action Code</div><p>${a.teil_4_action_code}</p></div>
+    <div class="teil ${result.safety_flag === 'koerperlich_kritisch' ? 'safety' : ''}">
+      <div class="label">5 · Deine ersten kleinen Schritte</div>
+      <ol>${a.teil_5_mikro_handlungen.map(m => `<li>${m}</li>`).join("")}</ol>
+    </div>
+    <div class="teil gold"><div class="label">6 · Abschluss</div><p>${a.teil_6_abschluss}</p></div>
+  `;
+}
+
+function renderDebug(result) {
+  const panel = document.getElementById("debug-panel");
+  panel.textContent = JSON.stringify(result, null, 2);
+}
+
+document.getElementById("btn-generate").addEventListener("click", () => {
+  leereFehler();
+  const input = {
+    reset_check: {
+      inner_code_prozent: parseFloat(document.getElementById("inner-prozent").value),
+      body_code_prozent: parseFloat(document.getElementById("body-prozent").value),
+      action_code_prozent: parseFloat(document.getElementById("action-prozent").value)
+    },
+    erkannte_themen: leseMusterEingaben(),
+    freitext: document.getElementById("freitext").value,
+    session_referenz: aktuelleSessionReferenz
+  };
+
+  const result = ENGINE.generiere(input);
+
+  if (result.status === "abgebrochen" && (result.fehlercode === "E01" || result.fehlercode === "E02" || result.fehlercode === "E08")) {
+    zeigeFehler(`Fehler ${result.fehlercode}: ${result.fehlerText}`);
+    document.getElementById("ergebnis").style.display = "none";
+  } else {
+    renderErgebnis(result);
+  }
+  renderDebug(result);
+});
+
+document.getElementById("btn-debug-toggle").addEventListener("click", () => {
+  const panel = document.getElementById("debug-panel");
+  panel.style.display = panel.style.display === "block" ? "none" : "block";
+});
+
+</script>
+</body>
+</html>
