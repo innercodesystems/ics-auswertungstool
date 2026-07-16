@@ -123,6 +123,33 @@
     margin:8px 0 0;
     display:none;
   }
+  .selected-tags-section{
+    margin:0 0 16px;
+  }
+  .selected-tags-label{
+    font-size:12px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--text-muted);
+    margin:0 0 8px;
+  }
+  .selected-tags-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .selected-tag{
+    background:var(--gold);
+    color:#fff;
+    font-size:12.5px;
+    padding:6px 14px;
+    border-radius:999px;
+  }
+  .freitext-hinweis{
+    font-size:13px;
+    color:var(--black-soft);
+    margin:0 0 10px;
+  }
 
   /* Info box */
   .info-box{
@@ -601,6 +628,15 @@
     </div>
   </div>
 
+  <!-- Zeigt die aktuell ausgewählten Themen als goldene Tags — rein
+       darstellend, verändert keine Auswahl-/Begrenzungslogik. -->
+  <div class="selected-tags-section" id="selectedTagsSection" style="display:none;">
+    <div class="selected-tags-label">Deine ausgewählten Themen</div>
+    <div class="selected-tags-list" id="selectedTagsList"></div>
+  </div>
+
+  <p class="freitext-hinweis">Beschreibe deine Situation zusätzlich in eigenen Worten – freiwillig.</p>
+
   <div class="input-card">
     <textarea id="userInput" placeholder="z. B.
 • Ich habe Angst vor der Zukunft.
@@ -999,6 +1035,22 @@ function aktualisiereChipLimitHinweis(anzeigen){
   document.getElementById('chipLimitHinweis').style.display = anzeigen ? 'block' : 'none';
 }
 
+// Rein darstellende Funktion: zeigt die aktuell ausgewählten Themen als
+// goldene Tags oberhalb des Freitextfelds. Verändert weder
+// selectedChipKeys noch die Begrenzungs-/Analyselogik — liest sie nur.
+function aktualisiereAusgewaehlteThemenAnzeige(){
+  const section = document.getElementById('selectedTagsSection');
+  const liste = document.getElementById('selectedTagsList');
+  liste.innerHTML = '';
+  selectedChipKeys.forEach(key=>{
+    const tag = document.createElement('span');
+    tag.className = 'selected-tag';
+    tag.textContent = DB[key].label.replace(/„|"/g,'');
+    liste.appendChild(tag);
+  });
+  section.style.display = selectedChipKeys.length > 0 ? 'block' : 'none';
+}
+
 const chipsEl = document.getElementById('chips');
 CHIP_ORDER.forEach(key=>{
   const c = document.createElement('div');
@@ -1010,6 +1062,7 @@ CHIP_ORDER.forEach(key=>{
       selectedChipKeys = selectedChipKeys.filter(k=>k!==key);
       c.classList.remove('active');
       aktualisiereChipLimitHinweis(false);
+      aktualisiereAusgewaehlteThemenAnzeige();
       return;
     }
     if(selectedChipKeys.length >= MAX_CHIP_AUSWAHL){
@@ -1019,6 +1072,7 @@ CHIP_ORDER.forEach(key=>{
     selectedChipKeys.push(key);
     c.classList.add('active');
     aktualisiereChipLimitHinweis(false);
+    aktualisiereAusgewaehlteThemenAnzeige();
   });
   chipsEl.appendChild(c);
 });
