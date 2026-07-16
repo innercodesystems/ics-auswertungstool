@@ -106,6 +106,23 @@
     color:#fff;
     transform:translateY(-1px);
   }
+  .chip.active{
+    background:var(--gold);
+    border-color:var(--gold);
+    color:#fff;
+    font-weight:600;
+  }
+  .chips-hinweis{
+    font-size:13px;
+    color:var(--black-soft);
+    margin:0 0 10px;
+  }
+  .chips-limit-hinweis{
+    font-size:13px;
+    color:var(--gold);
+    margin:8px 0 0;
+    display:none;
+  }
 
   /* Info box */
   .info-box{
@@ -596,8 +613,10 @@
 • Ich verliere die Kontrolle."></textarea>
   </div>
 
+  <p class="chips-hinweis">Wähle bis zu 3 Themen, die dich gerade am stärksten beschäftigen.</p>
   <div class="chips-label">Oder wähle ein Thema</div>
   <div class="chips" id="chips"></div>
+  <p class="chips-limit-hinweis" id="chipLimitHinweis">Du hast bereits 3 Themen gewählt. Für eine klare Auswertung ist das die maximale Auswahl.</p>
 
   <div class="info-box">
     <div class="info-icon">i</div>
@@ -973,15 +992,33 @@ function speichereKiAuswertungJourney(matches, freitextVorhanden, kennzahlen){
   }
 }
 
+const MAX_CHIP_AUSWAHL = 3;
+let selectedChipKeys = [];
+
+function aktualisiereChipLimitHinweis(anzeigen){
+  document.getElementById('chipLimitHinweis').style.display = anzeigen ? 'block' : 'none';
+}
+
 const chipsEl = document.getElementById('chips');
 CHIP_ORDER.forEach(key=>{
   const c = document.createElement('div');
   c.className='chip';
   c.textContent = DB[key].label.replace(/„|"/g,'');
   c.addEventListener('click',()=>{
-    const ta = document.getElementById('userInput');
-    ta.value = ta.value.trim().length ? ta.value.trim()+", "+c.textContent : c.textContent;
-    ta.focus();
+    const istAusgewaehlt = selectedChipKeys.includes(key);
+    if(istAusgewaehlt){
+      selectedChipKeys = selectedChipKeys.filter(k=>k!==key);
+      c.classList.remove('active');
+      aktualisiereChipLimitHinweis(false);
+      return;
+    }
+    if(selectedChipKeys.length >= MAX_CHIP_AUSWAHL){
+      aktualisiereChipLimitHinweis(true);
+      return;
+    }
+    selectedChipKeys.push(key);
+    c.classList.add('active');
+    aktualisiereChipLimitHinweis(false);
   });
   chipsEl.appendChild(c);
 });
@@ -990,23 +1027,42 @@ function normalize(t){
   return t.toLowerCase().replace(/[.,!?;:„"]/g,' ').replace(/\s+/g,' ').trim();
 }
 
-function analyze(text){
+// Erweitert um ausgewählte Chips (chipKeys): explizit gewählte Themen werden
+// unabhängig vom Freitext als Treffer aufgenommen und beim Sortieren vor
+// rein aus dem Freitext erkannten Treffern eingeordnet, da eine bewusste
+// Auswahl mindestens so aussagekräftig ist wie ein automatischer Fund.
+function analyze(text, chipKeys){
   const n = normalize(text);
   const matches = [];
+  const gesehen = new Set();
+  (chipKeys||[]).forEach(key=>{
+    if(DB[key] && !gesehen.has(key)){
+      matches.push({key, ...DB[key]});
+      gesehen.add(key);
+    }
+  });
   Object.keys(DB).forEach(key=>{
+    if(gesehen.has(key)) return;
     const entry = DB[key];
     if(entry.keywords.some(k=>n.includes(k))){
       matches.push({key, ...entry});
+      gesehen.add(key);
     }
   });
-  matches.sort((a,b)=>b.weight-a.weight);
+  const chipSet = new Set(chipKeys||[]);
+  matches.sort((a,b)=>{
+    const aChip = chipSet.has(a.key) ? 1 : 0;
+    const bChip = chipSet.has(b.key) ? 1 : 0;
+    if(aChip !== bChip) return bChip - aChip;
+    return b.weight-a.weight;
+  });
   return matches;
 }
 
 document.getElementById('analyzeBtn').addEventListener('click',()=>{
   const text = document.getElementById('userInput').value;
   const results = document.getElementById('results');
-  const matches = analyze(text);
+  const matches = analyze(text, selectedChipKeys);
 
   const tagsRow = document.getElementById('tagsRow');
   const innerList = document.getElementById('innerCodeList');
@@ -1074,7 +1130,12 @@ document.getElementById('analyzeBtn').addEventListener('click',()=>{
   document.getElementById('alignSurvivalBar').style.width = survivalPct+'%';
   document.getElementById('alignGrowthBar').style.width = growthPct+'%';
 
-  matches.forEach(m=>{
+  // Sichtbare Ergebnisdarstellung: maximal die 3 stärksten Muster (Vorgabe).
+  // Die vollständige Liste "matches" bleibt für die Journey-Speicherung
+  // (bis zu 5, siehe speichereKiAuswertungJourney) unverändert erhalten.
+  const sichtbareMatches = matches.slice(0, 3);
+
+  sichtbareMatches.forEach(m=>{
     const tag = document.createElement('div');
     tag.className='tag';
     tag.textContent = m.label;
@@ -1082,7 +1143,7 @@ document.getElementById('analyzeBtn').addEventListener('click',()=>{
   });
 
   // 3. Gegenüberstellung als direkte Zuordnung (nur erkannte Begriffe mit Gegenpol in der DB)
-  matches.forEach(m=>{
+  sichtbareMatches.forEach(m=>{
     if(!m.gegenpol) return;
     const row = document.createElement('div');
     row.className='pair-row';
@@ -1094,7 +1155,7 @@ document.getElementById('analyzeBtn').addEventListener('click',()=>{
 
   // 4. Entscheidung für heute – einzigartige Gegenpole als Auswahl
   const uniqueGrowth = [];
-  matches.forEach(m=>{
+  sichtbareMatches.forEach(m=>{
     if(m.gegenpol && !uniqueGrowth.includes(m.gegenpol)) uniqueGrowth.push(m.gegenpol);
   });
   uniqueGrowth.forEach(term=>{
@@ -1119,7 +1180,7 @@ document.getElementById('analyzeBtn').addEventListener('click',()=>{
   });
 
   const seenInner = new Set(), seenBody = new Set();
-  matches.slice(0,5).forEach(m=>{
+  sichtbareMatches.forEach(m=>{
     if(!seenInner.has(m.innerCode)){
       const li = document.createElement('li'); li.textContent = m.innerCode;
       innerList.appendChild(li); seenInner.add(m.innerCode);
