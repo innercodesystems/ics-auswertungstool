@@ -236,14 +236,45 @@
 <body>
 <div class="wrap">
 
-  <header class="top">
+  <header class="top" id="test-header">
     <div class="eyebrow">Inner Code Systems</div>
     <h1>Gegenpol-Generator</h1>
     <p class="sub">Interner Test-Prototyp — bedient die Engine mit Testdaten</p>
     <span class="badge-intern">Intern · Nicht öffentlich</span>
   </header>
 
+  <!-- ================= LIVE-MODUS: Überschrift ================= -->
+  <header class="top" id="live-header" style="display:none;">
+    <div class="eyebrow">Inner Code Systems</div>
+    <h1>Dein persönlicher Gegenpol</h1>
+  </header>
+
   <div id="error-container"></div>
+
+  <!-- ================= LIVE-MODUS: Verarbeitung ================= -->
+  <section class="card" id="live-processing" style="display:none; text-align:center;">
+    <p style="margin:0;">Dein persönlicher Gegenpol wird erstellt …</p>
+  </section>
+
+  <!-- ================= LIVE-MODUS: RESET/Auswertung fehlen ================= -->
+  <section class="card" id="live-missing" style="display:none; text-align:center;">
+    <p style="margin:0 0 16px;">Für deinen persönlichen Gegenpol werden zuerst der RESET-Check und die persönliche Auswertung benötigt.</p>
+    <div class="cta-wrap" style="margin:0;">
+      <button type="button" class="primary" id="btn-live-zum-reset" style="margin-bottom:10px;">RESET-Check starten</button><br>
+      <button type="button" class="secondary" id="btn-live-zur-auswertung">Zur persönlichen Auswertung</button>
+    </div>
+  </section>
+
+  <!-- ================= LIVE-MODUS: Journey abgelaufen/beschädigt ================= -->
+  <section class="card" id="live-expired" style="display:none; text-align:center;">
+    <p style="margin:0 0 16px;">Deine vorherige Sitzung ist nicht mehr verfügbar. Starte bitte noch einmal mit dem RESET-Check.</p>
+    <div class="cta-wrap" style="margin:0;">
+      <button type="button" class="primary" id="btn-live-neustart">Neu mit dem RESET-Check beginnen</button>
+    </div>
+  </section>
+
+  <!-- ================= TESTMODUS: Entwickler-Eingabefelder ================= -->
+  <div id="testmodus-eingaben">
 
   <section class="card">
     <h2>1 · RESET-Check-Werte</h2>
@@ -287,16 +318,30 @@
     <button type="button" class="primary" id="btn-generate">Meinen Gestaltungsmodus anzeigen</button>
   </div>
 
+  </div>
+  <!-- ================= Ende Testmodus-Eingabefelder ================= -->
+
   <div id="ergebnis"></div>
 
+  <!-- JOURNEY: Weiter zu den Downloads — neu, Schritt 4.
+       Standardmäßig unsichtbar, erscheint erst nach erfolgreicher
+       Journey-Speicherung des gegenpol-Schritts. -->
+  <div class="cta-wrap" id="journeyDownloadsWrap" style="display:none;">
+    <button type="button" class="primary" id="btn-journey-downloads">Zu deinen persönlichen Downloads</button>
+  </div>
+
+  <!-- ================= TESTMODUS: Debug ================= -->
+  <div id="testmodus-debug">
   <div class="debug-toggle">
     <button type="button" id="btn-debug-toggle">Debug-Modus ein-/ausblenden</button>
   </div>
   <div id="debug-panel"></div>
+  </div>
 
   <footer class="foot">Inner Code Systems · interner Prototyp, keine Veröffentlichung</footer>
 </div>
 
+<script src="ics-journey.js"></script>
 <script>
 /* ============================================================
    SCHICHT 1 — INHALTSDATEN (Datenbasis v1.1, unverändert)
@@ -810,6 +855,296 @@ document.getElementById("btn-debug-toggle").addEventListener("click", () => {
   const panel = document.getElementById("debug-panel");
   panel.style.display = panel.style.display === "block" ? "none" : "block";
 });
+
+/* ============================================================
+   JOURNEY-INTEGRATION (Schritt 4) — reine Ergänzung.
+   Verändert nichts an DATENBASIS, ENGINE oder den bisherigen
+   UI-Funktionen oben. Der Generator führt hier keine eigene
+   Analyse durch — er übersetzt und übergibt ausschließlich
+   bereits vorhandene Journey-Daten an die unveränderte ENGINE.
+   ============================================================ */
+
+// Ziel-URL für den Downloads-Button als Konstante, damit sie später
+// leicht angepasst werden kann, ohne den restlichen Code zu berühren.
+const DOWNLOADS_URL = "downloads.html";
+
+// Schaltet zwischen der internen Testoberfläche (true) und der
+// öffentlichen Live-Ansicht (false) um. Für den produktiven Einsatz auf
+// "false" belassen. Ändert nichts an ENGINE, DATENBASIS, Mapping-Tabelle,
+// Journey-Speicherung oder Sicherheitslogik — ausschließlich Sichtbarkeit
+// von Oberflächenelementen.
+const ICS_GEGENPOL_TESTMODUS = false;
+
+// ---------- Mapping-Tabelle: KI-Auswertung-Muster -> Gegenpol-Muster ----------
+// Die KI-Auswertung (ics-auswertung-tool.html) erkennt Gefühlszustände aus
+// einer eigenen, 16 Einträge umfassenden DB (z.B. "angst", "stress").
+// Der Gegenpol-Generator kennt dagegen ausschließlich seine 8 Muster-IDs.
+// Diese Tabelle ist die einzige Übersetzungsstelle zwischen beiden
+// Vokabularen — sie verändert nichts an DATENBASIS.muster.
+//
+// Fachlich geprüft und freigegeben (siehe Prüftabelle). Jeder Eintrag ist
+// jetzt ein ARRAY aus einem oder mehreren möglichen Gegenpol-Mustern, da
+// manche KI-Themen mehrdeutig auf mehrere Muster zutreffen können. Bei
+// mehreren Kandidaten entscheidet ausschließlich die bestehende, unver-
+// änderte Priorisierungslogik der ENGINE (Leit-/Sekundär-/Drittmuster),
+// nicht diese Datei.
+//
+// "koerpersignale_ignorieren" hat bewusst KEINEN Eintrag: keines der 16
+// KI-Auswertung-Themen behandelt tatsächlich das Ignorieren von Körper-
+// signalen. Eine künstliche Zuordnung eines fachlich unpassenden Themas
+// wurde ausdrücklich abgelehnt. Die saubere Lösung ist ein zukünftiges,
+// eigenständiges 17. Thema in der KI-Auswertungs-Datenbasis (eigene
+// Schlüsselwörter, eigene Texte) mit einer eigenen 1:1-Zuordnung hierher
+// — das ist eine inhaltliche Erweiterung von ics-auswertung-tool.html und
+// bewusst nicht Teil dieser Datei.
+const KI_AUSWERTUNG_MUSTER_MAPPING = {
+  angst:            ["gruebeln_und_kontrollieren", "entscheidungen_aus_druck"],
+  stress:           ["dauerfunktionieren"],
+  traurigkeit:      ["beduerfnisse_zurueckstellen"],
+  wut:              ["grenzen_nicht_setzen"],
+  kontrolle:        ["gruebeln_und_kontrollieren"],
+  selbstzweifel:    ["sich_im_aussen_verlieren", "gruebeln_und_kontrollieren"],
+  ueberforderung:   ["dauerfunktionieren", "entscheidungen_aus_druck"],
+  schuld:           ["grenzen_nicht_setzen", "beduerfnisse_zurueckstellen"],
+  scham:            ["sich_im_aussen_verlieren"],
+  neid:             ["beduerfnisse_zurueckstellen"],
+  mangel:           ["beduerfnisse_zurueckstellen"],
+  unsicherheit:     ["handeln_aufschieben"],
+  blockiert:        ["handeln_aufschieben"],
+  schaffenicht:     ["handeln_aufschieben"],
+  weissnichtweiter: ["handeln_aufschieben"], // geändert von gruebeln_und_kontrollieren
+  wertlos:          ["sich_im_aussen_verlieren"]
+  // "koerpersignale_ignorieren": bewusst kein Eintrag, siehe Kommentar oben.
+};
+
+// Übersetzt erkannte_muster (KI-Auswertung-Keys, absteigend nach Relevanz
+// sortiert) in erkannte_themen für die ENGINE. Jeder KI-Key kann jetzt zu
+// MEHREREN Gegenpol-Muster-Kandidaten führen (Array). Alle Kandidaten
+// werden an die Engine übergeben; Duplikate (dasselbe Muster aus
+// verschiedenen KI-Themen oder aus dem Array eines einzelnen Themas)
+// werden zusammengeführt — dabei gewinnt jeweils der höchste geschätzte
+// uebereinstimmungsgrad. Unbekannte Keys werden ignoriert. Welches der
+// resultierenden Muster am Ende tatsächlich verwendet wird, entscheidet
+// ausschließlich die unveränderte ENGINE-Priorisierung.
+const RANG_SCORES = [0.9, 0.75, 0.6, 0.5, 0.4];
+function uebersetzeMuster(erkannteMusterKeys) {
+  const ergebnis = new Map();
+  (erkannteMusterKeys || []).forEach((key, i) => {
+    const kandidaten = KI_AUSWERTUNG_MUSTER_MAPPING[key];
+    if (!kandidaten || !kandidaten.length) return; // unbekannter/nicht gemappter Key -> ignorieren
+    const score = RANG_SCORES[i] !== undefined ? RANG_SCORES[i] : 0.4;
+    kandidaten.forEach(musterId => {
+      if (!ergebnis.has(musterId) || ergebnis.get(musterId) < score) {
+        ergebnis.set(musterId, score);
+      }
+    });
+  });
+  return Array.from(ergebnis.entries())
+    .map(([muster_id, uebereinstimmungsgrad]) => ({ muster_id, uebereinstimmungsgrad }))
+    .sort((a, b) => b.uebereinstimmungsgrad - a.uebereinstimmungsgrad);
+  // Kein slice(0,3) mehr hier: die ENGINE selbst wählt intern Leit-/
+  // Sekundär-/Drittmuster aus einer beliebig langen Liste aus (siehe
+  // ENGINE.priorisiere). Das Formular zeigt trotzdem nur die ersten drei
+  // Zeilen an, siehe ladeUndFuelleAusJourney().
+}
+
+// ---------- Journey laden und bestehende Formularfelder automatisch befüllen ----------
+function ladeUndFuelleAusJourney() {
+  if (typeof ICS_JOURNEY === "undefined") return;
+  let gelesen;
+  try {
+    gelesen = ICS_JOURNEY.leseJourney();
+  } catch (e) {
+    return; // kein Fehler für den Nutzer, Seite bleibt vollständig nutzbar
+  }
+  if (!gelesen.ok || !gelesen.objekt) return;
+
+  const j = gelesen.objekt;
+  if (!j.reset_check || !j.ki_auswertung) return; // beide Schritte müssen vorhanden sein
+
+  const rc = j.reset_check;
+  const rcGueltig = typeof rc.inner_code_prozent === "number"
+    && typeof rc.body_code_prozent === "number"
+    && typeof rc.action_code_prozent === "number";
+  if (!rcGueltig) return;
+
+  // bestehende Formularfelder befüllen (keine neuen Felder, keine neuen Texte)
+  document.getElementById("inner-prozent").value = rc.inner_code_prozent;
+  document.getElementById("body-prozent").value = rc.body_code_prozent;
+  document.getElementById("action-prozent").value = rc.action_code_prozent;
+
+  const gemappteThemen = uebersetzeMuster(j.ki_auswertung.erkannte_muster);
+  document.getElementById("muster-liste").innerHTML = "";
+  musterRowCount = 0;
+  document.getElementById("btn-add-muster").disabled = false;
+  // Das Formular zeigt weiterhin nur maximal drei Zeilen (bestehende
+  // Beschränkung von neueMusterZeile()) — die ENGINE bekommt unten trotzdem
+  // ALLE Kandidaten, auch wenn mehr als drei erkannte Themen vorliegen.
+  gemappteThemen.slice(0, 3).forEach(t => {
+    neueMusterZeile();
+    const zeilen = document.querySelectorAll(".muster-row");
+    const letzte = zeilen[zeilen.length - 1];
+    letzte.querySelector(".muster-id").value = t.muster_id;
+    letzte.querySelector(".muster-score").value = t.uebereinstimmungsgrad;
+  });
+
+  // Session-Referenz aus der Journey übernehmen statt neu zu erzeugen,
+  // damit reset_check/ki_auswertung/gegenpol dieselbe session_id teilen.
+  aktuelleSessionReferenz = j.session_id;
+  document.getElementById("session-ref").textContent = aktuelleSessionReferenz;
+
+  // Automatische Erstellung: die ENGINE wird HIER DIREKT mit der
+  // vollständigen (nicht auf 3 gekappten) Themenliste aufgerufen, damit bei
+  // mehreren Kandidaten pro KI-Thema wirklich alle an die bestehende
+  // Priorisierungslogik übergeben werden (Vorgabe: "alle Kandidaten ... an
+  // die Engine übergeben"). Ein Klick auf den bestehenden Button würde
+  // stattdessen nur die sichtbaren, auf 3 gekappten Formularzeilen lesen.
+  // Es wird weiterhin keine eigene Analyse-/Berechnungslogik durchgeführt —
+  // ENGINE, renderErgebnis und renderDebug bleiben exakt die bestehenden,
+  // unveränderten Funktionen.
+  const input = {
+    reset_check: {
+      inner_code_prozent: rc.inner_code_prozent,
+      body_code_prozent: rc.body_code_prozent,
+      action_code_prozent: rc.action_code_prozent
+    },
+    erkannte_themen: gemappteThemen,
+    freitext: document.getElementById("freitext").value,
+    session_referenz: aktuelleSessionReferenz
+  };
+  const result = ENGINE.generiere(input);
+  renderErgebnis(result);
+  renderDebug(result); // ruft über den Monkey-Patch unten auch speichereGegenpolInJourney() auf
+}
+
+// ---------- gegenpol-Schritt in der Journey speichern ----------
+function speichereGegenpolInJourney(result) {
+  if (typeof ICS_JOURNEY === "undefined") return;
+  if (!result || result.status !== "ok") return;
+
+  let gelesen;
+  try {
+    gelesen = ICS_JOURNEY.leseJourney();
+  } catch (e) {
+    return;
+  }
+  if (!gelesen.ok || !gelesen.objekt) return; // keine gültige Journey -> nichts zu speichern, kein Fehler
+
+  const objekt = gelesen.objekt;
+
+  // ics-journey.js unterstützt "gegenpol" jetzt offiziell als schrittName in
+  // ergaenzeSchritt() — das Journey-Objekt wird dort selbst ergänzt
+  // (inkl. completed_steps), kein manueller Umbau mehr nötig.
+  const daten = {
+    session_id: objekt.session_id,
+    muster_id: result.leitmuster_id,
+    intensitaet: result.intensitaet,
+    inner_code: objekt.reset_check ? objekt.reset_check.inner_code_prozent : null,
+    body_code: objekt.reset_check ? objekt.reset_check.body_code_prozent : null,
+    action_code: objekt.reset_check ? objekt.reset_check.action_code_prozent : null,
+    erstellt_am: new Date().toISOString(),
+    generator_version: "1.0"
+  };
+
+  let speicherErgebnis;
+  try {
+    speicherErgebnis = ICS_JOURNEY.ergaenzeSchritt("gegenpol", daten);
+  } catch (e) {
+    speicherErgebnis = { ok: false };
+  }
+
+  if (speicherErgebnis && speicherErgebnis.ok) {
+    document.getElementById("journeyDownloadsWrap").style.display = "block";
+  }
+}
+
+document.getElementById("btn-journey-downloads").addEventListener("click", () => {
+  window.location.href = DOWNLOADS_URL; // Navigation im selben Tab
+});
+
+// Hängt die Journey-Speicherung an die bestehende renderDebug()-Funktion an,
+// ohne deren ursprüngliche Definition zu verändern (Funktionsdeklarationen
+// sind neu zuweisbar; der bestehende btn-generate-Listener ruft renderDebug
+// über den Bezeichner auf und bekommt dadurch automatisch diese erweiterte
+// Fassung). So bekommen wir zuverlässig dasselbe result-Objekt, das die
+// bestehende Logik bereits berechnet hat, ohne deren Code anzufassen.
+const renderDebugUrsprünglich = renderDebug;
+renderDebug = function (result) {
+  renderDebugUrsprünglich(result);
+  speichereGegenpolInJourney(result);
+};
+
+/* ============================================================
+   LIVE-/TESTMODUS-UMSCHALTUNG — reine Sichtbarkeitssteuerung.
+   Verändert nichts an ladeUndFuelleAusJourney(), ENGINE, DATENBASIS,
+   Mapping-Tabelle, Journey-Speicherung oder Sicherheitslogik.
+   ============================================================ */
+
+function wendeModusAn() {
+  const testElemente = ["test-header", "testmodus-eingaben", "testmodus-debug"];
+  const liveElemente = ["live-header"];
+  testElemente.forEach(id => {
+    document.getElementById(id).style.display = ICS_GEGENPOL_TESTMODUS ? "" : "none";
+  });
+  liveElemente.forEach(id => {
+    document.getElementById(id).style.display = ICS_GEGENPOL_TESTMODUS ? "none" : "";
+  });
+}
+
+document.getElementById("btn-live-zum-reset").addEventListener("click", () => {
+  window.location.href = "ics-reset-check.html"; // selber Tab
+});
+document.getElementById("btn-live-zur-auswertung").addEventListener("click", () => {
+  window.location.href = "ics-auswertung-tool.html"; // selber Tab
+});
+document.getElementById("btn-live-neustart").addEventListener("click", () => {
+  window.location.href = "ics-reset-check.html"; // selber Tab
+});
+
+// Ermittelt im Live-Modus, welcher der drei Zustände (Verarbeitung/
+// Ergebnis, fehlende Daten, abgelaufene/beschädigte Journey) angezeigt
+// wird. Liest die Journey nur lesend über die bestehende, unveränderte
+// ICS_JOURNEY-API — dieselbe Prüfung, die ladeUndFuelleAusJourney() ohnehin
+// selbst durchführt, hier ausschließlich zur Auswahl der passenden
+// Statuskarte verwendet.
+function initLiveAnsicht() {
+  ["live-processing", "live-missing", "live-expired"].forEach(id => {
+    document.getElementById(id).style.display = "none";
+  });
+
+  let gelesen;
+  try {
+    gelesen = ICS_JOURNEY.leseJourney();
+  } catch (e) {
+    gelesen = { ok: false, fehlercode: "J05" };
+  }
+
+  const bereit = gelesen.ok && gelesen.objekt && gelesen.objekt.reset_check && gelesen.objekt.ki_auswertung;
+  const abgelaufenOderBeschaedigt = !gelesen.ok && ["J02", "J03", "J04"].includes(gelesen.fehlercode);
+
+  if (bereit) {
+    document.getElementById("live-processing").style.display = "block";
+    // Verzögerung von 0ms, damit der Browser die "wird erstellt"-Karte
+    // tatsächlich rendert, bevor die (synchrone) Erstellung läuft.
+    setTimeout(() => {
+      ladeUndFuelleAusJourney(); // bestehende, unveränderte Funktion
+      document.getElementById("live-processing").style.display = "none";
+    }, 0);
+  } else if (abgelaufenOderBeschaedigt) {
+    document.getElementById("live-expired").style.display = "block";
+  } else {
+    // J01 (keine Journey vorhanden), J05 (Speicher blockiert) oder
+    // reset_check/ki_auswertung fehlt trotz gültiger Journey.
+    document.getElementById("live-missing").style.display = "block";
+  }
+}
+
+wendeModusAn();
+if (ICS_GEGENPOL_TESTMODUS) {
+  ladeUndFuelleAusJourney();
+} else {
+  initLiveAnsicht();
+}
 
 </script>
 </body>
