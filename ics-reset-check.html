@@ -629,6 +629,23 @@
       <a class="ics-btn ics-btn-gold" id="ctaButton" href="#" target="_blank" rel="noopener">Weiter</a>
     </div>
 
+    <!-- ============ JOURNEY: Übergabe zur KI-Auswertung ============
+         Neu ergänzt für Schritt 2 der Integrationsarchitektur.
+         Verändert nichts an der bestehenden Darstellung darüber -
+         beides ist standardmäßig unsichtbar, bis finish() es setzt. -->
+    <div class="ics-card" id="journeySaveError" style="display:none;">
+      <p style="margin:0; font-size:14px; color:rgba(26,24,21,0.75); text-align:center;">
+        Deine Ergebnisse konnten nicht für die weitere Auswertung gespeichert werden.
+        Du kannst den RESET-Check trotzdem als Reflexion nutzen — für die persönliche
+        Auswertung starte bitte in diesem Tab noch einmal von vorn.
+      </p>
+      <p id="journeySaveErrorDebug" style="display:none; margin:8px 0 0; font-size:11.5px; text-align:center; color:rgba(26,24,21,0.4); font-family:monospace;"></p>
+    </div>
+
+    <div id="journeyContinueWrap" style="display:none; margin-top:14px;">
+      <a class="ics-btn ics-btn-gold" id="journeyContinueBtn" href="ics-auswertung-tool.html">Weiter zur persönlichen Auswertung</a>
+    </div>
+
     <p class="ics-disclaimer">Der ICS RESET-Check ist keine Diagnose. Er dient ausschließlich als Reflexions- und Orientierungshilfe auf deinem Weg vom Überlebens- in den Gestaltungsmodus.</p>
 
     <div class="ics-restart">
@@ -643,8 +660,17 @@
 
 </div>
 
+<script src="ics-journey.js"></script>
 <script>
 (function(){
+
+  /* ============================================================
+     JOURNEY-INTEGRATION (Schritt 2)
+     Nur diese Konstante und die journey-bezogenen Funktionen weiter
+     unten sind neu. Auf "false" lassen für den Live-Betrieb — nur
+     bei "true" werden interne Fehlercodes (J01-J06) sichtbar.
+     ============================================================ */
+  const ICS_DEV_MODE = false;
 
   /* ============================================================
      KONFIGURATION
@@ -818,7 +844,97 @@
     });
 
     renderResults({ overall, survival, resetLevel, weakestKey, catAverages });
+    speichereInJourney(catAverages);
     showScreen('results');
+  }
+
+  /* ============================================================
+     JOURNEY-INTEGRATION (Schritt 2) — reine Übergabe, keine
+     Änderung an der Berechnung oder Darstellung oben.
+
+     Verbindliche fachliche Architektur (Modell C, Dimensionsebene):
+     ICS bewertet nicht einzelne Fragen, sondern menschliche
+     Dimensionen. Energie wird deshalb bereits auf Dimensionsebene
+     in zwei benannte Teildimensionen aufgeteilt, bevor die drei
+     Codes berechnet werden:
+       Energie-Erholung  = Ø(Energiefrage 2, Energiefrage 3) -> Body Code
+       Energie-Umsetzung = Energiefrage 1                    -> Action Code
+       Inner Code  % = Gedanken
+       Body Code   % = Ø( Körper, Gefühle, Energie-Erholung )   — 3 Dimensionen
+       Action Code % = Ø( Handeln, Energie-Umsetzung )          — 2 Dimensionen
+     ============================================================ */
+
+  // Liefert den Rohwert (0/25/50/75/100) der n-ten Energie-Frage (n = 1,2,3),
+  // in der Reihenfolge, in der sie in QUESTIONS auftreten - unabhängig von
+  // ihrer absoluten Position in der Gesamtliste.
+  function energieFrageWert(n){
+    const energieIndizes = QUESTIONS
+      .map((q, i) => ({ q, i }))
+      .filter(o => o.q.cat === 'energie')
+      .map(o => o.i);
+    return state.answers[energieIndizes[n - 1]];
+  }
+
+  function speichereInJourney(catAverages){
+    const errorBox = $('#journeySaveError');
+    const errorDebug = $('#journeySaveErrorDebug');
+    const continueWrap = $('#journeyContinueWrap');
+
+    function zeigeFehler(code){
+      errorBox.style.display = 'block';
+      continueWrap.style.display = 'none';
+      if (ICS_DEV_MODE){
+        errorDebug.style.display = 'block';
+        errorDebug.textContent = 'Interner Fehlercode: ' + code;
+      }
+    }
+
+    if (typeof ICS_JOURNEY === 'undefined'){
+      zeigeFehler('ICS_JOURNEY nicht geladen');
+      return;
+    }
+
+    const energieErholung  = average([energieFrageWert(2), energieFrageWert(3)]);
+    const energieUmsetzung = energieFrageWert(1);
+
+    const innerCodeProzent  = Math.round(catAverages.gedanken);
+    const bodyCodeProzent   = Math.round(average([catAverages.koerper, catAverages.gefuehle, energieErholung]));
+    const actionCodeProzent = Math.round(average([catAverages.handeln, energieUmsetzung]));
+
+    const imGueltigenBereich = [innerCodeProzent, bodyCodeProzent, actionCodeProzent]
+      .every(v => typeof v === 'number' && !isNaN(v) && v >= 0 && v <= 100);
+    if (!imGueltigenBereich){
+      zeigeFehler('Werte außerhalb 0-100');
+      return;
+    }
+
+    const daten = {
+      inner_code_prozent: innerCodeProzent,
+      body_code_prozent: bodyCodeProzent,
+      action_code_prozent: actionCodeProzent,
+      erstellt_am: new Date().toISOString(),
+      check_version: '1.0'
+      // session_id wird von ICS_JOURNEY.ergaenzeSchritt selbst verwaltet
+      // (neu erzeugt, falls dies der erste Schritt der Reise ist).
+    };
+
+    const ergebnis = ICS_JOURNEY.ergaenzeSchritt('reset_check', daten);
+    if (ergebnis.ok){
+      // session_id zusätzlich innerhalb von reset_check ablegen (wie gefordert),
+      // zusätzlich zur ohnehin vorhandenen Journey-weiten session_id.
+      // Nutzt ausschließlich die bestehende, öffentliche ICS_JOURNEY-API.
+      const objekt = ergebnis.objekt;
+      objekt.reset_check.session_id = objekt.session_id;
+      const speicherErgebnis = ICS_JOURNEY.speichereJourney(objekt);
+      if (!speicherErgebnis.ok){
+        zeigeFehler(speicherErgebnis.fehlercode);
+        return;
+      }
+      errorBox.style.display = 'none';
+      continueWrap.style.display = 'block';
+    } else {
+      zeigeFehler(ergebnis.fehlercode);
+    }
   }
 
   function modeText(overall){
