@@ -248,6 +248,72 @@
   }
   .gauge-text{font-size:14.5px; line-height:1.6; color:var(--black-soft); max-width:480px; margin:0 auto;}
 
+  /* Ausrichtungs-Karte */
+  .alignment-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:24px;
+    margin-bottom:24px;
+  }
+  .alignment-title{
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:18px;
+    font-weight:400;
+    margin:0 0 18px;
+    text-align:center;
+  }
+  .alignment-bars{margin-bottom:18px;}
+  .alignment-row{margin-bottom:14px;}
+  .alignment-row:last-child{margin-bottom:0;}
+  .alignment-row-head{
+    display:flex;
+    justify-content:space-between;
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:6px;
+  }
+  .alignment-track{
+    height:9px;
+    border-radius:999px;
+    background:var(--cream-soft);
+    overflow:hidden;
+  }
+  .alignment-fill{
+    height:100%;
+    border-radius:999px;
+    transition:width .6s cubic-bezier(.4,0,.2,1);
+  }
+  .alignment-fill.survival{background:var(--black);}
+  .alignment-fill.growth{background:var(--gold);}
+  .alignment-text{
+    font-size:13.5px;
+    line-height:1.7;
+    color:var(--text-muted);
+    margin:0 0 12px;
+  }
+  .alignment-text + .alignment-text{margin-top:-4px;}
+  .alignment-signature{
+    text-align:center;
+    font-size:11.5px;
+    font-style:italic;
+    color:var(--gold-dark);
+    line-height:1.6;
+    border-top:1px solid var(--line);
+    padding-top:14px;
+    margin-top:6px;
+  }
+  .alignment-recommendation{
+    font-size:12px;
+    line-height:1.6;
+    color:var(--text-muted);
+    background:var(--cream-soft);
+    border-radius:10px;
+    padding:12px 14px;
+    margin-top:14px;
+  }
+  .alignment-recommendation strong{color:var(--black);}
+
   /* Gegenüberstellung als Zuordnung */
   .polarity-section{margin-bottom:16px;}
   .polarity-title{
@@ -507,6 +573,17 @@
     <p class="subtitle">Beschreibe deine Gedanken, Gefühle oder aktuelle Situation. Du kannst einzelne Begriffe oder ganze Sätze eingeben. Die ICS-Auswertung erkennt Muster und erstellt daraus eine persönliche Analyse.</p>
   </div>
 
+  <!-- JOURNEY: RESET-Übernahme-Infokarte — neu, Schritt 3. Standardmäßig
+       unsichtbar, wird nur bei vorhandenen gültigen RESET-Daten eingeblendet. -->
+  <div class="input-card" id="resetInfoCard" style="display:none;">
+    <p style="margin:0 0 10px; font-size:14px; font-weight:600; color:var(--black);">✨ Dein RESET-Check wurde übernommen.</p>
+    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      <span class="tag" id="riInner" style="display:inline-block;"></span>
+      <span class="tag" id="riBody" style="display:inline-block;"></span>
+      <span class="tag" id="riAction" style="display:inline-block;"></span>
+    </div>
+  </div>
+
   <div class="input-card">
     <textarea id="userInput" placeholder="z. B.
 • Ich habe Angst vor der Zukunft.
@@ -557,6 +634,33 @@
       <div class="gauge-labels"><span>Gestaltungsmodus</span><span>Überlebensmodus</span></div>
       <div class="gauge-track"><div class="gauge-marker" id="gaugeMarker"></div></div>
       <p class="gauge-text" id="gaugeText"></p>
+    </div>
+
+    <!-- 2b. AKTUELLE AUSRICHTUNG -->
+    <div class="alignment-card">
+      <h3 class="alignment-title">📊 Deine aktuelle Ausrichtung</h3>
+      <div class="alignment-bars">
+        <div class="alignment-row">
+          <div class="alignment-row-head"><span>Überlebensmodus</span><span id="alignSurvivalPct">–</span></div>
+          <div class="alignment-track"><div class="alignment-fill survival" id="alignSurvivalBar" style="width:0%"></div></div>
+        </div>
+        <div class="alignment-row">
+          <div class="alignment-row-head"><span>Gestaltungsmodus</span><span id="alignGrowthPct">–</span></div>
+          <div class="alignment-track"><div class="alignment-fill growth" id="alignGrowthBar" style="width:0%"></div></div>
+        </div>
+      </div>
+      <p class="alignment-text">Diese Werte sind keine Bewertung deiner Persönlichkeit, sondern eine Momentaufnahme deines aktuellen Zustands. Jeder bewusste Schritt, jede neue Erfahrung und jede Entscheidung kann dein inneres Gleichgewicht verändern.</p>
+      <p class="alignment-text">Je häufiger du erkennst, aus welchem Modus du handelst, desto leichter richtest du dein System Schritt für Schritt auf den Gestaltungsmodus aus.</p>
+      <p class="alignment-signature">✨ Veränderung ist kein Sprung.<br>Sie entsteht durch viele kleine bewusste Entscheidungen.</p>
+      <p class="alignment-recommendation"><strong>Empfehlung:</strong> Speichere deine Auswertung und wiederhole sie in einigen Wochen. So kannst du deine persönliche Entwicklung sichtbar verfolgen.</p>
+    </div>
+
+    <!-- JOURNEY: Schwerpunkt aus dem RESET-Check — neu, Schritt 3.
+         Nur sichtbar, wenn gültige RESET-Daten übernommen wurden. -->
+    <div class="alignment-card" id="resetSchwerpunktCard" style="display:none;">
+      <h3 class="alignment-title">Dein Schwerpunkt aus dem RESET-Check</h3>
+      <p class="alignment-text" style="text-align:center;"><strong id="schwerpunktName"></strong> — <span id="schwerpunktProzent"></span></p>
+      <p class="alignment-text" id="schwerpunktSatz" style="text-align:center;"></p>
     </div>
 
     <!-- 3. GEGENÜBERSTELLUNG -->
@@ -625,15 +729,24 @@
       <h3>Nächster Schritt</h3>
       <p>Wenn du tiefer in deinen persönlichen Inner Code eintauchen möchtest, begleite ich dich gerne.</p>
       <div class="cta-buttons">
-        <a href="#" class="cta-btn primary">RESET entdecken</a>
-        <a href="#" class="cta-btn">Klarheitsgespräch</a>
-        <a href="#" class="cta-btn">Transformationsmassage</a>
+        <a href="https://innercodesystems.com/reset-guide" target="_blank" rel="noopener noreferrer" class="cta-btn primary">RESET entdecken</a>
+        <a href="https://innercodesystems.com/klarheitsgespraech" target="_blank" rel="noopener noreferrer" class="cta-btn">Klarheitsgespräch</a>
+        <a href="https://innercodesystems.com/transformation-durch-beruehrung" target="_blank" rel="noopener noreferrer" class="cta-btn">Transformationsmassage</a>
       </div>
     </div>
+
+    <!-- JOURNEY: Weiter zum Gegenpol-Generator — neu, Schritt 3.
+         Ersetzt NICHT die drei bestehenden CTA-Buttons oben, ergänzt sie nur.
+         Sichtbar erst nach erfolgreicher Journey-Speicherung. -->
+    <div id="journeyGegenpolWrap" style="display:none; margin-top:16px; text-align:center;">
+      <a href="ics-gegenpol-generator.html" class="cta-btn primary">Weiter zu deinem persönlichen Gegenpol</a>
+    </div>
+    <p id="journeySaveNotice" style="display:none; text-align:center; font-size:12.5px; color:var(--text-muted); margin-top:12px;"></p>
   </div>
 
 </div>
 
+<script src="ics-journey.js"></script>
 <script>
 const DB = {
   angst:{label:"Angst",weight:3,gegenpol:"Vertrauen",keywords:["angst","ängstlich","furcht","zukunftsangst"],
@@ -736,6 +849,130 @@ const DB = {
 
 const CHIP_ORDER = ["angst","stress","traurigkeit","wut","kontrolle","selbstzweifel","ueberforderung","schuld","scham","neid","mangel","unsicherheit","blockiert","schaffenicht","weissnichtweiter"];
 
+/* ============================================================
+   JOURNEY-INTEGRATION (Schritt 3) — reine Ergänzung.
+   Verändert nichts an DB, analyze(), den Chips oder der
+   bestehenden Freitext-Auswertungslogik weiter unten.
+   ============================================================ */
+const ICS_DEV_MODE = false; // wie in ics-reset-check.html: nur intern auf true setzen
+
+let journeyDaten = null;      // { inner_code_prozent, body_code_prozent, action_code_prozent, session_id }
+let resetUebernommen = false;
+
+(function ladeJourneyDaten(){
+  if (typeof ICS_JOURNEY === 'undefined') return; // ics-journey.js nicht geladen -> Seite funktioniert wie bisher
+  let ergebnis;
+  try {
+    ergebnis = ICS_JOURNEY.leseJourney();
+  } catch (e) {
+    return; // kein Fehler für den Nutzer, Seite funktioniert wie bisher
+  }
+  if (!ergebnis.ok || !ergebnis.objekt || !ergebnis.objekt.reset_check) return;
+
+  const rc = ergebnis.objekt.reset_check;
+  const gueltig = typeof rc.inner_code_prozent === 'number'
+    && typeof rc.body_code_prozent === 'number'
+    && typeof rc.action_code_prozent === 'number'
+    && !!ergebnis.objekt.session_id;
+  if (!gueltig) return;
+
+  journeyDaten = {
+    inner_code_prozent: rc.inner_code_prozent,
+    body_code_prozent: rc.body_code_prozent,
+    action_code_prozent: rc.action_code_prozent,
+    session_id: ergebnis.objekt.session_id
+  };
+  resetUebernommen = true;
+
+  const card = document.getElementById('resetInfoCard');
+  document.getElementById('riInner').textContent = 'Inner Code: ' + rc.inner_code_prozent + '%';
+  document.getElementById('riBody').textContent = 'Body Code: ' + rc.body_code_prozent + '%';
+  document.getElementById('riAction').textContent = 'Action Code: ' + rc.action_code_prozent + '%';
+  card.style.display = 'block';
+  // Bewusst KEIN automatischer Start der Auswertung — der Nutzer entscheidet
+  // weiterhin selbst über den bestehenden Button "ICS-Auswertung erstellen".
+})();
+
+// Verbindliche Berechnung aus den drei RESET-Werten (siehe Vorgabe Punkt 6).
+function berechneResetKennzahlen(){
+  if (!resetUebernommen) return null;
+  const codes = [
+    { name: 'inner_code',  label: 'Inner Code',  wert: journeyDaten.inner_code_prozent },
+    { name: 'body_code',   label: 'Body Code',   wert: journeyDaten.body_code_prozent },
+    { name: 'action_code', label: 'Action Code', wert: journeyDaten.action_code_prozent }
+  ];
+  const staerkster = codes.reduce((a, b) => (b.wert > a.wert ? b : a));
+  const schwaechster = codes.reduce((a, b) => (b.wert < a.wert ? b : a));
+  const gestaltung = Math.round((journeyDaten.inner_code_prozent + journeyDaten.body_code_prozent + journeyDaten.action_code_prozent) / 3);
+  const ueberleben = 100 - gestaltung;
+  return { staerkster, schwaechster, gestaltung, ueberleben };
+}
+
+function wendeResetBalkenAn(kennzahlen){
+  if (!kennzahlen) return; // ohne RESET-Daten bleibt die bisherige Freitext-Berechnung der Balken unverändert
+  document.getElementById('alignSurvivalPct').textContent = kennzahlen.ueberleben + ' %';
+  document.getElementById('alignGrowthPct').textContent = kennzahlen.gestaltung + ' %';
+  document.getElementById('alignSurvivalBar').style.width = kennzahlen.ueberleben + '%';
+  document.getElementById('alignGrowthBar').style.width = kennzahlen.gestaltung + '%';
+}
+
+const SCHWERPUNKT_SAETZE = {
+  inner_code: 'Hier zeigt sich aktuell dein größter Raum für Klarheit.',
+  body_code: 'Hier zeigt sich aktuell dein größter Raum für Wahrnehmung und Regulation.',
+  action_code: 'Hier zeigt sich aktuell dein größter Raum für Entscheidung und Umsetzung.'
+};
+function zeigeSchwerpunkt(kennzahlen){
+  const card = document.getElementById('resetSchwerpunktCard');
+  if (!kennzahlen){ card.style.display = 'none'; return; }
+  document.getElementById('schwerpunktName').textContent = kennzahlen.schwaechster.label;
+  document.getElementById('schwerpunktProzent').textContent = kennzahlen.schwaechster.wert + ' %';
+  document.getElementById('schwerpunktSatz').textContent = SCHWERPUNKT_SAETZE[kennzahlen.schwaechster.name];
+  card.style.display = 'block';
+}
+
+// Speichert den ki_auswertung-Journey-Schritt (Vorgabe Punkt 9). Ohne
+// übernommene RESET-Daten wird bewusst nichts gespeichert und keine
+// Meldung angezeigt (Vorgabe Punkt 4) — die Auswertung bleibt trotzdem
+// vollständig nutzbar.
+function speichereKiAuswertungJourney(matches, freitextVorhanden, kennzahlen){
+  const notice = document.getElementById('journeySaveNotice');
+  const gegenpolWrap = document.getElementById('journeyGegenpolWrap');
+  notice.style.display = 'none';
+  gegenpolWrap.style.display = 'none';
+
+  if (typeof ICS_JOURNEY === 'undefined' || !resetUebernommen || !kennzahlen) return;
+
+  const daten = {
+    session_id: journeyDaten.session_id,
+    freitext_vorhanden: !!freitextVorhanden,
+    erkannte_muster: matches.slice(0, 5).map(m => m.key),
+    staerkster_code: kennzahlen.staerkster.name,
+    schwaechster_code: kennzahlen.schwaechster.name,
+    inner_code_prozent: journeyDaten.inner_code_prozent,
+    body_code_prozent: journeyDaten.body_code_prozent,
+    action_code_prozent: journeyDaten.action_code_prozent,
+    gestaltungsmodus_prozent: kennzahlen.gestaltung,
+    ueberlebensmodus_prozent: kennzahlen.ueberleben,
+    erstellt_am: new Date().toISOString(),
+    auswertung_version: '1.0'
+  };
+
+  let ergebnis;
+  try {
+    ergebnis = ICS_JOURNEY.ergaenzeSchritt('ki_auswertung', daten);
+  } catch (e) {
+    ergebnis = { ok: false, fehlercode: 'Ausnahme beim Speichern' };
+  }
+
+  if (ergebnis.ok){
+    gegenpolWrap.style.display = 'block';
+  } else {
+    notice.textContent = 'Die Weitergabe an den Gegenpol konnte gerade nicht gespeichert werden.'
+      + (ICS_DEV_MODE ? ' (Interner Fehlercode: ' + ergebnis.fehlercode + ')' : '');
+    notice.style.display = 'block';
+  }
+}
+
 const chipsEl = document.getElementById('chips');
 CHIP_ORDER.forEach(key=>{
   const c = document.createElement('div');
@@ -793,6 +1030,16 @@ document.getElementById('analyzeBtn').addEventListener('click',()=>{
     document.getElementById('actionCodeText').textContent = "Beschreibe deine Situation etwas genauer – ein bis zwei Sätze reichen bereits.";
     document.getElementById('resetText').textContent = "Nimm dir einen bewussten, tiefen Atemzug, bevor du es erneut versuchst.";
     document.getElementById('reflectionText').textContent = "Was beschäftigt dich gerade wirklich am meisten?";
+
+    // JOURNEY (Schritt 3): RESET-Balken/Schwerpunkt gelten unabhängig davon,
+    // ob im Freitext Muster erkannt wurden — und die Journey-Speicherung
+    // ebenso, damit ein Besuch ohne (verwertbaren) Freitext die Reise nicht
+    // unnötig abbricht.
+    const kennzahlenLeer = berechneResetKennzahlen();
+    wendeResetBalkenAn(kennzahlenLeer);
+    zeigeSchwerpunkt(kennzahlenLeer);
+    speichereKiAuswertungJourney(matches, text.trim().length > 0, kennzahlenLeer);
+
     results.style.display='block';
     results.scrollIntoView({behavior:'smooth', block:'start'});
     return;
@@ -819,6 +1066,13 @@ document.getElementById('analyzeBtn').addEventListener('click',()=>{
   document.getElementById('resultsTitle').textContent = modeLabel;
   document.getElementById('gaugeMarker').style.left = percent+'%';
   document.getElementById('gaugeText').textContent = modeText;
+
+  const survivalPct = Math.round(percent);
+  const growthPct = 100 - survivalPct;
+  document.getElementById('alignSurvivalPct').textContent = survivalPct+' %';
+  document.getElementById('alignGrowthPct').textContent = growthPct+' %';
+  document.getElementById('alignSurvivalBar').style.width = survivalPct+'%';
+  document.getElementById('alignGrowthBar').style.width = growthPct+'%';
 
   matches.forEach(m=>{
     const tag = document.createElement('div');
@@ -881,6 +1135,12 @@ document.getElementById('analyzeBtn').addEventListener('click',()=>{
   document.getElementById('actionCodeText').textContent = primary.actionCode;
   document.getElementById('resetText').textContent = primary.reset;
   document.getElementById('reflectionText').textContent = secondary ? secondary.reflection : primary.reflection;
+
+  // JOURNEY (Schritt 3): siehe Kommentar im "keine Muster erkannt"-Zweig oben.
+  const kennzahlen = berechneResetKennzahlen();
+  wendeResetBalkenAn(kennzahlen);
+  zeigeSchwerpunkt(kennzahlen);
+  speichereKiAuswertungJourney(matches, text.trim().length > 0, kennzahlen);
 
   results.style.display='block';
   results.scrollIntoView({behavior:'smooth', block:'start'});
