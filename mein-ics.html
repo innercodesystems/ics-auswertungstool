@@ -78,6 +78,29 @@
     color: var(--gray);
     text-align: center;
   }
+  .platzhalter p {
+    margin: 0 0 14px;
+  }
+  .bibliothek-link {
+    display: block;
+    width: 100%;
+    padding: 14px 18px;
+    border-radius: 12px;
+    background: var(--black);
+    color: var(--white);
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .bibliothek-link:hover {
+    background: #2b2823;
+    transform: translateY(-1px);
+  }
+  .bibliothek-link:focus-visible {
+    outline: 3px solid var(--gold-light);
+    outline-offset: 3px;
+  }
   footer.foot {
     text-align: center;
     font-size: 12px;
@@ -115,7 +138,8 @@
   </section>
 
   <div class="platzhalter">
-    Deine persönlichen Downloads, Workbooks und Guides erscheinen hier, sobald sie für dich freigeschaltet sind.
+    <p>Entdecke deine persönliche ICS-Bibliothek. Deine Downloads, Workbooks und Guides werden dort nach und nach für dich freigeschaltet.</p>
+    <a class="bibliothek-link" href="https://innercodesystems.com/mein-ics">Meine ICS-Bibliothek öffnen</a>
   </div>
 
   <footer class="foot">Inner Code Systems · innercodesystems.com</footer>
