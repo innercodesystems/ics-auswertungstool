@@ -156,6 +156,41 @@ function passendeAntwort(text) {
   return "Erzähl mir bitte mehr darüber.";
 }
 
+function themaErkennen(text) {
+  if (
+    text.includes("angst") ||
+    text.includes("aengste") ||
+    text.includes("versagen") ||
+    text.includes("unsicher") ||
+    text.includes("sorge")
+  ) {
+    return "angst";
+  }
+
+  if (
+    text.includes("stress") ||
+    text.includes("druck") ||
+    text.includes("ueberfordert") ||
+    text.includes("erschoepft")
+  ) {
+    return "stress";
+  }
+
+  return "";
+}
+
+function startFrageFuerThema(thema) {
+  if (thema === "angst") {
+    return "Ich nehme wahr, dass Angst gerade viel Raum einnimmt. Wovor hast du im Moment am meisten Angst?";
+  }
+
+  if (thema === "stress") {
+    return "Ich nehme wahr, dass Stress gerade viel Raum einnimmt. Was belastet dich im Moment am stärksten?";
+  }
+
+  return "Erzähl mir bitte mehr darüber.";
+}
+
 function auswertungAngst() {
   const ausloeser = htmlSicher(gespraech.antworten[0] || "");
   const folge = htmlSicher(gespraech.antworten[1] || "");
