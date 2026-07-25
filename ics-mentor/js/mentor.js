@@ -76,24 +76,58 @@ function sendeNachricht() {
   }, 700);
 }
 
-function passendeAntwort(text) {
-  const t = text.toLowerCase();
+function passendeAntwort(text){
 
-  if (gespraech.thema === "") {
-    if (
-      t.includes("angst") ||
-      t.includes("ängste") ||
-      t.includes("unsicher") ||
-      t.includes("sorge")
-    ) {
-      gespraech.thema = "angst";
-      gespraech.schritt = 1;
+    const t=text.toLowerCase();
 
-      return "Ich nehme wahr, dass Angst gerade viel Raum einnimmt. Wovor hast du im Moment am meisten Angst?";
+    switch(gespraech.thema){
+
+        case "":
+
+            if(
+                t.includes("angst") ||
+                t.includes("ängste") ||
+                t.includes("unsicher") ||
+                t.includes("sorge")
+            ){
+
+                gespraech.thema="angst";
+                gespraech.schritt=1;
+
+                return "Ich nehme wahr, dass Angst gerade viel Raum einnimmt. Wovor hast du im Moment am meisten Angst?";
+            }
+
+            return "Danke für deine Offenheit. Erzähl mir bitte etwas mehr darüber.";
+
+
+        case "angst":
+
+            if(gespraech.schritt===1){
+
+                gespraech.schritt=2;
+
+                return "Was glaubst du, könnte im schlimmsten Fall geschehen?";
+            }
+
+            if(gespraech.schritt===2){
+
+                gespraech.schritt=3;
+
+                return "Wie reagierst du normalerweise in solchen Situationen?";
+            }
+
+            if(gespraech.schritt===3){
+
+                gespraech.schritt=4;
+
+                return "Was würdest du tun, wenn diese Angst morgen verschwunden wäre?";
+            }
+
+            return "Danke. Gleich erhältst du deine persönliche Auswertung.";
     }
 
-    return "Danke für deine Offenheit. Erzähl mir bitte etwas mehr darüber.";
-  }
+    return "Erzähl mir bitte mehr darüber.";
+}
 
   if (gespraech.thema === "angst" && gespraech.schritt === 1) {
     gespraech.schritt = 2;
