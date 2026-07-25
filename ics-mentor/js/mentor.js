@@ -5,6 +5,11 @@ const counter = document.getElementById("ics-counter");
 const reset = document.getElementById("ics-reset");
 const typing = document.getElementById("ics-typing");
 
+let gespraech = {
+  thema: "",
+  schritt: 0
+};
+
 send.addEventListener("click", sendeNachricht);
 
 input.addEventListener("keydown", function (event) {
@@ -19,6 +24,11 @@ input.addEventListener("input", function () {
 });
 
 reset.addEventListener("click", function () {
+  gespraech = {
+    thema: "",
+    schritt: 0
+  };
+
   messages.innerHTML = `
     <div class="chat-row mentor-row">
       <div class="chat-avatar">🧠</div>
@@ -42,42 +52,59 @@ function sendeNachricht() {
     return;
   }
 
-  let antwort =
-    "Danke für deine Nachricht. Erzähl mir bitte etwas mehr darüber.";
+  userNachricht(text);
 
-  const t = text.toLowerCase();
+  input.value = "";
+  counter.textContent = "0 / 1500";
+  send.disabled = true;
 
-  if (
-    t.includes("angst") ||
-    t.includes("ängste") ||
-    t.includes("unsicher") ||
-    t.includes("sorge")
-  ) {
-    antwort =
-      "Ich nehme wahr, dass Angst gerade viel Raum einnimmt. Wovor hast du im Moment am meisten Angst?";
-  } else if (
-    t.includes("stress") ||
-    t.includes("überfordert") ||
-    t.includes("druck")
-  ) {
-    antwort =
-      "Stress ist oft ein Signal deines Nervensystems. Was belastet dich aktuell am meisten?";
-  } else if (
-    t.includes("energie") ||
-    t.includes("müde") ||
-    t.includes("erschöpft")
-  ) {
-    antwort =
-      "Energie folgt Aufmerksamkeit. Wofür verwendest du im Moment die meiste Energie?";
-  } else if (
-    t.includes("beziehung") ||
-    t.includes("partner") ||
-    t.includes("liebe")
-  ) {
-    antwort =
-      "Beziehungen spiegeln oft unsere tiefsten Bedürfnisse. Was beschäftigt dich dort gerade am meisten?";
+  if (typing) {
+    typing.hidden = false;
   }
 
+  setTimeout(function () {
+    if (typing) {
+      typing.hidden = true;
+    }
+
+    const antwort = passendeAntwort(text);
+
+    mentorNachricht(antwort);
+
+    send.disabled = false;
+    input.focus();
+  }, 700);
+}
+
+function passendeAntwort(text) {
+  const t = text.toLowerCase();
+
+  if (gespraech.thema === "") {
+    if (
+      t.includes("angst") ||
+      t.includes("ängste") ||
+      t.includes("unsicher") ||
+      t.includes("sorge")
+    ) {
+      gespraech.thema = "angst";
+      gespraech.schritt = 1;
+
+      return "Ich nehme wahr, dass Angst gerade viel Raum einnimmt. Wovor hast du im Moment am meisten Angst?";
+    }
+
+    return "Danke für deine Offenheit. Erzähl mir bitte etwas mehr darüber.";
+  }
+
+  if (gespraech.thema === "angst" && gespraech.schritt === 1) {
+    gespraech.schritt = 2;
+
+    return "Was glaubst du, könnte im schlimmsten Fall geschehen?";
+  }
+
+  return "Danke. Ich höre dir zu. Was löst diese Situation innerlich in dir aus?";
+}
+
+function userNachricht(text) {
   messages.insertAdjacentHTML(
     "beforeend",
     `
@@ -89,40 +116,25 @@ function sendeNachricht() {
     `
   );
 
-  input.value = "";
-  counter.textContent = "0 / 1500";
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function mentorNachricht(antwort) {
+  messages.insertAdjacentHTML(
+    "beforeend",
+    `
+      <div class="chat-row mentor-row">
+        <div class="chat-avatar">🧠</div>
+
+        <div class="chat-bubble mentor-bubble">
+          <strong>ICS Mentor</strong>
+          <p>${antwort}</p>
+        </div>
+      </div>
+    `
+  );
 
   messages.scrollTop = messages.scrollHeight;
-
-  if (typing) {
-    typing.hidden = false;
-  }
-
-  send.disabled = true;
-
-  setTimeout(function () {
-    if (typing) {
-      typing.hidden = true;
-    }
-
-    messages.insertAdjacentHTML(
-      "beforeend",
-      `
-        <div class="chat-row mentor-row">
-          <div class="chat-avatar">🧠</div>
-
-          <div class="chat-bubble mentor-bubble">
-            <strong>ICS Mentor</strong>
-            <p>${antwort}</p>
-          </div>
-        </div>
-      `
-    );
-
-    messages.scrollTop = messages.scrollHeight;
-    send.disabled = false;
-    input.focus();
-  }, 700);
 }
 
 function htmlSicher(text) {
