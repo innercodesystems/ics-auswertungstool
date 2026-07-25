@@ -732,7 +732,7 @@ function themaErkennen(text) {
     let punktzahl = 0;
 
     for (const begriff of themen[thema].begriffe) {
-      if (text.includes(normalisieren(begriff))) {
+      if (begriffGefunden(text, begriff)) {
         punktzahl += begriff.includes(" ") ? 3 : 1;
       }
     }
@@ -744,6 +744,19 @@ function themaErkennen(text) {
   }
 
   return bestesThema;
+}
+
+function begriffGefunden(text, begriff) {
+  const saubererText = normalisieren(text);
+  const saubererBegriff = normalisieren(begriff);
+
+  if (saubererBegriff.includes(" ")) {
+    return saubererText.includes(saubererBegriff);
+  }
+
+  const woerter = saubererText.split(" ");
+
+  return woerter.includes(saubererBegriff);
 }
 
 /* =========================================================
