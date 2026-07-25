@@ -472,6 +472,212 @@ function sendeNachricht() {
    ANTWORTLOGIK
 ========================================================= */
 
+/* =========================================================
+   MUSTERERKENNUNG
+========================================================= */
+
+const musterDaten = {
+  rueckzug: {
+    name: "Rückzug",
+    begriffe: [
+      "ich ziehe mich zurueck",
+      "ziehe mich zurueck",
+      "ich gehe auf abstand",
+      "ich mache dicht",
+      "ich sage nichts mehr",
+      "ich isoliere mich",
+      "ich gehe weg",
+      "ich verschwinde"
+    ],
+    antwort: `
+      Ich erkenne darin möglicherweise ein
+      <strong>Rückzugsmuster</strong>.<br><br>
+
+      Rückzug kann kurzfristig schützen, verhindert aber manchmal,
+      dass deine wirklichen Bedürfnisse sichtbar werden.<br><br>
+
+      Ziehst du dich eher zurück, um dich zu schützen,
+      einen Konflikt zu vermeiden oder weil du dich überfordert fühlst?
+    `
+  },
+
+  kontrolle: {
+    name: "Kontrolle",
+    begriffe: [
+      "ich muss alles kontrollieren",
+      "ich will alles kontrollieren",
+      "ich kann nicht loslassen",
+      "ich muss alles im griff haben",
+      "ich kontrolliere alles",
+      "ich vertraue niemandem",
+      "ich mache lieber alles selbst"
+    ],
+    antwort: `
+      Ich erkenne darin möglicherweise ein
+      <strong>Kontrollmuster</strong>.<br><br>
+
+      Kontrolle versucht häufig, Unsicherheit zu reduzieren.
+      Gleichzeitig kann sie sehr viel Kraft kosten.<br><br>
+
+      Was befürchtest du, könnte geschehen,
+      wenn du einen Teil der Kontrolle abgeben würdest?
+    `
+  },
+
+  perfektionismus: {
+    name: "Perfektionismus",
+    begriffe: [
+      "es muss perfekt sein",
+      "ich muss perfekt sein",
+      "ich darf keinen fehler machen",
+      "ich mache alles perfekt",
+      "es ist nie gut genug",
+      "ich bin nie zufrieden",
+      "ich muss es besser machen"
+    ],
+    antwort: `
+      Ich erkenne darin möglicherweise ein
+      <strong>Perfektionsmuster</strong>.<br><br>
+
+      Perfektionismus schützt oft vor Kritik, Ablehnung
+      oder dem Gefühl, nicht gut genug zu sein.<br><br>
+
+      Was würde passieren, wenn dein Ergebnis heute
+      gut und stimmig wäre – aber nicht perfekt?
+    `
+  },
+
+  vermeidung: {
+    name: "Vermeidung",
+    begriffe: [
+      "ich schiebe es auf",
+      "ich vermeide es",
+      "ich gehe dem aus dem weg",
+      "ich druecke mich davor",
+      "ich ignoriere es",
+      "ich will mich nicht damit beschaeftigen",
+      "ich mache es spaeter"
+    ],
+    antwort: `
+      Ich erkenne darin möglicherweise ein
+      <strong>Vermeidungsmuster</strong>.<br><br>
+
+      Vermeidung gibt kurzfristig Erleichterung,
+      hält die innere Belastung aber häufig aufrecht.<br><br>
+
+      Was wäre der kleinstmögliche Schritt,
+      mit dem du dich der Situation heute annähern könntest?
+    `
+  },
+
+  anpassung: {
+    name: "Überanpassung",
+    begriffe: [
+      "ich sage immer ja",
+      "ich kann nicht nein sagen",
+      "ich passe mich immer an",
+      "ich will niemanden enttaeuschen",
+      "ich mache es allen recht",
+      "ich stelle mich hinten an",
+      "die anderen sind wichtiger"
+    ],
+    antwort: `
+      Ich erkenne darin möglicherweise ein
+      <strong>Anpassungsmuster</strong>.<br><br>
+
+      Hinter ständiger Anpassung liegt häufig der Wunsch,
+      Konflikte, Ablehnung oder Enttäuschung zu vermeiden.<br><br>
+
+      Was würdest du sagen oder entscheiden,
+      wenn deine Bedürfnisse genauso wichtig wären wie die der anderen?
+    `
+  },
+
+  selbstkritik: {
+    name: "Selbstkritik",
+    begriffe: [
+      "ich bin schuld",
+      "ich bin nicht gut genug",
+      "ich kann nichts",
+      "ich mache alles falsch",
+      "ich bin ein versager",
+      "ich bin dumm",
+      "ich hasse mich",
+      "ich kritisiere mich"
+    ],
+    antwort: `
+      Ich höre darin eine starke
+      <strong>innere Selbstkritik</strong>.<br><br>
+
+      Diese Stimme fühlt sich oft wie Wahrheit an,
+      ist aber häufig eine alte erlernte Bewertung.<br><br>
+
+      Würdest du mit einem Menschen, den du liebst,
+      genauso sprechen wie gerade mit dir selbst?
+    `
+  },
+
+  konfliktvermeidung: {
+    name: "Konfliktvermeidung",
+    begriffe: [
+      "ich will keinen streit",
+      "ich vermeide konflikt",
+      "ich sage lieber nichts",
+      "ich schlucke alles runter",
+      "ich halte den mund",
+      "ich gehe konfrontation aus dem weg",
+      "ich will keinen aerger"
+    ],
+    antwort: `
+      Ich erkenne darin möglicherweise ein
+      <strong>Konfliktvermeidungsmuster</strong>.<br><br>
+
+      Frieden nach außen kann innerlich sehr viel Spannung erzeugen,
+      wenn deine Wahrheit keinen Raum bekommt.<br><br>
+
+      Was möchtest du eigentlich sagen,
+      hältst es aber aus Angst vor der Reaktion zurück?
+    `
+  },
+
+  leistung: {
+    name: "Leistungsdruck",
+    begriffe: [
+      "ich muss funktionieren",
+      "ich muss leisten",
+      "ich darf nicht ausfallen",
+      "ich muss weitermachen",
+      "ich kann keine pause machen",
+      "ich muss stark sein",
+      "ich darf keine schwaeche zeigen"
+    ],
+    antwort: `
+      Ich erkenne darin möglicherweise ein
+      <strong>Leistungs- und Funktionsmuster</strong>.<br><br>
+
+      Wenn dein Wert an Leistung gekoppelt ist,
+      wird selbst Ruhe schnell zu etwas, das du dir verdienen musst.<br><br>
+
+      Wer wärst du in diesem Moment,
+      wenn du gerade nichts beweisen müsstest?
+    `
+  }
+};
+
+function musterErkennen(text) {
+  const saubererText = normalisieren(text);
+
+  for (const muster in musterDaten) {
+    for (const begriff of musterDaten[muster].begriffe) {
+      if (saubererText.includes(normalisieren(begriff))) {
+        return muster;
+      }
+    }
+  }
+
+  return "";
+}
+
 function passendeAntwort(text) {
   const t = normalisieren(text);
 
@@ -497,6 +703,7 @@ function passendeAntwort(text) {
   }
 
   const erkanntesThema = themaErkennen(t);
+  const erkanntesMuster = musterErkennen(t);
 
   /* =====================================================
      NOCH KEIN THEMA AKTIV
@@ -518,6 +725,10 @@ function passendeAntwort(text) {
       return emotionsAntwort;
     }
 
+if (erkanntesMuster !== "") {
+  return musterDaten[erkanntesMuster].antwort;
+}
+    
     return `
       Danke für deine Offenheit. Ich möchte dich besser verstehen.<br><br>
       Geht es dabei hauptsächlich um
