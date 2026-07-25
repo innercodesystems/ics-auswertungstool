@@ -100,6 +100,30 @@ if (
 ) {
   return "Danke, dass du fragst. Ich bin hier, um dich zu begleiten. Viel wichtiger ist: Wie geht es dir gerade wirklich?";
 }
+
+if (
+  t === "danke" ||
+  t === "dankeschön" ||
+  t === "vielen dank"
+) {
+  return "Sehr gern. Nimm dir die Zeit, die du brauchst. Was möchtest du als Nächstes mit mir anschauen?";
+}
+
+if (
+  t === "okay" ||
+  t === "ok" ||
+  t === "alles klar"
+) {
+  return "Gut. Was beschäftigt dich im Moment am meisten?";
+}
+
+if (
+  t === "super" ||
+  t === "gut" ||
+  t === "sehr gut"
+) {
+  return "Das freut mich. Was möchtest du heute noch für dich klären?";
+}
   
   const neuesThema = themaErkennen(t);
 
