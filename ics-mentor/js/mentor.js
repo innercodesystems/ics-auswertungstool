@@ -5,19 +5,34 @@ const messages = document.getElementById("ics-messages");
 send.addEventListener("click", sendeNachricht);
 
 function sendeNachricht() {
+  const text = input.value.trim();
 
-    const text = input.value.trim();
+  if (text === "") return;
 
-    if (text === "") return;
+  messages.innerHTML += `
+    <div class="chat-row user-row">
+      <div class="chat-bubble user-bubble">
+        ${text}
+      </div>
+    </div>
+  `;
 
+  input.value = "";
+
+  setTimeout(() => {
     messages.innerHTML += `
-        <div class="chat-row user-row">
-            <div class="chat-bubble user-bubble">
-                ${text}
-            </div>
+      <div class="chat-row mentor-row">
+        <div class="chat-avatar">🧠</div>
+
+        <div class="chat-bubble mentor-bubble">
+          <strong>ICS Mentor</strong>
+          <p>Danke für deine Nachricht. Erzähl mir bitte etwas mehr darüber.</p>
         </div>
+      </div>
     `;
 
-    input.value = "";
+    messages.scrollTop = messages.scrollHeight;
+  }, 700);
 
+  messages.scrollTop = messages.scrollHeight;
 }
