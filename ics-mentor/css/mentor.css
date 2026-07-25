@@ -1,1 +1,109 @@
-/* ICS Mentor Design */
+:root{
+  --cream:#F8F3E8;
+  --gold:#C8A45D;
+  --black:#1C1C1C;
+  --text:#4B4B4B;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  background:var(--cream);
+  font-family:Arial, Helvetica, sans-serif;
+  color:var(--black);
+}
+
+.mentor-page{
+  max-width:900px;
+  margin:auto;
+  padding:60px 20px;
+}
+
+.mentor-header{
+  text-align:center;
+  margin-bottom:40px;
+}
+
+.mentor-label{
+  color:var(--gold);
+  letter-spacing:4px;
+  font-size:12px;
+  font-weight:bold;
+  margin-bottom:15px;
+}
+
+h1{
+  font-size:48px;
+  margin-bottom:20px;
+}
+
+.mentor-intro{
+  max-width:650px;
+  margin:auto;
+  color:var(--text);
+  line-height:1.8;
+}
+
+.mentor-card{
+  background:white;
+  border-radius:22px;
+  padding:35px;
+  box-shadow:0 15px 40px rgba(0,0,0,.08);
+}
+
+.mentor-status{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:#666;
+  margin-bottom:25px;
+}
+
+.mentor-dot{
+  width:12px;
+  height:12px;
+  background:#3CB371;
+  border-radius:50%;
+}
+
+.mentor-chat{
+  min-height:220px;
+  background:#fafafa;
+  border-radius:15px;
+  padding:25px;
+  margin-bottom:25px;
+}
+
+.mentor-message{
+  line-height:1.8;
+}
+
+textarea{
+  width:100%;
+  padding:18px;
+  border-radius:14px;
+  border:1px solid #ddd;
+  resize:vertical;
+  font-size:16px;
+}
+
+button{
+  margin-top:20px;
+  width:100%;
+  padding:18px;
+  border:none;
+  border-radius:14px;
+  background:var(--gold);
+  color:white;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:hover{
+  opacity:.9;
+}
