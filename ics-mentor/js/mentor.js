@@ -681,8 +681,6 @@ function musterErkennen(text) {
 function passendeAntwort(text) {
   const t = normalisieren(text);
 
-  /* Gespräch per Texteingabe neu starten */
-
   if (
     t === "neu starten" ||
     t === "neues gespraech" ||
@@ -691,8 +689,6 @@ function passendeAntwort(text) {
     neuesGespraech();
     return "";
   }
-
-  /* Smalltalk nur, wenn kein Fachgespräch läuft */
 
   if (gespraech.thema === "") {
     const smalltalk = smalltalkAntwort(t);
@@ -705,9 +701,7 @@ function passendeAntwort(text) {
   const erkanntesThema = themaErkennen(t);
   const erkanntesMuster = musterErkennen(t);
 
-  /* =====================================================
-     NOCH KEIN THEMA AKTIV
-  ===================================================== */
+  /* Noch kein Hauptthema aktiv */
 
   if (gespraech.thema === "") {
     if (erkanntesThema !== "") {
@@ -725,20 +719,19 @@ function passendeAntwort(text) {
       return emotionsAntwort;
     }
 
-if (erkanntesMuster !== "") {
-  return musterDaten[erkanntesMuster].antwort;
-}
-    
+    if (erkanntesMuster !== "") {
+      return musterDaten[erkanntesMuster].antwort;
+    }
+
     return `
       Danke für deine Offenheit. Ich möchte dich besser verstehen.<br><br>
       Geht es dabei hauptsächlich um
-      <strong>Angst, Stress, Beziehung, Energie, Arbeit, Finanzen, Familie oder Selbstwert?</strong>
+      <strong>Angst, Stress, Beziehung, Energie, Arbeit,
+      Finanzen, Familie oder Selbstwert?</strong>
     `;
   }
 
-  /* =====================================================
-     THEMA BEREITS ABGESCHLOSSEN
-  ===================================================== */
+  /* Gespräch wurde bereits abgeschlossen */
 
   if (gespraech.abgeschlossen) {
     if (erkanntesThema !== "") {
@@ -759,9 +752,7 @@ if (erkanntesMuster !== "") {
     `;
   }
 
-  /* =====================================================
-     AUSDRÜCKLICHER THEMENWECHSEL
-  ===================================================== */
+  /* Ausdrücklicher Themenwechsel */
 
   if (
     erkanntesThema !== "" &&
@@ -788,10 +779,7 @@ if (erkanntesMuster !== "") {
     `;
   }
 
-  /* =====================================================
-     NEUES THEMA WIRD NUR ERWÄHNT
-     Gespräch bleibt beim bisherigen Thema
-  ===================================================== */
+  /* Ein anderes Thema wird nur beiläufig erwähnt */
 
   if (
     erkanntesThema !== "" &&
@@ -803,6 +791,7 @@ if (erkanntesMuster !== "") {
 
     if (gespraech.schritt < themaDaten.fragen.length) {
       const frage = themaDaten.fragen[gespraech.schritt];
+
       gespraech.schritt += 1;
 
       return `
@@ -818,8 +807,28 @@ if (erkanntesMuster !== "") {
     }
 
     gespraech.abgeschlossen = true;
+
     return auswertungErstellen();
   }
+
+  /* Normale Antwort im laufenden Gespräch */
+
+  gespraech.antworten.push(text);
+
+  const themaDaten = themen[gespraech.thema];
+
+  if (gespraech.schritt < themaDaten.fragen.length) {
+    const frage = themaDaten.fragen[gespraech.schritt];
+
+    gespraech.schritt += 1;
+
+    return frage;
+  }
+
+  gespraech.abgeschlossen = true;
+
+  return auswertungErstellen();
+}
 
 function willThemaWechseln(text) {
   return (
@@ -832,67 +841,6 @@ function willThemaWechseln(text) {
     text.includes("ich moechte ueber") ||
     text.includes("lass uns ueber")
   );
-}
-  
-  /* =====================================================
-     NORMALE ANTWORT IM LAUFENDEN GESPRÄCH
-  ===================================================== */
-
-  gespraech.antworten.push(text);
-
-  const themaDaten = themen[gespraech.thema];
-
-  if (gespraech.schritt < themaDaten.fragen.length) {
-    const frage = themaDaten.fragen[gespraech.schritt];
-
-    gespraech.schritt += 1;
-
-    return frage;
-  }
-
-  gespraech.abgeschlossen = true;
-
-  return auswertungErstellen();
-}
-
-  /* Aktives Gespräch abgeschlossen */
-
-  if (gespraech.abgeschlossen) {
-    if (erkanntesThema !== "") {
-      gespraech = {
-        thema: erkanntesThema,
-        schritt: 0,
-        antworten: [],
-        abgeschlossen: false
-      };
-
-      return themen[erkanntesThema].start;
-    }
-
-    return `
-      Dieses Thema haben wir zunächst abgeschlossen.<br><br>
-      Du kannst oben ein <strong>neues Gespräch starten</strong>
-      oder mir direkt ein neues Thema nennen.
-    `;
-  }
-
-  /* Antwort im aktiven Gespräch speichern */
-
-  gespraech.antworten.push(text);
-
-  const themaDaten = themen[gespraech.thema];
-
-  if (gespraech.schritt < themaDaten.fragen.length) {
-    const frage = themaDaten.fragen[gespraech.schritt];
-
-    gespraech.schritt += 1;
-
-    return frage;
-  }
-
-  gespraech.abgeschlossen = true;
-
-  return auswertungErstellen();
 }
 
 /* =========================================================
