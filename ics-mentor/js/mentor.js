@@ -82,6 +82,25 @@ function sendeNachricht() {
 
 function passendeAntwort(text) {
   const t = normalisieren(text);
+
+  if (
+  t === "hallo" ||
+  t === "hi" ||
+  t === "hey" ||
+  t.includes("guten morgen") ||
+  t.includes("guten tag") ||
+  t.includes("guten abend")
+) {
+  return "Hallo 😊 Schön, dass du da bist. Was beschäftigt dich heute?";
+}
+
+if (
+  t.includes("wie geht es dir") ||
+  t.includes("wie gehts dir")
+) {
+  return "Danke, dass du fragst. Ich bin hier, um dich zu begleiten. Viel wichtiger ist: Wie geht es dir gerade wirklich?";
+}
+  
   const neuesThema = themaErkennen(t);
 
   if (
