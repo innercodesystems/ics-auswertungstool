@@ -610,6 +610,19 @@ function passendeAntwort(text) {
     return auswertungErstellen();
   }
 
+function willThemaWechseln(text) {
+  return (
+    text.includes("thema wechseln") ||
+    text.includes("wechseln zu") ||
+    text.includes("jetzt ueber") ||
+    text.includes("lieber ueber") ||
+    text.includes("neues thema") ||
+    text.includes("stattdessen") ||
+    text.includes("ich moechte ueber") ||
+    text.includes("lass uns ueber")
+  );
+}
+  
   /* =====================================================
      NORMALE ANTWORT IM LAUFENDEN GESPRÄCH
   ===================================================== */
