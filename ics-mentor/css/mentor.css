@@ -172,3 +172,62 @@ button:hover{
     margin-right:auto;
     font-style:italic;
 }
+
+.typing-indicator{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  margin:0 0 22px 52px;
+  color:#777;
+  font-size:14px;
+}
+
+.typing-indicator[hidden]{
+  display:none;
+}
+
+.typing-indicator span{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--gold);
+  animation:typingPulse 1.2s infinite ease-in-out;
+}
+
+.typing-indicator span:nth-child(2){
+  animation-delay:.15s;
+}
+
+.typing-indicator span:nth-child(3){
+  animation-delay:.30s;
+}
+
+@keyframes typingPulse{
+  0%,
+  60%,
+  100%{
+    opacity:.3;
+    transform:translateY(0);
+  }
+
+  30%{
+    opacity:1;
+    transform:translateY(-4px);
+  }
+}
+
+.chat-row{
+  animation:messageIn .35s ease;
+}
+
+@keyframes messageIn{
+  from{
+    opacity:0;
+    transform:translateY(8px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
