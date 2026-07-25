@@ -2,7 +2,11 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>ICS Digital Mentor</title>
 
@@ -13,78 +17,126 @@
 
   <main class="mentor-page">
 
-<section class="mentor-header">
+    <header class="mentor-header">
 
-    <div class="mentor-logo">🧠</div>
+      <div class="mentor-logo">🧠</div>
 
-    <p class="mentor-label">
+      <p class="mentor-label">
         INNER CODE SYSTEMS
-    </p>
+      </p>
 
-    <h1>ICS Digital Mentor</h1>
+      <h1>ICS Digital Mentor</h1>
 
-    <p class="mentor-intro">
-        Mehr als Antworten.<br>
-        Ein Gespräch, das dich zu mehr Klarheit,
-        Selbstwahrnehmung und bewussten Entscheidungen führt.
-    </p>
+      <p class="mentor-intro">
+        Mehr als Antworten. Ein Gespräch für Klarheit,
+        Selbstwahrnehmung und deinen nächsten bewussten Schritt.
+      </p>
 
-</section>
+    </header>
+
 
     <section class="mentor-card">
 
       <div class="mentor-status">
+
         <span class="mentor-dot"></span>
-        Mentor ist bereit
+
+        <span>Mentor ist bereit</span>
+
+        <button
+          id="ics-reset"
+          class="reset-button"
+          type="button"
+        >
+          Gespräch neu starten
+        </button>
+
       </div>
 
-      <div class="mentor-chat">
-        <div class="mentor-message">
-          <strong>🧠 ICS Mentor</strong>
 
-          <p>
-            Willkommen. Was beschäftigt dich im Moment am meisten?
-          </p>
+      <div
+        id="ics-messages"
+        class="mentor-chat"
+        aria-live="polite"
+      >
+
+        <div class="chat-row mentor-row">
+
+          <div class="chat-avatar">
+            🧠
+          </div>
+
+          <div class="chat-bubble mentor-bubble">
+
+            <strong>ICS Mentor</strong>
+
+            <p>
+              Willkommen. Was beschäftigt dich im Moment am meisten?
+            </p>
+
+          </div>
+
         </div>
+
       </div>
+
+
+      <div
+        id="ics-typing"
+        class="typing-indicator"
+        hidden
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+        ICS Mentor schreibt …
+      </div>
+
 
       <div class="mentor-input-area">
+
+        <label
+          class="input-label"
+          for="ics-input"
+        >
+          Deine Nachricht
+        </label>
+
         <textarea
-          placeholder="Schreibe hier, was dich gerade beschäftigt..."
-          rows="4"
+          id="ics-input"
+          rows="3"
+          maxlength="1500"
+          placeholder="Schreibe hier, was dich gerade beschäftigt …"
         ></textarea>
 
-        <button type="button">
-          Nachricht senden
-        </button>
+        <div class="input-footer">
+
+          <span id="ics-counter">
+            0 / 1500
+          </span>
+
+          <button
+            id="ics-send"
+            class="send-button"
+            type="button"
+          >
+            Nachricht senden
+          </button>
+
+        </div>
+
       </div>
 
     </section>
 
+    <p class="mentor-note">
+      Der ICS Mentor bietet Impulse zur Selbstreflexion und ersetzt keine medizinische oder therapeutische Beratung.
+    </p>
+
   </main>
+
+
+  <script src="js/mentor.js"></script>
 
 </body>
 </html>
-
-.mentor-logo{
-
-    width:90px;
-    height:90px;
-
-    margin:0 auto 25px;
-
-    border-radius:50%;
-
-    background:linear-gradient(145deg,#d4b06d,#b88937);
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    font-size:42px;
-
-    color:white;
-
-    box-shadow:
-        0 15px 35px rgba(0,0,0,.18);
-}
