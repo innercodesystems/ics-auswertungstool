@@ -1,4 +1,27 @@
 const input = document.getElementById("ics-input");
+
+let antwort = "Danke für deine Nachricht. Erzähl mir bitte etwas mehr darüber.";
+
+const t = text.toLowerCase();
+
+if (t.includes("angst")) {
+
+    antwort = "Ich nehme wahr, dass Angst gerade viel Raum einnimmt. Wovor hast du im Moment am meisten Angst?";
+
+} else if (t.includes("stress")) {
+
+    antwort = "Stress ist oft ein Signal deines Nervensystems. Was belastet dich aktuell am meisten?";
+
+} else if (t.includes("energie")) {
+
+    antwort = "Energie folgt Aufmerksamkeit. Wofür verwendest du im Moment die meiste Energie?";
+
+} else if (t.includes("beziehung")) {
+
+    antwort = "Beziehungen spiegeln oft unsere tiefsten Bedürfnisse. Was beschäftigt dich dort gerade?";
+
+}
+
 const send = document.getElementById("ics-send");
 const messages = document.getElementById("ics-messages");
 
@@ -26,7 +49,7 @@ function sendeNachricht() {
 
         <div class="chat-bubble mentor-bubble">
           <strong>ICS Mentor</strong>
-          <p>Danke für deine Nachricht. Erzähl mir bitte etwas mehr darüber.</p>
+          <p>${antwort}</p>
         </div>
       </div>
     `;
