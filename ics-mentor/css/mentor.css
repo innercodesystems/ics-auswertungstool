@@ -160,3 +160,15 @@ button:hover{
 .mentor-chat{
   overflow-y:auto;
 }
+
+.mentor-note{
+    margin-top:80px;
+    text-align:center;
+    font-size:14px;
+    color:#777;
+    line-height:1.7;
+    max-width:700px;
+    margin-left:auto;
+    margin-right:auto;
+    padding:0 20px;
+}
