@@ -107,3 +107,56 @@ button{
 button:hover{
   opacity:.9;
 }
+
+.chat-row{
+  display:flex;
+  margin-bottom:18px;
+}
+
+.mentor-row{
+  justify-content:flex-start;
+  align-items:flex-start;
+  gap:12px;
+}
+
+.user-row{
+  justify-content:flex-end;
+}
+
+.chat-avatar{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:var(--gold);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
+
+.chat-bubble{
+  max-width:75%;
+  padding:14px 18px;
+  border-radius:18px;
+  line-height:1.6;
+}
+
+.mentor-bubble{
+  background:#ffffff;
+  border:1px solid #eee7da;
+  border-top-left-radius:6px;
+}
+
+.user-bubble{
+  background:var(--gold);
+  color:white;
+  border-bottom-right-radius:6px;
+}
+
+.mentor-bubble p{
+  margin-top:6px;
+}
+
+.mentor-chat{
+  overflow-y:auto;
+}
