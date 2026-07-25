@@ -124,6 +124,43 @@ if (
 ) {
   return "Das freut mich. Was möchtest du heute noch für dich klären?";
 }
+
+if (
+  t.includes("mir geht es gut") ||
+  t.includes("mir gehts gut") ||
+  t === "ich bin gut drauf"
+) {
+  return "Das freut mich. Was trägt heute dazu bei, dass es dir gut geht?";
+}
+
+if (
+  t.includes("mir geht es schlecht") ||
+  t.includes("mir gehts schlecht") ||
+  t.includes("nicht gut")
+) {
+  return "Danke, dass du das so ehrlich sagst. Was belastet dich gerade am meisten?";
+}
+
+if (
+  t.includes("traurig") ||
+  t.includes("trauer")
+) {
+  return "Traurigkeit möchte oft nicht sofort gelöst, sondern zuerst wahrgenommen werden. Was macht dich gerade traurig?";
+}
+
+if (
+  t.includes("wuetend") ||
+  t.includes("wut")
+) {
+  return "Wut zeigt häufig, dass eine Grenze verletzt wurde oder etwas nicht stimmig ist. Worüber bist du gerade wütend?";
+}
+
+if (
+  t.includes("muede") ||
+  t.includes("erschoepft")
+) {
+  return "Dein Körper scheint gerade nach Entlastung zu fragen. Ist es eher körperliche Müdigkeit oder innere Erschöpfung?";
+}
   
   const neuesThema = themaErkennen(t);
 
