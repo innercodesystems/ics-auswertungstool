@@ -52,7 +52,9 @@ function neuesGespraech() {
 function sendeNachricht() {
   const text = input.value.trim();
 
-  if (text === "") return;
+  if (text === "") {
+    return;
+  }
 
   userNachricht(text);
 
@@ -80,7 +82,6 @@ function sendeNachricht() {
 
 function passendeAntwort(text) {
   const t = normalisieren(text);
-
   const neuesThema = themaErkennen(t);
 
   if (
@@ -89,7 +90,7 @@ function passendeAntwort(text) {
     neuesThema !== gespraech.thema
   ) {
     gespraech.thema = neuesThema;
-    gespraech.schritt = 1;
+    gespraech.schritt = 2;
     gespraech.antworten = [];
 
     return startFrageFuerThema(neuesThema);
@@ -98,7 +99,8 @@ function passendeAntwort(text) {
   if (gespraech.thema === "") {
     if (neuesThema !== "") {
       gespraech.thema = neuesThema;
-      gespraech.schritt = 1;
+      gespraech.schritt = 2;
+      gespraech.antworten = [];
 
       return startFrageFuerThema(neuesThema);
     }
@@ -109,23 +111,27 @@ function passendeAntwort(text) {
   if (gespraech.thema === "angst") {
     gespraech.antworten.push(text);
 
-    if (gespraech.schritt === 1) {
-      gespraech.schritt = 2;
-      return "Was glaubst du, könnte im schlimmsten Fall geschehen?";
-    }
-
     if (gespraech.schritt === 2) {
       gespraech.schritt = 3;
-      return "Was tust du aktuell, um dieses Gefühl oder diese Situation zu vermeiden?";
+
+      return "Was glaubst du, könnte im schlimmsten Fall geschehen?";
     }
 
     if (gespraech.schritt === 3) {
       gespraech.schritt = 4;
-      return "Was würdest du tun, wenn du dich innerlich sicher fühlen würdest?";
+
+      return "Was tust du aktuell, um dieses Gefühl oder diese Situation zu vermeiden?";
     }
 
     if (gespraech.schritt === 4) {
       gespraech.schritt = 5;
+
+      return "Was würdest du tun, wenn du dich innerlich sicher fühlen würdest?";
+    }
+
+    if (gespraech.schritt === 5) {
+      gespraech.schritt = 6;
+
       return auswertungAngst();
     }
 
@@ -135,22 +141,31 @@ function passendeAntwort(text) {
   if (gespraech.thema === "stress") {
     gespraech.antworten.push(text);
 
-    if (gespraech.schritt === 1) {
-      gespraech.schritt = 2;
-      return "Was belastet dich im Moment am stärksten?";
-    }
-
     if (gespraech.schritt === 2) {
       gespraech.schritt = 3;
+
       return "Woran merkst du körperlich, dass der Stress zu viel wird?";
     }
 
     if (gespraech.schritt === 3) {
       gespraech.schritt = 4;
+
       return "Was könntest du heute bewusst weglassen oder vereinfachen?";
     }
 
-    return "Danke. Wir bauen die Stress-Auswertung im nächsten Schritt ein.";
+    if (gespraech.schritt === 4) {
+      gespraech.schritt = 5;
+
+      return "Was würde dir heute konkret etwas mehr Ruhe oder Entlastung geben?";
+    }
+
+    if (gespraech.schritt === 5) {
+      gespraech.schritt = 6;
+
+      return auswertungStress();
+    }
+
+    return "Das Gespräch ist abgeschlossen. Du kannst oben ein neues Gespräch starten.";
   }
 
   return "Erzähl mir bitte mehr darüber.";
@@ -193,8 +208,8 @@ function startFrageFuerThema(thema) {
 
 function auswertungAngst() {
   const ausloeser = htmlSicher(gespraech.antworten[0] || "");
-  const folge = htmlSicher(gespraech.antworten[1] || "");
-  const schutz = htmlSicher(gespraech.antworten[2] || "");
+  const befürchtung = htmlSicher(gespraech.antworten[1] || "");
+  const schutzreaktion = htmlSicher(gespraech.antworten[2] || "");
   const moeglichkeit = htmlSicher(gespraech.antworten[3] || "");
 
   return `
@@ -204,10 +219,10 @@ function auswertungAngst() {
     ${ausloeser}<br><br>
 
     <strong>Was du befürchtest</strong><br>
-    ${folge}<br><br>
+    ${befürchtung}<br><br>
 
     <strong>Deine bisherige Schutzreaktion</strong><br>
-    ${schutz}<br><br>
+    ${schutzreaktion}<br><br>
 
     <strong>Was eigentlich möglich wäre</strong><br>
     ${moeglichkeit}<br><br>
@@ -220,6 +235,38 @@ function auswertungAngst() {
 
     <strong>🔥 Action Code</strong><br>
     Wähle heute einen kleinen Schritt, der Mut zeigt, ohne dich zu überfordern.
+  `;
+}
+
+function auswertungStress() {
+  const belastung = htmlSicher(gespraech.antworten[0] || "");
+  const koerpersignal = htmlSicher(gespraech.antworten[1] || "");
+  const vereinfachung = htmlSicher(gespraech.antworten[2] || "");
+  const entlastung = htmlSicher(gespraech.antworten[3] || "");
+
+  return `
+    <strong>🔎 Deine persönliche Auswertung</strong><br><br>
+
+    <strong>Deine größte aktuelle Belastung</strong><br>
+    ${belastung}<br><br>
+
+    <strong>Das Signal deines Körpers</strong><br>
+    ${koerpersignal}<br><br>
+
+    <strong>Was du vereinfachen könntest</strong><br>
+    ${vereinfachung}<br><br>
+
+    <strong>Was dir Entlastung geben würde</strong><br>
+    ${entlastung}<br><br>
+
+    <strong>🧠 Inner Code</strong><br>
+    Du musst nicht alles gleichzeitig tragen. Klarheit entsteht oft dort, wo du bewusst entscheidest, was heute wirklich wichtig ist.<br><br>
+
+    <strong>❤️ Body Code</strong><br>
+    Atme länger aus als ein. Senke bewusst deine Schultern und gib deinem Nervensystem für einen Moment das Signal, dass du nichts leisten musst.<br><br>
+
+    <strong>🔥 Action Code</strong><br>
+    Wähle heute eine Aufgabe, die du verschiebst, vereinfachst oder ganz weglässt.
   `;
 }
 
