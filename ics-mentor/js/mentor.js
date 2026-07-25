@@ -81,18 +81,26 @@ function sendeNachricht() {
 function passendeAntwort(text) {
   const t = normalisieren(text);
 
+  const neuesThema = themaErkennen(t);
+
+  if (
+    gespraech.thema !== "" &&
+    neuesThema !== "" &&
+    neuesThema !== gespraech.thema
+  ) {
+    gespraech.thema = neuesThema;
+    gespraech.schritt = 1;
+    gespraech.antworten = [];
+
+    return startFrageFuerThema(neuesThema);
+  }
+
   if (gespraech.thema === "") {
-    if (
-      t.includes("angst") ||
-      t.includes("aengste") ||
-      t.includes("versagen") ||
-      t.includes("unsicher") ||
-      t.includes("sorge")
-    ) {
-      gespraech.thema = "angst";
+    if (neuesThema !== "") {
+      gespraech.thema = neuesThema;
       gespraech.schritt = 1;
 
-      return "Ich nehme wahr, dass Angst gerade viel Raum einnimmt. Wovor hast du im Moment am meisten Angst?";
+      return startFrageFuerThema(neuesThema);
     }
 
     return "Danke für deine Offenheit. Welches Gefühl steht für dich gerade im Vordergrund?";
@@ -103,29 +111,46 @@ function passendeAntwort(text) {
 
     if (gespraech.schritt === 1) {
       gespraech.schritt = 2;
-
       return "Was glaubst du, könnte im schlimmsten Fall geschehen?";
     }
 
     if (gespraech.schritt === 2) {
       gespraech.schritt = 3;
-
       return "Was tust du aktuell, um dieses Gefühl oder diese Situation zu vermeiden?";
     }
 
     if (gespraech.schritt === 3) {
       gespraech.schritt = 4;
-
       return "Was würdest du tun, wenn du dich innerlich sicher fühlen würdest?";
     }
 
     if (gespraech.schritt === 4) {
       gespraech.schritt = 5;
-
       return auswertungAngst();
     }
 
     return "Das Gespräch ist abgeschlossen. Du kannst oben ein neues Gespräch starten.";
+  }
+
+  if (gespraech.thema === "stress") {
+    gespraech.antworten.push(text);
+
+    if (gespraech.schritt === 1) {
+      gespraech.schritt = 2;
+      return "Was belastet dich im Moment am stärksten?";
+    }
+
+    if (gespraech.schritt === 2) {
+      gespraech.schritt = 3;
+      return "Woran merkst du körperlich, dass der Stress zu viel wird?";
+    }
+
+    if (gespraech.schritt === 3) {
+      gespraech.schritt = 4;
+      return "Was könntest du heute bewusst weglassen oder vereinfachen?";
+    }
+
+    return "Danke. Wir bauen die Stress-Auswertung im nächsten Schritt ein.";
   }
 
   return "Erzähl mir bitte mehr darüber.";
