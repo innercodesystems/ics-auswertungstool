@@ -7,7 +7,8 @@ const typing = document.getElementById("ics-typing");
 
 let gespraech = {
   thema: "",
-  schritt: 0
+  schritt: 0,
+  antworten: []
 };
 
 send.addEventListener("click", sendeNachricht);
@@ -23,10 +24,13 @@ input.addEventListener("input", function () {
   counter.textContent = input.value.length + " / 1500";
 });
 
-reset.addEventListener("click", function () {
+reset.addEventListener("click", neuesGespraech);
+
+function neuesGespraech() {
   gespraech = {
     thema: "",
-    schritt: 0
+    schritt: 0,
+    antworten: []
   };
 
   messages.innerHTML = `
@@ -43,14 +47,12 @@ reset.addEventListener("click", function () {
   input.value = "";
   counter.textContent = "0 / 1500";
   input.focus();
-});
+}
 
 function sendeNachricht() {
   const text = input.value.trim();
 
-  if (text === "") {
-    return;
-  }
+  if (text === "") return;
 
   userNachricht(text);
 
@@ -76,66 +78,89 @@ function sendeNachricht() {
   }, 700);
 }
 
-function passendeAntwort(text){
+function passendeAntwort(text) {
+  const t = normalisieren(text);
 
-    const t=text.toLowerCase();
+  if (gespraech.thema === "") {
+    if (
+      t.includes("angst") ||
+      t.includes("aengste") ||
+      t.includes("versagen") ||
+      t.includes("unsicher") ||
+      t.includes("sorge")
+    ) {
+      gespraech.thema = "angst";
+      gespraech.schritt = 1;
 
-    switch(gespraech.thema){
-
-        case "":
-
-            if(
-                t.includes("angst") ||
-                t.includes("ängste") ||
-                t.includes("unsicher") ||
-                t.includes("sorge")
-            ){
-
-                gespraech.thema="angst";
-                gespraech.schritt=1;
-
-                return "Ich nehme wahr, dass Angst gerade viel Raum einnimmt. Wovor hast du im Moment am meisten Angst?";
-            }
-
-            return "Danke für deine Offenheit. Erzähl mir bitte etwas mehr darüber.";
-
-
-        case "angst":
-
-            if(gespraech.schritt===1){
-
-                gespraech.schritt=2;
-
-                return "Was glaubst du, könnte im schlimmsten Fall geschehen?";
-            }
-
-            if(gespraech.schritt===2){
-
-                gespraech.schritt=3;
-
-                return "Wie reagierst du normalerweise in solchen Situationen?";
-            }
-
-            if(gespraech.schritt===3){
-
-                gespraech.schritt=4;
-
-                return "Was würdest du tun, wenn diese Angst morgen verschwunden wäre?";
-            }
-
-            return "Danke. Gleich erhältst du deine persönliche Auswertung.";
+      return "Ich nehme wahr, dass Angst gerade viel Raum einnimmt. Wovor hast du im Moment am meisten Angst?";
     }
 
-    return "Erzähl mir bitte mehr darüber.";
-}
-
-  if (gespraech.thema === "angst" && gespraech.schritt === 1) {
-    gespraech.schritt = 2;
-
-    return "Was glaubst du, könnte im schlimmsten Fall geschehen?";
+    return "Danke für deine Offenheit. Welches Gefühl steht für dich gerade im Vordergrund?";
   }
 
-  return "Danke. Ich höre dir zu. Was löst diese Situation innerlich in dir aus?";
+  if (gespraech.thema === "angst") {
+    gespraech.antworten.push(text);
+
+    if (gespraech.schritt === 1) {
+      gespraech.schritt = 2;
+
+      return "Was glaubst du, könnte im schlimmsten Fall geschehen?";
+    }
+
+    if (gespraech.schritt === 2) {
+      gespraech.schritt = 3;
+
+      return "Was tust du aktuell, um dieses Gefühl oder diese Situation zu vermeiden?";
+    }
+
+    if (gespraech.schritt === 3) {
+      gespraech.schritt = 4;
+
+      return "Was würdest du tun, wenn du dich innerlich sicher fühlen würdest?";
+    }
+
+    if (gespraech.schritt === 4) {
+      gespraech.schritt = 5;
+
+      return auswertungAngst();
+    }
+
+    return "Das Gespräch ist abgeschlossen. Du kannst oben ein neues Gespräch starten.";
+  }
+
+  return "Erzähl mir bitte mehr darüber.";
+}
+
+function auswertungAngst() {
+  const ausloeser = htmlSicher(gespraech.antworten[0] || "");
+  const folge = htmlSicher(gespraech.antworten[1] || "");
+  const schutz = htmlSicher(gespraech.antworten[2] || "");
+  const moeglichkeit = htmlSicher(gespraech.antworten[3] || "");
+
+  return `
+    <strong>🔎 Deine persönliche Auswertung</strong><br><br>
+
+    <strong>Dein innerer Auslöser</strong><br>
+    ${ausloeser}<br><br>
+
+    <strong>Was du befürchtest</strong><br>
+    ${folge}<br><br>
+
+    <strong>Deine bisherige Schutzreaktion</strong><br>
+    ${schutz}<br><br>
+
+    <strong>Was eigentlich möglich wäre</strong><br>
+    ${moeglichkeit}<br><br>
+
+    <strong>🧠 Inner Code</strong><br>
+    Du brauchst nicht völlige Sicherheit, bevor du handelst. Sicherheit kann auch durch einen kleinen bewussten Schritt entstehen.<br><br>
+
+    <strong>❤️ Body Code</strong><br>
+    Atme langsam aus und spüre für einen Moment bewusst deine Füße. Dein Körper darf erfahren, dass du im jetzigen Moment sicher bist.<br><br>
+
+    <strong>🔥 Action Code</strong><br>
+    Wähle heute einen kleinen Schritt, der Mut zeigt, ohne dich zu überfordern.
+  `;
 }
 
 function userNachricht(text) {
@@ -169,6 +194,15 @@ function mentorNachricht(antwort) {
   );
 
   messages.scrollTop = messages.scrollHeight;
+}
+
+function normalisieren(text) {
+  return text
+    .toLowerCase()
+    .replace(/ä/g, "ae")
+    .replace(/ö/g, "oe")
+    .replace(/ü/g, "ue")
+    .replace(/ß/g, "ss");
 }
 
 function htmlSicher(text) {
