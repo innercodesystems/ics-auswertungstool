@@ -475,46 +475,32 @@ function sendeNachricht() {
 function passendeAntwort(text) {
   const t = normalisieren(text);
 
-  /* Gespräch neu starten per Texteingabe */
+  /* Gespräch per Texteingabe neu starten */
 
   if (
     t === "neu starten" ||
     t === "neues gespraech" ||
-    t === "anderes thema"
+    t === "gespraech neu starten"
   ) {
     neuesGespraech();
-
     return "";
   }
 
-  /* Smalltalk funktioniert auch während eines Gesprächs */
+  /* Smalltalk nur, wenn kein Fachgespräch läuft */
 
-  const smalltalk = smalltalkAntwort(t);
+  if (gespraech.thema === "") {
+    const smalltalk = smalltalkAntwort(t);
 
-  if (smalltalk !== "") {
-    return smalltalk;
+    if (smalltalk !== "") {
+      return smalltalk;
+    }
   }
 
   const erkanntesThema = themaErkennen(t);
 
-  /* Ein neues Hauptthema wird ausdrücklich genannt */
-
-  if (
-    gespraech.thema !== "" &&
-    erkanntesThema !== "" &&
-    erkanntesThema !== gespraech.thema
-  ) {
-    gespraech = {
-      thema: erkanntesThema,
-      schritt: 0,
-      antworten: [],
-      abgeschlossen: false
-    };
-
-    return themen[erkanntesThema].start;
-  }
-
-  /* Noch kein Thema aktiv */
+  /* =====================================================
+     NOCH KEIN THEMA AKTIV
+  ===================================================== */
 
   if (gespraech.thema === "") {
     if (erkanntesThema !== "") {
@@ -538,6 +524,112 @@ function passendeAntwort(text) {
       <strong>Angst, Stress, Beziehung, Energie, Arbeit, Finanzen, Familie oder Selbstwert?</strong>
     `;
   }
+
+  /* =====================================================
+     THEMA BEREITS ABGESCHLOSSEN
+  ===================================================== */
+
+  if (gespraech.abgeschlossen) {
+    if (erkanntesThema !== "") {
+      gespraech = {
+        thema: erkanntesThema,
+        schritt: 0,
+        antworten: [],
+        abgeschlossen: false
+      };
+
+      return themen[erkanntesThema].start;
+    }
+
+    return `
+      Dieses Thema haben wir zunächst abgeschlossen.<br><br>
+      Du kannst oben ein <strong>neues Gespräch starten</strong>
+      oder direkt ein neues Thema nennen.
+    `;
+  }
+
+  /* =====================================================
+     AUSDRÜCKLICHER THEMENWECHSEL
+  ===================================================== */
+
+  if (
+    erkanntesThema !== "" &&
+    erkanntesThema !== gespraech.thema &&
+    willThemaWechseln(t)
+  ) {
+    const altesThema = themen[gespraech.thema].name;
+    const neuesThema = themen[erkanntesThema].name;
+
+    gespraech = {
+      thema: erkanntesThema,
+      schritt: 0,
+      antworten: [],
+      abgeschlossen: false
+    };
+
+    return `
+      Wir beenden damit zunächst das Thema
+      <strong>${altesThema}</strong>
+      und wechseln zu
+      <strong>${neuesThema}</strong>.<br><br>
+
+      ${themen[erkanntesThema].start}
+    `;
+  }
+
+  /* =====================================================
+     NEUES THEMA WIRD NUR ERWÄHNT
+     Gespräch bleibt beim bisherigen Thema
+  ===================================================== */
+
+  if (
+    erkanntesThema !== "" &&
+    erkanntesThema !== gespraech.thema
+  ) {
+    gespraech.antworten.push(text);
+
+    const themaDaten = themen[gespraech.thema];
+
+    if (gespraech.schritt < themaDaten.fragen.length) {
+      const frage = themaDaten.fragen[gespraech.schritt];
+      gespraech.schritt += 1;
+
+      return `
+        Ich höre auch das Thema
+        <strong>${themen[erkanntesThema].name}</strong>
+        in deiner Antwort.<br><br>
+
+        Wir bleiben zunächst bei
+        <strong>${themaDaten.name}</strong>.<br><br>
+
+        ${frage}
+      `;
+    }
+
+    gespraech.abgeschlossen = true;
+    return auswertungErstellen();
+  }
+
+  /* =====================================================
+     NORMALE ANTWORT IM LAUFENDEN GESPRÄCH
+  ===================================================== */
+
+  gespraech.antworten.push(text);
+
+  const themaDaten = themen[gespraech.thema];
+
+  if (gespraech.schritt < themaDaten.fragen.length) {
+    const frage = themaDaten.fragen[gespraech.schritt];
+
+    gespraech.schritt += 1;
+
+    return frage;
+  }
+
+  gespraech.abgeschlossen = true;
+
+  return auswertungErstellen();
+}
 
   /* Aktives Gespräch abgeschlossen */
 
