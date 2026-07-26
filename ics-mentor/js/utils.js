@@ -22,28 +22,22 @@ ICS.begriffGefunden = function(text,begriff){
 
 ICS.trefferAnzahl = function(text,begriffe){
   return (begriffe || []).reduce(function(summe,begriff){
-    return summe + (ICS.begriffGefunden(text,begriff) ? 1 : 0);
+    return summe + (ICS.begriffGefunden(text,begriff) ? Math.max(1, ICS.normalisiere(begriff).split(" ").length) : 0);
   },0);
 };
 
+ICS.ergebnisse = function(text,daten){
+  return Object.keys(daten)
+    .map(function(id){
+      const eintrag = daten[id];
+      return Object.assign({id:id,punkte:ICS.trefferAnzahl(text,eintrag.begriffe)},eintrag);
+    })
+    .filter(function(eintrag){ return eintrag.punkte > 0; })
+    .sort(function(a,b){ return b.punkte-a.punkte; });
+};
+
 ICS.bestesErgebnis = function(text,daten){
-  let bestes = null;
-  let bestePunktzahl = 0;
-
-  Object.keys(daten).forEach(function(id){
-    const eintrag = daten[id];
-    const punkte = ICS.trefferAnzahl(text,eintrag.begriffe);
-
-    if(punkte > bestePunktzahl){
-      bestePunktzahl = punkte;
-      bestes = Object.assign({
-        id:id,
-        punkte:punkte
-      },eintrag);
-    }
-  });
-
-  return bestes;
+  return ICS.ergebnisse(text,daten)[0] || null;
 };
 
 ICS.escapen = function(text){
@@ -54,5 +48,5 @@ ICS.escapen = function(text){
 
 ICS.zufall = function(liste){
   if(!Array.isArray(liste) || !liste.length) return "";
-  return liste[Math.floor(Math.random() * liste.length)];
+  return liste[Math.floor(Math.random()*liste.length)];
 };
