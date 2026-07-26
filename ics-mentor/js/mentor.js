@@ -105,7 +105,7 @@ const hypothesen = ICS.Hypothesen.erstellen(
     return unbekanntAntwort(analyse);
   }
 
-  return dialogAntwort(text, analyse, update);
+  return dialogAntwort(text, analyse, update, hypothesen);
 }
 
 function uebernehmen(analyse){
@@ -136,7 +136,7 @@ function uebernehmen(analyse){
   }
 }
 
-function dialogAntwort(text, analyse, update){
+function dialogAntwort(text, analyse, update, hypothesen){
   const teile = [];
   const faden = ICS.brain.roterFaden(gespraech, analyse, update);
 
