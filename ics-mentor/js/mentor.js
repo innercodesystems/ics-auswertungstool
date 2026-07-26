@@ -89,6 +89,11 @@ const hypothesen = ICS.Hypothesen.erstellen(
     gespraech,
     analyse
 );
+
+const prioritaet = ICS.Prioritaeten.wichtigste(
+    analyse,
+    gespraech
+);
   
   gespraech.analysen.push(analyse);
 
