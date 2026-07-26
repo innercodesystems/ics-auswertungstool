@@ -10,17 +10,30 @@ const typing=document.getElementById("ics-typing");
 let gespraech=neuesGespraechObjekt();
 
 function neuesGespraechObjekt(){
-  return {thema:"",muster:"",schritt:0,modus:"",antworten:[],abgeschlossen:false};
+  return {
+    thema:"",
+    muster:"",
+    weitereMuster:[],
+    schritt:0,
+    modus:"",
+    antworten:[],
+    abgeschlossen:false
+  };
 }
 
 send.addEventListener("click",sendeNachricht);
+
 input.addEventListener("keydown",function(event){
   if(event.key==="Enter"&&!event.shiftKey){
     event.preventDefault();
     sendeNachricht();
   }
 });
-input.addEventListener("input",()=>counter.textContent=input.value.length+" / 1500");
+
+input.addEventListener("input",function(){
+  counter.textContent=input.value.length+" / 1500";
+});
+
 reset.addEventListener("click",neuesGespraech);
 
 function sendeNachricht(){
@@ -35,14 +48,12 @@ function sendeNachricht(){
   typing.hidden=false;
   scrollNachUnten();
 
-  const wartezeit=Math.min(1500,550+text.length*8);
-
   setTimeout(function(){
     typing.hidden=true;
     mentorNachricht(erzeugeAntwort(text));
     send.disabled=false;
     input.focus();
-  },wartezeit);
+  },Math.min(1500,550+text.length*8));
 }
 
 function erzeugeAntwort(text){
@@ -59,27 +70,35 @@ function erzeugeAntwort(text){
     const smalltalk=ICS.pruefeSmalltalk(text);
     if(smalltalk) return smalltalk;
 
-    const muster=ICS.musterErkennen(text);
+    const musterListe=ICS.musterErkennenAlle(text);
+    const muster=musterListe[0]||null;
     const thema=ICS.themaErkennen(text);
     const emotion=ICS.emotionErkennen(text);
 
-    if(muster&&muster.punkte>0){
+    if(muster){
       gespraech.muster=muster.id;
+      gespraech.weitereMuster=musterListe.slice(1).map(m=>m.id);
       gespraech.modus="muster";
       gespraech.schritt=0;
-      if(thema&&thema.punkte>0) gespraech.thema=thema.id;
+      if(thema) gespraech.thema=thema.id;
 
-      return `Ich erkenne darin möglicherweise ein <strong>${ICS.escapen(muster.name)}</strong>.<br><br>${ICS.escapen(muster.spiegel)}<br><br>${ICS.escapen(muster.fragen[0])}`;
+      let zusatz="";
+      if(musterListe.length>1){
+        zusatz="<br><br>Daneben zeigen sich auch Anteile von <strong>"+
+          musterListe.slice(1).map(m=>ICS.escapen(m.name)).join(" und ")+"</strong>.";
+      }
+
+      return `Ich erkenne darin möglicherweise ein <strong>${ICS.escapen(muster.name)}</strong>.<br><br>${ICS.escapen(muster.spiegel)}${zusatz}<br><br>${ICS.escapen(muster.fragen[0])}`;
     }
 
-    if(thema&&thema.punkte>0){
+    if(thema){
       gespraech.thema=thema.id;
       gespraech.modus="thema";
       gespraech.schritt=0;
       return ICS.escapen(thema.start);
     }
 
-    if(emotion&&emotion.punkte>0) return ICS.escapen(emotion.antwort);
+    if(emotion) return ICS.escapen(emotion.antwort);
 
     return "Ich möchte dich richtig verstehen. Geht es gerade eher um eine Situation, ein Gefühl, eine Beziehung, eine Entscheidung oder ein wiederkehrendes Verhalten?";
   }
@@ -99,7 +118,7 @@ function fuehreMusterDialog(){
   }
 
   gespraech.abgeschlossen=true;
-  return `Danke für deine Offenheit.<br><br>Aus deinen Antworten lässt sich bereits ein klarer roter Faden erkennen.<br><br>${ICS.erstelleAuswertung(gespraech)}<br><br>Welchen kleinen Schritt möchtest du daraus heute wirklich umsetzen?`;
+  return `Danke für deine Offenheit.<br><br>Aus deinen Antworten lässt sich ein klarer roter Faden erkennen.<br><br>${ICS.erstelleAuswertung(gespraech)}<br><br>Welchen kleinen Schritt möchtest du daraus heute wirklich umsetzen?`;
 }
 
 function fuehreThemenDialog(){
@@ -153,5 +172,7 @@ function neuesGespraech(){
 }
 
 function scrollNachUnten(){
-  requestAnimationFrame(()=>messages.scrollTop=messages.scrollHeight);
+  requestAnimationFrame(function(){
+    messages.scrollTop=messages.scrollHeight;
+  });
 }
