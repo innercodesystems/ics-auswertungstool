@@ -7,41 +7,10 @@ input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventD
 input.addEventListener("input",()=>counter.textContent=input.value.length+" / 1500");
 reset.addEventListener("click",neustart);
 if(profileButton)profileButton.addEventListener("click",()=>mentorNachricht(ICS.profilHtml()));
-
 function senden(){const text=input.value.trim();if(!text||send.disabled)return;userNachricht(text);gespraech.antworten.push(text);input.value="";counter.textContent="0 / 1500";send.disabled=true;typing.hidden=false;scrollen();setTimeout(()=>{typing.hidden=true;mentorNachricht(antwort(text));send.disabled=false;input.focus();},Math.min(1500,550+text.length*8));}
-
-function antwort(text){
-  if(auswertungsWunsch(text)){gespraech.abgeschlossen=true;speichern();return ICS.erstelleAuswertung(gespraech);}
-  if(themaWechsel(text))gespraech=neu();
-  if(!gespraech.thema&&!gespraech.muster)return starten(text);
-
-  const nm=ICS.musterErkennen(text),nt=ICS.themaErkennen(text);
-
-  if(nm&&nm.id!==gespraech.muster&&!gespraech.weitereMuster.includes(nm.id)){
-    gespraech.weitereMuster.push(nm.id);
-    return `Ich nehme neben <strong>${ICS.escapen(fokus())}</strong> auch ein <strong>${ICS.escapen(nm.name)}</strong> wahr.<br><br>Ich halte diesen Zusammenhang fest.<br><br>${naechsteFrage()}`;
-  }
-
-  if(nt&&nt.id!==gespraech.thema&&!gespraech.nebenthemen.includes(nt.id)){
-    gespraech.nebenthemen.push(nt.id);
-    return `Ich nehme neben <strong>${ICS.escapen(fokus())}</strong> auch das Thema <strong>${ICS.escapen(nt.name)}</strong> wahr.<br><br>Ich halte diesen Zusammenhang fest.<br><br>${naechsteFrage()}`;
-  }
-
-  if(gespraech.modus==="muster")return musterDialog();
-  if(gespraech.modus==="thema")return themenDialog();
-  return "Was daran ist für dich im Moment am wichtigsten?";
-}
-
-function starten(text){
-  const st=ICS.pruefeSmalltalk(text);if(st)return st;
-  const ml=ICS.musterErkennenAlle(text),m=ml[0]||null,t=ICS.themaErkennen(text),e=ICS.emotionErkennen(text);
-  if(m){gespraech.muster=m.id;gespraech.weitereMuster=ml.slice(1).map(x=>x.id);gespraech.modus="muster";gespraech.schritt=0;if(t)gespraech.thema=t.id;return `Ich erkenne darin möglicherweise ein <strong>${ICS.escapen(m.name)}</strong>.<br><br>${ICS.escapen(m.spiegel)}<br><br>${ICS.escapen(m.fragen[0])}`;}
-  if(t){gespraech.thema=t.id;gespraech.modus="thema";gespraech.schritt=0;return ICS.escapen(t.start);}
-  if(e)return ICS.escapen(e.antwort);
-  return "Ich möchte dich richtig verstehen. Geht es gerade eher um eine Situation, ein Gefühl, eine Beziehung, eine Entscheidung oder ein wiederkehrendes Verhalten?";
-}
-
-function fokus(){if(gespraech.muster&&ICS.MUSTER[gespraech.muster])return ICS.MUSTER[gespraech.muster].name;if(gespraech.thema&&ICS.THEMEN[gespraech.thema])return ICS.THEMEN[gespraech.thema].name;return "deinem bisherigen Thema";}
+function antwort(text){if(auswertungsWunsch(text)){gespraech.abgeschlossen=true;speichern();return ICS.erstelleAuswertung(gespraech);}if(themaWechsel(text))gespraech=neu();const m=ICS.musterErkennen(text),t=ICS.themaErkennen(text);if(!gespraech.muster&&!gespraech.thema)return starten(text,m,t);if(m&&m.id!==gespraech.muster&&!gespraech.weitereMuster.includes(m.id)){gespraech.weitereMuster.push(m.id);return `Ich nehme neben <strong>${ICS.escapen(fokus())}</strong> auch ein <strong>${ICS.escapen(m.name)}</strong> wahr.<br><br>Ich halte diesen Zusammenhang fest.<br><br>${naechsteFrage()}`;}if(t&&t.id!==gespraech.thema&&!gespraech.nebenthemen.includes(t.id)){gespraech.nebenthemen.push(t.id);return `Ich nehme neben <strong>${ICS.escapen(fokus())}</strong> auch das Thema <strong>${ICS.escapen(t.name)}</strong> wahr.<br><br>Ich halte diesen Zusammenhang fest.<br><br>${naechsteFrage()}`;}if(gespraech.modus==="muster")return musterDialog();if(gespraech.modus==="thema")return themenDialog();return"Was daran ist für dich im Moment am wichtigsten?";}
+function starten(text,m,t){const st=ICS.pruefeSmalltalk(text);if(st)return st;const ml=ICS.musterErkennenAlle(text);m=m||ml[0]||null;const e=ICS.emotionErkennen(text);if(m){gespraech.muster=m.id;gespraech.weitereMuster=ml.filter(x=>x.id!==m.id).map(x=>x.id);gespraech.modus="muster";gespraech.schritt=0;if(t)gespraech.thema=t.id;return `Ich erkenne darin möglicherweise ein <strong>${ICS.escapen(m.name)}</strong>.<br><br>${ICS.escapen(m.spiegel)}<br><br>${ICS.escapen(m.fragen[0])}`;}if(t){gespraech.thema=t.id;gespraech.modus="thema";gespraech.schritt=0;return ICS.escapen(t.start);}if(e)return ICS.escapen(e.antwort);return"Ich möchte dich richtig verstehen. Geht es gerade eher um eine Situation, ein Gefühl, eine Beziehung, eine Entscheidung oder ein wiederkehrendes Verhalten?";}
+function fokus(){if(gespraech.muster&&ICS.MUSTER[gespraech.muster])return ICS.MUSTER[gespraech.muster].name;if(gespraech.thema&&ICS.THEMEN[gespraech.thema])return ICS.THEMEN[gespraech.thema].name;return"deinem bisherigen Thema";}
 function naechsteFrage(){if(gespraech.modus==="muster"){const m=ICS.MUSTER[gespraech.muster],i=Math.min(gespraech.schritt+1,m.fragen.length-1);gespraech.schritt=i;return ICS.escapen(m.fragen[i]);}const t=ICS.THEMEN[gespraech.thema],i=Math.min(gespraech.schritt,t.fragen.length-1);gespraech.schritt=i+1;return ICS.escapen(t.fragen[i]);}
 function musterDialog(){const m=ICS.MUSTER[gespraech.muster];gespraech.schritt++;if(gespraech.schritt<m.fragen.length)return ICS.escapen(m.fragen[gespraech.schritt]);gespraech.abgeschlossen=true;speichern();return `Danke für deine Offenheit.<br><br>${ICS.erstelleAuswertung(gespraech)}<br><br>Dein ICS Profil wurde aktualisiert.`;}
 function themenDialog(){const t=ICS.THEMEN[gespraech.thema];if(gespraech.schritt<t.fragen.length){const f=t.fragen[gespraech.schritt++];return ICS.escapen(f);}gespraech.abgeschlossen=true;speichern();return `Danke für deine Offenheit.<br><br>${ICS.erstelleAuswertung(gespraech)}<br><br>Dein ICS Profil wurde aktualisiert.`;}
