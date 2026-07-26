@@ -110,7 +110,7 @@ const prioritaet = ICS.Prioritaeten.wichtigste(
     return unbekanntAntwort(analyse);
   }
 
-  return dialogAntwort(text, analyse, update, hypothesen);
+  return dialogAntwort(text, analyse, update, hypothesen, prioritaet);
 }
 
 function uebernehmen(analyse){
@@ -141,7 +141,7 @@ function uebernehmen(analyse){
   }
 }
 
-function dialogAntwort(text, analyse, update, hypothesen){
+function dialogAntwort(text, analyse, update, hypothesen, prioritaet){
   const teile = [];
   const faden = ICS.brain.roterFaden(gespraech, analyse, update);
 
