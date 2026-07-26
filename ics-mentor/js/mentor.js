@@ -5,6 +5,7 @@ const send=document.getElementById("ics-send");
 const messages=document.getElementById("ics-messages");
 const counter=document.getElementById("ics-counter");
 const reset=document.getElementById("ics-reset");
+const profileButton=document.getElementById("ics-profile");
 const typing=document.getElementById("ics-typing");
 
 let gespraech=neuesGespraechObjekt();
@@ -14,10 +15,12 @@ function neuesGespraechObjekt(){
     thema:"",
     muster:"",
     weitereMuster:[],
+    nebenthemen:[],
     schritt:0,
     modus:"",
     antworten:[],
-    abgeschlossen:false
+    abgeschlossen:false,
+    gespeichert:false
   };
 }
 
@@ -36,12 +39,17 @@ input.addEventListener("input",function(){
 
 reset.addEventListener("click",neuesGespraech);
 
+profileButton.addEventListener("click",function(){
+  mentorNachricht(ICS.profilHtml());
+});
+
 function sendeNachricht(){
   const text=input.value.trim();
   if(!text||send.disabled) return;
 
   userNachricht(text);
   gespraech.antworten.push(text);
+
   input.value="";
   counter.textContent="0 / 1500";
   send.disabled=true;
@@ -59,6 +67,7 @@ function sendeNachricht(){
 function erzeugeAntwort(text){
   if(istAuswertungsWunsch(text)){
     gespraech.abgeschlossen=true;
+    speichereGespraechEinmal();
     return ICS.erstelleAuswertung(gespraech);
   }
 
@@ -67,46 +76,110 @@ function erzeugeAntwort(text){
   }
 
   if(!gespraech.thema&&!gespraech.muster){
-    const smalltalk=ICS.pruefeSmalltalk(text);
-    if(smalltalk) return smalltalk;
-
-    const musterListe=ICS.musterErkennenAlle(text);
-    const muster=musterListe[0]||null;
-    const thema=ICS.themaErkennen(text);
-    const emotion=ICS.emotionErkennen(text);
-
-    if(muster){
-      gespraech.muster=muster.id;
-      gespraech.weitereMuster=musterListe.slice(1).map(m=>m.id);
-      gespraech.modus="muster";
-      gespraech.schritt=0;
-      if(thema) gespraech.thema=thema.id;
-
-      let zusatz="";
-      if(musterListe.length>1){
-        zusatz="<br><br>Daneben zeigen sich auch Anteile von <strong>"+
-          musterListe.slice(1).map(m=>ICS.escapen(m.name)).join(" und ")+"</strong>.";
-      }
-
-      return `Ich erkenne darin möglicherweise ein <strong>${ICS.escapen(muster.name)}</strong>.<br><br>${ICS.escapen(muster.spiegel)}${zusatz}<br><br>${ICS.escapen(muster.fragen[0])}`;
-    }
-
-    if(thema){
-      gespraech.thema=thema.id;
-      gespraech.modus="thema";
-      gespraech.schritt=0;
-      return ICS.escapen(thema.start);
-    }
-
-    if(emotion) return ICS.escapen(emotion.antwort);
-
-    return "Ich möchte dich richtig verstehen. Geht es gerade eher um eine Situation, ein Gefühl, eine Beziehung, eine Entscheidung oder ein wiederkehrendes Verhalten?";
+    return starteNeuesThema(text);
   }
 
-  if(gespraech.modus==="muster"&&gespraech.muster) return fuehreMusterDialog();
-  if(gespraech.modus==="thema"&&gespraech.thema) return fuehreThemenDialog();
+  const neuesThema=ICS.themaErkennen(text);
+  const neuesMuster=ICS.musterErkennen(text);
+
+  if(istNeuerWichtigerAspekt(neuesThema,neuesMuster)){
+    merkeNebenthema(neuesThema,neuesMuster);
+
+    const aktuell=gespraech.muster
+      ? ICS.MUSTER[gespraech.muster].name
+      : ICS.THEMEN[gespraech.thema].name;
+
+    const erkannt=neuesMuster ? neuesMuster.name : neuesThema.name;
+
+    return `Ich nehme wahr, dass neben <strong>${ICS.escapen(aktuell)}</strong> auch <strong>${ICS.escapen(erkannt)}</strong> wichtig ist.<br><br>Ich halte diesen zweiten Aspekt fest. Lass uns den aktuellen roten Faden kurz zu Ende führen, damit daraus echte Klarheit entsteht.<br><br>${naechsteAktuelleFrage()}`;
+  }
+
+  if(gespraech.modus==="muster"&&gespraech.muster){
+    return fuehreMusterDialog();
+  }
+
+  if(gespraech.modus==="thema"&&gespraech.thema){
+    return fuehreThemenDialog();
+  }
 
   return "Was daran ist für dich im Moment am wichtigsten?";
+}
+
+function starteNeuesThema(text){
+  const smalltalk=ICS.pruefeSmalltalk(text);
+  if(smalltalk) return smalltalk;
+
+  const musterListe=ICS.musterErkennenAlle(text);
+  const muster=musterListe[0]||null;
+  const thema=ICS.themaErkennen(text);
+  const emotion=ICS.emotionErkennen(text);
+
+  if(muster){
+    gespraech.muster=muster.id;
+    gespraech.weitereMuster=musterListe.slice(1).map(m=>m.id);
+    gespraech.modus="muster";
+    gespraech.schritt=0;
+    if(thema) gespraech.thema=thema.id;
+
+    let zusatz="";
+    if(musterListe.length>1){
+      zusatz="<br><br>Daneben zeigen sich auch Anteile von <strong>"+
+        musterListe.slice(1).map(m=>ICS.escapen(m.name)).join(" und ")+"</strong>.";
+    }
+
+    return `Ich erkenne darin möglicherweise ein <strong>${ICS.escapen(muster.name)}</strong>.<br><br>${ICS.escapen(muster.spiegel)}${zusatz}<br><br>${ICS.escapen(muster.fragen[0])}`;
+  }
+
+  if(thema){
+    gespraech.thema=thema.id;
+    gespraech.modus="thema";
+    gespraech.schritt=0;
+    return ICS.escapen(thema.start);
+  }
+
+  if(emotion) return ICS.escapen(emotion.antwort);
+
+  return "Ich möchte dich richtig verstehen. Geht es gerade eher um eine Situation, ein Gefühl, eine Beziehung, eine Entscheidung oder ein wiederkehrendes Verhalten?";
+}
+
+function istNeuerWichtigerAspekt(thema,muster){
+  if(muster&&muster.id!==gespraech.muster&&!gespraech.weitereMuster.includes(muster.id)){
+    return true;
+  }
+
+  if(thema&&thema.id!==gespraech.thema&&!gespraech.nebenthemen.includes(thema.id)){
+    return true;
+  }
+
+  return false;
+}
+
+function merkeNebenthema(thema,muster){
+  if(muster&&muster.id!==gespraech.muster&&!gespraech.weitereMuster.includes(muster.id)){
+    gespraech.weitereMuster.push(muster.id);
+  }
+
+  if(thema&&thema.id!==gespraech.thema&&!gespraech.nebenthemen.includes(thema.id)){
+    gespraech.nebenthemen.push(thema.id);
+  }
+}
+
+function naechsteAktuelleFrage(){
+  if(gespraech.modus==="muster"&&gespraech.muster){
+    const muster=ICS.MUSTER[gespraech.muster];
+    const index=Math.min(gespraech.schritt+1,muster.fragen.length-1);
+    gespraech.schritt=index;
+    return ICS.escapen(muster.fragen[index]);
+  }
+
+  if(gespraech.modus==="thema"&&gespraech.thema){
+    const thema=ICS.THEMEN[gespraech.thema];
+    const index=Math.min(gespraech.schritt,thema.fragen.length-1);
+    gespraech.schritt=index+1;
+    return ICS.escapen(thema.fragen[index]);
+  }
+
+  return "Was ist daran für dich der wichtigste Punkt?";
 }
 
 function fuehreMusterDialog(){
@@ -118,7 +191,9 @@ function fuehreMusterDialog(){
   }
 
   gespraech.abgeschlossen=true;
-  return `Danke für deine Offenheit.<br><br>Aus deinen Antworten lässt sich ein klarer roter Faden erkennen.<br><br>${ICS.erstelleAuswertung(gespraech)}<br><br>Welchen kleinen Schritt möchtest du daraus heute wirklich umsetzen?`;
+  speichereGespraechEinmal();
+
+  return `Danke für deine Offenheit.<br><br>Aus deinen Antworten lässt sich ein klarer roter Faden erkennen.<br><br>${ICS.erstelleAuswertung(gespraech)}<br><br>Dein ICS Profil wurde aktualisiert.<br><br>Welchen kleinen Schritt möchtest du daraus heute wirklich umsetzen?`;
 }
 
 function fuehreThemenDialog(){
@@ -131,7 +206,15 @@ function fuehreThemenDialog(){
   }
 
   gespraech.abgeschlossen=true;
-  return `Danke für deine Offenheit.<br><br>${ICS.erstelleAuswertung(gespraech)}<br><br>Welcher Teil davon spricht dich am stärksten an?`;
+  speichereGespraechEinmal();
+
+  return `Danke für deine Offenheit.<br><br>${ICS.erstelleAuswertung(gespraech)}<br><br>Dein ICS Profil wurde aktualisiert.<br><br>Welcher Teil davon spricht dich am stärksten an?`;
+}
+
+function speichereGespraechEinmal(){
+  if(gespraech.gespeichert) return;
+  ICS.profilAktualisieren(gespraech);
+  gespraech.gespeichert=true;
 }
 
 function istAuswertungsWunsch(text){
