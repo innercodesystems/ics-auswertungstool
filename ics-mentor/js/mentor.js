@@ -154,6 +154,18 @@ function dialogAntwort(text, analyse, update, hypothesen){
     teile.push(zwischenSpiegel());
   }
 
+if(hypothesen && hypothesen.length){
+
+    teile.push(
+        `💡 <strong>${ICS.escapen(hypothesen[0].text)}</strong>`
+    );
+
+    teile.push(
+        ICS.escapen(hypothesen[0].frage)
+    );
+
+}
+  
   const frage = intelligenteFrage(analyse);
   if(frage) {
     gespraech.offeneFragen.push(frage);
