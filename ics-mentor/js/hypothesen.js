@@ -8,8 +8,7 @@ ICS.Hypothesen = (() => {
 
         if(!analyse) return liste;
 
-        if(analyse.emotion?.id === "angst"
-            && analyse.musterIds?.includes("kontrolle")){
+        if(analyse.musterIds?.includes("kontrolle")){
 
             liste.push({
 
