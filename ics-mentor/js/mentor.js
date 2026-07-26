@@ -84,6 +84,12 @@ function antwort(text){
   if(smalltalk && gespraech.antworten.length <= 1) return smalltalk;
 
   const analyse = ICS.brain.analysieren(text, gespraech);
+
+const hypothesen = ICS.Hypothesen.erstellen(
+    gespraech,
+    analyse
+);
+  
   gespraech.analysen.push(analyse);
 
   const update = ICS.brain.aktualisieren(gespraech, analyse);
