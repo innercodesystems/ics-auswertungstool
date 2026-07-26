@@ -5,13 +5,6 @@ const counter = document.getElementById("ics-counter");
 const reset = document.getElementById("ics-reset");
 const typing = document.getElementById("ics-typing");
 
-const startNachricht =
-  "Willkommen. Was beschäftigt dich im Moment am meisten?";
-
-/* =========================================================
-   GESPRÄCHSSPEICHER
-========================================================= */
-
 let gespraech = {
   thema: "",
   schritt: 0,
@@ -19,14 +12,9 @@ let gespraech = {
   abgeschlossen: false
 };
 
-/* =========================================================
-   THEMEN UND GESPRÄCHSABLAUF
-========================================================= */
-
 const themen = {
   angst: {
     name: "Angst und Unsicherheit",
-
     begriffe: [
       "angst",
       "aengste",
@@ -37,39 +25,27 @@ const themen = {
       "sorgen",
       "versagen",
       "ablehnung",
-      "panik",
-      "befuerchtung"
+      "panik"
     ],
-
     start:
       "Ich nehme wahr, dass Angst oder Unsicherheit gerade viel Raum einnimmt. Wovor hast du im Moment am meisten Angst?",
-
     fragen: [
       "Was glaubst du, könnte im schlimmsten Fall geschehen?",
       "Was tust du momentan, um dieses Gefühl oder diese Situation zu vermeiden?",
       "Was würdest du tun, wenn du dich innerlich sicher fühlen würdest?"
     ],
-
-    auswertung: {
-      titel: "Dein aktuelles Angst- und Sicherheitsmuster",
-
-      innerCode:
-        "Du musst nicht warten, bis jede Unsicherheit verschwunden ist. Innere Sicherheit kann entstehen, während du einen kleinen bewussten Schritt gehst.",
-
-      bodyCode:
-        "Atme langsam und länger aus als ein. Spüre beide Füße auf dem Boden und orientiere dich bewusst im Raum. Dein Körper darf erfahren, dass du in diesem Moment sicher bist.",
-
-      actionCode:
-        "Wähle heute einen kleinen Schritt, der Mut zeigt, ohne dich zu überfordern.",
-
-      reset:
-        "Realisiere die Angst, ohne sie zu bekämpfen. Erkenne ihre Schutzabsicht. Nimm deinen Körper wahr. Entscheide dich für einen kleinen Schritt. Transformiere Unsicherheit durch eine neue Erfahrung."
-    }
+    innerCode:
+      "Du musst nicht warten, bis jede Unsicherheit verschwunden ist. Innere Sicherheit kann entstehen, während du einen kleinen bewussten Schritt gehst.",
+    bodyCode:
+      "Atme langsam und länger aus als ein. Spüre beide Füße auf dem Boden und orientiere dich bewusst im Raum.",
+    actionCode:
+      "Wähle heute einen kleinen Schritt, der Mut zeigt, ohne dich zu überfordern.",
+    reset:
+      "Realisiere die Angst. Erkenne ihre Schutzabsicht. Nimm deinen Körper wahr. Entscheide dich für einen kleinen Schritt. Transformiere Unsicherheit durch eine neue Erfahrung."
   },
 
   stress: {
     name: "Stress und Überforderung",
-
     begriffe: [
       "stress",
       "gestresst",
@@ -84,36 +60,25 @@ const themen = {
       "belastung",
       "funktionieren"
     ],
-
     start:
       "Ich nehme wahr, dass Stress oder Überforderung gerade viel Raum einnimmt. Was belastet dich im Moment am stärksten?",
-
     fragen: [
       "Woran merkst du körperlich, dass die Belastung zu viel wird?",
       "Was versuchst du trotzdem weiterhin zu leisten oder aufrechtzuerhalten?",
       "Was würde dir heute konkret etwas mehr Ruhe oder Entlastung geben?"
     ],
-
-    auswertung: {
-      titel: "Dein aktuelles Belastungs- und Entlastungsmuster",
-
-      innerCode:
-        "Du musst nicht alles gleichzeitig tragen. Klarheit entsteht oft dort, wo du bewusst entscheidest, was heute wirklich wichtig ist.",
-
-      bodyCode:
-        "Senke bewusst deine Schultern. Löse den Kiefer und atme langsam aus. Gib deinem Nervensystem für einen Moment das Signal, dass du gerade nichts leisten musst.",
-
-      actionCode:
-        "Verschiebe, vereinfache oder streiche heute bewusst eine Aufgabe.",
-
-      reset:
-        "Realisiere deine aktuelle Belastung. Erkenne, was nicht wirklich heute erledigt werden muss. Nimm deine Körpersignale wahr. Entscheide dich für Entlastung. Transformiere Dauerfunktionieren in bewusste Priorität."
-    }
+    innerCode:
+      "Du musst nicht alles gleichzeitig tragen. Klarheit entsteht dort, wo du bewusst entscheidest, was heute wirklich wichtig ist.",
+    bodyCode:
+      "Senke bewusst deine Schultern, löse den Kiefer und atme langsam aus.",
+    actionCode:
+      "Verschiebe, vereinfache oder streiche heute bewusst eine Aufgabe.",
+    reset:
+      "Realisiere deine Belastung. Erkenne, was heute nicht notwendig ist. Nimm deine Körpersignale wahr. Entscheide dich für Entlastung."
   },
 
   beziehung: {
     name: "Beziehung und Nähe",
-
     begriffe: [
       "beziehung",
       "partner",
@@ -124,84 +89,29 @@ const themen = {
       "naehe",
       "distanz",
       "streit",
-      "allein",
       "einsam",
-      "petra",
-      "freundin",
-      "freund"
+      "freund",
+      "freundin"
     ],
-
     start:
-      "Beziehungen berühren oft unsere tiefsten Bedürfnisse. Was beschäftigt dich in deiner Beziehung oder Verbindung gerade am meisten?",
-
+      "Beziehungen berühren oft unsere tiefsten Bedürfnisse. Was beschäftigt dich dort gerade am meisten?",
     fragen: [
       "Welches Bedürfnis von dir wird in dieser Situation gerade nicht erfüllt?",
-      "Wie reagierst du normalerweise, wenn du dich nicht gesehen, verstanden oder sicher fühlst?",
+      "Wie reagierst du normalerweise, wenn du dich nicht gesehen oder verstanden fühlst?",
       "Was wäre eine ehrliche und gleichzeitig respektvolle Handlung, die dir selbst treu bleibt?"
     ],
-
-    auswertung: {
-      titel: "Dein aktuelles Beziehungs- und Bedürfnismuster",
-
-      innerCode:
-        "Nähe entsteht nicht durch Selbstaufgabe. Eine tragfähige Verbindung beginnt dort, wo du deine Wahrheit wahrnimmst und respektvoll ausdrückst.",
-
-      bodyCode:
-        "Lege eine Hand auf den Brustkorb und eine auf den Bauch. Spüre, ob dein Körper gerade Nähe, Abstand, Schutz oder Ausdruck braucht.",
-
-      actionCode:
-        "Formuliere heute einen ehrlichen Satz über dein Bedürfnis, ohne Vorwurf und ohne Forderung.",
-
-      reset:
-        "Realisiere, was zwischen euch geschieht. Erkenne dein eigentliches Bedürfnis. Nimm deine körperliche Reaktion wahr. Entscheide dich für eine klare Haltung. Transformiere unausgesprochene Spannung in ehrliche Kommunikation."
-    }
-  },
-
-  energie: {
-    name: "Energie und Erschöpfung",
-
-    begriffe: [
-      "energie",
-      "energielos",
-      "muedigkeit",
-      "muede",
-      "kraftlos",
-      "keine kraft",
-      "ausgelaugt",
-      "antriebslos",
-      "erschoepft",
-      "erschoepfung"
-    ],
-
-    start:
-      "Deine Energie scheint gerade Aufmerksamkeit zu brauchen. Wodurch verlierst du im Moment am meisten Kraft?",
-
-    fragen: [
-      "Welche Menschen, Aufgaben oder Gedanken ziehen regelmäßig Energie von dir ab?",
-      "Was gibt dir normalerweise spürbar Kraft, kommt momentan aber zu kurz?",
-      "Welche eine Veränderung würde deine Energie heute am stärksten schützen?"
-    ],
-
-    auswertung: {
-      titel: "Dein aktuelles Energie- und Kraftmuster",
-
-      innerCode:
-        "Energie entsteht nicht nur durch mehr Ruhe, sondern auch dadurch, dass du aufhörst, dich ständig gegen dich selbst zu bewegen.",
-
-      bodyCode:
-        "Schließe für einen Moment die Augen und frage deinen Körper: Brauche ich gerade Ruhe, Bewegung, Nahrung, Abstand oder Verbindung?",
-
-      actionCode:
-        "Schütze heute mindestens 30 Minuten bewusst vor fremden Anforderungen und digitalen Reizen.",
-
-      reset:
-        "Realisiere deinen Energieverlust. Erkenne seine wichtigste Quelle. Nimm das Bedürfnis deines Körpers wahr. Entscheide dich für eine Grenze. Transformiere Energieverlust in bewusste Selbstführung."
-    }
+    innerCode:
+      "Nähe entsteht nicht durch Selbstaufgabe. Eine tragfähige Verbindung beginnt dort, wo du deine Wahrheit wahrnimmst und ausdrückst.",
+    bodyCode:
+      "Lege eine Hand auf deinen Brustkorb und eine auf deinen Bauch. Spüre, ob dein Körper Nähe, Abstand, Schutz oder Ausdruck braucht.",
+    actionCode:
+      "Formuliere heute einen ehrlichen Satz über dein Bedürfnis – ohne Vorwurf und ohne Forderung.",
+    reset:
+      "Realisiere, was geschieht. Erkenne dein Bedürfnis. Nimm deine Reaktion wahr. Entscheide dich für eine klare Haltung."
   },
 
   arbeit: {
     name: "Arbeit und berufliche Klarheit",
-
     begriffe: [
       "arbeit",
       "job",
@@ -212,42 +122,29 @@ const themen = {
       "firma",
       "kunde",
       "kunden",
-      "kuendigen",
-      "kuendigung",
       "karriere",
       "business",
       "selbststaendig"
     ],
-
     start:
       "Deine berufliche Situation scheint dich gerade zu beschäftigen. Was ist dort im Moment das eigentliche Problem?",
-
     fragen: [
       "Was davon kannst du beeinflussen – und was liegt außerhalb deiner Kontrolle?",
       "Welche Grenze oder Entscheidung vermeidest du momentan?",
       "Wie würde ein beruflicher Schritt aussehen, der besser zu deiner Kraft und deinen Werten passt?"
     ],
-
-    auswertung: {
-      titel: "Dein aktuelles Arbeits- und Entscheidungsmuster",
-
-      innerCode:
-        "Berufliche Klarheit entsteht nicht dadurch, dass du jede Unsicherheit vermeidest. Sie entsteht, wenn du erkennst, was nicht länger zu dir passt.",
-
-      bodyCode:
-        "Achte darauf, wie dein Körper auf verschiedene berufliche Möglichkeiten reagiert: Wird es enger, schwerer und unruhiger – oder weiter und klarer?",
-
-      actionCode:
-        "Definiere heute eine konkrete berufliche Grenze oder einen nächsten überprüfbaren Schritt.",
-
-      reset:
-        "Realisiere deine aktuelle Arbeitssituation. Erkenne deinen beeinflussbaren Bereich. Nimm deine körperliche Resonanz wahr. Entscheide dich für eine klare Grenze. Transformiere berufliche Unklarheit in eine konkrete Handlung."
-    }
+    innerCode:
+      "Berufliche Klarheit entsteht, wenn du erkennst, was nicht länger zu dir passt.",
+    bodyCode:
+      "Achte darauf, ob dein Körper bei einer Möglichkeit enger, schwerer und unruhiger oder weiter und klarer wird.",
+    actionCode:
+      "Definiere heute eine konkrete berufliche Grenze oder einen nächsten überprüfbaren Schritt.",
+    reset:
+      "Realisiere deine Situation. Erkenne deinen beeinflussbaren Bereich. Nimm deine Resonanz wahr. Entscheide dich für Klarheit."
   },
 
   finanzen: {
     name: "Finanzen und Sicherheit",
-
     begriffe: [
       "geld",
       "finanzen",
@@ -259,84 +156,28 @@ const themen = {
       "steuer",
       "einkommen",
       "ausgaben",
-      "unterhalt",
       "zahlung",
-      "bezahlen",
       "konto"
     ],
-
     start:
-      "Finanzielle Themen können schnell starken inneren Druck erzeugen. Was belastet dich daran im Moment am meisten?",
-
+      "Finanzielle Themen können starken inneren Druck erzeugen. Was belastet dich daran im Moment am meisten?",
     fragen: [
       "Welche konkrete Zahl, Zahlung oder Unsicherheit macht dir derzeit am meisten Sorgen?",
       "Was vermeidest du möglicherweise, weil der Blick darauf unangenehm ist?",
-      "Welcher realistische nächste Schritt würde dir heute etwas mehr Kontrolle und Klarheit geben?"
+      "Welcher realistische nächste Schritt würde dir heute mehr Kontrolle und Klarheit geben?"
     ],
-
-    auswertung: {
-      titel: "Dein aktuelles Finanz- und Sicherheitsmuster",
-
-      innerCode:
-        "Finanzielle Klarheit beginnt nicht erst, wenn genug Geld vorhanden ist. Sie beginnt mit einem ehrlichen Blick auf die aktuelle Realität.",
-
-      bodyCode:
-        "Beobachte, wo du finanziellen Druck im Körper spürst. Atme bewusst in diesen Bereich und trenne für einen Moment die tatsächlichen Zahlen von den inneren Befürchtungen.",
-
-      actionCode:
-        "Notiere heute alle offenen Zahlungen und markiere genau eine, die du konkret klärst.",
-
-      reset:
-        "Realisiere deine finanzielle Situation ohne Bewertung. Erkenne die wichtigste offene Position. Nimm die Angstreaktion deines Körpers wahr. Entscheide dich für eine konkrete Klärung. Transformiere Vermeidung in Überblick."
-    }
-  },
-
-  familie: {
-    name: "Familie und Verantwortung",
-
-    begriffe: [
-      "familie",
-      "mutter",
-      "vater",
-      "eltern",
-      "sohn",
-      "tochter",
-      "kind",
-      "kinder",
-      "bruder",
-      "schwester",
-      "familiaer"
-    ],
-
-    start:
-      "Familienthemen können viele alte Rollen und Verpflichtungen berühren. Was beschäftigt dich in deiner Familie gerade am stärksten?",
-
-    fragen: [
-      "Welche Verantwortung übernimmst du dort möglicherweise automatisch?",
-      "Was würdest du dir von den anderen wünschen, sprichst es aber nicht klar aus?",
-      "Welche gesunde Grenze oder ehrliche Aussage wäre jetzt wichtig?"
-    ],
-
-    auswertung: {
-      titel: "Dein aktuelles Familien- und Verantwortungsmuster",
-
-      innerCode:
-        "Du darfst verbunden sein, ohne für alles verantwortlich zu sein. Liebe und Abgrenzung schließen sich nicht aus.",
-
-      bodyCode:
-        "Spüre, ob dein Körper bei diesem Familienthema eher zusammenzieht, schwer wird oder in Alarm geht. Diese Reaktion zeigt dir, wo eine Grenze fehlt.",
-
-      actionCode:
-        "Formuliere einen klaren Satz darüber, wofür du verantwortlich bist – und wofür nicht.",
-
-      reset:
-        "Realisiere deine familiäre Rolle. Erkenne übernommene Verantwortung. Nimm deine innere Belastung wahr. Entscheide dich für eine gesunde Grenze. Transformiere Pflichtgefühl in bewusste Verbindung."
-    }
+    innerCode:
+      "Finanzielle Klarheit beginnt mit einem ehrlichen Blick auf die aktuelle Realität.",
+    bodyCode:
+      "Trenne für einen Moment die tatsächlichen Zahlen von deinen inneren Befürchtungen.",
+    actionCode:
+      "Notiere alle offenen Zahlungen und kläre heute genau eine davon.",
+    reset:
+      "Realisiere die Situation. Erkenne die wichtigste offene Position. Nimm die Angst wahr. Entscheide dich für eine konkrete Klärung."
   },
 
   selbstwert: {
     name: "Selbstwert und innere Kritik",
-
     begriffe: [
       "selbstwert",
       "nicht gut genug",
@@ -346,41 +187,101 @@ const themen = {
       "versager",
       "kann nichts",
       "unfaehig",
-      "kritik",
-      "vergleichen",
-      "vergleich"
+      "kritik"
     ],
-
     start:
       "Ich höre darin viel Selbstzweifel oder innere Bewertung. Was glaubst du im Moment über dich selbst?",
-
     fragen: [
       "Wessen Stimme oder Erwartung könnte hinter dieser inneren Kritik stehen?",
       "Wie verhältst du dich, wenn du glaubst, nicht gut genug zu sein?",
       "Was würdest du einem Menschen sagen, den du liebst, wenn er genauso über sich denken würde?"
     ],
-
-    auswertung: {
-      titel: "Dein aktuelles Selbstwert- und Kritikmuster",
-
-      innerCode:
-        "Dein Wert hängt nicht davon ab, ob du jederzeit funktionierst, erfolgreich bist oder die Erwartungen anderer erfüllst.",
-
-      bodyCode:
-        "Richte dich bewusst auf, atme ruhig und spüre den Boden. Dein Körper darf eine Haltung einnehmen, die nicht um Erlaubnis bittet.",
-
-      actionCode:
-        "Notiere eine konkrete Fähigkeit oder Handlung, auf die du ehrlich stolz bist, und handle heute einmal aus dieser Haltung heraus.",
-
-      reset:
-        "Realisiere deine Selbstkritik. Erkenne ihre Herkunft. Nimm wahr, wie dein Körper darauf reagiert. Entscheide dich für eine neue innere Aussage. Transformiere Abwertung in Selbstachtung."
-    }
+    innerCode:
+      "Dein Wert hängt nicht davon ab, ob du jederzeit funktionierst oder die Erwartungen anderer erfüllst.",
+    bodyCode:
+      "Richte dich bewusst auf, atme ruhig und spüre den Boden unter deinen Füßen.",
+    actionCode:
+      "Notiere eine Fähigkeit oder Handlung, auf die du ehrlich stolz bist.",
+    reset:
+      "Realisiere deine Selbstkritik. Erkenne ihre Herkunft. Nimm deine Reaktion wahr. Entscheide dich für Selbstachtung."
   }
 };
 
-/* =========================================================
-   EREIGNISSE
-========================================================= */
+const musterDaten = {
+  rueckzug: {
+    begriffe: [
+      "ich ziehe mich zurueck",
+      "ziehe mich zurueck",
+      "ich gehe auf abstand",
+      "ich mache dicht",
+      "ich sage nichts mehr",
+      "ich isoliere mich"
+    ],
+    antwort:
+      "Ich erkenne darin möglicherweise ein <strong>Rückzugsmuster</strong>.<br><br>Rückzug kann kurzfristig schützen, verhindert aber manchmal, dass deine wirklichen Bedürfnisse sichtbar werden.<br><br>Ziehst du dich eher zurück, um dich zu schützen, einen Konflikt zu vermeiden oder weil du dich überfordert fühlst?"
+  },
+
+  kontrolle: {
+    begriffe: [
+      "ich muss alles kontrollieren",
+      "ich will alles kontrollieren",
+      "ich kann nicht loslassen",
+      "ich muss alles im griff haben",
+      "ich mache lieber alles selbst"
+    ],
+    antwort:
+      "Ich erkenne darin möglicherweise ein <strong>Kontrollmuster</strong>.<br><br>Kontrolle versucht häufig, Unsicherheit zu reduzieren und kostet gleichzeitig viel Kraft.<br><br>Was befürchtest du, könnte geschehen, wenn du einen Teil der Kontrolle abgeben würdest?"
+  },
+
+  perfektionismus: {
+    begriffe: [
+      "es muss perfekt sein",
+      "ich muss perfekt sein",
+      "ich darf keinen fehler machen",
+      "es ist nie gut genug",
+      "ich muss es besser machen"
+    ],
+    antwort:
+      "Ich erkenne darin möglicherweise ein <strong>Perfektionsmuster</strong>.<br><br>Perfektionismus schützt oft vor Kritik oder Ablehnung.<br><br>Was würde passieren, wenn dein Ergebnis heute gut und stimmig wäre – aber nicht perfekt?"
+  },
+
+  anpassung: {
+    begriffe: [
+      "ich sage immer ja",
+      "ich kann nicht nein sagen",
+      "ich passe mich immer an",
+      "ich mache es allen recht",
+      "ich stelle mich hinten an"
+    ],
+    antwort:
+      "Ich erkenne darin möglicherweise ein <strong>Anpassungsmuster</strong>.<br><br>Was würdest du sagen oder entscheiden, wenn deine Bedürfnisse genauso wichtig wären wie die der anderen?"
+  },
+
+  vermeidung: {
+    begriffe: [
+      "ich schiebe es auf",
+      "ich vermeide es",
+      "ich gehe dem aus dem weg",
+      "ich ignoriere es",
+      "ich mache es spaeter"
+    ],
+    antwort:
+      "Ich erkenne darin möglicherweise ein <strong>Vermeidungsmuster</strong>.<br><br>Vermeidung entlastet kurzfristig, hält die Belastung aber häufig aufrecht.<br><br>Was wäre der kleinstmögliche Schritt, mit dem du dich der Situation heute annähern könntest?"
+  },
+
+  leistung: {
+    begriffe: [
+      "ich muss funktionieren",
+      "ich muss leisten",
+      "ich darf nicht ausfallen",
+      "ich muss weitermachen",
+      "ich kann keine pause machen",
+      "ich muss stark sein"
+    ],
+    antwort:
+      "Ich erkenne darin möglicherweise ein <strong>Leistungs- und Funktionsmuster</strong>.<br><br>Wer wärst du in diesem Moment, wenn du gerade nichts beweisen müsstest?"
+  }
+};
 
 send.addEventListener("click", sendeNachricht);
 
@@ -392,14 +293,12 @@ input.addEventListener("keydown", function (event) {
 });
 
 input.addEventListener("input", function () {
-  counter.textContent = input.value.length + " / 1500";
+  if (counter) {
+    counter.textContent = input.value.length + " / 1500";
+  }
 });
 
 reset.addEventListener("click", neuesGespraech);
-
-/* =========================================================
-   NEUES GESPRÄCH
-========================================================= */
 
 function neuesGespraech() {
   gespraech = {
@@ -415,25 +314,24 @@ function neuesGespraech() {
 
       <div class="chat-bubble mentor-bubble">
         <strong>ICS Mentor</strong>
-        <p>${startNachricht}</p>
+        <p>Willkommen. Was beschäftigt dich im Moment am meisten?</p>
       </div>
     </div>
   `;
 
   input.value = "";
-  counter.textContent = "0 / 1500";
-  send.disabled = false;
+
+  if (counter) {
+    counter.textContent = "0 / 1500";
+  }
 
   if (typing) {
     typing.hidden = true;
   }
 
+  send.disabled = false;
   input.focus();
 }
-
-/* =========================================================
-   NACHRICHT SENDEN
-========================================================= */
 
 function sendeNachricht() {
   const text = input.value.trim();
@@ -445,263 +343,54 @@ function sendeNachricht() {
   userNachricht(text);
 
   input.value = "";
-  counter.textContent = "0 / 1500";
+
+  if (counter) {
+    counter.textContent = "0 / 1500";
+  }
+
   send.disabled = true;
 
   if (typing) {
     typing.hidden = false;
   }
 
-  const denkzeit = berechneDenkzeit(text);
-
   setTimeout(function () {
-    if (typing) {
-      typing.hidden = true;
-    }
+    try {
+      const antwort = passendeAntwort(text);
 
-    const antwort = passendeAntwort(text);
-
-    mentorNachricht(antwort);
-
-    send.disabled = false;
-    input.focus();
-  }, denkzeit);
-}
-
-/* =========================================================
-   ANTWORTLOGIK
-========================================================= */
-
-/* =========================================================
-   MUSTERERKENNUNG
-========================================================= */
-
-const musterDaten = {
-  rueckzug: {
-    name: "Rückzug",
-    begriffe: [
-      "ich ziehe mich zurueck",
-      "ziehe mich zurueck",
-      "ich gehe auf abstand",
-      "ich mache dicht",
-      "ich sage nichts mehr",
-      "ich isoliere mich",
-      "ich gehe weg",
-      "ich verschwinde"
-    ],
-    antwort: `
-      Ich erkenne darin möglicherweise ein
-      <strong>Rückzugsmuster</strong>.<br><br>
-
-      Rückzug kann kurzfristig schützen, verhindert aber manchmal,
-      dass deine wirklichen Bedürfnisse sichtbar werden.<br><br>
-
-      Ziehst du dich eher zurück, um dich zu schützen,
-      einen Konflikt zu vermeiden oder weil du dich überfordert fühlst?
-    `
-  },
-
-  kontrolle: {
-    name: "Kontrolle",
-    begriffe: [
-      "ich muss alles kontrollieren",
-      "ich will alles kontrollieren",
-      "ich kann nicht loslassen",
-      "ich muss alles im griff haben",
-      "ich kontrolliere alles",
-      "ich vertraue niemandem",
-      "ich mache lieber alles selbst"
-    ],
-    antwort: `
-      Ich erkenne darin möglicherweise ein
-      <strong>Kontrollmuster</strong>.<br><br>
-
-      Kontrolle versucht häufig, Unsicherheit zu reduzieren.
-      Gleichzeitig kann sie sehr viel Kraft kosten.<br><br>
-
-      Was befürchtest du, könnte geschehen,
-      wenn du einen Teil der Kontrolle abgeben würdest?
-    `
-  },
-
-  perfektionismus: {
-    name: "Perfektionismus",
-    begriffe: [
-      "es muss perfekt sein",
-      "ich muss perfekt sein",
-      "ich darf keinen fehler machen",
-      "ich mache alles perfekt",
-      "es ist nie gut genug",
-      "ich bin nie zufrieden",
-      "ich muss es besser machen"
-    ],
-    antwort: `
-      Ich erkenne darin möglicherweise ein
-      <strong>Perfektionsmuster</strong>.<br><br>
-
-      Perfektionismus schützt oft vor Kritik, Ablehnung
-      oder dem Gefühl, nicht gut genug zu sein.<br><br>
-
-      Was würde passieren, wenn dein Ergebnis heute
-      gut und stimmig wäre – aber nicht perfekt?
-    `
-  },
-
-  vermeidung: {
-    name: "Vermeidung",
-    begriffe: [
-      "ich schiebe es auf",
-      "ich vermeide es",
-      "ich gehe dem aus dem weg",
-      "ich druecke mich davor",
-      "ich ignoriere es",
-      "ich will mich nicht damit beschaeftigen",
-      "ich mache es spaeter"
-    ],
-    antwort: `
-      Ich erkenne darin möglicherweise ein
-      <strong>Vermeidungsmuster</strong>.<br><br>
-
-      Vermeidung gibt kurzfristig Erleichterung,
-      hält die innere Belastung aber häufig aufrecht.<br><br>
-
-      Was wäre der kleinstmögliche Schritt,
-      mit dem du dich der Situation heute annähern könntest?
-    `
-  },
-
-  anpassung: {
-    name: "Überanpassung",
-    begriffe: [
-      "ich sage immer ja",
-      "ich kann nicht nein sagen",
-      "ich passe mich immer an",
-      "ich will niemanden enttaeuschen",
-      "ich mache es allen recht",
-      "ich stelle mich hinten an",
-      "die anderen sind wichtiger"
-    ],
-    antwort: `
-      Ich erkenne darin möglicherweise ein
-      <strong>Anpassungsmuster</strong>.<br><br>
-
-      Hinter ständiger Anpassung liegt häufig der Wunsch,
-      Konflikte, Ablehnung oder Enttäuschung zu vermeiden.<br><br>
-
-      Was würdest du sagen oder entscheiden,
-      wenn deine Bedürfnisse genauso wichtig wären wie die der anderen?
-    `
-  },
-
-  selbstkritik: {
-    name: "Selbstkritik",
-    begriffe: [
-      "ich bin schuld",
-      "ich bin nicht gut genug",
-      "ich kann nichts",
-      "ich mache alles falsch",
-      "ich bin ein versager",
-      "ich bin dumm",
-      "ich hasse mich",
-      "ich kritisiere mich"
-    ],
-    antwort: `
-      Ich höre darin eine starke
-      <strong>innere Selbstkritik</strong>.<br><br>
-
-      Diese Stimme fühlt sich oft wie Wahrheit an,
-      ist aber häufig eine alte erlernte Bewertung.<br><br>
-
-      Würdest du mit einem Menschen, den du liebst,
-      genauso sprechen wie gerade mit dir selbst?
-    `
-  },
-
-  konfliktvermeidung: {
-    name: "Konfliktvermeidung",
-    begriffe: [
-      "ich will keinen streit",
-      "ich vermeide konflikt",
-      "ich sage lieber nichts",
-      "ich schlucke alles runter",
-      "ich halte den mund",
-      "ich gehe konfrontation aus dem weg",
-      "ich will keinen aerger"
-    ],
-    antwort: `
-      Ich erkenne darin möglicherweise ein
-      <strong>Konfliktvermeidungsmuster</strong>.<br><br>
-
-      Frieden nach außen kann innerlich sehr viel Spannung erzeugen,
-      wenn deine Wahrheit keinen Raum bekommt.<br><br>
-
-      Was möchtest du eigentlich sagen,
-      hältst es aber aus Angst vor der Reaktion zurück?
-    `
-  },
-
-  leistung: {
-    name: "Leistungsdruck",
-    begriffe: [
-      "ich muss funktionieren",
-      "ich muss leisten",
-      "ich darf nicht ausfallen",
-      "ich muss weitermachen",
-      "ich kann keine pause machen",
-      "ich muss stark sein",
-      "ich darf keine schwaeche zeigen"
-    ],
-    antwort: `
-      Ich erkenne darin möglicherweise ein
-      <strong>Leistungs- und Funktionsmuster</strong>.<br><br>
-
-      Wenn dein Wert an Leistung gekoppelt ist,
-      wird selbst Ruhe schnell zu etwas, das du dir verdienen musst.<br><br>
-
-      Wer wärst du in diesem Moment,
-      wenn du gerade nichts beweisen müsstest?
-    `
-  }
-};
-
-function musterErkennen(text) {
-  const saubererText = normalisieren(text);
-
-  for (const muster in musterDaten) {
-    for (const begriff of musterDaten[muster].begriffe) {
-      if (saubererText.includes(normalisieren(begriff))) {
-        return muster;
+      if (typing) {
+        typing.hidden = true;
       }
-    }
-  }
 
-  return "";
+      mentorNachricht(antwort);
+    } catch (fehler) {
+      console.error("ICS Mentor Fehler:", fehler);
+
+      if (typing) {
+        typing.hidden = true;
+      }
+
+      mentorNachricht(
+        "Entschuldige, gerade ist ein technischer Fehler aufgetreten. Bitte starte das Gespräch neu."
+      );
+    } finally {
+      send.disabled = false;
+      input.focus();
+    }
+  }, 800);
 }
 
 function passendeAntwort(text) {
   const t = normalisieren(text);
 
-  if (
-    t === "neu starten" ||
-    t === "neues gespraech" ||
-    t === "gespraech neu starten"
-  ) {
-    neuesGespraech();
-    return "";
-  }
+  const smalltalk = smalltalkAntwort(t);
 
-  if (gespraech.thema === "") {
-    const smalltalk = smalltalkAntwort(t);
-
-    if (smalltalk !== "") {
-      return smalltalk;
-    }
+  if (smalltalk !== "") {
+    return smalltalk;
   }
 
   const erkanntesThema = themaErkennen(t);
   const erkanntesMuster = musterErkennen(t);
-
-  /* Noch kein Hauptthema aktiv */
 
   if (gespraech.thema === "") {
     if (erkanntesThema !== "") {
@@ -713,25 +402,22 @@ function passendeAntwort(text) {
       return themen[erkanntesThema].start;
     }
 
-    const emotionsAntwort = emotionErkennen(t);
-
-    if (emotionsAntwort !== "") {
-      return emotionsAntwort;
-    }
-
     if (erkanntesMuster !== "") {
       return musterDaten[erkanntesMuster].antwort;
     }
 
+    const emotion = emotionAntwort(t);
+
+    if (emotion !== "") {
+      return emotion;
+    }
+
     return `
-      Danke für deine Offenheit. Ich möchte dich besser verstehen.<br><br>
+      Danke für deine Offenheit.<br><br>
       Geht es dabei hauptsächlich um
-      <strong>Angst, Stress, Beziehung, Energie, Arbeit,
-      Finanzen, Familie oder Selbstwert?</strong>
+      <strong>Angst, Stress, Beziehung, Arbeit, Finanzen oder Selbstwert</strong>?
     `;
   }
-
-  /* Gespräch wurde bereits abgeschlossen */
 
   if (gespraech.abgeschlossen) {
     if (erkanntesThema !== "") {
@@ -747,21 +433,15 @@ function passendeAntwort(text) {
 
     return `
       Dieses Thema haben wir zunächst abgeschlossen.<br><br>
-      Du kannst oben ein <strong>neues Gespräch starten</strong>
-      oder direkt ein neues Thema nennen.
+      Starte oben ein neues Gespräch oder nenne direkt ein neues Thema.
     `;
   }
-
-  /* Ausdrücklicher Themenwechsel */
 
   if (
     erkanntesThema !== "" &&
     erkanntesThema !== gespraech.thema &&
     willThemaWechseln(t)
   ) {
-    const altesThema = themen[gespraech.thema].name;
-    const neuesThema = themen[erkanntesThema].name;
-
     gespraech = {
       thema: erkanntesThema,
       schritt: 0,
@@ -770,55 +450,19 @@ function passendeAntwort(text) {
     };
 
     return `
-      Wir beenden damit zunächst das Thema
-      <strong>${altesThema}</strong>
-      und wechseln zu
-      <strong>${neuesThema}</strong>.<br><br>
+      Wir wechseln zum Thema
+      <strong>${themen[erkanntesThema].name}</strong>.<br><br>
 
       ${themen[erkanntesThema].start}
     `;
   }
 
-  /* Ein anderes Thema wird nur beiläufig erwähnt */
-
-  if (
-    erkanntesThema !== "" &&
-    erkanntesThema !== gespraech.thema
-  ) {
-    gespraech.antworten.push(text);
-
-    const themaDaten = themen[gespraech.thema];
-
-    if (gespraech.schritt < themaDaten.fragen.length) {
-      const frage = themaDaten.fragen[gespraech.schritt];
-
-      gespraech.schritt += 1;
-
-      return `
-        Ich höre auch das Thema
-        <strong>${themen[erkanntesThema].name}</strong>
-        in deiner Antwort.<br><br>
-
-        Wir bleiben zunächst bei
-        <strong>${themaDaten.name}</strong>.<br><br>
-
-        ${frage}
-      `;
-    }
-
-    gespraech.abgeschlossen = true;
-
-    return auswertungErstellen();
-  }
-
-  /* Normale Antwort im laufenden Gespräch */
-
   gespraech.antworten.push(text);
 
-  const themaDaten = themen[gespraech.thema];
+  const daten = themen[gespraech.thema];
 
-  if (gespraech.schritt < themaDaten.fragen.length) {
-    const frage = themaDaten.fragen[gespraech.schritt];
+  if (gespraech.schritt < daten.fragen.length) {
+    const frage = daten.fragen[gespraech.schritt];
 
     gespraech.schritt += 1;
 
@@ -829,23 +473,6 @@ function passendeAntwort(text) {
 
   return auswertungErstellen();
 }
-
-function willThemaWechseln(text) {
-  return (
-    text.includes("thema wechseln") ||
-    text.includes("wechseln zu") ||
-    text.includes("jetzt ueber") ||
-    text.includes("lieber ueber") ||
-    text.includes("neues thema") ||
-    text.includes("stattdessen") ||
-    text.includes("ich moechte ueber") ||
-    text.includes("lass uns ueber")
-  );
-}
-
-/* =========================================================
-   SMALLTALK
-========================================================= */
 
 function smalltalkAntwort(text) {
   if (
@@ -863,7 +490,7 @@ function smalltalkAntwort(text) {
     text.includes("wie geht es dir") ||
     text.includes("wie gehts dir")
   ) {
-    return "Danke, dass du fragst. Ich bin hier, um dich zu begleiten. Viel wichtiger ist: Wie geht es dir gerade wirklich?";
+    return "Danke, dass du fragst. Ich bin hier, um dich zu begleiten. Wie geht es dir gerade wirklich?";
   }
 
   if (
@@ -871,10 +498,6 @@ function smalltalkAntwort(text) {
     text === "dankeschoen" ||
     text === "vielen dank"
   ) {
-    if (gespraech.thema !== "" && !gespraech.abgeschlossen) {
-      return "Sehr gern. Wir können uns dafür alle Zeit nehmen, die du brauchst. Möchtest du bei diesem Thema weitermachen?";
-    }
-
     return "Sehr gern. Was möchtest du als Nächstes mit mir anschauen?";
   }
 
@@ -883,10 +506,6 @@ function smalltalkAntwort(text) {
     text === "ok" ||
     text === "alles klar"
   ) {
-    if (gespraech.thema !== "" && !gespraech.abgeschlossen) {
-      return "Gut. Nimm dir einen Moment und antworte so ehrlich, wie es sich für dich richtig anfühlt.";
-    }
-
     return "Gut. Was beschäftigt dich im Moment am meisten?";
   }
 
@@ -898,49 +517,15 @@ function smalltalkAntwort(text) {
     return "Das freut mich. Was möchtest du heute noch für dich klären?";
   }
 
-  if (
-    text === "ja" &&
-    gespraech.thema === ""
-  ) {
-    return "Dann erzähl mir bitte, was dich im Moment am stärksten beschäftigt.";
-  }
-
-  if (
-    text === "nein" &&
-    gespraech.thema === ""
-  ) {
-    return "Das ist völlig in Ordnung. Du kannst einfach frei schreiben, was gerade in dir auftaucht.";
-  }
-
   return "";
 }
 
-/* =========================================================
-   EMOTIONEN
-========================================================= */
-
-function emotionErkennen(text) {
-  if (
-    text.includes("mir geht es gut") ||
-    text.includes("mir gehts gut") ||
-    text.includes("gut drauf")
-  ) {
-    return "Das freut mich. Was trägt heute dazu bei, dass es dir gut geht?";
-  }
-
-  if (
-    text.includes("mir geht es schlecht") ||
-    text.includes("mir gehts schlecht") ||
-    text.includes("nicht gut")
-  ) {
-    return "Danke, dass du das ehrlich sagst. Was belastet dich gerade am meisten?";
-  }
-
+function emotionAntwort(text) {
   if (
     text.includes("traurig") ||
     text.includes("trauer")
   ) {
-    return "Traurigkeit möchte oft nicht sofort gelöst, sondern zuerst wahrgenommen werden. Was macht dich gerade traurig?";
+    return "Traurigkeit möchte oft zuerst wahrgenommen werden. Was macht dich gerade traurig?";
   }
 
   if (
@@ -948,21 +533,14 @@ function emotionErkennen(text) {
     text.includes("wut") ||
     text.includes("sauer")
   ) {
-    return "Wut zeigt häufig, dass eine Grenze verletzt wurde oder etwas nicht stimmig ist. Worüber bist du gerade wütend?";
-  }
-
-  if (
-    text.includes("enttaeuscht") ||
-    text.includes("enttaeuschung")
-  ) {
-    return "Enttäuschung zeigt oft, dass eine Hoffnung oder Erwartung nicht erfüllt wurde. Was hattest du dir stattdessen gewünscht?";
+    return "Wut zeigt häufig, dass eine Grenze verletzt wurde. Worüber bist du gerade wütend?";
   }
 
   if (
     text.includes("einsam") ||
     text.includes("alleine")
   ) {
-    return "Einsamkeit kann auch entstehen, wenn wir uns trotz anderer Menschen nicht wirklich gesehen fühlen. Was fehlt dir gerade am meisten?";
+    return "Was fehlt dir gerade am meisten: Nähe, Verständnis oder Verbindung?";
   }
 
   if (
@@ -970,39 +548,27 @@ function emotionErkennen(text) {
     text.includes("unklar") ||
     text.includes("weiss nicht")
   ) {
-    return "Dann müssen wir noch keine fertige Antwort finden. Welche zwei Gedanken oder Möglichkeiten stehen gerade gegeneinander?";
-  }
-
-  if (
-    text.includes("gluecklich") ||
-    text.includes("freue mich") ||
-    text.includes("freude")
-  ) {
-    return "Das klingt schön. Was genau löst dieses Gefühl von Freude in dir aus?";
+    return "Welche zwei Gedanken oder Möglichkeiten stehen gerade gegeneinander?";
   }
 
   return "";
 }
 
-/* =========================================================
-   THEMENERKENNUNG MIT PUNKTESYSTEM
-========================================================= */
-
 function themaErkennen(text) {
   let bestesThema = "";
-  let hoechstePunktzahl = 0;
+  let bestePunkte = 0;
 
   for (const thema in themen) {
-    let punktzahl = 0;
+    let punkte = 0;
 
     for (const begriff of themen[thema].begriffe) {
       if (begriffGefunden(text, begriff)) {
-        punktzahl += begriff.includes(" ") ? 3 : 1;
+        punkte += begriff.includes(" ") ? 3 : 1;
       }
     }
 
-    if (punktzahl > hoechstePunktzahl) {
-      hoechstePunktzahl = punktzahl;
+    if (punkte > bestePunkte) {
+      bestePunkte = punkte;
       bestesThema = thema;
     }
   }
@@ -1023,18 +589,40 @@ function begriffGefunden(text, begriff) {
   return woerter.includes(saubererBegriff);
 }
 
-/* =========================================================
-   PERSÖNLICHE AUSWERTUNG
-========================================================= */
+function musterErkennen(text) {
+  const saubererText = normalisieren(text);
+
+  for (const muster in musterDaten) {
+    for (const begriff of musterDaten[muster].begriffe) {
+      if (saubererText.includes(normalisieren(begriff))) {
+        return muster;
+      }
+    }
+  }
+
+  return "";
+}
+
+function willThemaWechseln(text) {
+  const formulierungen = [
+    "thema wechseln",
+    "wechseln zu",
+    "jetzt ueber",
+    "lieber ueber",
+    "neues thema",
+    "stattdessen",
+    "ich moechte ueber",
+    "lass uns ueber"
+  ];
+
+  return formulierungen.some(function (formulierung) {
+    return text.includes(formulierung);
+  });
+}
 
 function auswertungErstellen() {
   const daten = themen[gespraech.thema];
   const antworten = gespraech.antworten;
-
-  const antwort1 = htmlSicher(antworten[0] || "Nicht näher beschrieben");
-  const antwort2 = htmlSicher(antworten[1] || "Nicht näher beschrieben");
-  const antwort3 = htmlSicher(antworten[2] || "Nicht näher beschrieben");
-  const antwort4 = htmlSicher(antworten[3] || "Nicht näher beschrieben");
 
   return `
     <div class="ics-auswertung">
@@ -1051,56 +639,47 @@ function auswertungErstellen() {
 
       <div class="auswertung-bereich">
         <strong>Was dich aktuell beschäftigt</strong>
-        <p>${antwort1}</p>
+        <p>${htmlSicher(antworten[0] || "Nicht näher beschrieben")}</p>
       </div>
 
       <div class="auswertung-bereich">
         <strong>Was darunter liegen könnte</strong>
-        <p>${antwort2}</p>
+        <p>${htmlSicher(antworten[1] || "Nicht näher beschrieben")}</p>
       </div>
 
       <div class="auswertung-bereich">
         <strong>Dein bisheriges Reaktionsmuster</strong>
-        <p>${antwort3}</p>
+        <p>${htmlSicher(antworten[2] || "Nicht näher beschrieben")}</p>
       </div>
 
       <div class="auswertung-bereich">
         <strong>Deine mögliche neue Richtung</strong>
-        <p>${antwort4}</p>
+        <p>${htmlSicher(antworten[3] || "Nicht näher beschrieben")}</p>
       </div>
 
       <div class="code-card">
         <strong>🧠 Inner Code</strong>
-        <p>${daten.auswertung.innerCode}</p>
+        <p>${daten.innerCode}</p>
       </div>
 
       <div class="code-card">
         <strong>❤️ Body Code</strong>
-        <p>${daten.auswertung.bodyCode}</p>
+        <p>${daten.bodyCode}</p>
       </div>
 
       <div class="code-card">
         <strong>🔥 Action Code</strong>
-        <p>${daten.auswertung.actionCode}</p>
+        <p>${daten.actionCode}</p>
       </div>
 
       <div class="reset-card">
         <strong>🔄 RESET-Impuls</strong>
-        <p>${daten.auswertung.reset}</p>
+        <p>${daten.reset}</p>
       </div>
-
-      <p class="auswertung-abschluss">
-        Du musst nicht alles auf einmal verändern.
-        Entscheidend ist der nächste bewusste Schritt.
-      </p>
 
     </div>
   `;
 }
-
-/* =========================================================
-   CHAT-NACHRICHTEN
-========================================================= */
 
 function userNachricht(text) {
   messages.insertAdjacentHTML(
@@ -1114,11 +693,11 @@ function userNachricht(text) {
     `
   );
 
-  zumChatEndeScrollen();
+  scrollZumEnde();
 }
 
 function mentorNachricht(antwort) {
-  if (antwort === "") {
+  if (!antwort) {
     return;
   }
 
@@ -1126,28 +705,31 @@ function mentorNachricht(antwort) {
     "beforeend",
     `
       <div class="chat-row mentor-row">
-        <div class="chat-avatar">🧠</div>
+
+        <div class="chat-avatar">
+          🧠
+        </div>
 
         <div class="chat-bubble mentor-bubble">
           <strong>ICS Mentor</strong>
-          <div class="mentor-text">${antwort}</div>
+
+          <div class="mentor-text">
+            ${antwort}
+          </div>
         </div>
+
       </div>
     `
   );
 
-  zumChatEndeScrollen();
+  scrollZumEnde();
 }
 
-function zumChatEndeScrollen() {
+function scrollZumEnde() {
   requestAnimationFrame(function () {
     messages.scrollTop = messages.scrollHeight;
   });
 }
-
-/* =========================================================
-   HILFSFUNKTIONEN
-========================================================= */
 
 function normalisieren(text) {
   return String(text)
@@ -1165,11 +747,4 @@ function htmlSicher(text) {
   const element = document.createElement("div");
   element.textContent = text;
   return element.innerHTML;
-}
-
-function berechneDenkzeit(text) {
-  const basis = 700;
-  const zusatz = Math.min(text.length * 5, 800);
-
-  return basis + zusatz;
 }
