@@ -154,19 +154,24 @@ function dialogAntwort(text, analyse, update, hypothesen){
     teile.push(zwischenSpiegel());
   }
 
+let hypothesenFrage = "";
+
 if(hypothesen && hypothesen.length){
 
     teile.push(
         `💡 <strong>${ICS.escapen(hypothesen[0].text)}</strong>`
     );
 
-    teile.push(
-        ICS.escapen(hypothesen[0].frage)
-    );
+    hypothesenFrage = hypothesen[0].frage || "";
+
+    if(hypothesenFrage){
+        gespraech.offeneFragen.push(hypothesenFrage);
+        teile.push(`<strong>${ICS.escapen(hypothesenFrage)}</strong>`);
+    }
 
 }
-  
-  const frage = intelligenteFrage(analyse);
+
+const frage = hypothesenFrage ? "" : intelligenteFrage(analyse);
   if(frage) {
     gespraech.offeneFragen.push(frage);
     teile.push(`<strong>${ICS.escapen(frage)}</strong>`);
