@@ -142,7 +142,17 @@ function uebernehmen(analyse){
 }
 
 function dialogAntwort(text, analyse, update, hypothesen, prioritaet){
+  
   const teile = [];
+  
+if(prioritaet){
+
+    teile.push(
+        `<em>Aktueller Schwerpunkt: ${ICS.escapen(prioritaet.name)}</em>`
+    );
+
+}
+  
   const faden = ICS.brain.roterFaden(gespraech, analyse, update);
 
   if(faden) teile.push(faden);
