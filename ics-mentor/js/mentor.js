@@ -115,8 +115,14 @@ ICS.Verknuepfungen.erklaerung(
     return unbekanntAntwort(analyse);
   }
 
-  return dialogAntwort(text, analyse, update, hypothesen, prioritaet);
-}
+ return dialogAntwort(
+    text,
+    analyse,
+    update,
+    hypothesen,
+    prioritaet,
+    verknuepfungen
+);
 
 function uebernehmen(analyse){
   analyse.muster.forEach((m, index) => {
