@@ -95,10 +95,35 @@ const prioritaet = ICS.Prioritaeten.wichtigste(
     gespraech
 );
 
-  const verknuepfungen =
-ICS.Verknuepfungen.erklaerung(
-    ICS.musterErkennenAlle(text)
-);
+let verknuepfungen = null;
+
+try {
+
+    if (
+        ICS.Verknuepfungen &&
+        typeof ICS.Verknuepfungen.erklaerung === "function" &&
+        typeof ICS.musterErkennenAlle === "function"
+    ) {
+
+        const erkannteMuster =
+            ICS.musterErkennenAlle(text);
+
+        verknuepfungen =
+            ICS.Verknuepfungen.erklaerung(
+                erkannteMuster
+            );
+
+    }
+
+} catch (fehler) {
+
+    console.error(
+        "ICS Verknüpfungsfehler:",
+        fehler
+    );
+
+    verknuepfungen = null;
+}
   
   gespraech.analysen.push(analyse);
 
@@ -115,14 +140,14 @@ ICS.Verknuepfungen.erklaerung(
     return unbekanntAntwort(analyse);
   }
 
- return dialogAntwort(
+function dialogAntwort(
     text,
     analyse,
     update,
     hypothesen,
     prioritaet,
     verknuepfungen
-);
+) {
 
 function uebernehmen(analyse){
   analyse.muster.forEach((m, index) => {
@@ -164,20 +189,25 @@ if (prioritaet) {
 
 }
 
-if (verknuepfungen && verknuepfungen.verbunden.length) {
+if (
+    verknuepfungen &&
+    Array.isArray(verknuepfungen.verbunden) &&
+    verknuepfungen.verbunden.length > 0
+) {
 
     teile.push("<br>");
 
-    teile.push("<strong>Erkannte Zusammenhänge</strong>");
+    teile.push(
+        "<strong>Erkannte Zusammenhänge</strong>"
+    );
 
-    verknuepfungen.verbunden.forEach(muster => {
+    verknuepfungen.verbunden.forEach(function(muster) {
 
         teile.push(
-            `• ${muster.name} (${muster.prozent}%)`
+            `• ${muster.name} (${muster.prozent} %)`
         );
 
     });
-
 }
 
 let hypothesenFrage = "";
