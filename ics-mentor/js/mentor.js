@@ -95,36 +95,6 @@ const prioritaet = ICS.Prioritaeten.wichtigste(
     gespraech
 );
 
-let verknuepfungen = null;
-
-try {
-
-    if (
-        ICS.Verknuepfungen &&
-        typeof ICS.Verknuepfungen.erklaerung === "function" &&
-        typeof ICS.musterErkennenAlle === "function"
-    ) {
-
-        const erkannteMuster =
-            ICS.musterErkennenAlle(text);
-
-        verknuepfungen =
-            ICS.Verknuepfungen.erklaerung(
-                erkannteMuster
-            );
-
-    }
-
-} catch (fehler) {
-
-    console.error(
-        "ICS Verknüpfungsfehler:",
-        fehler
-    );
-
-    verknuepfungen = null;
-}
-  
   gespraech.analysen.push(analyse);
 
   const update = ICS.brain.aktualisieren(gespraech, analyse);
@@ -187,27 +157,6 @@ if (prioritaet) {
         `<em><strong>Aktueller Schwerpunkt:</strong> ${prioritaet.name}</em>`
     );
 
-}
-
-if (
-    verknuepfungen &&
-    Array.isArray(verknuepfungen.verbunden) &&
-    verknuepfungen.verbunden.length > 0
-) {
-
-    teile.push("<br>");
-
-    teile.push(
-        "<strong>Erkannte Zusammenhänge</strong>"
-    );
-
-    verknuepfungen.verbunden.forEach(function(muster) {
-
-        teile.push(
-            `• ${muster.name} (${muster.prozent} %)`
-        );
-
-    });
 }
 
 let hypothesenFrage = "";
