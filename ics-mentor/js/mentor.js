@@ -94,6 +94,11 @@ const prioritaet = ICS.Prioritaeten.wichtigste(
     analyse,
     gespraech
 );
+
+  const verknuepfungen =
+ICS.Verknuepfungen.erklaerung(
+    ICS.musterErkennenAlle(text)
+);
   
   gespraech.analysen.push(analyse);
 
@@ -145,29 +150,29 @@ function dialogAntwort(text, analyse, update, hypothesen, prioritaet){
   
   const teile = [];
   
-if(prioritaet){
+if (prioritaet) {
 
     teile.push(
-        `<em>Aktueller Schwerpunkt: ${ICS.escapen(prioritaet.name)}</em>`
+        `<em><strong>Aktueller Schwerpunkt:</strong> ${prioritaet.name}</em>`
     );
 
 }
-  
-  const faden = ICS.brain.roterFaden(gespraech, analyse, update);
 
-  if(faden) teile.push(faden);
+if (verknuepfungen && verknuepfungen.verbunden.length) {
 
-  if(gespraech.strategie === "stabilisieren"){
-    teile.push("Bevor wir tiefer gehen: Atme einmal langsam aus. Du musst gerade nicht alles auf einmal lösen.");
-  }
+    teile.push("<br>");
 
-  if(gespraech.strategie === "verbinden"){
-    teile.push(zusammenhang());
-  }
+    teile.push("<strong>Erkannte Zusammenhänge</strong>");
 
-  if(gespraech.strategie === "spiegeln"){
-    teile.push(zwischenSpiegel());
-  }
+    verknuepfungen.verbunden.forEach(muster => {
+
+        teile.push(
+            `• ${muster.name} (${muster.prozent}%)`
+        );
+
+    });
+
+}
 
 let hypothesenFrage = "";
 
