@@ -329,6 +329,24 @@ window.ICS = window.ICS || {};
   ) {
     const teile = [];
 
+    const spiegel =
+  ICS.Spiegel &&
+  typeof ICS.Spiegel.erstellen === "function"
+    ? ICS.Spiegel.erstellen(
+        analyse,
+        gespraech
+      )
+    : null;
+
+if (spiegel && spiegel.text) {
+
+  teile.push(
+    `🪞 <strong>${escapen(spiegel.titel)}</strong><br>` +
+    `${escapen(spiegel.text)}`
+  );
+
+}
+
     if (prioritaet && prioritaet.name) {
       teile.push(
         `<em>Aktueller Schwerpunkt: ${escapen(prioritaet.name)}</em>`
