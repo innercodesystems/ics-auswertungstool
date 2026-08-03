@@ -342,6 +342,25 @@ window.ICS = window.ICS || {};
 
 if (spiegel && spiegel.text) {
 
+  const verknuepfung =
+  ICS.Verknuepfungen &&
+  typeof ICS.Verknuepfungen.erklaerung === "function"
+    ? ICS.Verknuepfungen.erklaerung(
+        analyse.muster || []
+      )
+    : null;
+
+if (
+  verknuepfung &&
+  verknuepfung.verbunden &&
+  verknuepfung.verbunden.length
+) {
+  teile.push(
+    `🧩 <strong>Zusammenhänge</strong><br>` +
+    `${escapen(verknuepfung.text)}`
+  );
+}
+
   teile.push(
     `🪞 <strong>${escapen(spiegel.titel)}</strong><br>` +
     `${escapen(spiegel.text)}`
