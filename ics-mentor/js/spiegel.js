@@ -31,6 +31,7 @@ ICS.Spiegel = {
         return {
           titel: "Spiegel",
           text: daten.spiegel,
+          confidence: 0.95,
           musterId: hauptmuster.id,
           musterName:
             daten.name ||
@@ -56,6 +57,7 @@ ICS.Spiegel = {
       return {
         titel: "Spiegel",
         text: analyse.emotion.antwort,
+        confidence: 0.75,
         musterId: "",
         musterName: "",
         confidence: 0.75
@@ -82,6 +84,7 @@ ICS.Spiegel = {
         return {
           titel: "Spiegel",
           text: daten.spiegel,
+          confidence: 0.60,
           musterId: gespraech.muster,
           musterName: daten.name || "",
           confidence: 0.60
@@ -91,13 +94,13 @@ ICS.Spiegel = {
 
     }
 
-    return {
-      titel: "Spiegel",
-      text: "",
-      musterId: "",
-      musterName: "",
-      confidence: 0
-    };
+return {
+  titel: "Spiegel",
+  text: "",
+  musterId: "",
+  musterName: "",
+  confidence: 0
+};
 
   }
 
