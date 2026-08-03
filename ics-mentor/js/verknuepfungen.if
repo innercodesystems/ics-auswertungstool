@@ -326,6 +326,8 @@ ICS.Verknuepfungen = {
 
   erklaerung: function(ergebnisse) {
 
+console.log("VERKNÜPFUNGEN INPUT:", ergebnisse);
+
     const analyse =
       this.analysieren(ergebnisse);
 
@@ -336,11 +338,13 @@ ICS.Verknuepfungen = {
     const hauptmuster =
       analyse[0];
 
-    const verbunden =
-      analyse
-        .slice(1, 4);
+const verbunden =
+    analyse
+      .slice(1, 4);
 
-    return {
+console.log("VERKNÜPFUNGEN ANALYSE:", analyse);
+
+return {
       hauptmuster: hauptmuster,
       verbunden: verbunden,
 
