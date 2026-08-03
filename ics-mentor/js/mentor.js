@@ -338,6 +338,8 @@ window.ICS = window.ICS || {};
       )
     : null;
 
+    console.log("Spiegel:", spiegel);
+
 if (spiegel && spiegel.text) {
 
   teile.push(
