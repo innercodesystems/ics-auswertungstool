@@ -340,6 +340,10 @@ window.ICS = window.ICS || {};
 
     console.log("Spiegel:", spiegel);
 
+    console.log("ICS.Verknuepfungen:", ICS.Verknuepfungen);
+console.log("Typ:", typeof ICS.Verknuepfungen);
+console.log("Erklärung:", ICS.Verknuepfungen?.erklaerung);
+
 if (spiegel && spiegel.text) {
 
   teile.push(
