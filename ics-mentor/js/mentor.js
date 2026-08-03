@@ -342,13 +342,22 @@ window.ICS = window.ICS || {};
 
 if (spiegel && spiegel.text) {
 
-  const verknuepfung =
+  teile.push(
+    `🪞 <strong>${escapen(spiegel.titel)}</strong><br>` +
+    `${escapen(spiegel.text)}`
+  );
+
+}
+
+const verknuepfung =
   ICS.Verknuepfungen &&
   typeof ICS.Verknuepfungen.erklaerung === "function"
     ? ICS.Verknuepfungen.erklaerung(
         analyse.muster || []
       )
     : null;
+
+console.log("VERKNÜPFUNG:", verknuepfung);
 
 if (
   verknuepfung &&
@@ -360,14 +369,7 @@ if (
     `${escapen(verknuepfung.text)}`
   );
 }
-
-  teile.push(
-    `🪞 <strong>${escapen(spiegel.titel)}</strong><br>` +
-    `${escapen(spiegel.text)}`
-  );
-
-}
-
+    
     if (prioritaet && prioritaet.name) {
       teile.push(
         `<em>Aktueller Schwerpunkt: ${escapen(prioritaet.name)}</em>`
