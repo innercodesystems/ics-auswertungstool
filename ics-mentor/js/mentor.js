@@ -495,6 +495,21 @@ if (actionCode) {
   );
 
 }
+
+    const analysebericht =
+  ICS.Analysebericht &&
+  typeof ICS.Analysebericht.erstellen === "function"
+    ? ICS.Analysebericht.erstellen({
+        spiegel: spiegel,
+        verknuepfung: verknuepfung,
+        dynamischeAnalyse: dynamischeAnalyse,
+        schlussfolgerung: schlussfolgerung,
+        beduerfnisse: beduerfnisse,
+        innerCode: innerCode,
+        bodyCode: bodyCode,
+        actionCode: actionCode
+      })
+    : null;
     
     if (prioritaet && prioritaet.name) {
       teile.push(
