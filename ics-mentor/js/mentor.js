@@ -390,6 +390,23 @@ if (beduerfnisse.length) {
   );
 
 }
+
+const glaubenssatz =
+  ICS.Glaubenssaetze &&
+  typeof ICS.Glaubenssaetze.erkennen === "function"
+    ? ICS.Glaubenssaetze.erkennen(
+        analyse.muster?.[0]?.id
+      )
+    : null;
+
+if (glaubenssatz) {
+
+  teile.push(
+    `🧠 <strong>Möglicher Glaubenssatz</strong><br>` +
+    glaubenssatz
+  );
+
+}
     
     if (prioritaet && prioritaet.name) {
       teile.push(
