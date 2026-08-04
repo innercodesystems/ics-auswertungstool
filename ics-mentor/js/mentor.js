@@ -374,6 +374,26 @@ if (
   );
 }
 
+    const dynamischeAnalyse =
+  ICS.Intelligenz &&
+  typeof ICS.Intelligenz.erklaerung === "function"
+    ? ICS.Intelligenz.erklaerung(
+        ICS.Verknuepfungen &&
+        typeof ICS.Verknuepfungen.analysieren === "function"
+          ? ICS.Verknuepfungen.analysieren(
+              analyse.muster || []
+            )
+          : []
+      )
+    : null;
+
+if (dynamischeAnalyse && dynamischeAnalyse.text) {
+  teile.push(
+    `🧠 <strong>Dynamische Analyse</strong><br>` +
+    `${escapen(dynamischeAnalyse.text)}`
+  );
+}
+
     const beduerfnisse =
   ICS.Beduerfnisse &&
   typeof ICS.Beduerfnisse.erkennen === "function"
