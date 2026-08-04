@@ -343,15 +343,6 @@ window.ICS = window.ICS || {};
     console.log("ICS.Verknuepfungen:", ICS.Verknuepfungen);
 console.log("Typ:", typeof ICS.Verknuepfungen);
 console.log("Erklärung:", ICS.Verknuepfungen?.erklaerung);
-
-if (spiegel && spiegel.text) {
-
-  teile.push(
-    `🪞 <strong>${escapen(spiegel.titel)}</strong><br>` +
-    `${escapen(spiegel.text)}`
-  );
-
-}
     
 const verknuepfung =
   ICS.Verknuepfungen &&
@@ -362,17 +353,6 @@ const verknuepfung =
     : null;
 
 console.log("VERKNÜPFUNG:", verknuepfung);
-
-if (
-  verknuepfung &&
-  verknuepfung.verbunden &&
-  verknuepfung.verbunden.length
-) {
-  teile.push(
-    `🧩 <strong>Zusammenhänge</strong><br>` +
-    `${escapen(verknuepfung.text)}`
-  );
-}
 
     const dynamischeAnalyse =
   ICS.Intelligenz &&
@@ -387,13 +367,6 @@ if (
       )
     : null;
 
-if (dynamischeAnalyse && dynamischeAnalyse.text) {
-  teile.push(
-    `🧠 <strong>Dynamische Analyse</strong><br>` +
-    `${escapen(dynamischeAnalyse.text)}`
-  );
-}
-
     const schlussfolgerung =
   ICS.Schlussfolgerungen &&
   typeof ICS.Schlussfolgerungen.erstellen === "function"
@@ -403,15 +376,6 @@ if (dynamischeAnalyse && dynamischeAnalyse.text) {
         )
       )
     : null;
-
-if (schlussfolgerung) {
-
-  teile.push(
-    `🎯 <strong>${escapen(schlussfolgerung.titel)}</strong><br>` +
-    `${escapen(schlussfolgerung.text)}`
-  );
-
-}
     
     const beduerfnisse =
   ICS.Beduerfnisse &&
@@ -421,15 +385,6 @@ if (schlussfolgerung) {
       )
     : [];
 
-if (beduerfnisse.length) {
-
-  teile.push(
-    `❤️ <strong>Bedürfnisse</strong><br>` +
-    beduerfnisse.join(", ")
-  );
-
-}
-
 const glaubenssatz =
   ICS.Glaubenssaetze &&
   typeof ICS.Glaubenssaetze.erkennen === "function"
@@ -437,15 +392,6 @@ const glaubenssatz =
         analyse.muster?.[0]?.id
       )
     : null;
-
-if (glaubenssatz) {
-
-  teile.push(
-    `🧠 <strong>Möglicher Glaubenssatz</strong><br>` +
-    glaubenssatz
-  );
-
-}
 
     const innerCode =
   ICS.InnerCode &&
@@ -455,13 +401,6 @@ if (glaubenssatz) {
       )
     : null;
 
-if (innerCode) {
-  teile.push(
-    `💡 <strong>Inner Code</strong><br>` +
-    innerCode
-  );
-}
-
     const bodyCode =
   ICS.BodyCode &&
   typeof ICS.BodyCode.erkennen === "function"
@@ -470,15 +409,6 @@ if (innerCode) {
       )
     : null;
 
-if (bodyCode) {
-
-  teile.push(
-    `❤️‍🩹 <strong>Body Code</strong><br>` +
-    bodyCode
-  );
-
-}
-
     const actionCode =
   ICS.ActionCode &&
   typeof ICS.ActionCode.erkennen === "function"
@@ -486,15 +416,6 @@ if (bodyCode) {
         analyse.muster?.[0]?.id
       )
     : null;
-
-if (actionCode) {
-
-  teile.push(
-    `🚀 <strong>Action Code</strong><br>` +
-    actionCode
-  );
-
-}
 
     const analysebericht =
   ICS.Analysebericht &&
