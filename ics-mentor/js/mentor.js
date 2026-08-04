@@ -407,6 +407,21 @@ if (glaubenssatz) {
   );
 
 }
+
+    const innerCode =
+  ICS.InnerCode &&
+  typeof ICS.InnerCode.erkennen === "function"
+    ? ICS.InnerCode.erkennen(
+        analyse.muster?.[0]?.id
+      )
+    : null;
+
+if (innerCode) {
+  teile.push(
+    `💡 <strong>Inner Code</strong><br>` +
+    innerCode
+  );
+}
     
     if (prioritaet && prioritaet.name) {
       teile.push(
