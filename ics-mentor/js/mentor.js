@@ -439,6 +439,23 @@ if (bodyCode) {
   );
 
 }
+
+    const actionCode =
+  ICS.ActionCode &&
+  typeof ICS.ActionCode.erkennen === "function"
+    ? ICS.ActionCode.erkennen(
+        analyse.muster?.[0]?.id
+      )
+    : null;
+
+if (actionCode) {
+
+  teile.push(
+    `🚀 <strong>Action Code</strong><br>` +
+    actionCode
+  );
+
+}
     
     if (prioritaet && prioritaet.name) {
       teile.push(
