@@ -352,7 +352,7 @@ if (spiegel && spiegel.text) {
   );
 
 }
-
+    
 const verknuepfung =
   ICS.Verknuepfungen &&
   typeof ICS.Verknuepfungen.erklaerung === "function"
@@ -372,6 +372,23 @@ if (
     `🧩 <strong>Zusammenhänge</strong><br>` +
     `${escapen(verknuepfung.text)}`
   );
+}
+
+    const beduerfnisse =
+  ICS.Beduerfnisse &&
+  typeof ICS.Beduerfnisse.erkennen === "function"
+    ? ICS.Beduerfnisse.erkennen(
+        analyse.muster?.[0]?.id
+      )
+    : [];
+
+if (beduerfnisse.length) {
+
+  teile.push(
+    `❤️ <strong>Bedürfnisse</strong><br>` +
+    beduerfnisse.join(", ")
+  );
+
 }
     
     if (prioritaet && prioritaet.name) {
