@@ -510,7 +510,44 @@ if (actionCode) {
         actionCode: actionCode
       })
     : null;
-    
+
+    if (analysebericht) {
+
+  teile.push(`
+
+<hr style="margin:18px 0">
+
+<h3>🧠 ${escapen(analysebericht.titel)}</h3>
+
+<p><strong>Spiegel</strong><br>
+${escapen(analysebericht.spiegel)}</p>
+
+<p><strong>Was ich erkenne</strong><br>
+${escapen(analysebericht.erkannt)}</p>
+
+${
+  analysebericht.ursache
+    ? `<p><strong>Wahrscheinliche Ursache</strong><br>
+${escapen(analysebericht.ursache)}</p>`
+    : ""
+}
+
+<p><strong>Was dein System jetzt braucht</strong><br>
+${escapen(analysebericht.beduerfnisse)}</p>
+
+<p><strong>Neuer Blickwinkel</strong><br>
+${escapen(analysebericht.innerCode)}</p>
+
+<p><strong>Körperimpuls</strong><br>
+${escapen(analysebericht.bodyCode)}</p>
+
+<p><strong>Nächster Schritt</strong><br>
+${escapen(analysebericht.actionCode)}</p>
+
+`);
+
+}
+  
     if (prioritaet && prioritaet.name) {
       teile.push(
         `<em>Aktueller Schwerpunkt: ${escapen(prioritaet.name)}</em>`
