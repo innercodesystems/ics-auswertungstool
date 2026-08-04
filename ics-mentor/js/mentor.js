@@ -422,6 +422,23 @@ if (innerCode) {
     innerCode
   );
 }
+
+    const bodyCode =
+  ICS.BodyCode &&
+  typeof ICS.BodyCode.erkennen === "function"
+    ? ICS.BodyCode.erkennen(
+        analyse.muster?.[0]?.id
+      )
+    : null;
+
+if (bodyCode) {
+
+  teile.push(
+    `❤️‍🩹 <strong>Body Code</strong><br>` +
+    bodyCode
+  );
+
+}
     
     if (prioritaet && prioritaet.name) {
       teile.push(
