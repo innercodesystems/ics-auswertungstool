@@ -394,6 +394,25 @@ if (dynamischeAnalyse && dynamischeAnalyse.text) {
   );
 }
 
+    const schlussfolgerung =
+  ICS.Schlussfolgerungen &&
+  typeof ICS.Schlussfolgerungen.erstellen === "function"
+    ? ICS.Schlussfolgerungen.erstellen(
+        ICS.Verknuepfungen.analysieren(
+          analyse.muster || []
+        )
+      )
+    : null;
+
+if (schlussfolgerung) {
+
+  teile.push(
+    `🎯 <strong>${escapen(schlussfolgerung.titel)}</strong><br>` +
+    `${escapen(schlussfolgerung.text)}`
+  );
+
+}
+    
     const beduerfnisse =
   ICS.Beduerfnisse &&
   typeof ICS.Beduerfnisse.erkennen === "function"
