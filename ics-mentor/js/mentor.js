@@ -896,6 +896,28 @@ ${escapen(analysebericht.actionCode)}</p>
       .replace(/ß/g, "ss");
   }
 
+  function einstiegErkennen(text){
+
+    const n = normalisieren(text);
+
+    if(n === "situation") return "situation";
+
+    if(n === "gefuehl") return "gefuehl";
+    if(n === "gefühl") return "gefuehl";
+
+    if(n === "beziehung") return "beziehung";
+
+    if(n === "entscheidung") return "entscheidung";
+
+    if(
+        n === "wiederkehrendes verhalten" ||
+        n === "verhalten"
+    ){
+        return "verhalten";
+    }
+
+    return "";
+}
 
   initialisieren();
 
