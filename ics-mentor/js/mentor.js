@@ -123,6 +123,27 @@ window.ICS = window.ICS || {};
       gespraech = neuesGespraech();
     }
 
+    const einstieg = einstiegErkennen(text);
+
+if (einstieg && !gespraech.einstieg) {
+    gespraech.einstieg = einstieg;
+
+    if (einstieg === "situation")
+        return "Beschreibe mir bitte kurz, was genau passiert ist.";
+
+    if (einstieg === "gefuehl")
+        return "Welches Gefühl steht im Moment am stärksten im Vordergrund?";
+
+    if (einstieg === "beziehung")
+        return "Um welche Beziehung geht es und was belastet dich darin?";
+
+    if (einstieg === "entscheidung")
+        return "Zwischen welchen Möglichkeiten versuchst du gerade zu entscheiden?";
+
+    if (einstieg === "verhalten")
+        return "Welches Verhalten wiederholt sich bei dir immer wieder?";
+}
+    
     const smalltalk =
       typeof ICS.pruefeSmalltalk === "function"
         ? ICS.pruefeSmalltalk(text)
