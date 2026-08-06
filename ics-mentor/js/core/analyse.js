@@ -39,28 +39,32 @@ ICS.Analysieren = function (text, gespraech) {
 
 function einstiegErkennen(text) {
 
-  if (text === "situation") {
+  const n = String(text || "")
+    .toLowerCase()
+    .trim();
+
+  if (n.includes("situation")) {
     return "situation";
   }
 
   if (
-    text === "gefuehl" ||
-    text === "gefühl"
+    n.includes("gefuehl") ||
+    n.includes("gefühl")
   ) {
     return "gefuehl";
   }
 
-  if (text === "beziehung") {
+  if (n.includes("beziehung")) {
     return "beziehung";
   }
 
-  if (text === "entscheidung") {
+  if (n.includes("entscheidung")) {
     return "entscheidung";
   }
 
   if (
-    text === "wiederkehrendes verhalten" ||
-    text === "verhalten"
+    n.includes("wiederkehrendes verhalten") ||
+    n === "verhalten"
   ) {
     return "verhalten";
   }
