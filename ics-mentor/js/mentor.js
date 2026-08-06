@@ -19,9 +19,10 @@ window.ICS = window.ICS || {};
   let gespraech = neuesGespraech();
 
 
-  function neuesGespraech() {
-    return {
-      thema: "",
+      function neuesGespraech() {
+  return {
+    einstieg: "",
+    thema: "",
       muster: "",
       weitereMuster: [],
       nebenthemen: [],
