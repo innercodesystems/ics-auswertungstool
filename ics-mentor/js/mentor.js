@@ -155,31 +155,24 @@ if (einstieg && !gespraech.einstieg) {
       return smalltalk;
     }
 
-    const analyse = analyseErstellen(text);
-
-    gespraech.analysen.push(analyse);
-
-    const update = brainAktualisieren(analyse);
-
-    const hypothesen = hypothesenErstellen(analyse);
-
-    const prioritaet = prioritaetErmitteln(analyse);
-
-    analyseUebernehmen(analyse);
-
-    if (!gespraech.muster && !gespraech.thema) {
-      return unbekannteAntwort(analyse);
-    }
-
-    return dialogAntwort(
-      analyse,
-      update,
-      hypothesen,
-      prioritaet
+if (
+  ICS.Engine &&
+  typeof ICS.Engine.antwort === "function"
+) {
+  const ergebnis =
+    ICS.Engine.antwort(
+      text,
+      gespraech
     );
+
+  if (ergebnis && ergebnis.html) {
+    return ergebnis.html;
   }
+}
 
-
+return "Ich möchte dich besser verstehen. Was beschäftigt dich daran am stärksten?";
+}
+  
   function analyseErstellen(text) {
     if (
       ICS.brain &&
