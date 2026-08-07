@@ -1,7 +1,5 @@
 window.ICS = window.ICS || {};
 
-alert("ANALYSE V2 GELADEN");
-
 ICS.Analysieren = function (text, gespraech) {
 
   const normalisiert =
