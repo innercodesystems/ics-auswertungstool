@@ -1,7 +1,5 @@
 window.ICS = window.ICS || {};
 
-alert("MENTOR V35 GELADEN");
-
 (function () {
   "use strict";
 
