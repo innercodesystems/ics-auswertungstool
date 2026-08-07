@@ -124,7 +124,16 @@ alert("MENTOR V35 GELADEN");
     if (istThemenwechsel(text)) {
       gespraech = neuesGespraech();
     }
- 
+
+const eingabe = normalisieren(text);
+
+if (
+  eingabe === "wiederkehrendes verhalten" ||
+  eingabe === "verhalten"
+) {
+  return "Welches Verhalten wiederholt sich bei dir immer wieder? Beschreibe mir bitte eine konkrete Situation.";
+}
+    
     const smalltalk =
       typeof ICS.pruefeSmalltalk === "function"
         ? ICS.pruefeSmalltalk(text)
