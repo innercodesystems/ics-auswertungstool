@@ -130,9 +130,9 @@ alert("MENTOR V35 GELADEN");
         ? ICS.pruefeSmalltalk(text)
         : null;
 
-    if (smalltalk && gespraech.antworten.length <= 1) {
-      return smalltalk;
-    }
+    if (smalltalk) {
+  return smalltalk;
+}
 
 if (
   ICS.Engine &&
