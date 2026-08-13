@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ICS – 4 Schlüssel für den Gestaltungsmodus</title>
+<style>
+:root{
+  --bg:#0b0a08;
+  --bg2:#15120d;
+  --gold:#d3a13b;
+  --gold2:#b8924f;
+  --cream:#f6f1e7;
+  --muted:rgba(246,241,231,.62);
+  --line:rgba(211,161,59,.34);
+  --glow:rgba(211,161,59,.42);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--cream);font-family:Arial,Helvetica,sans-serif}
+body{display:flex;justify-content:center;padding:24px 12px 40px}
+.ics4{width:min(100%,720px);text-align:center;background:
+radial-gradient(circle at 50% 45%,rgba(211,161,59,.07),transparent 42%),
+#0b0a08;padding:28px 12px 34px;overflow:hidden}
+.kicker{color:var(--gold);letter-spacing:.28em;text-transform:uppercase;font-size:12px;margin-bottom:10px}
+h1{font-family:Georgia,'Times New Roman',serif;font-size:clamp(30px,6.5vw,56px);line-height:1.02;margin:0 0 10px}
+.sub{color:var(--muted);font-size:clamp(15px,3.5vw,20px);margin:0 auto 24px;max-width:560px}
+.stage{position:relative;width:min(92vw,590px);aspect-ratio:1/1;margin:0 auto}
+.orbit,.orbit2{position:absolute;inset:10%;border:1px solid var(--line);border-radius:50%}
+.orbit2{inset:17%;border-color:rgba(211,161,59,.18)}
+.center{
+ position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+ width:34%;aspect-ratio:1;border-radius:50%;
+ border:2px solid var(--gold);
+ background:radial-gradient(circle at 50% 35%,#242015 0%,#0e0c09 72%);
+ box-shadow:0 0 26px rgba(211,161,59,.22),inset 0 0 18px rgba(0,0,0,.55);
+ display:flex;flex-direction:column;justify-content:center;align-items:center;padding:14px;z-index:2
+}
+.center .small{font-size:12px;letter-spacing:.18em;color:var(--gold);text-transform:uppercase}
+.center strong{font-family:Georgia,'Times New Roman',serif;font-size:clamp(27px,5.5vw,46px);line-height:1.02;margin:5px 0}
+.center span:last-child{font-size:clamp(11px,2.3vw,14px);line-height:1.35;color:var(--muted)}
+.key{
+ position:absolute;width:28%;aspect-ratio:1;border-radius:50%;
+ border:1.6px solid rgba(211,161,59,.72);
+ background:radial-gradient(circle at 50% 30%,#211c13,#0c0b09 75%);
+ color:var(--cream);display:flex;flex-direction:column;align-items:center;justify-content:center;
+ cursor:pointer;padding:8px;transition:.35s ease;z-index:3;-webkit-tap-highlight-color:transparent
+}
+.key:hover,.key:focus-visible{border-color:var(--gold)}
+.key.active{border-color:#f0c562;box-shadow:0 0 34px 6px var(--glow),0 0 9px rgba(240,197,98,.45),inset 0 0 18px rgba(211,161,59,.16);transform:scale(1.05)}
+.key.dim{opacity:.46}
+.key .icon{width:38px;height:38px;margin-bottom:5px;color:var(--gold)}
+.key .num{font-size:10px;color:var(--gold);letter-spacing:.12em}
+.key .title{font-family:Georgia,'Times New Roman',serif;font-size:clamp(13px,2.9vw,19px);margin-top:2px}
+.key .mini{font-size:clamp(8px,1.8vw,11px);line-height:1.2;color:rgba(246,241,231,.78);margin-top:2px}
+.resp{left:4%;top:10%}
+.disc{right:4%;top:10%}
+.vis{left:4%;bottom:10%}
+.std{right:4%;bottom:10%}
+.arrow{position:absolute;color:var(--gold);opacity:.75;font-size:24px;z-index:1}
+.a1{left:30%;top:16%;transform:rotate(25deg)} .a2{right:30%;top:16%;transform:rotate(155deg)}
+.a3{left:30%;bottom:16%;transform:rotate(-25deg)} .a4{right:30%;bottom:16%;transform:rotate(205deg)}
+.focus{
+ margin:20px auto 0;max-width:610px;min-height:112px;border:1px solid rgba(211,161,59,.32);
+ border-radius:22px;padding:20px;background:rgba(255,255,255,.018);display:flex;flex-direction:column;justify-content:center
+}
+.focus h2{font-family:Georgia,'Times New Roman',serif;color:var(--gold);font-size:24px;margin:0 0 8px}
+.focus p{font-family:Georgia,'Times New Roman',serif;font-size:18px;line-height:1.45;margin:0;color:var(--cream)}
+.focus button{display:none;margin:16px auto 0;border:1px solid var(--gold);border-radius:999px;padding:11px 18px;background:transparent;color:var(--gold);font-weight:700}
+.process{margin:28px auto 0;display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;color:var(--cream);font-family:Georgia,'Times New Roman',serif;letter-spacing:.08em;text-transform:uppercase}
+.process .arr{color:var(--gold)}
+.brand{margin-top:28px;padding-top:24px;border-top:1px solid rgba(211,161,59,.24);color:var(--gold);letter-spacing:.24em;text-transform:uppercase}
+.claim{margin-top:10px;color:var(--muted);font-size:12px;letter-spacing:.18em;text-transform:uppercase}
+@media(max-width:470px){
+ .ics4{padding-left:5px;padding-right:5px}
+ .stage{width:100%}
+ .key{width:27%}
+ .resp,.vis{left:1%}.disc,.std{right:1%}
+ .center{width:40%}
+ .key .icon{width:32px;height:32px}
+}
+
+@media(max-width:470px){
+  body{padding:10px 6px 30px}
+  .ics4{padding-top:22px}
+  .kicker{font-size:10.5px;margin-bottom:12px}
+  h1{font-size:clamp(29px,10vw,42px);line-height:.98;margin-bottom:12px}
+  .sub{font-size:14px;line-height:1.35;padding:0 16px;margin-bottom:12px}
+  .stage{width:min(98vw,430px)}
+  .center{width:35%}
+  .center strong{font-size:clamp(22px,7.2vw,32px)}
+  .key{width:29%}
+  .resp{left:1%;top:9%}.disc{right:1%;top:9%}
+  .vis{left:1%;bottom:9%}.std{right:1%;bottom:9%}
+  .key .title{font-size:clamp(14px,4.2vw,18px)}
+  .key .mini{font-size:clamp(8px,2.45vw,10.5px);max-width:95%}
+  .focus{margin-top:8px;border-radius:18px;padding:17px 14px;min-height:104px}
+  .focus h2{font-size:22px}
+  .focus p{font-size:17px}
+}
+</style>
+</head>
+<body>
+<section class="ics4" id="ics4">
+  <div class="kicker">Inner Code Systems</div>
+  <h1>Die 4 Schlüssel<br>für den Gestaltungsmodus</h1>
+  <p class="sub">Tippe auf einen Schlüssel und entdecke, was deinen Gestaltungsmodus stärkt.</p>
+
+  <div class="stage">
+    <div class="orbit"></div><div class="orbit2"></div>
+
+    <div class="center">
+      <span class="small">ICS</span>
+      <strong>Gestaltungs&shy;modus</strong>
+      <span>Verstehen.<br>Spüren.<br>Handeln.</span>
+    </div>
+
+    <button class="key resp" data-key="responsibility" aria-label="Verantwortung">
+      <svg class="icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="32" cy="32" r="18"/><path d="M32 8v8M32 48v8M8 32h8M48 32h8"/><path d="M32 22l7 10-7 10-7-10 7-10z"/>
+      </svg>
+      <span class="num">01</span><span class="title">Verantwortung</span><span class="mini">Ich gestalte mein Leben.</span>
+    </button>
+
+    <button class="key disc" data-key="discipline" aria-label="Disziplin">
+      <svg class="icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M35 8c4 10-4 12 2 19 4 5 10 2 10-5 7 8 9 18 4 27-5 9-18 11-27 5-9-6-11-18-4-27 3-4 7-7 9-12 1 8 6 10 9 8 4-3 1-9-3-15z"/>
+      </svg>
+      <span class="num">02</span><span class="title">Disziplin</span><span class="mini">Kleine Schritte. Jeden Tag.</span>
+    </button>
+
+    <button class="key vis" data-key="vision" aria-label="Vision">
+      <svg class="icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 43h46"/><path d="M16 43c4-14 11-21 16-21s12 7 16 21"/><path d="M32 8v8M16 15l5 6M48 15l-5 6"/>
+      </svg>
+      <span class="num">03</span><span class="title">Vision</span><span class="mini">Ich entscheide für meine Zukunft.</span>
+    </button>
+
+    <button class="key std" data-key="standards" aria-label="Standards">
+      <svg class="icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 24l10 10 10-18 10 18 10-10-4 25H16l-4-25z"/><path d="M18 49h28"/>
+      </svg>
+      <span class="num">04</span><span class="title">Standards</span><span class="mini">Ich schütze Zeit, Energie und Fokus.</span>
+    </button>
+  </div>
+
+  <div class="focus" aria-live="polite">
+    <h2 id="focusTitle">Wähle deinen Schlüssel</h2>
+    <p id="focusText">Die vier Bereiche bilden gemeinsam deinen Weg in den Gestaltungsmodus.</p>
+    <button id="openBtn" type="button">Bereich öffnen</button>
+  </div>
+
+  <div class="process">
+    <span>Entscheidung</span><span class="arr">→</span>
+    <span>Handlung</span><span class="arr">→</span>
+    <span>Erfahrung</span>
+  </div>
+  <div class="brand">Inner Code Systems</div>
+  <div class="claim">Verstehen · Spüren · Handeln</div>
+</section>
+
+<script>
+(() => {
+  const RESPONSIBILITY_URL = "#";
+  const DISCIPLINE_URL     = "#";
+  const VISION_URL         = "#";
+  const STANDARDS_URL      = "#";
+
+  const data = {
+    responsibility: {
+      title: "Dein Fokus: Verantwortung",
+      text: "Veränderung beginnt dort, wo du aufhörst, deine Gestaltungskraft abzugeben.",
+      url: RESPONSIBILITY_URL
+    },
+    discipline: {
+      title: "Dein Fokus: Disziplin",
+      text: "Nicht Motivation trägt dich, sondern das, was du konsequent wiederholst.",
+      url: DISCIPLINE_URL
+    },
+    vision: {
+      title: "Dein Fokus: Vision",
+      text: "Klarheit entsteht, wenn du entscheidest, wohin du wirklich willst.",
+      url: VISION_URL
+    },
+    standards: {
+      title: "Dein Fokus: Standards",
+      text: "Was du schützt, bestimmt, was in deinem Leben wachsen kann.",
+      url: STANDARDS_URL
+    }
+  };
+
+  const keys = [...document.querySelectorAll(".key")];
+  const title = document.getElementById("focusTitle");
+  const text = document.getElementById("focusText");
+  const openBtn = document.getElementById("openBtn");
+  let selected = null;
+
+  function choose(key) {
+    selected = key;
+    keys.forEach(btn => {
+      const active = btn.dataset.key === key;
+      btn.classList.toggle("active", active);
+      btn.classList.toggle("dim", !active);
+    });
+    title.textContent = data[key].title;
+    text.textContent = data[key].text;
+    openBtn.style.display = data[key].url !== "#" ? "inline-block" : "none";
+  }
+
+  keys.forEach(btn => btn.addEventListener("click", () => choose(btn.dataset.key)));
+
+  openBtn.addEventListener("click", () => {
+    if (!selected) return;
+    const url = data[selected].url;
+    if (url && url !== "#") window.open(url, "_blank", "noopener");
+  });
+})();
+</script>
+</body>
+</html>
