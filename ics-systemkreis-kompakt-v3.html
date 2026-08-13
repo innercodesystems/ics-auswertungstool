@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ICS – Interaktiver Systemkreis kompakt</title>
+<style>
+:root{
+  --bg:#0b0a08;
+  --gold:#d4a03a;
+  --gold2:#f0c467;
+  --cream:#f6f1e7;
+  --muted:rgba(246,241,231,.62);
+  --line:rgba(212,160,58,.28);
+}
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  padding:0;
+  background:var(--bg);
+  color:var(--cream);
+  font-family:Arial,Helvetica,sans-serif;
+  overflow:hidden;
+}
+body{min-height:100vh}
+
+.ics-system{
+  width:100%;
+  max-width:760px;
+  margin:0 auto;
+  padding:8px 6px 10px;
+  text-align:center;
+  background:
+    radial-gradient(circle at 50% 48%,rgba(212,160,58,.07),transparent 44%),
+    var(--bg);
+}
+
+.stage{
+  position:relative;
+  width:min(96vw,620px);
+  max-width:100%;
+  aspect-ratio:1/1;
+  margin:0 auto;
+}
+
+.orbit,.orbit2,.orbit3{
+  position:absolute;
+  border-radius:50%;
+  pointer-events:none;
+}
+.orbit{inset:9%;border:1px solid var(--line)}
+.orbit2{inset:18%;border:1px solid rgba(212,160,58,.20)}
+.orbit3{inset:28%;border:1px solid rgba(212,160,58,.13)}
+
+.spark{
+  position:absolute;
+  width:5px;height:5px;
+  border-radius:50%;
+  background:rgba(212,160,58,.55);
+  box-shadow:0 0 9px rgba(212,160,58,.35);
+}
+.s1{top:17%;left:22%}.s2{top:19%;right:21%}.s3{bottom:17%;left:23%}.s4{bottom:19%;right:22%}
+
+.center{
+  position:absolute;
+  left:50%;top:50%;
+  transform:translate(-50%,-50%);
+  width:35%;
+  aspect-ratio:1;
+  border-radius:50%;
+  border:2px solid var(--gold);
+  background:radial-gradient(circle at 50% 32%,#261f13 0%,#0c0a08 73%);
+  box-shadow:0 0 34px rgba(212,160,58,.28),inset 0 0 20px rgba(0,0,0,.72);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  z-index:2;
+  padding:12px;
+  transition:box-shadow .3s ease,border-color .3s ease;
+}
+.center.pulse{
+  border-color:var(--gold2);
+  box-shadow:0 0 18px rgba(240,196,103,.72),0 0 42px rgba(212,160,58,.50),inset 0 0 20px rgba(0,0,0,.72);
+}
+.center-kicker{
+  color:var(--gold);
+  font-size:9px;
+  letter-spacing:.17em;
+  text-transform:uppercase;
+}
+.center-title{
+  margin:5px 0 4px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(23px,5vw,40px);
+  line-height:1;
+}
+.center-copy{
+  max-width:88%;
+  color:var(--muted);
+  font-size:clamp(9px,1.8vw,12px);
+  line-height:1.28;
+}
+
+.node{
+  position:absolute;
+  width:30%;
+  aspect-ratio:1;
+  border-radius:50%;
+  border:1.5px solid rgba(212,160,58,.62);
+  background:radial-gradient(circle at 50% 28%,#211c12 0%,#0b0a08 76%);
+  color:var(--cream);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:8px;
+  cursor:pointer;
+  z-index:4;
+  transition:opacity .28s ease,transform .28s ease,border-color .28s ease,box-shadow .28s ease,background .28s ease;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+.node.top{top:1%;left:50%;transform:translateX(-50%)}
+.node.right{right:1%;top:50%;transform:translateY(-50%)}
+.node.bottom{bottom:1%;left:50%;transform:translateX(-50%)}
+.node.left{left:1%;top:50%;transform:translateY(-50%)}
+
+.node.active{
+  border-color:var(--gold2);
+  background:radial-gradient(circle at 50% 26%,#342816 0%,#0b0a08 76%);
+  box-shadow:0 0 16px rgba(240,196,103,.72),0 0 42px rgba(212,160,58,.48);
+}
+.node.dim{opacity:.26}
+
+.node-icon{
+  color:var(--gold);
+  font-size:clamp(21px,3.8vw,29px);
+  line-height:1;
+  margin-bottom:4px;
+}
+.node-name{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(15px,2.7vw,20px);
+  line-height:1.05;
+}
+.node-sub{
+  margin-top:3px;
+  color:var(--muted);
+  font-size:clamp(8px,1.45vw,10px);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+@media(max-width:600px){
+  .ics-system{padding:4px 2px 6px}
+  .stage{width:100%}
+  .node{width:30.5%}
+  .center{width:36%}
+}
+</style>
+</head>
+<body>
+
+<section class="ics-system" id="icsSystemCircle">
+  <div class="stage">
+    <div class="orbit"></div>
+    <div class="orbit2"></div>
+    <div class="orbit3"></div>
+    <span class="spark s1"></span>
+    <span class="spark s2"></span>
+    <span class="spark s3"></span>
+    <span class="spark s4"></span>
+
+    <div class="center" id="centerCard" aria-live="polite">
+      <div class="center-kicker" id="centerKicker">ICS</div>
+      <div class="center-title" id="centerTitle">RESET</div>
+      <div class="center-copy" id="centerCopy">Verstehen.<br>Spüren.<br>Handeln.</div>
+    </div>
+
+    <button class="node top" type="button" data-key="inner">
+      <span class="node-icon">🧠</span>
+      <span class="node-name">Verstehen</span>
+      <span class="node-sub">Inner Code</span>
+    </button>
+
+    <button class="node right" type="button" data-key="body">
+      <span class="node-icon">♥</span>
+      <span class="node-name">Spüren</span>
+      <span class="node-sub">Body Code</span>
+    </button>
+
+    <button class="node bottom" type="button" data-key="action">
+      <span class="node-icon">▲</span>
+      <span class="node-name">Handeln</span>
+      <span class="node-sub">Action Code</span>
+    </button>
+
+    <button class="node left" type="button" data-key="reset">
+      <span class="node-icon">↻</span>
+      <span class="node-name">RESET</span>
+      <span class="node-sub">Transformieren</span>
+    </button>
+  </div>
+</section>
+
+<script>
+(function(){
+  const root = document.getElementById('icsSystemCircle');
+  if(!root) return;
+
+  const nodes = Array.from(root.querySelectorAll('.node'));
+  const center = document.getElementById('centerCard');
+  const kicker = document.getElementById('centerKicker');
+  const title = document.getElementById('centerTitle');
+  const copy = document.getElementById('centerCopy');
+
+  const CONTENT = {
+    inner:{
+      kicker:"INNER CODE",
+      title:"Verstehen",
+      copy:"Erkenne, was in dir wirkt."
+    },
+    body:{
+      kicker:"BODY CODE",
+      title:"Spüren",
+      copy:"Was zeigt dir dein Körper?"
+    },
+    action:{
+      kicker:"ACTION CODE",
+      title:"Handeln",
+      copy:"Welcher Schritt ist jetzt dran?"
+    },
+    reset:{
+      kicker:"RESET",
+      title:"Transformieren",
+      copy:"Neu ausrichten. Integrieren."
+    }
+  };
+
+  function activate(key){
+    nodes.forEach(node=>{
+      const active = node.dataset.key === key;
+      node.classList.toggle('active',active);
+      node.classList.toggle('dim',!active);
+    });
+
+    kicker.textContent = CONTENT[key].kicker;
+    title.textContent = CONTENT[key].title;
+    copy.textContent = CONTENT[key].copy;
+
+    center.classList.remove('pulse');
+    void center.offsetWidth;
+    center.classList.add('pulse');
+  }
+
+  nodes.forEach(node=>{
+    node.addEventListener('click',()=>activate(node.dataset.key));
+  });
+})();
+</script>
+</body>
+</html>
