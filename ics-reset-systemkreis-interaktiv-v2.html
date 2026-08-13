@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ICS – Interaktiver RESET Systemkreis V2</title>
+<style>
+:root{
+  --bg:#0b0a08;
+  --gold:#d4a03a;
+  --gold2:#f0c467;
+  --cream:#f6f1e7;
+  --muted:rgba(246,241,231,.64);
+  --line:rgba(212,160,58,.28);
+}
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  padding:0;
+  background:var(--bg);
+  color:var(--cream);
+  font-family:Arial,Helvetica,sans-serif;
+  overflow-x:hidden;
+}
+body{min-height:100vh}
+
+.ics-reset{
+  width:100%;
+  max-width:900px;
+  margin:0 auto;
+  padding:18px 10px 22px;
+  text-align:center;
+  background:
+    radial-gradient(circle at 50% 47%,rgba(212,160,58,.07),transparent 42%),
+    var(--bg);
+}
+
+.kicker{
+  margin:0 0 5px;
+  color:var(--gold);
+  font-size:10px;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  font-weight:600;
+}
+
+.title{
+  margin:0;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(28px,4.6vw,44px);
+  line-height:1.02;
+  font-weight:500;
+}
+
+.intro{
+  max-width:590px;
+  margin:8px auto 2px;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.35;
+  padding:0 8px;
+}
+
+/* Größerer, präsenterer Kreis */
+.stage{
+  position:relative;
+  width:min(96vw,660px);
+  max-width:100%;
+  aspect-ratio:1/1;
+  margin:-4px auto -6px;
+}
+
+.orbit,.orbit2,.orbit3{
+  position:absolute;
+  border-radius:50%;
+  pointer-events:none;
+}
+.orbit{inset:10%;border:1px solid var(--line)}
+.orbit2{inset:18%;border:1px solid rgba(212,160,58,.20)}
+.orbit3{inset:27%;border:1px solid rgba(212,160,58,.14)}
+
+.spark{
+  position:absolute;
+  width:5px;height:5px;
+  border-radius:50%;
+  background:rgba(212,160,58,.58);
+  box-shadow:0 0 9px rgba(212,160,58,.36);
+}
+.s1{top:18%;left:23%}.s2{top:20%;right:22%}.s3{bottom:18%;left:24%}.s4{bottom:20%;right:22%}
+
+/* Zentrum */
+.center{
+  position:absolute;
+  left:50%;top:50%;
+  transform:translate(-50%,-50%);
+  width:36%;
+  aspect-ratio:1;
+  border-radius:50%;
+  border:2px solid var(--gold);
+  background:radial-gradient(circle at 50% 32%,#271f13 0%,#0c0a08 73%);
+  box-shadow:
+    0 0 34px rgba(212,160,58,.28),
+    inset 0 0 20px rgba(0,0,0,.72);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  z-index:2;
+  padding:12px;
+}
+.center-label{
+  color:var(--gold);
+  font-size:10px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+.center strong{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(28px,5vw,44px);
+  line-height:1;
+  margin:5px 0;
+}
+.center-copy{
+  color:var(--muted);
+  font-size:clamp(10px,1.8vw,13px);
+  line-height:1.3;
+}
+
+/* Vier Bereiche */
+.node{
+  position:absolute;
+  width:30%;
+  aspect-ratio:1;
+  border-radius:50%;
+  border:1.5px solid rgba(212,160,58,.60);
+  background:radial-gradient(circle at 50% 28%,#211c12 0%,#0b0a08 76%);
+  color:var(--cream);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:9px;
+  cursor:pointer;
+  z-index:4;
+  transition:
+    opacity .28s ease,
+    transform .28s ease,
+    border-color .28s ease,
+    box-shadow .28s ease,
+    background .28s ease;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+.node.top{top:1%;left:50%;transform:translateX(-50%)}
+.node.right{right:1%;top:50%;transform:translateY(-50%)}
+.node.bottom{bottom:1%;left:50%;transform:translateX(-50%)}
+.node.left{left:1%;top:50%;transform:translateY(-50%)}
+
+.node.active{
+  border-color:var(--gold2);
+  background:radial-gradient(circle at 50% 26%,#342816 0%,#0b0a08 76%);
+  box-shadow:
+    0 0 16px rgba(240,196,103,.72),
+    0 0 42px rgba(212,160,58,.50),
+    inset 0 0 18px rgba(212,160,58,.12);
+}
+.node.dim{opacity:.28}
+.node-icon{
+  color:var(--gold);
+  font-size:clamp(22px,3.8vw,30px);
+  line-height:1;
+  margin-bottom:4px;
+}
+.node-name{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(16px,2.7vw,21px);
+  line-height:1.05;
+}
+.node-sub{
+  margin-top:3px;
+  color:var(--muted);
+  font-size:clamp(8px,1.45vw,10px);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+/* Ergebnis kompakter und direkt unter Kreis */
+.focus{
+  max-width:650px;
+  min-height:94px;
+  margin:2px auto 0;
+  padding:14px 16px;
+  border:1px solid rgba(212,160,58,.35);
+  border-radius:18px;
+  background:rgba(255,255,255,.015);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.focus-title{
+  margin:0 0 5px;
+  color:var(--gold);
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(20px,3.5vw,26px);
+}
+.focus-text{
+  margin:0 auto;
+  max-width:540px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(15px,2.5vw,18px);
+  line-height:1.34;
+}
+.focus-action{
+  display:none;
+  margin:12px auto 0;
+  padding:9px 16px;
+  border-radius:999px;
+  border:1px solid var(--gold);
+  background:rgba(212,160,58,.08);
+  color:var(--gold2);
+  font-weight:700;
+  cursor:pointer;
+}
+.claim{
+  margin-top:12px;
+  color:rgba(246,241,231,.44);
+  font-size:9px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+
+@media(max-width:600px){
+  .ics-reset{
+    padding:16px 4px 18px;
+  }
+  .kicker{font-size:9px}
+  .title{font-size:clamp(26px,8.8vw,37px)}
+  .intro{
+    font-size:12.5px;
+    margin-top:7px;
+    padding:0 10px;
+  }
+  .stage{
+    width:100%;
+    margin:-2px auto -4px;
+  }
+  .node{width:30.5%}
+  .node.top{top:2%}
+  .node.right{right:1%}
+  .node.bottom{bottom:2%}
+  .node.left{left:1%}
+  .center{width:36.5%}
+  .focus{
+    min-height:90px;
+    margin-top:0;
+    padding:13px 11px;
+  }
+  .focus-title{font-size:20px}
+  .focus-text{font-size:15.5px}
+}
+</style>
+</head>
+<body>
+
+<section class="ics-reset" id="icsResetCircle">
+  <div class="kicker">Inner Code Systems</div>
+  <h1 class="title">So entsteht echte Veränderung</h1>
+  <p class="intro">Tippe auf einen Bereich und entdecke, wie Verstehen, Spüren, Handeln und RESET zusammenspielen.</p>
+
+  <div class="stage">
+    <div class="orbit"></div>
+    <div class="orbit2"></div>
+    <div class="orbit3"></div>
+    <span class="spark s1"></span>
+    <span class="spark s2"></span>
+    <span class="spark s3"></span>
+    <span class="spark s4"></span>
+
+    <div class="center">
+      <span class="center-label">ICS</span>
+      <strong>RESET</strong>
+      <span class="center-copy">Verstehen.<br>Spüren.<br>Handeln.</span>
+    </div>
+
+    <button class="node top" type="button" data-key="inner">
+      <span class="node-icon">🧠</span>
+      <span class="node-name">Verstehen</span>
+      <span class="node-sub">Inner Code</span>
+    </button>
+
+    <button class="node right" type="button" data-key="body">
+      <span class="node-icon">♥</span>
+      <span class="node-name">Spüren</span>
+      <span class="node-sub">Body Code</span>
+    </button>
+
+    <button class="node bottom" type="button" data-key="action">
+      <span class="node-icon">▲</span>
+      <span class="node-name">Handeln</span>
+      <span class="node-sub">Action Code</span>
+    </button>
+
+    <button class="node left" type="button" data-key="reset">
+      <span class="node-icon">↻</span>
+      <span class="node-name">RESET</span>
+      <span class="node-sub">Transformieren</span>
+    </button>
+  </div>
+
+  <div class="focus" aria-live="polite">
+    <div class="focus-title" id="focusTitle">Wähle deinen Bereich</div>
+    <p class="focus-text" id="focusText">Verstehen, Spüren und Handeln greifen ineinander. RESET verbindet sie zu einem bewussten Entwicklungsweg.</p>
+    <button class="focus-action" id="focusAction" type="button">Bereich öffnen</button>
+  </div>
+
+  <div class="claim">Verstehen · Spüren · Handeln · Integrieren</div>
+</section>
+
+<script>
+(function(){
+  const root = document.getElementById('icsResetCircle');
+  if(!root) return;
+
+  const nodes = Array.from(root.querySelectorAll('.node'));
+  const title = root.querySelector('#focusTitle');
+  const text = root.querySelector('#focusText');
+  const action = root.querySelector('#focusAction');
+
+  const URLS = {
+    inner:"#",
+    body:"#",
+    action:"#",
+    reset:"#"
+  };
+
+  const CONTENT = {
+    inner:{
+      title:"Inner Code · Verstehen",
+      text:"Erkenne, was in dir wirkt: Gedanken, Muster, Bewertungen und die Geschichte, die du dir über deine Situation erzählst."
+    },
+    body:{
+      title:"Body Code · Spüren",
+      text:"Nimm wahr, was dein Körper dir zeigt. Spannung, Ruhe, Druck oder Weite machen sichtbar, was dein Denken allein oft übersieht."
+    },
+    action:{
+      title:"Action Code · Handeln",
+      text:"Aus Erkenntnis wird Veränderung, wenn ein konkreter Schritt folgt. Klein genug, dass du ihn wirklich gehst."
+    },
+    reset:{
+      title:"RESET · Transformieren",
+      text:"RESET verbindet Verstehen, Spüren und Handeln. Du richtest dich neu aus und integrierst die Erfahrung in deinen Alltag."
+    }
+  };
+
+  let selected = null;
+
+  function activate(key){
+    selected = key;
+
+    nodes.forEach(node=>{
+      const active = node.dataset.key === key;
+      node.classList.toggle('active',active);
+      node.classList.toggle('dim',!active);
+    });
+
+    title.textContent = CONTENT[key].title;
+    text.textContent = CONTENT[key].text;
+
+    const url = URLS[key];
+    action.style.display = (url && url !== "#") ? "inline-block" : "none";
+  }
+
+  nodes.forEach(node=>{
+    node.addEventListener('click',()=>activate(node.dataset.key));
+  });
+
+  action.addEventListener('click',()=>{
+    if(!selected) return;
+    const url = URLS[selected];
+
+    if(url && url !== "#"){
+      window.open(url,"_blank","noopener");
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
