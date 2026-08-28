@@ -207,8 +207,9 @@
 </script>
 
   <div style="margin-top:24px; text-align:center;">
-  <a
-    href="https://app.innercodesystems.com"
+<a
+  id="backToIcsApp"
+  href="https://app.innercodesystems.com"
     style="
       display:inline-block;
       padding:14px 20px;
@@ -222,6 +223,24 @@
     Zurück zu meiner ICS App
   </a>
 </div>
+
+<script>
+document
+  .getElementById('backToIcsApp')
+  ?.addEventListener('click', (event) => {
+
+    if (typeof ICS_JOURNEY === 'undefined') return;
+
+    const gelesen = ICS_JOURNEY.leseJourney();
+
+    if (!gelesen?.ok || !gelesen.objekt) return;
+
+    console.log(
+      'ICS Journey für App:',
+      gelesen.objekt
+    );
+  });
+</script>
   
 </body>
 </html>
