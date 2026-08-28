@@ -227,9 +227,11 @@
 <script>
 document
   .getElementById('backToIcsApp')
-  ?.addEventListener('click', (event) => {
+.addEventListener('click', (event) => {
 
-    if (typeof ICS_JOURNEY === 'undefined') return;
+  event.preventDefault();
+
+  if (typeof ICS_JOURNEY === 'undefined') return;
 
     const gelesen = ICS_JOURNEY.leseJourney();
 
