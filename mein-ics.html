@@ -237,10 +237,42 @@ document
 
     if (!gelesen?.ok || !gelesen.objekt) return;
 
-    console.log(
-      'ICS Journey für App:',
-      gelesen.objekt
-    );
+const journey = gelesen.objekt;
+
+const appPayload = {
+  version: journey.version || '2.0',
+  sessionId: journey.session_id || '',
+  createdAt: journey.created_at || new Date().toISOString(),
+
+  resetCheck: journey.reset_check
+    ? {
+        innerCode: journey.reset_check.inner_code_prozent ?? null,
+        bodyCode: journey.reset_check.body_code_prozent ?? null,
+        actionCode: journey.reset_check.action_code_prozent ?? null,
+        createdAt: journey.reset_check.erstellt_am || null
+      }
+    : null,
+
+  evaluation: journey.ki_auswertung
+    ? {
+        strongestCode: journey.ki_auswertung.staerkster_code || null,
+        weakestCode: journey.ki_auswertung.schwaechster_code || null
+      }
+    : null,
+
+  counterPole: journey.gegenpol
+    ? {
+        patternId: journey.gegenpol.muster_id || null,
+        intensity: journey.gegenpol.intensitaet || null,
+        createdAt: journey.gegenpol.erstellt_am || null
+      }
+    : null
+};
+
+console.log(
+  'ICS App Payload:',
+  appPayload
+);
   });
 </script>
   
