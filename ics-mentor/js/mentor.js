@@ -206,6 +206,90 @@ window.ICS = window.ICS || {};
     `;
   }
 
+  function insightAnAppSenden(ergebnis) {
+    if (
+      window.parent === window ||
+      !ergebnis ||
+      !ergebnis.analyse
+    ) {
+      return;
+    }
+
+    let zielOrigin = "";
+
+    try {
+      zielOrigin =
+        new URL(document.referrer).origin;
+    } catch {
+      return;
+    }
+
+    if (!erlaubteIcsAppQuellen.has(zielOrigin)) {
+      return;
+    }
+
+    const analyse = ergebnis.analyse;
+
+    const patterns =
+      Array.isArray(analyse.muster)
+        ? analyse.muster
+            .map((item) =>
+              item && typeof item.id === "string"
+                ? item.id
+                : ""
+            )
+            .filter(Boolean)
+            .slice(0, 5)
+        : [];
+
+    const theme =
+      analyse.thema &&
+      typeof analyse.thema.id === "string"
+        ? analyse.thema.id
+        : "";
+
+    const emotion =
+      analyse.emotion &&
+      typeof analyse.emotion.id === "string"
+        ? analyse.emotion.id
+        : "";
+
+    if (
+      patterns.length === 0 &&
+      !theme &&
+      !emotion
+    ) {
+      return;
+    }
+
+    const uniqueId =
+      window.crypto &&
+      typeof window.crypto.randomUUID === "function"
+        ? window.crypto.randomUUID()
+        : `${Date.now()}_${Math.random()
+            .toString(36)
+            .slice(2)}`;
+
+    window.parent.postMessage(
+      {
+        type: "ICS_MENTOR_INSIGHT_V1",
+        insight: {
+          id: `MENTOR_INSIGHT_${uniqueId}`,
+          createdAt: new Date().toISOString(),
+          state:
+            gespraech.appKontext &&
+            typeof gespraech.appKontext.state === "string"
+              ? gespraech.appKontext.state
+              : "",
+          patterns,
+          theme,
+          emotion
+        }
+      },
+      zielOrigin
+    );
+  }
+  
   function antwortErzeugen(text) {
     if (istAuswertungsWunsch(text)) {
       gespraech.abgeschlossen = true;
@@ -251,6 +335,8 @@ if (
     );
 
 if (ergebnis && ergebnis.html) {
+    insightAnAppSenden(ergebnis);
+  
     return [
       appKontextHinweis(),
       ergebnis.html
