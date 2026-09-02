@@ -17,6 +17,82 @@ window.ICS = window.ICS || {};
   }
 
   let gespraech = neuesGespraech();
+    let empfangenerAppKontext = null;
+
+  const erlaubteIcsAppQuellen = new Set([
+    "https://app.innercodesystems.com",
+    "https://innercodesystems.github.io",
+    "https://www.innercodesystems.com",
+    "https://innercodesystems.com"
+  ]);
+
+  const appKontextLabels = {
+    energy: "Energie",
+    body: "Körper",
+    mind: "Gedanken",
+    pressure: "innerer Druck",
+    orientation: "Orientierung",
+    impulse: "Impuls"
+  };
+
+  window.addEventListener("message", function (event) {
+    if (!erlaubteIcsAppQuellen.has(event.origin)) {
+      return;
+    }
+
+    const data = event.data;
+
+    if (
+      !data ||
+      data.type !== "ICS_APP_CONTEXT_V1"
+    ) {
+      return;
+    }
+
+    const latestChoice =
+      data.context &&
+      data.context.latestChoice;
+
+    if (
+      !latestChoice ||
+      typeof latestChoice.state !== "string"
+    ) {
+      return;
+    }
+
+    if (
+      empfangenerAppKontext &&
+      empfangenerAppKontext.id &&
+      empfangenerAppKontext.id === latestChoice.id
+    ) {
+      return;
+    }
+
+    empfangenerAppKontext = {
+      id: latestChoice.id || "",
+      state: latestChoice.state,
+      title: latestChoice.title || "",
+      area: latestChoice.area || "",
+      createdAt: latestChoice.createdAt || ""
+    };
+
+    gespraech.appKontext = {
+      ...empfangenerAppKontext
+    };
+
+    const bereich =
+      appKontextLabels[latestChoice.state] ||
+      latestChoice.area ||
+      "deinen letzten Weg";
+
+    mentorNachricht(`
+      Ich sehe, dass du in ICS zuletzt den Bereich
+      <strong>${ICS.escapen(bereich)}</strong>
+      gewählt hast.<br><br>
+      Möchtest du dort weitergehen oder beschäftigt dich
+      gerade etwas anderes?
+    `);
+  });
 
 
       function neuesGespraech() {
