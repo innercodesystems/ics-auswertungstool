@@ -182,6 +182,29 @@ window.ICS = window.ICS || {};
     }, wartezeit);
   }
 
+    function appKontextHinweis() {
+    const kontext = gespraech.appKontext;
+
+    if (
+      !kontext ||
+      kontext.verwendet
+    ) {
+      return "";
+    }
+
+    kontext.verwendet = true;
+
+    const bereich =
+      appKontextLabels[kontext.state] ||
+      kontext.area ||
+      "deinen vorherigen ICS Weg";
+
+    return `
+      Ich behalte dabei im Blick, dass du zuvor den Bereich
+      <strong>${ICS.escapen(bereich)}</strong>
+      gewählt hast.
+    `;
+  }
 
   function antwortErzeugen(text) {
     if (istAuswertungsWunsch(text)) {
@@ -227,12 +250,22 @@ if (
       gespraech
     );
 
-  if (ergebnis && ergebnis.html) {
-    return ergebnis.html;
+if (ergebnis && ergebnis.html) {
+    return [
+      appKontextHinweis(),
+      ergebnis.html
+    ]
+      .filter(Boolean)
+      .join("<br><br>");
   }
 }
 
-return "Ich möchte dich besser verstehen. Was beschäftigt dich daran am stärksten?";
+return [
+  appKontextHinweis(),
+  "Ich möchte dich besser verstehen. Was beschäftigt dich daran am stärksten?"
+]
+  .filter(Boolean)
+  .join("<br><br>");
 }
   
   function analyseErstellen(text) {
