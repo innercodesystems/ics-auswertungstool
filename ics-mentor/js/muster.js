@@ -470,6 +470,42 @@ ICS.MUSTER = {
       "Warte vor einer impulsiven Reaktion zehn Minuten und frage dich, ob du aus Verbindung oder aus Verlustangst handelst."
   },
 
+    energieverlust: {
+    name: "Energieverlust und Erschöpfung",
+
+    regeln: [
+      /\benergielos\b/,
+      /\bwenig energie\b/,
+      /\bkaum energie\b/,
+      /\bkeine energie\b/,
+      /\bkeine kraft\b/,
+      /\bkraftlos\b/,
+      /\bmuede\b/,
+      /\berschoepf/,
+      /\bausgelaugt\b/,
+      /\bregeneration\b/
+    ],
+
+    spiegel:
+      "Deine Energie scheint gerade deutlich reduziert zu sein. Das muss nicht sofort auf ein tieferes Muster hinweisen. Zuerst darf sichtbar werden, wo und wie sich die Erschöpfung bei dir zeigt.",
+
+    fragen: [
+      "Wo bemerkst du die Erschöpfung gerade am stärksten – körperlich, gedanklich oder innerlich?",
+      "Seit wann fühlt sich deine Energie verändert an?",
+      "Was hat dir in den vergangenen Tagen besonders viel Energie genommen?",
+      "Was würde deinem System heute zuerst etwas Entlastung geben?",
+      "Wie viel ist gerade wirklich möglich – eine, drei oder zehn Minuten?"
+    ],
+
+    innerCode:
+      "Du musst deine Erschöpfung nicht übergehen, um weiterzukommen.",
+
+    bodyCode:
+      "Nimm für einen Moment wahr, wo dein Körper Ruhe, Versorgung oder sanfte Bewegung braucht.",
+
+    actionCode:
+      "Wähle einen kleinen Schritt, der heute Energie schützt oder Regeneration ermöglicht."
+  },
 
   ueberforderung: {
     name: "Überforderungsmuster",
@@ -486,12 +522,6 @@ ICS.MUSTER = {
       /\bzu viele aufgaben\b/,
       /\bzu viele gedanken\b/,
       /\bmein kopf ist voll\b/,
-      /\bkeine kraft mehr\b/,
-      /\bkeine energie mehr\b/,
-      /\bvoellig erschoepft\b/,
-      /\berschoepf/,
-      /\bausgelaugt\b/,
-      /\bkurz vorm zusammenbruch\b/,
       /\balles gleichzeitig\b/,
       /\bweiss nicht was zuerst\b/
     ],
