@@ -161,7 +161,12 @@ function result(){
   $("focus").innerHTML=`Dein stärkster Hebel liegt aktuell bei <b class="gold">${label}</b>. ICS führt dich von hier gezielt in den nächsten passenden Schritt.`;
   const pt={inner:"Klarheitsweg starten",body:"Energie-Weg starten",action:"Umsetzungsweg starten",reset:"RESET-Weg starten",orientation:"Orientierungsweg starten"}[weak];
   const tt={inner:"Klarheits-Tool öffnen",body:"Energie-Tool öffnen",action:"Action-Impuls öffnen",reset:"Gegenpol öffnen",orientation:"Lebensphase ansehen"}[weak];
-  $("pathTitle").textContent=pt;$("toolTitle").textContent=tt;$("flow").innerHTML="";show("result");window.scrollTo(0,0);
+  $("pathTitle").textContent=pt;
+$("toolTitle").textContent=tt;
+$("flow").innerHTML="";
+show("result");
+setActiveRouteButton(document.querySelector('[data-route="path"]'));
+window.scrollTo(0,0);
 }
 
 function setActiveTestButton(btn){
