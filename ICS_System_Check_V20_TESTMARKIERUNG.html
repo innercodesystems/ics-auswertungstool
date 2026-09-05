@@ -265,9 +265,46 @@ function program(){
     <div class="card">
       <div class="kicker">TIEFER GEHEN</div>
       <h2>${d[0]}</h2>
-      <p>Passend zu deinem Ergebnis und deiner Auswahl <b class="gold">${detail}</b>.</p>
+<p>Deine Auswahl <b class="gold">${detail}</b> zeigt, wo dein System gerade besonders viel Aufmerksamkeit bindet.</p>
 
-      ${
+<div class="card" style="margin:18px 0;background:#27221c;">
+  <div class="kicker">WARUM DAS JETZT ZU DIR PASST</div>
+
+  <p>
+    ${
+      weak==="inner" && detail==="Zu viele Gedanken"
+        ? "Wenn viele Gedanken gleichzeitig Raum einnehmen, entsteht Klarheit oft nicht durch noch mehr Nachdenken. Entscheidend ist, dein System zu entlasten, Gedanken zu sortieren und bewusst aus wiederkehrenden Reaktionen auszusteigen."
+
+      : weak==="inner" && detail==="Ich zweifle"
+        ? "Zweifel entstehen häufig dort, wo innere Sicherheit fehlt oder alte Überzeugungen deine Entscheidungen beeinflussen. Der nächste Schritt ist, diese Muster sichtbar zu machen und deine eigene innere Führung wieder zu stärken."
+
+      : weak==="inner" && detail==="Erwartungen anderer"
+        ? "Wenn Erwartungen anderer viel Raum einnehmen, wird es schwieriger zu erkennen, was wirklich zu dir gehört. Der nächste Schritt ist, übernommene Muster bewusster von deinen eigenen Bedürfnissen und Entscheidungen zu unterscheiden."
+
+      : weak==="inner" && detail==="Ich weiß nicht, was ich will"
+        ? "Wenn die eigene Richtung gerade nicht klar ist, braucht es nicht sofort eine große Entscheidung. Hilfreicher ist es, deine aktuelle Lebensphase, deine Bedürfnisse und das, was heute wirklich stimmig ist, bewusster zu betrachten."
+
+      : "Dein Ergebnis zeigt einen Bereich, in dem gerade Entwicklung möglich ist. Die folgende Vertiefung unterstützt dich dabei, daraus einen konkreten nächsten Schritt zu machen."
+    }
+  </p>
+
+  <p class="note">
+    <b class="gold">DEIN FOKUS:</b>
+    ${
+      detail==="Zu viele Gedanken"
+        ? " Gedanken entlasten · Klarheit zurückgewinnen · neue Reaktionen etablieren"
+      : detail==="Ich zweifle"
+        ? " Zweifel verstehen · innere Muster erkennen · Selbstvertrauen stärken"
+      : detail==="Erwartungen anderer"
+        ? " Fremde Erwartungen erkennen · Eigenes unterscheiden · selbstbestimmter entscheiden"
+      : detail==="Ich weiß nicht, was ich will"
+        ? " Orientierung gewinnen · Bedürfnisse erkennen · nächste Richtung entwickeln"
+      : " Verstehen · Spüren · Handeln · Integrieren"
+    }
+  </p>
+</div>
+
+${
         d[1]
           ? `<a class="btn main"
                 style="display:block;text-decoration:none"
