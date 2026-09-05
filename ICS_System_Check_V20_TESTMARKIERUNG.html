@@ -305,6 +305,27 @@ function tool(){
 
     why=resetToolText[detail] || why;
   }
+
+  if(weak==="orientation"){
+
+    const orientationToolText={
+
+      "Arbeit / Business":
+        "Wenn dir bei Arbeit oder Business die Richtung fehlt, hilft dir die Betrachtung deiner Lebensphase dabei, deine aktuelle Entwicklung einzuordnen und klarer zu erkennen, welcher berufliche Schritt heute wirklich zu dir passt.",
+
+      "Beziehung / Umfeld":
+        "Wenn sich Beziehungen oder dein Umfeld verändern, hilft dir die Betrachtung deiner Lebensphase dabei zu verstehen, was sich gerade in dir entwickelt und welche Verbindungen zu deiner heutigen Lebenssituation noch stimmig sind.",
+
+      "Nächste Lebensphase":
+        "Wenn du spürst, dass eine neue Phase beginnt, hilft dir der 7-Jahres-Zyklus dabei, deinen aktuellen Übergang einzuordnen und bewusster zu erkennen, welches Thema und welche Entwicklung jetzt für dich anstehen.",
+
+      "Leben insgesamt":
+        "Wenn du dein Leben insgesamt neu betrachten möchtest, gibt dir die Einordnung deiner Lebensphase einen größeren Rahmen. Sie hilft dir zu erkennen, wo du gerade stehst und welche Entwicklung als Nächstes in den Vordergrund rückt."
+
+    };
+
+    why=orientationToolText[detail] || why;
+  }
   
   $("flow").innerHTML=
     `${backBtn()}
