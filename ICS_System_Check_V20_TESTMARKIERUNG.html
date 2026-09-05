@@ -249,16 +249,39 @@ function program(){
       "https://innercodesystems.com/blockadenloeser-report"
     ];
 
-  }else{
+}else if(weak==="body"){
 
-    d={
-      reset:["7-Tage RESET","https://www.innercodesystems.com/7-tage-reset"],
-      orientation:["Lebensaufgabe Report","https://innercodesystems.com/Lebensaufgabe-Report"],
-      body:["7-Tage Energie-Weg",""],
-      action:["Action Code Kickstart",""]
-    }[weak];
+  const bodyMap={
+    "1–3 sehr niedrig":[
+      "7-Tage Energie-Weg",
+      ""
+    ],
 
-  }
+    "4–6 mittel":[
+      "7-Tage Energie-Weg",
+      ""
+    ],
+
+    "7–10 gut":[
+      "7-Tage Energie-Weg",
+      ""
+    ]
+  };
+
+  d=bodyMap[detail] || [
+    "7-Tage Energie-Weg",
+    ""
+  ];
+
+}else{
+
+  d={
+    reset:["7-Tage RESET","https://www.innercodesystems.com/7-tage-reset"],
+    orientation:["Lebensaufgabe Report","https://innercodesystems.com/Lebensaufgabe-Report"],
+    action:["Action Code Kickstart",""]
+  }[weak];
+
+}
 
   $("flow").innerHTML=
     `${backBtn()}
@@ -284,6 +307,15 @@ function program(){
       : weak==="inner" && detail==="Ich weiß nicht, was ich will"
         ? "Wenn die eigene Richtung gerade nicht klar ist, braucht es nicht sofort eine große Entscheidung. Hilfreicher ist es, deine aktuelle Lebensphase, deine Bedürfnisse und das, was heute wirklich stimmig ist, bewusster zu betrachten."
 
+      : weak==="body" && detail==="1–3 sehr niedrig"
+        ? "Dein Energielevel ist gerade sehr niedrig. Jetzt geht es nicht darum, noch mehr Leistung zu erzeugen, sondern dein System zuerst zu entlasten und deinem Körper wieder mehr Regulation, Ruhe und verfügbare Energie zu ermöglichen."
+
+      : weak==="body" && detail==="4–6 mittel"
+        ? "Deine Energie ist vorhanden, aber nicht stabil. Der nächste Schritt ist, genauer zu erkennen, was dir Energie gibt, was sie bindet und wie du deinen Alltag so gestaltest, dass dein Körper nicht ständig gegensteuern muss."
+
+      : weak==="body" && detail==="7–10 gut"
+        ? "Deine Energie ist grundsätzlich gut. Jetzt geht es weniger um Erholung als darum, diese Energie bewusster zu führen und sie für das einzusetzen, was für dich wirklich wichtig ist."
+      
       : "Dein Ergebnis zeigt einen Bereich, in dem gerade Entwicklung möglich ist. Die folgende Vertiefung unterstützt dich dabei, daraus einen konkreten nächsten Schritt zu machen."
     }
   </p>
@@ -299,6 +331,16 @@ function program(){
         ? " Fremde Erwartungen erkennen · Eigenes unterscheiden · selbstbestimmter entscheiden"
       : detail==="Ich weiß nicht, was ich will"
         ? " Orientierung gewinnen · Bedürfnisse erkennen · nächste Richtung entwickeln"
+
+      : weak==="body" && detail==="1–3 sehr niedrig"
+        ? " Entlasten · regulieren · Energie langsam wieder aufbauen"
+
+      : weak==="body" && detail==="4–6 mittel"
+        ? " Energieräuber erkennen · Rhythmus stabilisieren · Körper bewusster wahrnehmen"
+
+      : weak==="body" && detail==="7–10 gut"
+        ? " Energie bewusst führen · Fokus setzen · vorhandene Kraft gezielt nutzen"
+
       : " Verstehen · Spüren · Handeln · Integrieren"
     }
   </p>
