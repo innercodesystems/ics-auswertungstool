@@ -348,9 +348,15 @@ function tool(){
         <p>${why}</p>
       </div>
 
-      <p class="note">
-        Das passende ICS Tool wird im nächsten Schritt direkt mit diesem Weg verbunden.
-      </p>
+${
+  weak==="body"
+    ? `<button type="button" class="btn main" data-flow="energy-tool">
+         Energie-Tool starten
+       </button>`
+    : `<p class="note">
+         Das passende ICS Tool wird im nächsten Schritt direkt mit diesem Weg verbunden.
+       </p>`
+}
     </div>`;
 }
 function program(){
