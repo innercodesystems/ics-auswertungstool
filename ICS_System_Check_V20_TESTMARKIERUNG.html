@@ -263,6 +263,27 @@ function tool(){
 
     why=bodyToolText[detail] || why;
   }
+
+  if(weak==="action"){
+
+    const actionToolText={
+
+      "Unklarheit":
+        "Wenn dir der nächste Schritt fehlt, hilft dir der Action-Impuls dabei, aus vielen Möglichkeiten eine klare Priorität zu machen und einen konkret umsetzbaren nächsten Schritt festzulegen.",
+
+      "Zu viel auf einmal":
+        "Wenn zu viele Aufgaben gleichzeitig um Aufmerksamkeit kämpfen, unterstützt dich der Action-Impuls dabei, bewusst zu reduzieren, eine Sache auszuwählen und wieder echte Umsetzung zu erzeugen.",
+
+      "Perfektion":
+        "Wenn Perfektion dich bremst, hilft dir der Action-Impuls dabei, den Anspruch an die perfekte Lösung zu lösen und stattdessen mit einer kleinen, machbaren ersten Version ins Handeln zu kommen.",
+
+      "Widerstand":
+        "Wenn du Widerstand spürst, hilft dir der Action-Impuls dabei zu erkennen, was dich wirklich zurückhält und wie du den nächsten Schritt so klein machst, dass wieder Bewegung entstehen kann."
+
+    };
+
+    why=actionToolText[detail] || why;
+  }
   
   $("flow").innerHTML=
     `${backBtn()}
