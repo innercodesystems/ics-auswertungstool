@@ -214,8 +214,59 @@ function next(){
  <button type="button" class="cta" data-flow="coach"><strong>Persönliche Begleitung</strong><small>Individuell begleitet werden.</small></button></div></div>`;
 }
 function tool(){
- const msg={inner:"Klarheits-Impuls / Gegenpol",body:"Energie-Tool",action:"Action-Impuls",reset:"Gegenpol-Generator",orientation:"7-Jahres-Zyklus / Lebensphase"}[weak];
- $("flow").innerHTML=`${backBtn()}<div class="card"><div class="kicker">PASSENDES TOOL</div><h2>${msg}</h2><p>Diese Ebene läuft intern im Tool. Erst an einem bestätigten externen Endpunkt verlässt der Nutzer den Check.</p></div>`;
+
+  const msg={
+    inner:"Klarheits-Impuls / Gegenpol",
+    body:"Energie-Tool",
+    action:"Action-Impuls",
+    reset:"Gegenpol-Generator",
+    orientation:"7-Jahres-Zyklus / Lebensphase"
+  }[weak];
+
+  let why="Dieses Tool unterstützt dich dabei, deinen nächsten Schritt bewusster zu erkennen.";
+
+  if(weak==="inner"){
+
+    const innerToolText={
+
+      "Zu viele Gedanken":
+        "Gerade brauchst du nicht noch mehr Gedanken, sondern mehr innere Ordnung. Der Klarheits-Impuls hilft dir dabei, das Wesentliche vom gedanklichen Lärm zu unterscheiden.",
+
+      "Ich zweifle":
+        "Wenn Zweifel deine Entscheidungen begleiten, hilft dir dieser Impuls dabei, die Gedanken hinter dem Zweifel bewusster wahrzunehmen und wieder mehr Zugang zu deiner eigenen inneren Führung zu bekommen.",
+
+      "Erwartungen anderer":
+        "Der Klarheits-Impuls unterstützt dich dabei, fremde Erwartungen von dem zu unterscheiden, was für dich selbst wirklich stimmig ist.",
+
+      "Ich weiß nicht, was ich will":
+        "Wenn deine eigene Richtung gerade nicht klar ist, hilft dir dieser Impuls dabei, deine Aufmerksamkeit wieder auf deine Bedürfnisse, deine Wahrnehmung und deinen nächsten stimmigen Schritt zu richten."
+
+    };
+
+    why=innerToolText[detail] || why;
+  }
+
+  $("flow").innerHTML=
+    `${backBtn()}
+    <div class="card">
+      <div class="kicker">DEIN PASSENDES TOOL</div>
+
+      <h2>${msg}</h2>
+
+      <p>
+        Deine Auswahl <b class="gold">${detail}</b> zeigt,
+        wo du gerade am sinnvollsten ansetzen kannst.
+      </p>
+
+      <div class="card" style="margin:18px 0;background:#27221c;">
+        <div class="kicker">WARUM DIESES TOOL JETZT PASST</div>
+        <p>${why}</p>
+      </div>
+
+      <p class="note">
+        Das passende ICS Tool wird im nächsten Schritt direkt mit diesem Weg verbunden.
+      </p>
+    </div>`;
 }
 function program(){
 
