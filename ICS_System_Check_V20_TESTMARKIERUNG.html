@@ -204,6 +204,10 @@ function flowPath(){
 }
 function micro(label){
   detail=label;
+  
+    if(entryMode==="tool"){
+    return tool();
+  }
  const msg={inner:"Nimm dir 3 Minuten und schreibe nur auf: Was ist wirklich meins – und was nicht?",body:"Wähle 1, 3 oder 10 Minuten für Wasser, Tageslicht, Bewegung oder Regulation.",action:"Wähle genau einen nächsten Schritt und starte ihn für 3 Minuten.",reset:"Formuliere: Statt meiner alten Reaktion wähle ich heute einen kleinen Gegenpol.",orientation:"Vervollständige: Mein nächster stimmiger Schritt ist …"}[weak];
  $("flow").innerHTML=`${backBtn()}<div class="card"><div class="kicker">DEIN NÄCHSTER SCHRITT</div><h2>Jetzt konkret.</h2><p>${msg}</p><div class="ctas"><button type="button" class="cta primary" data-flow="next"><strong>Weiter im Funnel</strong><small>Prüfen, was jetzt am besten passt.</small></button></div></div>`;
 }
