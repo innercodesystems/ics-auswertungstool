@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Inner Code Systems</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap');
+
+    :root{
+      --ics-gold:#D4A03A;
+      --ics-black:#1A1A1A;
+      --ics-text:#2A2926;
+      --ics-muted:#777168;
+      --ics-bg:#fffdf8;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html,
+    body{
+      margin:0;
+      padding:0;
+      width:100%;
+      background:#f7f2e8;
+      color:var(--ics-text);
+      font-family:Arial,Helvetica,sans-serif;
+    }
+
+    .ics-page{
+      width:100%;
+    }
+
+    .ics-home-hero{
+      --ics-hero-image:url('https://www.innercodesystems.com/wp-content/uploads/go-x/u/29d01dde-2ac5-4cfb-9f51-304bb0d65a06/l0,t181,w1086,h1086/image.png');
+
+      max-width:1380px;
+      width:100%;
+      margin:0 auto;
+
+      background:var(--ics-bg);
+
+      border:1px solid rgba(26,26,26,.05);
+      box-shadow:0 16px 50px rgba(26,26,26,.07);
+
+      overflow:hidden;
+    }
+
+    /* HEADER */
+
+    .ics-topbar{
+      min-height:76px;
+
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+
+      gap:24px;
+
+      padding:14px 34px;
+
+      background:rgba(255,253,248,.97);
+      border-bottom:1px solid rgba(212,160,58,.12);
+    }
+
+    .ics-brand{
+      display:flex;
+      align-items:center;
+
+      gap:11px;
+
+      color:var(--ics-black);
+      text-decoration:none;
+
+      flex:0 0 auto;
+    }
+
+    .ics-brand-mark{
+      width:60px;
+      height:60px;
+
+      display:grid;
+      place-items:center;
+    }
+
+    .ics-brand-mark img{
+      width:60px;
+      height:60px;
+
+      object-fit:contain;
+
+      display:block;
+      transform:translateY(5px);
+    }
+
+    .ics-brand-main{
+      display:block;
+
+      font-family:Georgia,"Times New Roman",serif;
+      font-size:26px;
+      line-height:1;
+
+      color:var(--ics-gold);
+      letter-spacing:.04em;
+    }
+
+    .ics-brand-sub{
+      display:block;
+
+      margin-top:4px;
+
+      font-size:8px;
+      letter-spacing:.16em;
+
+      color:var(--ics-muted);
+    }
+
+    /* NAVIGATION */
+
+    .ics-nav{
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+
+      gap:22px;
+      flex-wrap:wrap;
+    }
+
+    .ics-nav a{
+      color:var(--ics-black);
+      text-decoration:none;
+
+      font-size:11px;
+      font-weight:700;
+      letter-spacing:.04em;
+
+      transition:.2s ease;
+    }
+
+    .ics-nav a:hover{
+      color:var(--ics-gold);
+    }
+
+    .ics-nav .ics-mein{
+      color:#fff;
+      background:var(--ics-gold);
+
+      padding:11px 15px;
+
+      border-radius:5px;
+    }
+
+    /* HERO */
+
+    .ics-hero-grid{
+      display:grid;
+
+      grid-template-columns:
+        minmax(0,1fr)
+        minmax(440px,.94fr);
+
+      min-height:500px;
+    }
+
+    .ics-hero-copy{
+      padding:64px 58px 60px;
+
+      background:
+        radial-gradient(
+          circle at 0% 0%,
+          rgba(212,160,58,.10),
+          transparent 36%
+        ),
+        linear-gradient(
+          135deg,
+          #fffdf8 0%,
+          #fffaf0 100%
+        );
+
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .ics-kicker{
+      color:var(--ics-gold);
+
+      font-size:11px;
+      font-weight:700;
+      letter-spacing:.16em;
+
+      margin-bottom:14px;
+    }
+
+    .ics-title{
+      margin:0;
+
+      max-width:680px;
+
+      font-family:"Playfair Display",Georgia,"Times New Roman",serif;
+      font-weight:400;
+
+      font-size:clamp(44px,4.6vw,70px);
+      line-height:.98;
+      letter-spacing:-.025em;
+
+      color:var(--ics-black);
+    }
+
+    .ics-subtitle{
+      margin:20px 0 28px;
+
+      font-family:Georgia,"Times New Roman",serif;
+
+      color:#6e665d;
+      font-size:17px;
+    }
+
+    /* SUCHE */
+
+    .ics-search{
+      max-width:570px;
+      height:56px;
+
+      display:flex;
+      align-items:center;
+
+      gap:12px;
+
+      padding:0 17px;
+
+      border-radius:9px;
+
+      background:#fff;
+
+      border:1px solid rgba(26,26,26,.08);
+
+      box-shadow:0 10px 30px rgba(26,26,26,.06);
+    }
+
+    .ics-search-icon{
+      color:#aaa39a;
+      font-size:18px;
+      line-height:1;
+    }
+
+    .ics-search input{
+      width:100%;
+
+      border:0;
+      outline:0;
+
+      background:transparent;
+
+      color:var(--ics-black);
+
+      font-size:14px;
+      font-family:Arial,Helvetica,sans-serif;
+    }
+
+    .ics-search input::placeholder{
+      color:#9d968e;
+    }
+
+    /* FOTO */
+
+    .ics-photo{
+      position:relative;
+
+      min-height:500px;
+
+      background:
+        linear-gradient(
+          180deg,
+          rgba(255,255,255,.02),
+          rgba(26,26,26,.18)
+        ),
+        var(--ics-hero-image),
+        linear-gradient(
+          145deg,
+          #efe2c2 0%,
+          #d8b97e 40%,
+          #8ea4ad 70%,
+          #54656b 100%
+        );
+
+      background-size:cover;
+      background-position:42% 15%;
+    }
+
+    .ics-photo::after{
+      content:"";
+
+      position:absolute;
+      inset:0;
+
+      background:
+        linear-gradient(
+          90deg,
+          rgba(255,253,248,.30) 0%,
+          transparent 28%
+        );
+
+      pointer-events:none;
+    }
+
+    /* PERSON KARTE */
+
+    .ics-person-card{
+      position:absolute;
+
+      z-index:2;
+
+      right:26px;
+      bottom:26px;
+
+      min-width:220px;
+
+      padding:15px 17px;
+
+      border-radius:8px;
+
+      background:rgba(26,26,26,.88);
+      color:#fff;
+
+      backdrop-filter:blur(6px);
+
+      box-shadow:0 12px 28px rgba(0,0,0,.22);
+    }
+
+    .ics-person-name{
+      color:#e0b75f;
+
+      font-family:Georgia,"Times New Roman",serif;
+      font-size:17px;
+
+      margin-bottom:4px;
+    }
+
+    .ics-person-role{
+      font-size:10px;
+      line-height:1.45;
+
+      color:#eee8dc;
+    }
+
+    /* TABLET */
+
+    @media(max-width:900px){
+
+      .ics-topbar{
+        padding:13px 18px;
+        min-height:68px;
+      }
+
+      .ics-nav{
+        display:none;
+      }
+
+      .ics-hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .ics-hero-copy{
+        padding:42px 24px 36px;
+      }
+
+      .ics-title{
+        font-size:clamp(42px,12vw,58px);
+      }
+
+      .ics-search{
+        max-width:none;
+      }
+
+      .ics-photo{
+        min-height:420px;
+        background-position:center 25%;
+      }
+    }
+
+    /* SMARTPHONE */
+
+    @media(max-width:520px){
+
+      .ics-home-hero{
+        border-left:0;
+        border-right:0;
+      }
+
+      .ics-topbar{
+        padding:12px 16px;
+      }
+
+      .ics-brand-main{
+        font-size:23px;
+      }
+
+      .ics-hero-copy{
+        padding:35px 20px 30px;
+      }
+
+      .ics-title{
+        font-size:43px;
+        line-height:1.02;
+      }
+
+      .ics-subtitle{
+        font-size:15px;
+        margin-bottom:22px;
+      }
+
+      .ics-search{
+        height:50px;
+      }
+
+      .ics-photo{
+        min-height:360px;
+      }
+
+      .ics-person-card{
+        right:16px;
+        bottom:16px;
+        min-width:190px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="ics-page">
+
+    <section class="ics-home-hero">
+
+      <header class="ics-topbar">
+
+        <a class="ics-brand" href="https://www.innercodesystems.com/">
+
+          <span class="ics-brand-mark">
+            <img
+              src="https://www.innercodesystems.com/wp-content/uploads/go-x/u/39adbfd1-c2be-4f0b-adb6-f4b956947aa2/l0,t256,w1024,h1024/image.png"
+              alt="ICS Lebensbaum">
+          </span>
+
+          <span>
+            <span class="ics-brand-main">ICS</span>
+            <span class="ics-brand-sub">INNER CODE SYSTEMS</span>
+          </span>
+
+        </a>
+
+        <nav class="ics-nav" aria-label="ICS Navigation">
+
+          <a href="#welten">WELTEN</a>
+          <a href="#tools">TOOLS</a>
+          <a href="#wege">WEGE</a>
+          <a href="#kostenlos">KOSTENLOS</a>
+
+          <a href="https://www.innercodesystems.com/mein-weg/">
+            ÜBER MICH
+          </a>
+
+          <a href="https://app.innercodesystems.com/">
+            APP
+          </a>
+
+          <a class="ics-mein" href="https://www.innercodesystems.com/mein-ics/">
+            MEIN ICS
+          </a>
+
+        </nav>
+
+      </header>
+
+      <div class="ics-hero-grid">
+
+        <div class="ics-hero-copy">
+
+          <div class="ics-kicker">
+            WILLKOMMEN BEI ICS
+          </div>
+
+          <h1 class="ics-title">
+            Dein Weg zu<br>
+            Klarheit, Energie<br>
+            und Veränderung.
+          </h1>
+
+          <p class="ics-subtitle">
+            Verstehen. Spüren. Handeln. Integrieren.
+          </p>
+
+          <label class="ics-search">
+
+            <span class="ics-search-icon">⌕</span>
+
+            <input
+              type="text"
+              placeholder="Was beschäftigt dich gerade?"
+              aria-label="Was beschäftigt dich gerade?">
+
+          </label>
+
+        </div>
+
+        <div class="ics-photo">
+
+          <div class="ics-person-card">
+
+            <div class="ics-person-name">
+              Peter Wicklein
+            </div>
+
+            <div class="ics-person-role">
+              Gründer von<br>
+              Inner Code Systems
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</body>
+</html>
