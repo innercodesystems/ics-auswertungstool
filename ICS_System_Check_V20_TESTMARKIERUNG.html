@@ -219,7 +219,7 @@ function program(){
  body:["7-Tage Energie-Weg",""],
  action:["Action Code Kickstart",""]
  }[weak];
- $("flow").innerHTML=`${backBtn()}<div class="card"><div class="kicker">TIEFER GEHEN</div><h2>${d[0]}</h2><p>Passend zu deinem Ergebnis.</p>${d[1]?`<a class="btn main" style="display:block;text-decoration:none" href="${d[1]}">${d[0]} öffnen</a>`:`<p class="note">Die finale öffentliche Zielseite ist noch nicht bestätigt. Deshalb bleibt dieser Weg vorerst intern.</p>`}</div>`;
+ $("flow").innerHTML=`${backBtn()}<div class="card"><div class="kicker">TIEFER GEHEN</div><h2>${d[0]}</h2><p>Passend zu deinem Ergebnis.</p>${d[1]?`<a class="btn main" style="display:block;text-decoration:n${d[1]?`<a class="btn main" style="display:block;text-decoration:none" href="${d[1]}" target="_blank" rel="noopener noreferrer">${d[0]} öffnen</a>`one" href="${d[1]}">${d[0]} öffnen</a>`:`<p class="note">Die finale öffentliche Zielseite ist noch nicht bestätigt. Deshalb bleibt dieser Weg vorerst intern.</p>`}</div>`;
 }
 function coach(){
  $("flow").innerHTML=`${backBtn()}<div class="card"><div class="kicker">PERSÖNLICHE BEGLEITUNG</div><h2>Dein Thema gezielt vertiefen.</h2><p>Wenn du nicht allein weitergehen möchtest, führt dieser Weg in deine persönliche ICS Begleitung.</p><div class="answers"><button type="button" class="ans" data-flow="qual">Prüfen, ob Begleitung passt</button></div></div>`;
