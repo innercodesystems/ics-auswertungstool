@@ -218,20 +218,55 @@ function tool(){
  $("flow").innerHTML=`${backBtn()}<div class="card"><div class="kicker">PASSENDES TOOL</div><h2>${msg}</h2><p>Diese Ebene läuft intern im Tool. Erst an einem bestätigten externen Endpunkt verlässt der Nutzer den Check.</p></div>`;
 }
 function program(){
-  const d={
-    inner:["Blockadenlöser Report","https://innercodesystems.com/blockadenloeser-report"],
-    reset:["7-Tage RESET","https://www.innercodesystems.com/7-tage-reset"],
-    orientation:["Lebensaufgabe Report","https://innercodesystems.com/Lebensaufgabe-Report"],
-    body:["7-Tage Energie-Weg",""],
-    action:["Action Code Kickstart",""]
-  }[weak];
+
+  let d;
+
+  if(weak==="inner"){
+    const innerMap={
+      "Zu viele Gedanken":[
+        "7-Tage RESET",
+        "https://www.innercodesystems.com/7-tage-reset"
+      ],
+
+      "Ich zweifle":[
+        "Blockadenlöser Report",
+        "https://innercodesystems.com/blockadenloeser-report"
+      ],
+
+      "Erwartungen anderer":[
+        "Blockadenlöser Report",
+        "https://innercodesystems.com/blockadenloeser-report"
+      ],
+
+      "Ich weiß nicht, was ich will":[
+        "Lebensaufgabe Report",
+        "https://innercodesystems.com/Lebensaufgabe-Report"
+      ]
+    };
+
+    d=innerMap[detail] || [
+      "Blockadenlöser Report",
+      "https://innercodesystems.com/blockadenloeser-report"
+    ];
+
+  }else{
+
+    d={
+      reset:["7-Tage RESET","https://www.innercodesystems.com/7-tage-reset"],
+      orientation:["Lebensaufgabe Report","https://innercodesystems.com/Lebensaufgabe-Report"],
+      body:["7-Tage Energie-Weg",""],
+      action:["Action Code Kickstart",""]
+    }[weak];
+
+  }
 
   $("flow").innerHTML=
     `${backBtn()}
     <div class="card">
       <div class="kicker">TIEFER GEHEN</div>
       <h2>${d[0]}</h2>
-      <p>Passend zu deinem Ergebnis.</p>
+      <p>Passend zu deinem Ergebnis und deiner Auswahl <b class="gold">${detail}</b>.</p>
+
       ${
         d[1]
           ? `<a class="btn main"
