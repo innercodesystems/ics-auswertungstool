@@ -275,10 +275,40 @@ function program(){
 
 }else{
 
+}else if(weak==="action"){
+
+  const actionMap={
+    "Unklarheit":[
+      "Action Code Kickstart",
+      ""
+    ],
+
+    "Zu viel auf einmal":[
+      "Action Code Kickstart",
+      ""
+    ],
+
+    "Perfektion":[
+      "Action Code Kickstart",
+      ""
+    ],
+
+    "Widerstand":[
+      "Action Code Kickstart",
+      ""
+    ]
+  };
+
+  d=actionMap[detail] || [
+    "Action Code Kickstart",
+    ""
+  ];
+
+}else{
+
   d={
     reset:["7-Tage RESET","https://www.innercodesystems.com/7-tage-reset"],
-    orientation:["Lebensaufgabe Report","https://innercodesystems.com/Lebensaufgabe-Report"],
-    action:["Action Code Kickstart",""]
+    orientation:["Lebensaufgabe Report","https://innercodesystems.com/Lebensaufgabe-Report"]
   }[weak];
 
 }
