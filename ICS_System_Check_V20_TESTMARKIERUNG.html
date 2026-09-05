@@ -132,7 +132,7 @@ p{line-height:1.55;color:#ddd5c9}
 const Q=[["inner", "Ich weiß im Moment ziemlich genau, was ich wirklich will.", 0], ["inner", "Meine Gedanken fühlen sich oft voll, laut oder schwer zu sortieren an.", 1], ["inner", "Ich kann Entscheidungen treffen, ohne mich ständig selbst infrage zu stellen.", 0], ["inner", "Ich merke schnell, wenn etwas nicht mehr zu mir passt.", 0], ["inner", "Ich verliere mich häufig in Erwartungen anderer.", 1], ["inner", "Ich kann unterscheiden, was wirklich meins ist und was ich nur übernommen habe.", 0], ["body", "Ich wache meistens mit ausreichend Energie für meinen Tag auf.", 0], ["body", "Mein Körper sendet mir häufig Signale, die ich im Alltag übergehe.", 1], ["body", "Ich kann Anspannung bewusst wahrnehmen und wieder herunterfahren.", 0], ["body", "Ich habe im Alltag genug echte Erholungsphasen.", 0], ["body", "Mein Energielevel bricht im Tagesverlauf oft deutlich ein.", 1], ["body", "Ich fühle mich grundsätzlich gut mit meinem Körper verbunden.", 0], ["action", "Ich setze Dinge um, sobald ich entschieden habe, dass sie wichtig sind.", 0], ["action", "Ich schiebe wichtige Schritte auf, obwohl ich genau weiß, was zu tun wäre.", 1], ["action", "Ich kann mich auf wenige wirklich wichtige Dinge fokussieren.", 0], ["action", "Mein Alltag wird eher von mir gestaltet als von äußeren Anforderungen bestimmt.", 0], ["action", "Ich beginne vieles, verliere aber unterwegs Energie oder Konsequenz.", 1], ["action", "Ich handle auch dann, wenn noch nicht alles perfekt oder sicher ist.", 0], ["reset", "Wenn ich ein altes Muster erkenne, gelingt es mir zunehmend, anders zu reagieren.", 0], ["reset", "Unter Stress falle ich schnell in alte Reaktionen zurück.", 1], ["reset", "Ich kann loslassen, was für mein heutiges Leben nicht mehr funktioniert.", 0], ["reset", "Ich habe das Gefühl, manche Themen drehen sich seit Jahren im Kreis.", 1], ["reset", "Ich kann neue Entscheidungen über längere Zeit stabil halten.", 0], ["reset", "Ich gebe mir selbst Raum für Veränderung, statt nur weiterzufunktionieren.", 0], ["orientation", "Ich habe das Gefühl, dass mein heutiges Leben zu der Person passt, die ich geworden bin.", 0], ["orientation", "Ich spüre, welche nächste Entwicklungsphase für mich ansteht.", 0], ["orientation", "Ich funktioniere häufig, ohne wirklich zu wissen, wofür.", 1], ["orientation", "Meine Arbeit, Beziehungen und Lebensweise fühlen sich insgesamt stimmig an.", 0], ["orientation", "Wenn ich ehrlich bin, weiß ich, welcher nächste Schritt jetzt wirklich wichtig wäre.", 0]];
 const N={inner:"INNER · Klarheit & innere Führung",body:"BODY · Energie & Körpersignale",action:"ACTION · Umsetzung & Selbstführung",reset:"RESET · Muster & Veränderung",orientation:"ORIENTIERUNG · Lebensphase & Richtung"};
 const A=["trifft gar nicht zu","trifft eher nicht zu","teils / teils","trifft eher zu","trifft voll zu"];
-let i=0,ans=Array(Q.length).fill(null),weak="inner",detail="";
+let i=0,ans=Array(Q.length).fill(null),weak="inner",detail="",entryMode="path";
 
 const $=id=>document.getElementById(id);
 function show(id){["start","quiz","result"].forEach(x=>$(x).classList.toggle("hide",x!==id));}
@@ -614,7 +614,8 @@ if(b.dataset.route==="path"){
 
 if(b.dataset.route==="tool"){
   setActiveRouteButton(b);
-  return tool();
+  entryMode="tool";
+  return flowPath();
 }
 
 if(b.dataset.route==="coach"){
