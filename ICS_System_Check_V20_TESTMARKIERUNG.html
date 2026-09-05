@@ -246,6 +246,24 @@ function tool(){
     why=innerToolText[detail] || why;
   }
 
+  if(weak==="body"){
+
+    const bodyToolText={
+
+      "1–3 sehr niedrig":
+        "Deine Energie ist gerade sehr niedrig. Das Energie-Tool hilft dir dabei, nicht noch mehr von dir zu verlangen, sondern zuerst wahrzunehmen, was dein System jetzt zur Entlastung und Regulation braucht.",
+
+      "4–6 mittel":
+        "Deine Energie ist vorhanden, aber nicht stabil. Das Energie-Tool unterstützt dich dabei, Energieräuber und Energiequellen bewusster zu erkennen und deinen Zustand gezielt zu verändern.",
+
+      "7–10 gut":
+        "Du hast grundsätzlich gute Energie zur Verfügung. Das Energie-Tool hilft dir dabei, diese Energie bewusst auszurichten und für das einzusetzen, was heute wirklich wichtig ist."
+
+    };
+
+    why=bodyToolText[detail] || why;
+  }
+  
   $("flow").innerHTML=
     `${backBtn()}
     <div class="card">
