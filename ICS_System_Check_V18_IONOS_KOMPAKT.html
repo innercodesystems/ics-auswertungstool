@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ICS System Check</title>
+<style>
+:root{--bg:#171512;--card:#211d18;--card2:#27221c;--gold:#d1a14a;--cream:#f6f1e7;--muted:#b8afa1;--line:#59482f;--teal:#13b9b7}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--cream);font-family:Arial,sans-serif}
+.ics{max-width:760px;margin:auto;padding:20px}
+.top{font-size:12px;letter-spacing:.24em;color:var(--gold);font-weight:800;margin:12px 0 22px}
+.card{background:var(--card);border:1px solid #40372d;border-radius:22px;padding:20px}
+h1,h2{margin:0;line-height:1.14} h1{font-size:38px} h2{font-size:30px}
+.gold{color:var(--gold)} .teal{color:var(--teal)}
+p{line-height:1.55;color:#ddd5c9}
+.btn,.ans,.testbtn{width:100%;border:1px solid var(--line);background:var(--card2);color:var(--cream);border-radius:15px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;text-align:left}
+.btn.main{background:linear-gradient(135deg,#d7ae5c,#bc8e3c);color:#17130e;border:0;text-align:center}
+.grid{display:grid;gap:10px}
+.test{border:1px dashed #8b6b32;border-radius:16px;padding:14px;margin-bottom:18px}
+.testtitle{color:var(--gold);font-weight:800;margin-bottom:12px}
+.testgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.testbtn{padding:11px;text-align:center;font-size:14px}
+.progress{height:5px;background:#312b24;border-radius:99px;overflow:hidden;margin:8px 0 20px}
+.progress>i{display:block;height:100%;background:var(--gold);width:0}
+.meta{display:flex;justify-content:space-between;color:#9f9587;font-size:12px}
+.answers{display:grid;gap:10px;margin-top:22px}
+.hide{display:none!important}
+.score{font-size:54px;font-weight:900;text-align:center;color:var(--gold);margin:20px 0 5px}
+.metric{margin:12px 0;padding:13px;background:#24201b;border:1px solid #40372d;border-radius:14px}
+.metric b{display:flex;justify-content:space-between}
+.mbar{height:7px;background:#39322a;border-radius:99px;margin-top:8px;overflow:hidden}
+.mbar i{display:block;height:100%;background:var(--gold)}
+.ctas{display:grid;gap:11px;margin-top:20px}
+.cta{border:1px solid #725c38;background:#221e19;color:var(--cream);border-radius:16px;padding:17px;text-align:left;cursor:pointer}
+.cta strong{display:block;font-size:18px} .cta small{display:block;color:#bdb3a5;margin-top:4px}
+.cta.primary{background:linear-gradient(135deg,#d7ae5c,#bc8e3c);color:#17130e;border:0}
+.flow{margin-top:18px}
+.kicker{color:var(--gold);font-size:13px;font-weight:800;margin-bottom:10px}
+.back{margin-bottom:14px;background:transparent;color:#cfc6b7;border:1px solid #4c4338;border-radius:12px;padding:11px 14px;cursor:pointer}
+.note{font-size:12px;color:#978d80}
+@media(max-width:560px){.testgrid{grid-template-columns:1fr}h1{font-size:31px}h2{font-size:26px}}
+</style>
+</head>
+<body>
+<div class="ics" id="icsApp">
+
+  <div class="test" id="testPanel">
+    <div class="testtitle">🛠 ICS TESTMODUS · nur für Entwicklung</div>
+    <div class="testgrid">
+      <button type="button" class="testbtn" data-test="inner">INNER testen</button>
+      <button type="button" class="testbtn" data-test="body">BODY testen</button>
+      <button type="button" class="testbtn" data-test="action">ACTION testen</button>
+      <button type="button" class="testbtn" data-test="reset">RESET testen</button>
+      <button type="button" class="testbtn" data-test="orientation">ORIENTIERUNG testen</button>
+    </div>
+  </div>
+
+  <section id="start">
+    <div class="top">INNER CODE SYSTEMS</div>
+    <div class="card">
+      <div class="kicker">ICS SYSTEM CHECK</div>
+      <h1><span class="teal">Wo stehst du gerade</span> <span class="gold">wirklich?</span></h1>
+      <p>In wenigen Minuten erkennst du, welcher Bereich deines Lebens gerade am meisten Energie bindet – und wo dein sinnvollster nächster Schritt liegt.</p>
+      <button type="button" class="btn main" data-act="start">ICS Check starten</button>
+    </div>
+  </section>
+
+  <section id="quiz" class="hide">
+    <div class="meta"><span id="sec"></span><span id="count"></span></div>
+    <div class="progress"><i id="prog"></i></div>
+    <div class="top">INNER CODE SYSTEMS</div>
+    <div class="kicker" id="qkicker"></div>
+    <h2 id="qtext"></h2>
+    <div class="answers" id="answers"></div>
+  </section>
+
+  <section id="result" class="hide">
+    <div class="top">INNER CODE SYSTEMS</div>
+    <div class="card">
+      <div class="kicker">DEINE AUSWERTUNG</div>
+      <h2>Dein ICS System Index</h2>
+      <div class="score" id="score"></div>
+      <h2 id="headline"></h2>
+      <p id="intro"></p>
+      <div id="metrics"></div>
+      <div class="card" style="margin-top:16px">
+        <div class="kicker">DEIN NÄCHSTER ICS FOKUS</div>
+        <p id="focus"></p>
+      </div>
+      <div class="ctas">
+        <button type="button" class="cta primary" data-route="path"><strong id="pathTitle">Meinen ICS Weg starten</strong><small>Dein persönlicher nächster Schritt – jetzt direkt.</small></button>
+        <button type="button" class="cta" data-route="tool"><strong id="toolTitle">Passendes Tool öffnen</strong><small>Direkt in dein passendes ICS Mikro-Tool.</small></button>
+        <button type="button" class="cta" data-route="coach"><strong>Persönliche Begleitung ansehen</strong><small>Wenn du tiefer gehen und begleitet werden möchtest.</small></button>
+      </div>
+    </div>
+    <div id="flow" class="flow"></div>
+  </section>
+</div>
+
+<script>
+(()=>{
+const Q=[["inner", "Ich weiß im Moment ziemlich genau, was ich wirklich will.", 0], ["inner", "Meine Gedanken fühlen sich oft voll, laut oder schwer zu sortieren an.", 1], ["inner", "Ich kann Entscheidungen treffen, ohne mich ständig selbst infrage zu stellen.", 0], ["inner", "Ich merke schnell, wenn etwas nicht mehr zu mir passt.", 0], ["inner", "Ich verliere mich häufig in Erwartungen anderer.", 1], ["inner", "Ich kann unterscheiden, was wirklich meins ist und was ich nur übernommen habe.", 0], ["body", "Ich wache meistens mit ausreichend Energie für meinen Tag auf.", 0], ["body", "Mein Körper sendet mir häufig Signale, die ich im Alltag übergehe.", 1], ["body", "Ich kann Anspannung bewusst wahrnehmen und wieder herunterfahren.", 0], ["body", "Ich habe im Alltag genug echte Erholungsphasen.", 0], ["body", "Mein Energielevel bricht im Tagesverlauf oft deutlich ein.", 1], ["body", "Ich fühle mich grundsätzlich gut mit meinem Körper verbunden.", 0], ["action", "Ich setze Dinge um, sobald ich entschieden habe, dass sie wichtig sind.", 0], ["action", "Ich schiebe wichtige Schritte auf, obwohl ich genau weiß, was zu tun wäre.", 1], ["action", "Ich kann mich auf wenige wirklich wichtige Dinge fokussieren.", 0], ["action", "Mein Alltag wird eher von mir gestaltet als von äußeren Anforderungen bestimmt.", 0], ["action", "Ich beginne vieles, verliere aber unterwegs Energie oder Konsequenz.", 1], ["action", "Ich handle auch dann, wenn noch nicht alles perfekt oder sicher ist.", 0], ["reset", "Wenn ich ein altes Muster erkenne, gelingt es mir zunehmend, anders zu reagieren.", 0], ["reset", "Unter Stress falle ich schnell in alte Reaktionen zurück.", 1], ["reset", "Ich kann loslassen, was für mein heutiges Leben nicht mehr funktioniert.", 0], ["reset", "Ich habe das Gefühl, manche Themen drehen sich seit Jahren im Kreis.", 1], ["reset", "Ich kann neue Entscheidungen über längere Zeit stabil halten.", 0], ["reset", "Ich gebe mir selbst Raum für Veränderung, statt nur weiterzufunktionieren.", 0], ["orientation", "Ich habe das Gefühl, dass mein heutiges Leben zu der Person passt, die ich geworden bin.", 0], ["orientation", "Ich spüre, welche nächste Entwicklungsphase für mich ansteht.", 0], ["orientation", "Ich funktioniere häufig, ohne wirklich zu wissen, wofür.", 1], ["orientation", "Meine Arbeit, Beziehungen und Lebensweise fühlen sich insgesamt stimmig an.", 0], ["orientation", "Wenn ich ehrlich bin, weiß ich, welcher nächste Schritt jetzt wirklich wichtig wäre.", 0]];
+const N={inner:"INNER · Klarheit & innere Führung",body:"BODY · Energie & Körpersignale",action:"ACTION · Umsetzung & Selbstführung",reset:"RESET · Muster & Veränderung",orientation:"ORIENTIERUNG · Lebensphase & Richtung"};
+const A=["trifft gar nicht zu","trifft eher nicht zu","teils / teils","trifft eher zu","trifft voll zu"];
+let i=0,ans=Array(Q.length).fill(null),weak="inner";
+
+const $=id=>document.getElementById(id);
+function show(id){["start","quiz","result"].forEach(x=>$(x).classList.toggle("hide",x!==id));}
+function renderQ(){
+  const q=Q[i]; $("sec").textContent=N[q[0]]; $("count").textContent=(i+1)+" / "+Q.length;
+  $("prog").style.width=Math.round(i/Q.length*100)+"%"; $("qkicker").textContent=N[q[0]]; $("qtext").textContent=q[1];
+  $("answers").innerHTML=A.map((t,n)=>`<button type="button" class="ans" data-answer="${n+1}">${t}</button>`).join("");
+}
+function start(){i=0;ans.fill(null);show("quiz");renderQ();window.scrollTo(0,0)}
+function choose(v){ans[i]=v;i++;if(i<Q.length)renderQ();else result();}
+function scores(){
+  const g={inner:[],body:[],action:[],reset:[],orientation:[]};
+  Q.forEach((q,n)=>{let v=ans[n]??3;if(q[2])v=6-v;g[q[0]].push(v)});
+  const s={};Object.keys(g).forEach(k=>{const a=g[k].reduce((x,y)=>x+y,0)/g[k].length;s[k]=Math.round((a-1)/4*100)});
+  return s;
+}
+function result(){
+  const s=scores(),vals=Object.values(s),total=Math.round(vals.reduce((a,b)=>a+b,0)/vals.length);
+  weak=Object.keys(s).sort((a,b)=>s[a]-s[b])[0];
+  $("score").textContent=total+" / 100";
+  let h=total<35?"Dein System braucht gerade Entlastung.":total<55?"Du funktionierst – aber noch nicht frei.":total<75?"Du bist in Bewegung – jetzt geht es um Ausrichtung.":"Dein System ist bereits sehr klar aufgestellt.";
+  $("headline").textContent=h;
+  $("intro").textContent=total<55?"Ein Teil deiner Energie geht aktuell in Überforderung, alten Mustern oder fehlender Ausrichtung verloren.":"Du hast bereits gute Grundlagen. Entscheidend ist jetzt, deinen stärksten Hebel gezielt weiterzuentwickeln.";
+  $("metrics").innerHTML=Object.keys(s).map(k=>`<div class="metric"><b><span>${N[k].split(" · ")[0]}</span><span>${s[k]} / 100</span></b><div class="mbar"><i style="width:${s[k]}%"></i></div></div>`).join("");
+  const label=N[weak].split(" · ")[0];
+  $("focus").innerHTML=`Dein stärkster Hebel liegt aktuell bei <b class="gold">${label}</b>. ICS führt dich von hier gezielt in den nächsten passenden Schritt.`;
+  const pt={inner:"Klarheitsweg starten",body:"Energie-Weg starten",action:"Umsetzungsweg starten",reset:"RESET-Weg starten",orientation:"Orientierungsweg starten"}[weak];
+  const tt={inner:"Klarheits-Tool öffnen",body:"Energie-Tool öffnen",action:"Action-Impuls öffnen",reset:"Gegenpol öffnen",orientation:"Lebensphase ansehen"}[weak];
+  $("pathTitle").textContent=pt;$("toolTitle").textContent=tt;$("flow").innerHTML="";show("result");window.scrollTo(0,0);
+}
+function test(k){
+  ans=Array(Q.length).fill(4);
+  Q.forEach((q,n)=>{if(q[0]===k) ans[n]=q[2]?5:1; else ans[n]=q[2]?2:4;});
+  i=Q.length;result();
+}
+function backBtn(){return `<button type="button" class="back" data-flow="back">← Zurück zum Ergebnis</button>`}
+function flowPath(){
+ const f=$("flow");
+ const data={
+ inner:["Was beschreibt deinen Zustand gerade?","Zu viele Gedanken|Ich zweifle|Erwartungen anderer|Ich weiß nicht, was ich will"],
+ body:["Wie ist deine Energie gerade?","1–3 sehr niedrig|4–6 mittel|7–10 gut"],
+ action:["Was hält dich gerade am meisten auf?","Unklarheit|Zu viel auf einmal|Perfektion|Widerstand"],
+ reset:["Was passiert gerade am ehesten?","Gleiches Muster|Stressreaktion|Festhalten|Neue Entscheidung hält nicht"],
+ orientation:["Wo fehlt dir am meisten Richtung?","Arbeit / Business|Beziehung / Umfeld|Nächste Lebensphase|Leben insgesamt"]
+ }[weak];
+ f.innerHTML=`${backBtn()}<div class="card"><div class="kicker">${N[weak]}</div><h2>${data[0]}</h2><div class="answers">${data[1].split("|").map(x=>`<button type="button" class="ans" data-flow="micro">${x}</button>`).join("")}</div></div>`;
+ f.scrollIntoView({behavior:"smooth"});
+}
+function micro(){
+ const msg={inner:"Nimm dir 3 Minuten und schreibe nur auf: Was ist wirklich meins – und was nicht?",body:"Wähle 1, 3 oder 10 Minuten für Wasser, Tageslicht, Bewegung oder Regulation.",action:"Wähle genau einen nächsten Schritt und starte ihn für 3 Minuten.",reset:"Formuliere: Statt meiner alten Reaktion wähle ich heute einen kleinen Gegenpol.",orientation:"Vervollständige: Mein nächster stimmiger Schritt ist …"}[weak];
+ $("flow").innerHTML=`${backBtn()}<div class="card"><div class="kicker">DEIN NÄCHSTER SCHRITT</div><h2>Jetzt konkret.</h2><p>${msg}</p><div class="ctas"><button type="button" class="cta primary" data-flow="next"><strong>Weiter im Funnel</strong><small>Prüfen, was jetzt am besten passt.</small></button></div></div>`;
+}
+function next(){
+ $("flow").innerHTML=`${backBtn()}<div class="card"><div class="kicker">DEINE NÄCHSTE ICS EBENE</div><h2>Wie möchtest du weitergehen?</h2><div class="ctas">
+ <button type="button" class="cta primary" data-flow="tool"><strong>Passendes Tool</strong><small>Direkt weiterarbeiten.</small></button>
+ <button type="button" class="cta" data-flow="program"><strong>Programm / Report</strong><small>Tiefer in dein Thema einsteigen.</small></button>
+ <button type="button" class="cta" data-flow="coach"><strong>Persönliche Begleitung</strong><small>Individuell begleitet werden.</small></button></div></div>`;
+}
+function tool(){
+ const msg={inner:"Klarheits-Impuls / Gegenpol",body:"Energie-Tool",action:"Action-Impuls",reset:"Gegenpol-Generator",orientation:"7-Jahres-Zyklus / Lebensphase"}[weak];
+ $("flow").innerHTML=`${backBtn()}<div class="card"><div class="kicker">PASSENDES TOOL</div><h2>${msg}</h2><p>Diese Ebene läuft intern im Tool. Erst an einem bestätigten externen Endpunkt verlässt der Nutzer den Check.</p></div>`;
+}
+function program(){
+ const d={
+ inner:["Blockadenlöser Report","https://innercodesystems.com/blockadenloeser-report"],
+ reset:["7-Tage RESET","https://www.innercodesystems.com/7-tage-reset"],
+ orientation:["Lebensaufgabe Report","https://innercodesystems.com/Lebensaufgabe-Report"],
+ body:["7-Tage Energie-Weg",""],
+ action:["Action Code Kickstart",""]
+ }[weak];
+ $("flow").innerHTML=`${backBtn()}<div class="card"><div class="kicker">TIEFER GEHEN</div><h2>${d[0]}</h2><p>Passend zu deinem Ergebnis.</p>${d[1]?`<a class="btn main" style="display:block;text-decoration:none" href="${d[1]}">${d[0]} öffnen</a>`:`<p class="note">Die finale öffentliche Zielseite ist noch nicht bestätigt. Deshalb bleibt dieser Weg vorerst intern.</p>`}</div>`;
+}
+function coach(){
+ $("flow").innerHTML=`${backBtn()}<div class="card"><div class="kicker">PERSÖNLICHE BEGLEITUNG</div><h2>Dein Thema gezielt vertiefen.</h2><p>Wenn du nicht allein weitergehen möchtest, führt dieser Weg in deine persönliche ICS Begleitung.</p><div class="answers"><button type="button" class="ans" data-flow="qual">Prüfen, ob Begleitung passt</button></div></div>`;
+}
+function qual(){
+ $("flow").innerHTML=`${backBtn()}<div class="card"><div class="kicker">BEGLEITUNG</div><h2>Wie wichtig ist dir Veränderung gerade?</h2><div class="answers"><button type="button" class="ans">Sehr wichtig</button><button type="button" class="ans">Wichtig</button><button type="button" class="ans">Ich orientiere mich</button></div></div>`;
+}
+document.addEventListener("click",e=>{
+ const b=e.target.closest("button"); if(!b||!$("#icsApp").contains(b))return;
+ e.preventDefault();
+ if(b.dataset.act==="start")return start();
+ if(b.dataset.answer)return choose(+b.dataset.answer);
+ if(b.dataset.test)return test(b.dataset.test);
+ if(b.dataset.route==="path")return flowPath();
+ if(b.dataset.route==="tool")return tool();
+ if(b.dataset.route==="coach")return coach();
+ if(b.dataset.flow==="back"){$("flow").innerHTML="";window.scrollTo(0,0);return}
+ if(b.dataset.flow==="micro")return micro();
+ if(b.dataset.flow==="next")return next();
+ if(b.dataset.flow==="tool")return tool();
+ if(b.dataset.flow==="program")return program();
+ if(b.dataset.flow==="coach")return coach();
+ if(b.dataset.flow==="qual")return qual();
+},true);
+})();
+</script>
+</body>
+</html>
