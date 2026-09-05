@@ -41,6 +41,22 @@ p{line-height:1.55;color:#ddd5c9}
 .cta{border:1px solid #725c38;background:#221e19;color:var(--cream);border-radius:16px;padding:17px;text-align:left;cursor:pointer}
 .cta strong{display:block;font-size:18px} .cta small{display:block;color:#bdb3a5;margin-top:4px}
 .cta.primary{background:linear-gradient(135deg,#d7ae5c,#bc8e3c);color:#17130e;border:0}
+  .ctas.route-selection .cta.primary{
+  background:#221e19;
+  color:var(--cream);
+  border:1px solid #725c38;
+}
+
+.ctas.route-selection .cta.route-active{
+  background:linear-gradient(135deg,#d7ae5c,#bc8e3c);
+  color:#17130e;
+  border:0;
+}
+
+.ctas.route-selection .cta.route-active small{
+  color:#17130e;
+  opacity:.65;
+}
 .flow{margin-top:18px}
 .kicker{color:var(--gold);font-size:13px;font-weight:800;margin-bottom:10px}
 .back{margin-bottom:14px;background:transparent;color:#cfc6b7;border:1px solid #4c4338;border-radius:12px;padding:11px 14px;cursor:pointer}
@@ -94,7 +110,7 @@ p{line-height:1.55;color:#ddd5c9}
         <div class="kicker">DEIN NÄCHSTER ICS FOKUS</div>
         <p id="focus"></p>
       </div>
-      <div class="ctas">
+      <div class="ctas route-selection">
         <button type="button" class="cta primary" data-route="path"><strong id="pathTitle">Meinen ICS Weg starten</strong><small>Dein persönlicher nächster Schritt – jetzt direkt.</small></button>
         <button type="button" class="cta" data-route="tool"><strong id="toolTitle">Passendes Tool öffnen</strong><small>Direkt in dein passendes ICS Mikro-Tool.</small></button>
         <button type="button" class="cta" data-route="coach"><strong>Persönliche Begleitung ansehen</strong><small>Wenn du tiefer gehen und begleitet werden möchtest.</small></button>
@@ -144,6 +160,16 @@ function result(){
 function setActiveTestButton(btn){
   document.querySelectorAll("#testPanel .testbtn").forEach(x=>x.classList.remove("active"));
   if(btn) btn.classList.add("active");
+}
+
+function setActiveRouteButton(btn){
+  document.querySelectorAll(".route-selection .cta").forEach(x=>{
+    x.classList.remove("route-active");
+  });
+
+  if(btn){
+    btn.classList.add("route-active");
+  }
 }
 
 function test(k){
@@ -200,9 +226,20 @@ document.addEventListener("click",e=>{
  if(b.dataset.act==="start"){setActiveTestButton(null);return start();}
  if(b.dataset.answer)return choose(+b.dataset.answer);
  if(b.dataset.test){setActiveTestButton(b);return test(b.dataset.test);}
- if(b.dataset.route==="path")return flowPath();
- if(b.dataset.route==="tool")return tool();
- if(b.dataset.route==="coach")return coach();
+if(b.dataset.route==="path"){
+  setActiveRouteButton(b);
+  return flowPath();
+}
+
+if(b.dataset.route==="tool"){
+  setActiveRouteButton(b);
+  return tool();
+}
+
+if(b.dataset.route==="coach"){
+  setActiveRouteButton(b);
+  return coach();
+}
  if(b.dataset.flow==="back"){$("flow").innerHTML="";window.scrollTo(0,0);return}
  if(b.dataset.flow==="micro")return micro();
  if(b.dataset.flow==="next")return next();
