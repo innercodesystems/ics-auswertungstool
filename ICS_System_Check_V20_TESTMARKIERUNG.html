@@ -284,6 +284,27 @@ function tool(){
 
     why=actionToolText[detail] || why;
   }
+
+  if(weak==="reset"){
+
+    const resetToolText={
+
+      "Gleiches Muster":
+        "Wenn sich ein Muster immer wiederholt, hilft dir der Gegenpol-Generator dabei, die automatische Reaktion sichtbar zu machen und ihr eine konkrete neue Handlung gegenüberzustellen.",
+
+      "Stressreaktion":
+        "Wenn du unter Stress schnell in alte Reaktionen zurückfällst, unterstützt dich der Gegenpol-Generator dabei, diese Reaktion früher zu erkennen und eine neue, bewusst gewählte Antwort vorzubereiten.",
+
+      "Festhalten":
+        "Wenn du an etwas festhältst, das dir heute nicht mehr dient, hilft dir der Gegenpol-Generator dabei zu erkennen, welche alte Reaktion dahinterliegt und welche neue Haltung oder Handlung du stattdessen wählen kannst.",
+
+      "Neue Entscheidung hält nicht":
+        "Wenn eine neue Entscheidung im Alltag noch nicht stabil bleibt, hilft dir der Gegenpol-Generator dabei, aus deiner Entscheidung eine kleine konkrete Gegenbewegung zu machen, die du wiederholen und festigen kannst."
+
+    };
+
+    why=resetToolText[detail] || why;
+  }
   
   $("flow").innerHTML=
     `${backBtn()}
