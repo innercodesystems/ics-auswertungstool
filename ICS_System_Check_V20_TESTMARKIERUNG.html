@@ -382,6 +382,13 @@ ${
        Gegenpol-Tool starten
      </button>`
 
+: weak==="orientation"
+  ? `<button type="button"
+             class="btn main"
+             data-flow="orientation-tool">
+       Lebensphasen-Kompass starten
+     </button>`
+
 : `<p class="note">
      Das passende ICS Tool wird im nächsten Schritt direkt mit diesem Weg verbunden.
    </p>`
@@ -1712,6 +1719,438 @@ function resetHistory(){
 
     </div>`;
 }
+
+function orientationTool(){
+
+  $("flow").innerHTML=
+    `${backBtn()}
+    <div class="card">
+
+      <div class="kicker">ORIENTIERUNG · DEIN KOMPASS</div>
+
+      <h2>Was würde dir gerade am meisten Klarheit geben?</h2>
+
+      <p>
+        Du hast <b class="gold">${detail}</b> gewählt.
+        Wähle den Blickwinkel, der dir jetzt am meisten helfen würde.
+      </p>
+
+      <div class="answers">
+
+        <button type="button"
+                class="ans"
+                data-orientation-goal="now">
+          Verstehen, wo ich gerade stehe
+        </button>
+
+        <button type="button"
+                class="ans"
+                data-orientation-goal="direction">
+          Meine nächste Richtung erkennen
+        </button>
+
+        <button type="button"
+                class="ans"
+                data-orientation-goal="decision">
+          Eine Entscheidung klarer sehen
+        </button>
+
+      </div>
+
+    </div>`;
+}
+
+
+function orientationGoal(goal){
+
+  const names={
+    now:"Verstehen, wo ich gerade stehe",
+    direction:"Meine nächste Richtung erkennen",
+    decision:"Eine Entscheidung klarer sehen"
+  };
+
+  $("flow").innerHTML=
+    `${backBtn()}
+    <div class="card">
+
+      <div class="kicker">ORIENTIERUNG · DEIN KOMPASS</div>
+
+      <h2>Wie viel Zeit möchtest du dir dafür nehmen?</h2>
+
+      <p>
+        Dein Fokus ist
+        <b class="gold">${names[goal]}</b>.
+        Wähle die Tiefe, die gerade zu dir passt.
+      </p>
+
+      <div class="answers">
+
+        <button type="button"
+                class="ans"
+                data-orientation-time="1"
+                data-orientation-goal="${goal}">
+          1 Minute
+        </button>
+
+        <button type="button"
+                class="ans"
+                data-orientation-time="3"
+                data-orientation-goal="${goal}">
+          3 Minuten
+        </button>
+
+        <button type="button"
+                class="ans"
+                data-orientation-time="10"
+                data-orientation-goal="${goal}">
+          10 Minuten
+        </button>
+
+      </div>
+
+    </div>`;
+}
+
+
+function orientationRecommendation(goal,time){
+
+  const t=Number(time);
+  let r={};
+
+  if(goal==="now"){
+
+    if(t===1){
+      r={
+        title:"Schau zuerst auf deinen jetzigen Standort.",
+        actionTitle:"1-Minuten-Standort",
+        action:"Vervollständige spontan drei Sätze: Gerade endet … Gerade entsteht … Gerade brauche ich … Nicht lange überlegen. Dein erster Impuls zählt."
+      };
+    }else if(t===3){
+      r={
+        title:"Dein Standort zeigt dir bereits viel.",
+        actionTitle:"3-Minuten-Lebensphasen-Check",
+        action:"Notiere drei Dinge, die in deinem Leben gerade nicht mehr richtig passen. Danach drei Dinge, zu denen du dich momentan stärker hingezogen fühlst. Schau anschließend, welche Richtung darin sichtbar wird."
+      };
+    }else{
+      r={
+        title:"Betrachte deine aktuelle Lebensphase.",
+        actionTitle:"10-Minuten-Standortbestimmung",
+        action:"Schau auf Arbeit, Beziehungen, Energie und persönliche Entwicklung. Notiere jeweils: Was trägt mich noch? Was kostet mich Kraft? Was möchte entstehen? Markiere anschließend den Bereich, in dem Veränderung gerade am deutlichsten ruft."
+      };
+    }
+
+  }else if(goal==="direction"){
+
+    if(t===1){
+      r={
+        title:"Richtung beginnt nicht mit dem ganzen Weg.",
+        actionTitle:"1-Minuten-Kompass",
+        action:"Beende spontan den Satz: Wenn ich niemandem etwas beweisen müsste, würde ich als Nächstes … Schreibe nur den ersten Gedanken auf."
+      };
+    }else if(t===3){
+      r={
+        title:"Folge dem, was mehr Stimmigkeit erzeugt.",
+        actionTitle:"3-Minuten-Richtungskompass",
+        action:"Schreibe drei mögliche nächste Richtungen auf. Frage bei jeder: Gibt mir diese Möglichkeit eher Energie oder nimmt sie mir Energie? Markiere die Richtung mit der größten inneren Stimmigkeit."
+      };
+    }else{
+      r={
+        title:"Mach deine nächste Richtung sichtbar.",
+        actionTitle:"10-Minuten-Kompass",
+        action:"3 Minuten: mögliche Richtungen sammeln. 3 Minuten: Was zieht dich wirklich an? 2 Minuten: Was davon entsteht aus Erwartung oder Pflicht? 2 Minuten: Wähle eine Richtung, die du in den nächsten sieben Tagen konkret erkunden kannst."
+      };
+    }
+
+  }else{
+
+    if(t===1){
+      r={
+        title:"Trenne Entscheidung und Angst.",
+        actionTitle:"1-Minuten-Entscheidungsimpuls",
+        action:"Stell dir vor, beide Möglichkeiten wären sicher. Welche würdest du wählen? Notiere deine spontane Antwort, ohne sie sofort zu erklären."
+      };
+    }else if(t===3){
+      r={
+        title:"Was ist wirklich deine Entscheidung?",
+        actionTitle:"3-Minuten-Entscheidungskompass",
+        action:"Schreibe Möglichkeit A und B auf. Ergänze jeweils: Was gewinne ich? Was verliere ich? Was fühlt sich mehr nach mir an? Entscheide noch nichts – erkenne zuerst die Richtung."
+      };
+    }else{
+      r={
+        title:"Schaffe Klarheit hinter den Argumenten.",
+        actionTitle:"10-Minuten-Entscheidungsraum",
+        action:"3 Minuten alle Argumente für Möglichkeit A. 3 Minuten für B. 2 Minuten: Welche Ängste beeinflussen deine Bewertung? 2 Minuten: Welche Wahl würdest du treffen, wenn du deiner eigenen Entwicklung vertrauen würdest?"
+      };
+    }
+  }
+
+  $("flow").innerHTML=
+    `${backBtn()}
+    <div class="card">
+
+      <div class="kicker">ORIENTIERUNG · DEIN IMPULS</div>
+
+      <h2>${r.title}</h2>
+
+      <div class="card" style="margin-top:18px;background:#27221c;">
+        <div class="kicker">${r.actionTitle}</div>
+        <p>${r.action}</p>
+      </div>
+
+      <button type="button"
+              class="btn main"
+              data-orientation-check="start"
+              style="margin-top:18px;">
+        Danach Orientierung prüfen
+      </button>
+
+    </div>`;
+}
+
+
+function orientationCheck(){
+
+  $("flow").innerHTML=
+    `${backBtn()}
+    <div class="card">
+
+      <div class="kicker">ORIENTIERUNG · KOMPASS-CHECK</div>
+
+      <h2>Wie klar ist deine Richtung jetzt?</h2>
+
+      <p>
+        Bewerte deinen aktuellen Zustand spontan.
+        1 bedeutet kaum Orientierung, 10 bedeutet sehr klare innere Richtung.
+      </p>
+
+      <div class="answers">
+
+        ${[1,2,3,4,5,6,7,8,9,10].map(n=>`
+          <button type="button"
+                  class="ans"
+                  data-orientation-after="${n}">
+            ${n}
+          </button>
+        `).join("")}
+
+      </div>
+
+    </div>`;
+}
+
+
+function orientationCheckResult(value){
+
+  const v=Number(value);
+
+  let title;
+  let text;
+
+  if(v<=3){
+    title="Deine Richtung ist noch nicht deutlich.";
+    text="Du musst die ganze Antwort noch nicht kennen. Oft reicht es, zuerst zu erkennen, was nicht mehr stimmt und welche Richtung du als Nächstes erkunden möchtest.";
+  }else if(v<=6){
+    title="Eine Richtung wird sichtbar.";
+    text="Du musst noch keine endgültige Entscheidung treffen. Nutze die Klarheit, um einen nächsten konkreten Schritt zu wählen und dadurch weitere Orientierung zu gewinnen.";
+  }else{
+    title="Dein innerer Kompass ist deutlich.";
+    text="Du hast gerade guten Zugang zu deiner Richtung. Jetzt geht es weniger um weiteres Nachdenken und mehr darum, dieser Klarheit einen konkreten nächsten Schritt folgen zu lassen.";
+  }
+
+  $("flow").innerHTML=
+    `${backBtn()}
+    <div class="card">
+
+      <div class="kicker">ORIENTIERUNG · DEIN AKTUELLER ZUSTAND</div>
+
+      <h2>${title}</h2>
+
+      <div class="card" style="margin-top:18px;background:#27221c;">
+
+        <div class="kicker">ORIENTIERUNG JETZT</div>
+
+        <p style="font-size:18px;">
+          <b class="gold">${v} / 10</b>
+        </p>
+
+      </div>
+
+      <p>${text}</p>
+
+      <div class="ctas" style="margin-top:20px;">
+
+        <button type="button"
+                class="cta primary"
+                data-orientation-save="${v}">
+          <strong>Orientierungswert festhalten</strong>
+          <small>Deinen aktuellen Kompass-Check speichern.</small>
+        </button>
+
+        <button type="button"
+                class="cta"
+                data-flow="orientation-history">
+          <strong>Meinen Orientierungs-Verlauf ansehen</strong>
+          <small>Deine letzten Kompass-Checks anzeigen.</small>
+        </button>
+
+        <button type="button"
+                class="cta"
+                data-flow="orientation-continue">
+          <strong>Weiter im ICS</strong>
+          <small>Schau, welcher nächste Schritt jetzt zu dir passt.</small>
+        </button>
+
+      </div>
+
+    </div>`;
+}
+
+
+function saveOrientationCheck(value){
+
+  const v=Number(value);
+
+  if(isTestMode){
+
+    const btn=document.querySelector("[data-orientation-save]");
+
+    if(btn){
+      btn.disabled=true;
+      btn.innerHTML=
+        `<strong>TESTMODUS</strong>
+         <small>Dieser Orientierungs-Check wurde nicht gespeichert.</small>`;
+    }
+
+    return;
+  }
+
+  const key="ICS_ORIENTATION_HISTORY";
+
+  let history=[];
+
+  try{
+    history=JSON.parse(localStorage.getItem(key) || "[]");
+  }catch(e){
+    history=[];
+  }
+
+  history.unshift({
+    area:"orientation",
+    detail:detail,
+    value:v,
+    createdAt:new Date().toISOString()
+  });
+
+  localStorage.setItem(
+    key,
+    JSON.stringify(history.slice(0,50))
+  );
+
+  const btn=document.querySelector("[data-orientation-save]");
+
+  if(btn){
+    btn.disabled=true;
+    btn.innerHTML=
+      `<strong>GESPEICHERT ✓</strong>
+       <small>Dein Orientierungswert wurde festgehalten.</small>`;
+  }
+}
+
+
+function orientationHistory(){
+
+  if(isTestMode){
+
+    $("flow").innerHTML=
+      `${backBtn()}
+      <div class="card">
+
+        <div class="kicker">ORIENTIERUNG · DEIN VERLAUF</div>
+
+        <h2>Im Testmodus werden keine echten Daten angezeigt.</h2>
+
+        <p>
+          Entwicklungs- und Testdaten werden nicht mit deinem
+          späteren echten Orientierungs-Verlauf vermischt.
+        </p>
+
+        <div class="ctas" style="margin-top:20px;">
+
+          <button type="button"
+                  class="cta primary"
+                  data-flow="orientation-continue">
+
+            <strong>Weiter im ICS</strong>
+            <small>Schau, welcher nächste Schritt jetzt zu dir passt.</small>
+
+          </button>
+
+        </div>
+
+      </div>`;
+
+    return;
+  }
+
+  const key="ICS_ORIENTATION_HISTORY";
+
+  let history=[];
+
+  try{
+    history=JSON.parse(localStorage.getItem(key) || "[]");
+  }catch(e){
+    history=[];
+  }
+
+  const items=history.slice(0,5);
+
+  $("flow").innerHTML=
+    `${backBtn()}
+    <div class="card">
+
+      <div class="kicker">ORIENTIERUNG · DEIN VERLAUF</div>
+
+      <h2>Deine letzten Orientierungs-Checks</h2>
+
+      ${
+        items.length
+          ? items.map(item=>`
+              <div class="card"
+                   style="margin-top:14px;background:#27221c;">
+
+                <div class="kicker">
+                  ${item.detail || "ORIENTIERUNG"}
+                </div>
+
+                <p style="font-size:18px;">
+                  Orientierung:
+                  <b class="gold">${item.value} / 10</b>
+                </p>
+
+                <small>
+                  ${new Date(item.createdAt).toLocaleString("de-DE")}
+                </small>
+
+              </div>
+            `).join("")
+          : `<p>Noch kein Orientierungs-Check gespeichert.</p>`
+      }
+
+      <div class="ctas" style="margin-top:20px;">
+
+        <button type="button"
+                class="cta primary"
+                data-flow="orientation-continue">
+
+          <strong>Weiter im ICS</strong>
+          <small>Schau, welcher nächste Schritt jetzt zu dir passt.</small>
+
+        </button>
+
+      </div>
+
+    </div>`;
+}
   
 function energyTool(){
 
@@ -2619,6 +3058,45 @@ if(b.dataset.flow==="reset-history"){
 }
 
 if(b.dataset.flow==="reset-continue"){
+  return next();
+}
+
+if(b.dataset.flow==="orientation-tool"){
+  return orientationTool();
+}
+
+if(b.dataset.orientationGoal && !b.dataset.orientationTime){
+  return orientationGoal(b.dataset.orientationGoal);
+}
+
+if(b.dataset.orientationTime && b.dataset.orientationGoal){
+  return orientationRecommendation(
+    b.dataset.orientationGoal,
+    b.dataset.orientationTime
+  );
+}
+
+if(b.dataset.orientationCheck==="start"){
+  return orientationCheck();
+}
+
+if(b.dataset.orientationAfter){
+  return orientationCheckResult(
+    b.dataset.orientationAfter
+  );
+}
+
+if(b.dataset.orientationSave){
+  return saveOrientationCheck(
+    b.dataset.orientationSave
+  );
+}
+
+if(b.dataset.flow==="orientation-history"){
+  return orientationHistory();
+}
+
+if(b.dataset.flow==="orientation-continue"){
   return next();
 }
   
