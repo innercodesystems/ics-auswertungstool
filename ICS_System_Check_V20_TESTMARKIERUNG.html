@@ -782,6 +782,52 @@ function energyCheckResult(value){
 
 </div>`;
 }
+
+function energyHistory(){
+
+  if(isTestMode){
+
+    $("flow").innerHTML=
+      `${backBtn()}
+      <div class="card">
+
+        <div class="kicker">BODY · ENERGIE-VERLAUF</div>
+
+        <h2>Dein Energie-Verlauf</h2>
+
+        <div class="card" style="margin-top:18px;background:#27221c;">
+          <div class="kicker">TESTMODUS</div>
+
+          <p>
+            Im Entwicklungs-Testmodus werden keine echten
+            Energie-Verlaufsdaten angezeigt.
+          </p>
+        </div>
+
+      </div>`;
+
+    return;
+  }
+
+  const history=JSON.parse(
+    localStorage.getItem("ICS_ENERGY_HISTORY") || "[]"
+  );
+
+  $("flow").innerHTML=
+    `${backBtn()}
+    <div class="card">
+
+      <div class="kicker">BODY · ENERGIE-VERLAUF</div>
+
+      <h2>Dein Energie-Verlauf</h2>
+
+      <p>
+        Bisher wurden <b class="gold">${history.length}</b>
+        Energie-Checks gespeichert.
+      </p>
+
+    </div>`;
+}
   
 function program(){
 
@@ -1086,6 +1132,10 @@ if(b.dataset.energySave){
   
 if(b.dataset.flow==="energy-continue"){
   return next();
+}
+
+if(b.dataset.flow==="energy-history"){
+  return energyHistory();
 }
   
  if(b.dataset.flow==="program")return program();
