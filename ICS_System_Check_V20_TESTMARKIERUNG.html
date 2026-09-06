@@ -686,9 +686,20 @@ function energyCheckResult(value){
 
       </div>
 
-      <p>${changeText}</p>
+<p>${changeText}</p>
 
-    </div>`;
+<div class="ctas" style="margin-top:20px;">
+
+  <button type="button"
+          class="cta primary"
+          data-flow="energy-continue">
+    <strong>Weiter im ICS</strong>
+    <small>Schau, welcher nächste Schritt jetzt zu dir passt.</small>
+  </button>
+
+</div>
+
+</div>`;
 }
   
 function program(){
@@ -986,6 +997,10 @@ if(b.dataset.energyCheck==="start"){
 
 if(b.dataset.energyAfter){
   return energyCheckResult(b.dataset.energyAfter);
+}
+
+if(b.dataset.flow==="energy-continue"){
+  return next();
 }
   
  if(b.dataset.flow==="program")return program();
