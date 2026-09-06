@@ -768,14 +768,15 @@ if(b.dataset.route==="coach"){
  if(b.dataset.flow==="next")return next();
  if(b.dataset.flow==="tool")return tool();
  if(b.dataset.flow==="energy-tool")return energyTool();
- if(b.dataset.energyGoal && !b.dataset.energyTime){
- if(b.dataset.energyTime && b.dataset.energyGoal){
+if(b.dataset.energyTime && b.dataset.energyGoal){
   return energyRecommendation(
     b.dataset.energyGoal,
     b.dataset.energyTime
   );
 }
-   return energyGoal(b.dataset.energyGoal);
+
+if(b.dataset.energyGoal && !b.dataset.energyTime){
+  return energyGoal(b.dataset.energyGoal);
 }
  if(b.dataset.flow==="program")return program();
  if(b.dataset.flow==="coach")return coach();
