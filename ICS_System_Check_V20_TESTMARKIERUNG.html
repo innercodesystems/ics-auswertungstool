@@ -443,6 +443,52 @@ function energyGoal(goal){
 
     </div>`;
 }
+
+function energyRecommendation(goal,time){
+
+  const t=Number(time);
+
+  if(goal!=="energy"){
+    return;
+  }
+
+  let r;
+
+  if(t===1){
+    r={
+      title:"Energie über Bewegung aktivieren.",
+      actionTitle:"60-Sekunden-Aktivierung",
+      action:"30 Sekunden zügig auf der Stelle gehen. 15 Sekunden Arme und Schultern ausschütteln. 15 Sekunden tief ein- und ausatmen."
+    };
+  }else if(t===3){
+    r={
+      title:"Kreislauf anschalten.",
+      actionTitle:"3-Minuten-Mikrobewegung",
+      action:"1 Minute zügig gehen. 1 Minute Knieheben oder lockere Kniebeugen im angenehmen Bereich. 1 Minute ausschütteln und ruhig nachspüren."
+    };
+  }else{
+    r={
+      title:"Gib deinem Körper zehn echte Minuten.",
+      actionTitle:"10-Minuten-Energieblock",
+      action:"8 Minuten zügig gehen – möglichst draußen oder am Fenster mit Tageslicht. Danach 2 Minuten ruhig stehen und bewusst nachspüren, wie sich Energie, Körper und Kopf verändert haben."
+    };
+  }
+
+  $("flow").innerHTML=
+    `${backBtn()}
+    <div class="card">
+
+      <div class="kicker">DEIN NÄCHSTER SCHRITT</div>
+
+      <h2>${r.title}</h2>
+
+      <div class="card" style="margin-top:18px;background:#27221c;">
+        <div class="kicker">${r.actionTitle}</div>
+        <p>${r.action}</p>
+      </div>
+
+    </div>`;
+}
   
 function program(){
 
@@ -723,6 +769,12 @@ if(b.dataset.route==="coach"){
  if(b.dataset.flow==="tool")return tool();
  if(b.dataset.flow==="energy-tool")return energyTool();
  if(b.dataset.energyGoal && !b.dataset.energyTime){
+ if(b.dataset.energyTime && b.dataset.energyGoal){
+  return energyRecommendation(
+    b.dataset.energyGoal,
+    b.dataset.energyTime
+  );
+}
    return energyGoal(b.dataset.energyGoal);
 }
  if(b.dataset.flow==="program")return program();
