@@ -809,24 +809,68 @@ function energyHistory(){
     return;
   }
 
-  const history=JSON.parse(
-    localStorage.getItem("ICS_ENERGY_HISTORY") || "[]"
-  );
+ const history=JSON.parse(
+  localStorage.getItem("ICS_ENERGY_HISTORY") || "[]"
+);
 
-  $("flow").innerHTML=
-    `${backBtn()}
-    <div class="card">
+const latest=[...history]
+  .reverse()
+  .slice(0,5);
 
-      <div class="kicker">BODY · ENERGIE-VERLAUF</div>
+const cards=latest.length
+  ? latest.map(entry=>{
 
-      <h2>Dein Energie-Verlauf</h2>
+      const date=new Date(entry.createdAt).toLocaleString("de-DE",{
+        day:"2-digit",
+        month:"2-digit",
+        year:"numeric",
+        hour:"2-digit",
+        minute:"2-digit"
+      });
 
-      <p>
-        Bisher wurden <b class="gold">${history.length}</b>
-        Energie-Checks gespeichert.
-      </p>
+      return `
+        <div class="card" style="margin-top:12px;background:#27221c;">
 
-    </div>`;
+          <div class="kicker">${date}</div>
+
+          <p style="margin:0;">
+            <b>Vorher:</b> ${entry.before}
+          </p>
+
+          <p style="margin:8px 0 0;">
+            <b>Danach:</b>
+            <span class="gold">${entry.after} / 10</span>
+          </p>
+
+        </div>
+      `;
+
+    }).join("")
+  : `
+      <div class="card" style="margin-top:18px;background:#27221c;">
+        <p style="margin:0;">
+          Noch keine Energie-Checks gespeichert.
+        </p>
+      </div>
+    `;
+
+$("flow").innerHTML=
+  `${backBtn()}
+  <div class="card">
+
+    <div class="kicker">BODY · ENERGIE-VERLAUF</div>
+
+    <h2>Dein Energie-Verlauf</h2>
+
+    <p>
+      Bisher wurden
+      <b class="gold">${history.length}</b>
+      Energie-Checks gespeichert.
+    </p>
+
+    ${cards}
+
+  </div>`;
 }
   
 function program(){
