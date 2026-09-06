@@ -594,6 +594,34 @@ if(goal!=="energy"){
 
     </div>`;
 }
+
+function energyCheck(){
+
+  $("flow").innerHTML=
+    `${backBtn()}
+    <div class="card">
+
+      <div class="kicker">BODY · ZUSTAND PRÜFEN</div>
+
+      <h2>Wie ist deine Energie jetzt?</h2>
+
+      <p>
+        Nimm kurz wahr, wie du dich nach der Übung fühlst.
+        Wähle den Wert, der deinem aktuellen Zustand am ehesten entspricht.
+      </p>
+
+      <div class="answers">
+        ${[1,2,3,4,5,6,7,8,9,10].map(n=>
+          `<button type="button"
+                   class="ans"
+                   data-energy-after="${n}">
+             ${n}
+           </button>`
+        ).join("")}
+      </div>
+
+    </div>`;
+}
   
 function program(){
 
@@ -883,6 +911,11 @@ if(b.dataset.energyTime && b.dataset.energyGoal){
 if(b.dataset.energyGoal && !b.dataset.energyTime){
   return energyGoal(b.dataset.energyGoal);
 }
+
+if(b.dataset.energyCheck==="start"){
+  return energyCheck();
+}
+  
  if(b.dataset.flow==="program")return program();
  if(b.dataset.flow==="coach")return coach();
  if(b.dataset.flow==="qual")return qual();
