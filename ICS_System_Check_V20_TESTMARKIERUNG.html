@@ -1651,6 +1651,10 @@ if(b.dataset.claritySave){
 if(b.dataset.flow==="clarity-history"){
   return clarityHistory();
 }
+
+if(b.dataset.flow==="clarity-continue"){
+  return next();
+}
   
  if(b.dataset.clarityGoal && !b.dataset.clarityTime){
   return clarityGoal(b.dataset.clarityGoal);
