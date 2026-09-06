@@ -469,6 +469,58 @@ function clarityGoal(goal){
 
     </div>`;
 }
+
+function clarityRecommendation(goal,time){
+
+  const t=Number(time);
+
+  if(goal!=="sort"){
+    return;
+  }
+
+  let r;
+
+  if(t===1){
+
+    r={
+      title:"Gedanken aus dem Kopf holen.",
+      actionTitle:"1-Minuten-Klarheits-Reset",
+      action:"Schreib genau drei Dinge auf, die gerade in deinem Kopf kreisen. Markiere danach nur eines davon: Was davon braucht heute wirklich deine Aufmerksamkeit?"
+    };
+
+  }else if(t===3){
+
+    r={
+      title:"Gedanken sortieren statt weiterdenken.",
+      actionTitle:"3-Minuten-Gedanken-Sortierung",
+      action:"1 Minute alles ungefiltert aufschreiben. 1 Minute markieren: Was ist wichtig, was kann warten? 1 Minute festlegen: Was ist mein einziger nächster klarer Schritt?"
+    };
+
+  }else{
+
+    r={
+      title:"Schaffe wieder innere Ordnung.",
+      actionTitle:"10-Minuten-Klarheitsblock",
+      action:"5 Minuten Brain-Dump. Danach 3 Minuten sortieren in: jetzt / später / nicht meins. In den letzten 2 Minuten entscheidest du dich für genau einen nächsten Schritt und notierst ihn konkret."
+    };
+
+  }
+
+  $("flow").innerHTML=
+    `${backBtn()}
+    <div class="card">
+
+      <div class="kicker">DEIN NÄCHSTER SCHRITT</div>
+
+      <h2>${r.title}</h2>
+
+      <div class="card" style="margin-top:18px;background:#27221c;">
+        <div class="kicker">${r.actionTitle}</div>
+        <p>${r.action}</p>
+      </div>
+
+    </div>`;
+}
   
 function energyTool(){
 
@@ -1252,6 +1304,13 @@ if(b.dataset.route==="coach"){
 
  if(b.dataset.clarityGoal && !b.dataset.clarityTime){
   return clarityGoal(b.dataset.clarityGoal);
+}
+
+if(b.dataset.clarityTime && b.dataset.clarityGoal){
+  return clarityRecommendation(
+    b.dataset.clarityGoal,
+    b.dataset.clarityTime
+  );
 }
   
  if(b.dataset.flow==="energy-tool")return energyTool();  
