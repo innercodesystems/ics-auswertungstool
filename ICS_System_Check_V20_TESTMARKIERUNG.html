@@ -379,6 +379,46 @@ ${
     </div>`;
 }
 
+function clarityTool(){
+
+  $("flow").innerHTML=
+    `${backBtn()}
+    <div class="card">
+
+      <div class="kicker">INNER · DEIN KLARHEITS-TOOL</div>
+
+      <h2>Was brauchst du gerade am meisten?</h2>
+
+      <p>
+        Du hast <b class="gold">${detail}</b> gewählt.
+        Entscheide jetzt spontan, was dir im Moment am meisten helfen würde.
+      </p>
+
+      <div class="answers">
+
+        <button type="button"
+                class="ans"
+                data-clarity-goal="sort">
+          Gedanken sortieren
+        </button>
+
+        <button type="button"
+                class="ans"
+                data-clarity-goal="release">
+          Inneren Druck lösen
+        </button>
+
+        <button type="button"
+                class="ans"
+                data-clarity-goal="decision">
+          Eine klare Entscheidung finden
+        </button>
+
+      </div>
+
+    </div>`;
+}
+
 function energyTool(){
 
   $("flow").innerHTML=
@@ -1157,11 +1197,12 @@ if(b.dataset.route==="coach"){
  if(b.dataset.flow==="micro")return micro(b.textContent.trim());
  if(b.dataset.flow==="next")return next();
  if(b.dataset.flow==="tool")return tool();
- if(b.dataset.flow==="energy-tool")return energyTool();
-if(b.dataset.energyTime && b.dataset.energyGoal){
-  return energyRecommendation(
-    b.dataset.energyGoal,
-    b.dataset.energyTime
+ if(b.dataset.flow==="clarity-tool")return clarityTool();
+ if(b.dataset.flow==="energy-tool")return energyTool();  
+ if(b.dataset.energyTime && b.dataset.energyGoal){
+   return energyRecommendation(
+     b.dataset.energyGoal,
+     b.dataset.energyTime
   );
 }
 
