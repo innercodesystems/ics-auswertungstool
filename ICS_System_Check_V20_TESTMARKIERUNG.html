@@ -395,6 +395,54 @@ function energyTool(){
 
     </div>`;
 }
+
+function energyGoal(goal){
+
+  const goalNames={
+    energy:"Mehr Energie",
+    calm:"Mehr Ruhe",
+    clarity:"Mehr Klarheit"
+  };
+
+  $("flow").innerHTML=
+    `${backBtn()}
+    <div class="card">
+
+      <div class="kicker">BODY · DEIN ENERGIE-TOOL</div>
+
+      <h2>Wie viel Zeit ist gerade wirklich möglich?</h2>
+
+      <p>
+        Du möchtest gerade
+        <b class="gold">${goalNames[goal]}</b>.
+        Wähle nicht das Ideal, sondern die Zeit,
+        die du jetzt tatsächlich investieren würdest.
+      </p>
+
+      <div class="answers">
+
+        <button type="button" class="ans"
+                data-energy-time="1"
+                data-energy-goal="${goal}">
+          1 Minute
+        </button>
+
+        <button type="button" class="ans"
+                data-energy-time="3"
+                data-energy-goal="${goal}">
+          3 Minuten
+        </button>
+
+        <button type="button" class="ans"
+                data-energy-time="10"
+                data-energy-goal="${goal}">
+          10 Minuten
+        </button>
+
+      </div>
+
+    </div>`;
+}
   
 function program(){
 
@@ -674,6 +722,9 @@ if(b.dataset.route==="coach"){
  if(b.dataset.flow==="next")return next();
  if(b.dataset.flow==="tool")return tool();
  if(b.dataset.flow==="energy-tool")return energyTool();
+ if(b.dataset.energyGoal && !b.dataset.energyTime){
+   return energyGoal(b.dataset.energyGoal);
+}
  if(b.dataset.flow==="program")return program();
  if(b.dataset.flow==="coach")return coach();
  if(b.dataset.flow==="qual")return qual();
