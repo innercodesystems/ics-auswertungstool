@@ -636,6 +636,50 @@ function energyCheck(){
     </div>`;
 }
 
+function saveEnergyCheck(value){
+
+  const v=Number(value);
+
+  if(isTestMode){
+
+    $("flow").innerHTML+=`
+      <div class="card" style="margin-top:18px;background:#27221c;">
+        <div class="kicker">TESTMODUS</div>
+        <p>
+          Dieser Energie-Check wurde nicht gespeichert.
+        </p>
+      </div>`;
+
+    return;
+  }
+
+  const entry={
+    area:"body",
+    before:detail,
+    after:v,
+    createdAt:new Date().toISOString()
+  };
+
+  const key="ICS_ENERGY_HISTORY";
+
+  const history=JSON.parse(localStorage.getItem(key) || "[]");
+
+  history.push(entry);
+
+  localStorage.setItem(
+    key,
+    JSON.stringify(history)
+  );
+
+  $("flow").innerHTML+=`
+    <div class="card" style="margin-top:18px;background:#27221c;">
+      <div class="kicker">GESPEICHERT</div>
+      <p>
+        Deine Veränderung wurde in deinem Energie-Verlauf festgehalten.
+      </p>
+    </div>`;
+}
+  
 function energyCheckResult(value){
 
   const v=Number(value);
@@ -1019,6 +1063,10 @@ if(b.dataset.energyAfter){
   return energyCheckResult(b.dataset.energyAfter);
 }
 
+if(b.dataset.energySave){
+  return saveEnergyCheck(b.dataset.energySave);
+}
+  
 if(b.dataset.flow==="energy-continue"){
   return next();
 }
