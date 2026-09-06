@@ -622,6 +622,25 @@ function energyCheck(){
 
     </div>`;
 }
+
+function energyCheckResult(value){
+
+  const v=Number(value);
+
+  $("flow").innerHTML=
+    `${backBtn()}
+    <div class="card">
+
+      <div class="kicker">BODY · DEINE VERÄNDERUNG</div>
+
+      <h2>Deine Energie liegt jetzt bei <span class="gold">${v} / 10</span>.</h2>
+
+      <p>
+        Gut. Damit hast du deinen Zustand nach der Übung bewusst wahrgenommen.
+      </p>
+
+    </div>`;
+}
   
 function program(){
 
@@ -914,6 +933,10 @@ if(b.dataset.energyGoal && !b.dataset.energyTime){
 
 if(b.dataset.energyCheck==="start"){
   return energyCheck();
+}
+
+if(b.dataset.energyAfter){
+  return energyCheckResult(b.dataset.energyAfter);
 }
   
  if(b.dataset.flow==="program")return program();
