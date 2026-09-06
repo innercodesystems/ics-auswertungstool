@@ -448,9 +448,51 @@ function energyRecommendation(goal,time){
 
   const t=Number(time);
 
-  if(goal!=="energy"){
-    return;
+if(goal==="calm"){
+
+  let r;
+
+  if(t===1){
+    r={
+      title:"Regulieren statt weitermachen.",
+      actionTitle:"1 Minute RESET",
+      action:"Beide Füße auf den Boden. Schultern lösen. 6 ruhige Atemzüge. Ausatmen jeweils etwas länger als einatmen. Danach nur eine Frage: Was ist jetzt wirklich nötig?"
+    };
+  }else if(t===3){
+    r={
+      title:"Kurz aus dem Dauerbetrieb raus.",
+      actionTitle:"3-Minuten-Regulation",
+      action:"60 Sekunden ruhig atmen. 60 Sekunden Körper wahrnehmen – Kiefer, Schultern, Bauch. 60 Sekunden nichts lösen, nur sitzen oder stehen und den Blick weich werden lassen."
+    };
+  }else{
+    r={
+      title:"Dein System darf runterfahren.",
+      actionTitle:"10-Minuten-RESET",
+      action:"2 Minuten langsam gehen oder stehen. 4 Minuten ruhige Atmung. 3 Minuten ohne Bildschirm sitzen. Letzte Minute: notiere einen Satz – Was darf heute weniger werden?"
+    };
   }
+
+  $("flow").innerHTML=
+    `${backBtn()}
+    <div class="card">
+
+      <div class="kicker">DEIN NÄCHSTER SCHRITT</div>
+
+      <h2>${r.title}</h2>
+
+      <div class="card" style="margin-top:18px;background:#27221c;">
+        <div class="kicker">${r.actionTitle}</div>
+        <p>${r.action}</p>
+      </div>
+
+    </div>`;
+
+  return;
+}
+
+if(goal!=="energy"){
+  return;
+}
 
   let r;
 
