@@ -671,6 +671,16 @@ function saveEnergyCheck(value){
     JSON.stringify(history)
   );
 
+const saveButton=document.querySelector("[data-energy-save]");
+
+if(saveButton){
+  saveButton.disabled=true;
+  saveButton.innerHTML=`
+    <strong>Veränderung gespeichert ✓</strong>
+    <small>Dieser Energie-Check wurde festgehalten.</small>
+  `;
+}
+  
   $("flow").innerHTML+=`
     <div class="card" style="margin-top:18px;background:#27221c;">
       <div class="kicker">GESPEICHERT</div>
