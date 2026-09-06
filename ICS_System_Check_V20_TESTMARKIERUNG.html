@@ -962,6 +962,333 @@ function actionGoal(goal){
 
     </div>`;
 }
+
+function actionRecommendation(goal,time){
+
+  const t=Number(time);
+  let r={};
+
+  if(goal==="focus"){
+
+    if(t===1){
+      r={
+        title:"Eine Sache. Nicht fünf.",
+        actionTitle:"1-Minuten-Priorität",
+        action:"Schreib genau eine Sache auf, die heute den größten Unterschied macht. Alles andere darf für diese Minute warten. Ergänze darunter: Mein nächster konkreter Schritt ist …"
+      };
+    }else if(t===3){
+      r={
+        title:"Reduzieren schafft Umsetzung.",
+        actionTitle:"3-Minuten-Prioritäten-Reset",
+        action:"Schreib deine drei wichtigsten offenen Dinge auf. Markiere nur eines: Was bringt dich heute wirklich weiter? Formuliere dafür einen nächsten Schritt, den du sofort beginnen könntest."
+      };
+    }else{
+      r={
+        title:"Ordne, bevor du weiterarbeitest.",
+        actionTitle:"10-Minuten-Fokusblock",
+        action:"4 Minuten: Alles aufschreiben, was gerade Aufmerksamkeit fordert. 3 Minuten: markieren in wichtig / später / nicht jetzt. 2 Minuten: genau eine Priorität auswählen. Letzte Minute: ersten konkreten Schritt festlegen."
+      };
+    }
+
+  }else if(goal==="small"){
+
+    if(t===1){
+      r={
+        title:"Mach den Schritt kleiner.",
+        actionTitle:"1-Minuten-Verkleinerung",
+        action:"Nimm die Aufgabe, vor der du gerade stehst. Mach daraus eine Handlung, die maximal zwei Minuten dauern würde. Nicht das Projekt lösen – nur den allerersten sichtbaren Schritt formulieren."
+      };
+    }else if(t===3){
+      r={
+        title:"Aus groß wird machbar.",
+        actionTitle:"3-Minuten-Schrittfolge",
+        action:"Teile dein Vorhaben in genau drei kleine Schritte. Der erste muss so klein sein, dass du ihn ohne weitere Vorbereitung beginnen kannst. Starte diesen ersten Schritt direkt."
+      };
+    }else{
+      r={
+        title:"Zerlege den Widerstand.",
+        actionTitle:"10-Minuten-Umsetzungsblock",
+        action:"3 Minuten: Aufgabe in kleine Schritte zerlegen. 2 Minuten: unnötige Schritte streichen. 5 Minuten: ausschließlich den ersten verbleibenden Schritt bearbeiten. Danach bewusst stoppen oder weitermachen."
+      };
+    }
+
+  }else{
+
+    if(t===1){
+      r={
+        title:"Nicht weiter vorbereiten. Starten.",
+        actionTitle:"60-Sekunden-Start",
+        action:"Stell einen Timer auf 60 Sekunden und beginne jetzt mit der Aufgabe. Keine Planung, kein Optimieren. Öffnen, schreiben, anrufen, anfangen – nur Bewegung erzeugen."
+      };
+    }else if(t===3){
+      r={
+        title:"Drei Minuten reichen für Bewegung.",
+        actionTitle:"3-Minuten-Start",
+        action:"Arbeite drei Minuten ausschließlich an deinem nächsten Schritt. Kein Handy, kein Wechseln, kein Bewerten. Nach drei Minuten entscheidest du neu, ob du weitermachst."
+      };
+    }else{
+      r={
+        title:"Mach aus Denken echte Bewegung.",
+        actionTitle:"10-Minuten-Fokus-Sprint",
+        action:"Stell einen Timer auf zehn Minuten. Entscheide vorher genau, was in diesen zehn Minuten entstehen soll. Dann arbeitest du ausschließlich daran – ohne Perfektion und ohne neue Baustelle."
+      };
+    }
+  }
+
+  $("flow").innerHTML=
+    `${backBtn()}
+    <div class="card">
+
+      <div class="kicker">ACTION · DEIN NÄCHSTER SCHRITT</div>
+
+      <h2>${r.title}</h2>
+
+      <div class="card" style="margin-top:18px;background:#27221c;">
+        <div class="kicker">${r.actionTitle}</div>
+        <p>${r.action}</p>
+      </div>
+
+      <button type="button"
+              class="btn main"
+              data-action-check="start"
+              style="margin-top:18px;">
+        Danach Umsetzung prüfen
+      </button>
+
+    </div>`;
+}
+
+
+function actionCheck(){
+
+  $("flow").innerHTML=
+    `${backBtn()}
+    <div class="card">
+
+      <div class="kicker">ACTION · UMSETZUNG PRÜFEN</div>
+
+      <h2>Wie handlungsbereit fühlst du dich jetzt?</h2>
+
+      <p>
+        Bewerte spontan deinen aktuellen Zustand.
+        Wie leicht fällt es dir gerade, wirklich den nächsten Schritt zu gehen?
+      </p>
+
+      <div class="answers">
+        ${[1,2,3,4,5,6,7,8,9,10].map(n=>`
+          <button type="button"
+                  class="ans"
+                  data-action-after="${n}">
+            ${n}
+          </button>
+        `).join("")}
+      </div>
+
+    </div>`;
+}
+
+
+function actionCheckResult(value){
+
+  const v=Number(value);
+
+  let title;
+  let text;
+
+  if(v<=3){
+    title="Deine Umsetzung braucht noch Entlastung.";
+    text="Der nächste Schritt fühlt sich noch schwer an. Mach ihn nicht größer. Reduziere weiter, bis du eine Handlung findest, die du ohne zusätzliche Vorbereitung beginnen kannst.";
+  }else if(v<=6){
+    title="Bewegung ist möglich.";
+    text="Du hast bereits Zugang zur Umsetzung. Jetzt ist entscheidend, nicht wieder ins Planen zurückzugehen. Halte deinen nächsten Schritt klein und konkret.";
+  }else{
+    title="Du bist bereit für Handlung.";
+    text="Deine Handlungsbereitschaft ist gerade hoch. Nutze diesen Moment und setze den nächsten Schritt um, bevor dein Kopf wieder neue Gründe zum Warten produziert.";
+  }
+
+  $("flow").innerHTML=
+    `${backBtn()}
+    <div class="card">
+
+      <div class="kicker">ACTION · DEIN AKTUELLER ZUSTAND</div>
+
+      <h2>${title}</h2>
+
+      <div class="card" style="margin-top:18px;background:#27221c;">
+        <div class="kicker">HANDLUNGSBEREITSCHAFT JETZT</div>
+        <p style="font-size:18px;">
+          <b class="gold">${v} / 10</b>
+        </p>
+      </div>
+
+      <p>${text}</p>
+
+      <div class="ctas" style="margin-top:20px;">
+
+        <button type="button"
+                class="cta primary"
+                data-action-save="${v}">
+          <strong>Action-Wert festhalten</strong>
+          <small>Deinen aktuellen Umsetzungs-Check speichern.</small>
+        </button>
+
+        <button type="button"
+                class="cta"
+                data-flow="action-history">
+          <strong>Meinen Action-Verlauf ansehen</strong>
+          <small>Deine letzten Umsetzungs-Checks anzeigen.</small>
+        </button>
+
+        <button type="button"
+                class="cta"
+                data-flow="action-continue">
+          <strong>Weiter im ICS</strong>
+          <small>Schau, welcher nächste Schritt jetzt zu dir passt.</small>
+        </button>
+
+      </div>
+
+    </div>`;
+}
+
+
+function saveActionCheck(value){
+
+  const v=Number(value);
+
+  if(isTestMode){
+
+    const btn=document.querySelector("[data-action-save]");
+
+    if(btn){
+      btn.disabled=true;
+      btn.innerHTML=
+        `<strong>TESTMODUS</strong>
+         <small>Dieser Action-Check wurde nicht gespeichert.</small>`;
+    }
+
+    return;
+  }
+
+  const key="ICS_ACTION_HISTORY";
+
+  let history=[];
+
+  try{
+    history=JSON.parse(localStorage.getItem(key) || "[]");
+  }catch(e){
+    history=[];
+  }
+
+  history.unshift({
+    area:"action",
+    detail:detail,
+    value:v,
+    createdAt:new Date().toISOString()
+  });
+
+  localStorage.setItem(
+    key,
+    JSON.stringify(history.slice(0,50))
+  );
+
+  const btn=document.querySelector("[data-action-save]");
+
+  if(btn){
+    btn.disabled=true;
+    btn.innerHTML=
+      `<strong>GESPEICHERT ✓</strong>
+       <small>Dein Action-Wert wurde festgehalten.</small>`;
+  }
+}
+
+
+function actionHistory(){
+
+  if(isTestMode){
+
+    $("flow").innerHTML=
+      `${backBtn()}
+      <div class="card">
+
+        <div class="kicker">ACTION · UMSETZUNGS-VERLAUF</div>
+
+        <h2>Im Testmodus werden keine echten Daten angezeigt.</h2>
+
+        <p>
+          Entwicklungs- und Testdaten werden nicht
+          mit deinem späteren echten Action-Verlauf vermischt.
+        </p>
+
+        <div class="ctas" style="margin-top:20px;">
+          <button type="button"
+                  class="cta primary"
+                  data-flow="action-continue">
+            <strong>Weiter im ICS</strong>
+            <small>Schau, welcher nächste Schritt jetzt zu dir passt.</small>
+          </button>
+        </div>
+
+      </div>`;
+
+    return;
+  }
+
+  const key="ICS_ACTION_HISTORY";
+
+  let history=[];
+
+  try{
+    history=JSON.parse(localStorage.getItem(key) || "[]");
+  }catch(e){
+    history=[];
+  }
+
+  const items=history.slice(0,5);
+
+  $("flow").innerHTML=
+    `${backBtn()}
+    <div class="card">
+
+      <div class="kicker">ACTION · UMSETZUNGS-VERLAUF</div>
+
+      <h2>Deine letzten Action-Checks</h2>
+
+      ${
+        items.length
+          ? items.map(item=>`
+              <div class="card"
+                   style="margin-top:14px;background:#27221c;">
+
+                <div class="kicker">${item.detail || "ACTION"}</div>
+
+                <p style="font-size:18px;">
+                  Handlungsbereitschaft:
+                  <b class="gold">${item.value} / 10</b>
+                </p>
+
+                <small>
+                  ${new Date(item.createdAt).toLocaleString("de-DE")}
+                </small>
+
+              </div>
+            `).join("")
+          : `
+            <p>Noch kein Action-Check gespeichert.</p>
+          `
+      }
+
+      <div class="ctas" style="margin-top:20px;">
+        <button type="button"
+                class="cta primary"
+                data-flow="action-continue">
+          <strong>Weiter im ICS</strong>
+          <small>Schau, welcher nächste Schritt jetzt zu dir passt.</small>
+        </button>
+      </div>
+
+    </div>`;
+}
   
 function energyTool(){
 
@@ -1808,6 +2135,33 @@ if(b.dataset.flow==="energy-continue"){
 
 if(b.dataset.flow==="energy-history"){
   return energyHistory();
+}
+
+if(b.dataset.actionTime && b.dataset.actionGoal){
+  return actionRecommendation(
+    b.dataset.actionGoal,
+    b.dataset.actionTime
+  );
+}
+
+if(b.dataset.actionCheck==="start"){
+  return actionCheck();
+}
+
+if(b.dataset.actionAfter){
+  return actionCheckResult(b.dataset.actionAfter);
+}
+
+if(b.dataset.actionSave){
+  return saveActionCheck(b.dataset.actionSave);
+}
+
+if(b.dataset.flow==="action-history"){
+  return actionHistory();
+}
+
+if(b.dataset.flow==="action-continue"){
+  return next();
 }
   
  if(b.dataset.flow==="program")return program();
