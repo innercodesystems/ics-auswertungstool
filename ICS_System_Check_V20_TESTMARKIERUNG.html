@@ -1131,9 +1131,10 @@ document.addEventListener("click",e=>{
  if(b.dataset.act==="start"){setActiveTestButton(null);return start();}
  if(b.dataset.answer)return choose(+b.dataset.answer);
  if(b.dataset.test){setActiveTestButton(b);return test(b.dataset.test);}
-if(b.dataset.route==="path"){
-  setActiveRouteButton(b);
-  return flowPath();
+ if(b.dataset.route==="path"){
+   setActiveRouteButton(b);
+   entryMode="path";
+   return flowPath();
 }
 
 if(b.dataset.route==="tool"){
