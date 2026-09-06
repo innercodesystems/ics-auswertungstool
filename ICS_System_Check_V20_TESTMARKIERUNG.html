@@ -359,6 +359,43 @@ ${
 }
     </div>`;
 }
+
+function energyTool(){
+
+  $("flow").innerHTML=
+    `${backBtn()}
+    <div class="card">
+
+      <div class="kicker">BODY · DEIN ENERGIE-TOOL</div>
+
+      <h2>Was soll sich jetzt verändern?</h2>
+
+      <p>
+        Deine aktuelle Energie liegt bei
+        <b class="gold">${detail}</b>.
+        Wähle jetzt nicht das Ideal, sondern das,
+        was dein System gerade wirklich braucht.
+      </p>
+
+      <div class="answers">
+
+        <button type="button" class="ans" data-energy-goal="energy">
+          Mehr Energie
+        </button>
+
+        <button type="button" class="ans" data-energy-goal="calm">
+          Mehr Ruhe
+        </button>
+
+        <button type="button" class="ans" data-energy-goal="clarity">
+          Mehr Klarheit
+        </button>
+
+      </div>
+
+    </div>`;
+}
+  
 function program(){
 
   let d;
@@ -636,6 +673,7 @@ if(b.dataset.route==="coach"){
  if(b.dataset.flow==="micro")return micro(b.textContent.trim());
  if(b.dataset.flow==="next")return next();
  if(b.dataset.flow==="tool")return tool();
+ if(b.dataset.flow==="energy-tool")return energyTool();
  if(b.dataset.flow==="program")return program();
  if(b.dataset.flow==="coach")return coach();
  if(b.dataset.flow==="qual")return qual();
