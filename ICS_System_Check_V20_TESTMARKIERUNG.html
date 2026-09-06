@@ -472,13 +472,59 @@ function clarityGoal(goal){
 
 function clarityRecommendation(goal,time){
 
-  const t=Number(time);
+const t=Number(time);
 
-  if(goal!=="sort"){
-    return;
+let r;
+
+if(goal==="release"){
+
+  if(t===1){
+
+    r={
+      title:"Druck kurz aus dem System nehmen.",
+      actionTitle:"1-Minuten-Druck-Reset",
+      action:"Stell beide Füße bewusst auf den Boden. Atme 5-mal ruhig ein und etwas länger aus. Lass beim Ausatmen Schultern und Kiefer bewusst lockerer werden. Frag dich danach nur: Was muss ich gerade nicht lösen?"
+    };
+
+  }else if(t===3){
+
+    r={
+      title:"Erst entlasten, dann weiterdenken.",
+      actionTitle:"3-Minuten-Entlastung",
+      action:"1 Minute ruhig atmen. 1 Minute wahrnehmen, wo du den Druck im Körper am stärksten spürst. 1 Minute innerlich formulieren: Was darf für heute leichter werden oder warten?"
+    };
+
+  }else{
+
+    r={
+      title:"Gib deinem inneren System wieder Raum.",
+      actionTitle:"10-Minuten-Druck lösen",
+      action:"3 Minuten ruhig atmen und den Körper wahrnehmen. 4 Minuten aufschreiben, was gerade Druck erzeugt. 2 Minuten markieren: Was liegt wirklich in meiner Verantwortung? Letzte Minute: Einen Punkt bewusst loslassen oder verschieben."
+    };
+
   }
 
-  let r;
+  $("flow").innerHTML=
+    `${backBtn()}
+    <div class="card">
+
+      <div class="kicker">DEIN NÄCHSTER SCHRITT</div>
+
+      <h2>${r.title}</h2>
+
+      <div class="card" style="margin-top:18px;background:#27221c;">
+        <div class="kicker">${r.actionTitle}</div>
+        <p>${r.action}</p>
+      </div>
+
+    </div>`;
+
+  return;
+}
+
+if(goal!=="sort"){
+  return;
+}
 
   if(t===1){
 
