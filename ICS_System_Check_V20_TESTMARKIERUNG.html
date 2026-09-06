@@ -522,6 +522,52 @@ if(goal==="release"){
   return;
 }
 
+if(goal==="decision"){
+
+  if(t===1){
+
+    r={
+      title:"Reduziere die Entscheidung auf das Wesentliche.",
+      actionTitle:"1-Minuten-Entscheidungs-Check",
+      action:"Schreib die Entscheidung in einem Satz auf. Frag dich dann: Wenn ich Erwartungen, Angst und das perfekte Ergebnis kurz ausblende – welche Möglichkeit fühlt sich für mich gerade stimmiger an?"
+    };
+
+  }else if(t===3){
+
+    r={
+      title:"Klarheit entsteht durch Unterscheiden.",
+      actionTitle:"3-Minuten-Entscheidungs-Check",
+      action:"1 Minute: Schreib die zwei wichtigsten Möglichkeiten auf. 1 Minute: Notiere zu jeder Möglichkeit – Was spricht wirklich dafür? 1 Minute: Beende den Satz: Wenn ich mir selbst vertrauen würde, wäre mein nächster Schritt …"
+    };
+
+  }else{
+
+    r={
+      title:"Trenne deine Entscheidung vom gedanklichen Lärm.",
+      actionTitle:"10-Minuten-Entscheidungsraum",
+      action:"3 Minuten: Schreib ungefiltert auf, worum es bei deiner Entscheidung wirklich geht. 3 Minuten: Teile deine Gedanken in drei Bereiche – Was will ich? Was befürchte ich? Was erwarten andere? 2 Minuten: Markiere, was tatsächlich zu dir gehört. Letzte 2 Minuten: Formuliere deinen aktuell stimmigsten nächsten Schritt."
+    };
+
+  }
+
+  $("flow").innerHTML=
+    `${backBtn()}
+    <div class="card">
+
+      <div class="kicker">DEIN NÄCHSTER SCHRITT</div>
+
+      <h2>${r.title}</h2>
+
+      <div class="card" style="margin-top:18px;background:#27221c;">
+        <div class="kicker">${r.actionTitle}</div>
+        <p>${r.action}</p>
+      </div>
+
+    </div>`;
+
+  return;
+}
+
 if(goal!=="sort"){
   return;
 }
