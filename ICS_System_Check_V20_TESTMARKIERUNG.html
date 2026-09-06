@@ -627,17 +627,66 @@ function energyCheckResult(value){
 
   const v=Number(value);
 
+  let min=1;
+  let max=3;
+
+  if(detail==="4–6 mittel"){
+    min=4;
+    max=6;
+  }
+
+  if(detail==="7–10 gut"){
+    min=7;
+    max=10;
+  }
+
+  let changeTitle;
+  let changeText;
+
+  if(v>max){
+
+    changeTitle="Deine Energie hat sich verbessert.";
+
+    changeText=
+      "Dein Wert liegt jetzt über deinem Ausgangsbereich. Dein System hat auf den Impuls positiv reagiert.";
+
+  }else if(v<min){
+
+    changeTitle="Deine Energie ist gerade niedriger.";
+
+    changeText=
+      "Dein Wert liegt unter deinem Ausgangsbereich. Das ist eine wichtige Information: Dein System braucht möglicherweise eher Entlastung, Ruhe oder eine andere Form der Regulation.";
+
+  }else{
+
+    changeTitle="Deine Energie liegt noch im gleichen Bereich.";
+
+    changeText=
+      "Dein Wert liegt weiterhin in deinem ursprünglichen Energiebereich. Auch das ist wertvoll – Veränderung muss nicht sofort groß sein. Entscheidend ist, dass du deinen Zustand bewusster wahrnimmst.";
+
+  }
+
   $("flow").innerHTML=
     `${backBtn()}
     <div class="card">
 
       <div class="kicker">BODY · DEINE VERÄNDERUNG</div>
 
-      <h2>Deine Energie liegt jetzt bei <span class="gold">${v} / 10</span>.</h2>
+      <h2>${changeTitle}</h2>
 
-      <p>
-        Gut. Damit hast du deinen Zustand nach der Übung bewusst wahrgenommen.
-      </p>
+      <div class="card" style="margin-top:18px;background:#27221c;">
+
+        <div class="kicker">VORHER → JETZT</div>
+
+        <p style="font-size:18px;">
+          <b>${detail}</b>
+          &nbsp;→&nbsp;
+          <b class="gold">${v} / 10</b>
+        </p>
+
+      </div>
+
+      <p>${changeText}</p>
 
     </div>`;
 }
