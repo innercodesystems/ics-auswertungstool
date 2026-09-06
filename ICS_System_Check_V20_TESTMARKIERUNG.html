@@ -911,6 +911,57 @@ function actionTool(){
 
     </div>`;
 }
+
+function actionGoal(goal){
+
+  const goalNames={
+    focus:"Eine klare Priorität setzen",
+    small:"Den Schritt kleiner machen",
+    start:"Einfach anfangen"
+  };
+
+  $("flow").innerHTML=
+    `${backBtn()}
+    <div class="card">
+
+      <div class="kicker">ACTION · DEIN ACTION-IMPULS</div>
+
+      <h2>Wie viel Zeit ist gerade wirklich möglich?</h2>
+
+      <p>
+        Du möchtest
+        <b class="gold">${goalNames[goal]}</b>.
+        Wähle nicht das Ideal, sondern das,
+        was du jetzt tatsächlich umsetzen würdest.
+      </p>
+
+      <div class="answers">
+
+        <button type="button"
+                class="ans"
+                data-action-time="1"
+                data-action-goal="${goal}">
+          1 Minute
+        </button>
+
+        <button type="button"
+                class="ans"
+                data-action-time="3"
+                data-action-goal="${goal}">
+          3 Minuten
+        </button>
+
+        <button type="button"
+                class="ans"
+                data-action-time="10"
+                data-action-goal="${goal}">
+          10 Minuten
+        </button>
+
+      </div>
+
+    </div>`;
+}
   
 function energyTool(){
 
@@ -1692,6 +1743,9 @@ if(b.dataset.route==="coach"){
  if(b.dataset.flow==="tool")return tool();
  if(b.dataset.flow==="clarity-tool")return clarityTool();
 if(b.dataset.flow==="action-tool")return actionTool();
+  if(b.dataset.actionGoal && !b.dataset.actionTime){
+  return actionGoal(b.dataset.actionGoal);
+}
 
  if(b.dataset.clarityCheck==="start"){
   return clarityCheck();
