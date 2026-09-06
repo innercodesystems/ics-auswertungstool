@@ -419,6 +419,57 @@ function clarityTool(){
     </div>`;
 }
 
+function clarityGoal(goal){
+
+  const goalNames={
+    sort:"Gedanken sortieren",
+    release:"Inneren Druck lösen",
+    decision:"Eine klare Entscheidung finden"
+  };
+
+  $("flow").innerHTML=
+    `${backBtn()}
+    <div class="card">
+
+      <div class="kicker">INNER · DEIN KLARHEITS-TOOL</div>
+
+      <h2>Wie viel Zeit ist gerade wirklich möglich?</h2>
+
+      <p>
+        Du möchtest gerade
+        <b class="gold">${goalNames[goal]}</b>.
+        Wähle nicht das Ideal, sondern die Zeit,
+        die du jetzt tatsächlich investieren würdest.
+      </p>
+
+      <div class="answers">
+
+        <button type="button"
+                class="ans"
+                data-clarity-time="1"
+                data-clarity-goal="${goal}">
+          1 Minute
+        </button>
+
+        <button type="button"
+                class="ans"
+                data-clarity-time="3"
+                data-clarity-goal="${goal}">
+          3 Minuten
+        </button>
+
+        <button type="button"
+                class="ans"
+                data-clarity-time="10"
+                data-clarity-goal="${goal}">
+          10 Minuten
+        </button>
+
+      </div>
+
+    </div>`;
+}
+  
 function energyTool(){
 
   $("flow").innerHTML=
@@ -1198,6 +1249,11 @@ if(b.dataset.route==="coach"){
  if(b.dataset.flow==="next")return next();
  if(b.dataset.flow==="tool")return tool();
  if(b.dataset.flow==="clarity-tool")return clarityTool();
+
+ if(b.dataset.clarityGoal && !b.dataset.clarityTime){
+  return clarityGoal(b.dataset.clarityGoal);
+}
+  
  if(b.dataset.flow==="energy-tool")return energyTool();  
  if(b.dataset.energyTime && b.dataset.energyGoal){
    return energyRecommendation(
