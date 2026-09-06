@@ -490,6 +490,48 @@ if(goal==="calm"){
   return;
 }
 
+if(goal==="clarity"){
+
+  let r;
+
+  if(t===1){
+    r={
+      title:"Kopf entlasten.",
+      actionTitle:"1-Minuten-Klarheit",
+      action:"Schreib genau einen Satz auf: Was beschäftigt mich gerade am meisten? Darunter: Was ist der kleinste nächste Schritt?"
+    };
+  }else if(t===3){
+    r={
+      title:"Gedanken aus dem Kopf holen.",
+      actionTitle:"3-Minuten-Kopf-Reset",
+      action:"1 Minute alles ungefiltert aufschreiben. 1 Minute markieren: Was ist heute wirklich relevant? 1 Minute nur einen nächsten Schritt festlegen."
+    };
+  }else{
+    r={
+      title:"Klarheit vor Aktivität.",
+      actionTitle:"10-Minuten-Klarheitsblock",
+      action:"5 Minuten Brain-Dump. 3 Minuten sortieren in: jetzt / später / nicht meins. 2 Minuten den einen Schritt festlegen, den du heute tatsächlich umsetzt."
+    };
+  }
+
+  $("flow").innerHTML=
+    `${backBtn()}
+    <div class="card">
+
+      <div class="kicker">DEIN NÄCHSTER SCHRITT</div>
+
+      <h2>${r.title}</h2>
+
+      <div class="card" style="margin-top:18px;background:#27221c;">
+        <div class="kicker">${r.actionTitle}</div>
+        <p>${r.action}</p>
+      </div>
+
+    </div>`;
+
+  return;
+}
+  
 if(goal!=="energy"){
   return;
 }
