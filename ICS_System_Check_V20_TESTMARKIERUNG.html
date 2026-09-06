@@ -634,6 +634,37 @@ if(goal!=="sort"){
 
     </div>`;
 }
+
+function clarityCheck(){
+
+  $("flow").innerHTML=
+    `${backBtn()}
+    <div class="card">
+
+      <div class="kicker">INNER · KLARHEIT PRÜFEN</div>
+
+      <h2>Wie klar fühlst du dich jetzt?</h2>
+
+      <p>
+        Nimm kurz wahr, wie es dir nach der Übung geht.
+        Wähle spontan den Wert, der deinem aktuellen Gefühl von Klarheit
+        am ehesten entspricht.
+      </p>
+
+      <div class="answers">
+
+        ${[1,2,3,4,5,6,7,8,9,10].map(n=>`
+          <button type="button"
+                  class="ans"
+                  data-clarity-after="${n}">
+            ${n}
+          </button>
+        `).join("")}
+
+      </div>
+
+    </div>`;
+}
   
 function energyTool(){
 
@@ -1414,6 +1445,10 @@ if(b.dataset.route==="coach"){
  if(b.dataset.flow==="next")return next();
  if(b.dataset.flow==="tool")return tool();
  if(b.dataset.flow==="clarity-tool")return clarityTool();
+
+ if(b.dataset.clarityCheck==="start"){
+  return clarityCheck();
+}
 
  if(b.dataset.clarityGoal && !b.dataset.clarityTime){
   return clarityGoal(b.dataset.clarityGoal);
