@@ -871,6 +871,46 @@ function clarityCheckResult(value){
 
     </div>`;
 }
+
+function actionTool(){
+
+  $("flow").innerHTML=
+    `${backBtn()}
+    <div class="card">
+
+      <div class="kicker">ACTION · DEIN ACTION-IMPULS</div>
+
+      <h2>Was brauchst du jetzt, um ins Handeln zu kommen?</h2>
+
+      <p>
+        Du hast <b class="gold">${detail}</b> gewählt.
+        Wähle jetzt den Impuls, der dich am ehesten wieder in Bewegung bringt.
+      </p>
+
+      <div class="answers">
+
+        <button type="button"
+                class="ans"
+                data-action-goal="focus">
+          Eine klare Priorität setzen
+        </button>
+
+        <button type="button"
+                class="ans"
+                data-action-goal="small">
+          Den Schritt kleiner machen
+        </button>
+
+        <button type="button"
+                class="ans"
+                data-action-goal="start">
+          Einfach anfangen
+        </button>
+
+      </div>
+
+    </div>`;
+}
   
 function energyTool(){
 
@@ -1651,6 +1691,7 @@ if(b.dataset.route==="coach"){
  if(b.dataset.flow==="next")return next();
  if(b.dataset.flow==="tool")return tool();
  if(b.dataset.flow==="clarity-tool")return clarityTool();
+if(b.dataset.flow==="action-tool")return actionTool();
 
  if(b.dataset.clarityCheck==="start"){
   return clarityCheck();
