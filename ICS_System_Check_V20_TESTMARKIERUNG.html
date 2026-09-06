@@ -667,6 +667,73 @@ function clarityCheck(){
 }
 
 function saveClarityCheck(value){
+  function clarityHistory(){
+
+  if(isTestMode){
+
+    $("flow").innerHTML=
+      `${backBtn()}
+      <div class="card">
+
+        <div class="kicker">INNER · KLARHEITS-VERLAUF</div>
+
+        <h2>Im Testmodus werden keine echten Daten angezeigt.</h2>
+
+        <p>
+          So verhindern wir, dass Entwicklungs- oder Testdaten
+          mit deinem späteren echten Klarheits-Verlauf vermischt werden.
+        </p>
+
+      </div>`;
+
+    return;
+  }
+
+  const key="ICS_CLARITY_HISTORY";
+
+  let history=[];
+
+  try{
+    history=JSON.parse(localStorage.getItem(key) || "[]");
+  }catch(e){
+    history=[];
+  }
+
+  const items=history.slice(0,5);
+
+  $("flow").innerHTML=
+    `${backBtn()}
+    <div class="card">
+
+      <div class="kicker">INNER · KLARHEITS-VERLAUF</div>
+
+      <h2>Deine letzten Klarheits-Checks</h2>
+
+      ${
+        items.length
+          ? items.map(item=>`
+              <div class="card" style="margin-top:14px;background:#27221c;">
+                <div class="kicker">${item.detail || "INNER"}</div>
+
+                <p style="font-size:18px;">
+                  Klarheit:
+                  <b class="gold">${item.value} / 10</b>
+                </p>
+
+                <small>
+                  ${new Date(item.createdAt).toLocaleString("de-DE")}
+                </small>
+              </div>
+            `).join("")
+          : `
+            <p>
+              Noch kein Klarheits-Check gespeichert.
+            </p>
+          `
+      }
+
+    </div>`;
+}
 
   const v=Number(value);
 
@@ -767,6 +834,13 @@ function clarityCheckResult(value){
         data-clarity-save="${v}">
   <strong>Klarheitswert festhalten</strong>
   <small>Deinen aktuellen Klarheits-Check speichern.</small>
+</button>
+
+<button type="button"
+        class="cta"
+        data-flow="clarity-history">
+  <strong>Meinen Klarheits-Verlauf ansehen</strong>
+  <small>Deine letzten Klarheits-Checks anzeigen.</small>
 </button>
 
         <button type="button"
@@ -1571,6 +1645,10 @@ if(b.dataset.clarityAfter){
 
 if(b.dataset.claritySave){
   return saveClarityCheck(b.dataset.claritySave);
+}
+
+if(b.dataset.flow==="clarity-history"){
+  return clarityHistory();
 }
   
  if(b.dataset.clarityGoal && !b.dataset.clarityTime){
