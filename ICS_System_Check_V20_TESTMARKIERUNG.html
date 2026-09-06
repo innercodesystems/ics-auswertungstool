@@ -666,6 +666,53 @@ function clarityCheck(){
     </div>`;
 }
 
+function saveClarityCheck(value){
+
+  const v=Number(value);
+
+  if(isTestMode){
+
+    const btn=document.querySelector('[data-clarity-save]');
+
+    if(btn){
+      btn.disabled=true;
+      btn.innerHTML=
+        `<strong>TESTMODUS</strong>
+         <small>Dieser Klarheits-Check wurde nicht gespeichert.</small>`;
+    }
+
+    return;
+  }
+
+  const key="ICS_CLARITY_HISTORY";
+
+  let history=[];
+
+  try{
+    history=JSON.parse(localStorage.getItem(key) || "[]");
+  }catch(e){
+    history=[];
+  }
+
+  history.unshift({
+    area:"inner",
+    detail:detail,
+    value:v,
+    createdAt:new Date().toISOString()
+  });
+
+  localStorage.setItem(key,JSON.stringify(history.slice(0,50)));
+
+  const btn=document.querySelector('[data-clarity-save]');
+
+  if(btn){
+    btn.disabled=true;
+    btn.innerHTML=
+      `<strong>GESPEICHERT</strong>
+       <small>Dein Klarheitswert wurde festgehalten.</small>`;
+  }
+}
+  
 function clarityCheckResult(value){
 
   const v=Number(value);
@@ -1520,6 +1567,10 @@ if(b.dataset.route==="coach"){
 
 if(b.dataset.clarityAfter){
   return clarityCheckResult(b.dataset.clarityAfter);
+}
+
+if(b.dataset.claritySave){
+  return saveClarityCheck(b.dataset.claritySave);
 }
   
  if(b.dataset.clarityGoal && !b.dataset.clarityTime){
