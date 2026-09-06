@@ -665,6 +665,67 @@ function clarityCheck(){
 
     </div>`;
 }
+
+function clarityCheckResult(value){
+
+  const v=Number(value);
+
+  let title;
+  let text;
+
+  if(v<=3){
+
+    title="Deine Klarheit ist gerade noch niedrig.";
+
+    text=
+      "Dein Kopf oder dein inneres System ist noch nicht wirklich frei. Mehr Denken muss jetzt nicht automatisch helfen. Entlastung, Abstand oder ein anderer Impuls kann der passendere nächste Schritt sein.";
+
+  }else if(v<=6){
+
+    title="Es ist etwas mehr Klarheit da.";
+
+    text=
+      "Du hast bereits etwas mehr Ordnung oder Abstand gewonnen. Jetzt geht es weniger darum, alles zu lösen, sondern den nächsten stimmigen Gedanken oder Schritt bewusst festzuhalten.";
+
+  }else{
+
+    title="Du hast gerade gute Klarheit.";
+
+    text=
+      "Dein aktueller Zustand zeigt, dass du wieder mehr innere Ordnung und Richtung wahrnimmst. Nutze diesen Moment, um deinen nächsten konkreten Schritt bewusst zu sichern.";
+  }
+
+  $("flow").innerHTML=
+    `${backBtn()}
+    <div class="card">
+
+      <div class="kicker">INNER · DEINE KLARHEIT</div>
+
+      <h2>${title}</h2>
+
+      <div class="card" style="margin-top:18px;background:#27221c;">
+        <div class="kicker">DEIN AKTUELLER KLARHEITSWERT</div>
+
+        <p style="font-size:18px;">
+          <b class="gold">${v} / 10</b>
+        </p>
+      </div>
+
+      <p>${text}</p>
+
+      <div class="ctas" style="margin-top:20px;">
+
+        <button type="button"
+                class="cta"
+                data-flow="clarity-continue">
+          <strong>Weiter im ICS</strong>
+          <small>Schau, welcher nächste Schritt jetzt zu dir passt.</small>
+        </button>
+
+      </div>
+
+    </div>`;
+}
   
 function energyTool(){
 
@@ -1450,6 +1511,10 @@ if(b.dataset.route==="coach"){
   return clarityCheck();
 }
 
+if(b.dataset.clarityAfter){
+  return clarityCheckResult(b.dataset.clarityAfter);
+}
+  
  if(b.dataset.clarityGoal && !b.dataset.clarityTime){
   return clarityGoal(b.dataset.clarityGoal);
 }
