@@ -1,1 +1,740 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>ACTION · Umsetzung | Inner Code Systems</title>
+
+<style>
+:root{
+  --cream:#faf1cb;
+  --light:#f8f3e8;
+  --gold:#d4a03a;
+  --black:#1a1815;
+  --dark:#211d18;
+  --text:#6f685f;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+body{
+  margin:0;
+  background:var(--light);
+  color:var(--black);
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+a{color:inherit}
+
+/* HEADER */
+
+.header{
+  min-height:74px;
+  padding:12px 5%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#fffaf0;
+  border-bottom:1px solid rgba(212,160,58,.22);
+}
+
+.brand{
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.brand img{
+  width:46px;
+  height:46px;
+  object-fit:contain;
+}
+
+.brand-main{
+  display:block;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:25px;
+}
+
+.brand-sub{
+  display:block;
+  font-size:9px;
+  letter-spacing:.15em;
+}
+
+.nav{
+  display:flex;
+  align-items:center;
+  gap:24px;
+}
+
+.nav a{
+  text-decoration:none;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.08em;
+}
+
+.nav .active{color:var(--gold)}
+
+/* HERO */
+
+.hero{
+  background:var(--black);
+  color:#f6f1e7;
+}
+
+.hero-inner{
+  max-width:1240px;
+  margin:auto;
+  padding:100px 34px 92px;
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:70px;
+  align-items:center;
+}
+
+.kicker{
+  color:var(--gold);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.18em;
+  margin-bottom:18px;
+}
+
+h1{
+  margin:0;
+  font-family:Georgia,"Times New Roman",serif;
+  font-weight:400;
+  font-size:clamp(55px,6vw,88px);
+  line-height:.98;
+}
+
+.hero-text{
+  max-width:670px;
+  margin:25px 0 0;
+  color:#c9c0b3;
+  font-size:18px;
+  line-height:1.7;
+}
+
+.hero-side{
+  padding:34px;
+  border:1px solid #59472c;
+  border-radius:18px;
+  background:#211d18;
+}
+
+.hero-side-label{
+  color:var(--gold);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.15em;
+}
+
+.hero-side h2{
+  margin:12px 0 12px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-weight:400;
+  font-size:32px;
+}
+
+.hero-side p{
+  color:#c9c0b3;
+  line-height:1.65;
+}
+
+.button{
+  display:inline-block;
+  margin-top:14px;
+  padding:15px 22px;
+  border-radius:8px;
+  background:var(--gold);
+  color:#17130e;
+  text-decoration:none;
+  font-weight:800;
+  font-size:14px;
+}
+
+/* CONTENT */
+
+.content{
+  max-width:1240px;
+  margin:auto;
+  padding:92px 34px;
+}
+
+.section{
+  padding:78px 0;
+}
+
+.section + .section{
+  border-top:1px solid rgba(212,160,58,.20);
+}
+
+.section-kicker{
+  color:var(--gold);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.16em;
+  margin-bottom:13px;
+}
+
+.section-title{
+  margin:0;
+  max-width:820px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(38px,4.5vw,58px);
+  line-height:1.05;
+  font-weight:400;
+}
+
+.section-intro{
+  max-width:760px;
+  color:var(--text);
+  line-height:1.75;
+  font-size:16px;
+  margin:20px 0 38px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px;
+}
+
+.grid.four{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+}
+
+.card{
+  padding:27px;
+  min-height:225px;
+  background:#fffdf8;
+  border:1px solid rgba(212,160,58,.25);
+  border-radius:16px;
+  text-decoration:none;
+  box-shadow:0 10px 30px rgba(0,0,0,.04);
+  transition:.2s ease;
+}
+
+a.card:hover{
+  transform:translateY(-3px);
+  border-color:rgba(212,160,58,.6);
+}
+
+.card-label{
+  color:var(--gold);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.14em;
+  margin-bottom:20px;
+}
+
+.card h3{
+  margin:0 0 12px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:24px;
+  font-weight:400;
+}
+
+.card p{
+  margin:0;
+  color:#746d64;
+  font-size:14px;
+  line-height:1.65;
+}
+
+.card-link{
+  display:inline-block;
+  margin-top:22px;
+  color:var(--gold);
+  font-size:13px;
+  font-weight:800;
+}
+
+/* DARK */
+
+.dark{
+  background:var(--black);
+  color:#f6f1e7;
+}
+
+.dark .content{
+  padding-top:90px;
+  padding-bottom:90px;
+}
+
+.dark .section-title{color:#f6f1e7}
+.dark .section-intro{color:#c4bbaf}
+
+.dark .card{
+  background:#211d18;
+  border-color:#514229;
+  box-shadow:none;
+}
+
+.dark .card h3{color:#f6f1e7}
+.dark .card p{color:#c7beb2}
+
+/* APP */
+
+.app-box{
+  padding:45px;
+  border-radius:20px;
+  background:#fffdf8;
+  border:1px solid rgba(212,160,58,.28);
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:45px;
+  align-items:center;
+}
+
+.app-box h3{
+  margin:0 0 15px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:38px;
+  font-weight:400;
+}
+
+.app-box p{
+  color:#746d64;
+  line-height:1.7;
+}
+
+.app-list{
+  display:grid;
+  gap:10px;
+}
+
+.app-item{
+  padding:14px 16px;
+  border-radius:10px;
+  background:#f4ecdc;
+  font-size:14px;
+}
+
+/* WORLDS */
+
+.worlds{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:10px;
+}
+
+.world{
+  text-decoration:none;
+  padding:20px 14px;
+  border:1px solid rgba(212,160,58,.3);
+  border-radius:12px;
+  text-align:center;
+  background:#fffdf8;
+}
+
+.world strong{
+  display:block;
+  color:var(--gold);
+  font-size:11px;
+  letter-spacing:.1em;
+}
+
+.world span{
+  display:block;
+  margin-top:7px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:17px;
+}
+
+.world.current{
+  background:var(--black);
+  color:#f6f1e7;
+}
+
+/* FINAL */
+
+.final{
+  padding:55px;
+  border-radius:20px;
+  background:var(--black);
+  color:#f6f1e7;
+}
+
+.final h2{
+  margin:0;
+  max-width:700px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:42px;
+  font-weight:400;
+}
+
+.final p{
+  max-width:680px;
+  color:#c7beb2;
+  line-height:1.7;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+  .nav{display:none}
+  .hero-inner{grid-template-columns:1fr}
+  .grid,.grid.four{grid-template-columns:repeat(2,1fr)}
+  .app-box{grid-template-columns:1fr}
+  .worlds{grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:620px){
+  .hero-inner,.content{
+    padding-left:20px;
+    padding-right:20px;
+  }
+
+  .hero-inner{padding-top:65px;padding-bottom:65px}
+  h1{font-size:56px}
+  .grid,.grid.four{grid-template-columns:1fr}
+  .worlds{grid-template-columns:1fr}
+  .app-box,.final{padding:28px}
+  .section{padding:58px 0}
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+<a class="brand" href="ics-startseite.html">
+  <img src="https://www.innercodesystems.com/wp-content/uploads/go-x/u/39adbfd1-c2be-4f0b-adb6-f4b956947aa2/l0,t256,w1024,h1024/image.png" alt="ICS">
+  <span>
+    <span class="brand-main">ICS</span>
+    <span class="brand-sub">INNER CODE SYSTEMS</span>
+  </span>
+</a>
+
+<nav class="nav">
+  <a href="ics-startseite.html">START</a>
+  <a href="inner.html">INNER</a>
+  <a href="body.html">BODY</a>
+  <a class="active" href="action.html">ACTION</a>
+  <a href="reset.html">RESET</a>
+  <a href="orientierung.html">ORIENTIERUNG</a>
+  <a href="https://app.innercodesystems.com/">MEIN ICS</a>
+</nav>
+
+</header>
+
+<section class="hero">
+
+<div class="hero-inner">
+
+<div>
+
+<div class="kicker">03 · ACTION · UMSETZUNG & BEWEGUNG</div>
+
+<h1>
+Klarheit wird erst<br>
+durch Handlung real.
+</h1>
+
+<p class="hero-text">
+Du kannst sehr viel verstehen und trotzdem feststecken.
+ACTION beginnt dort, wo Erkenntnis in Bewegung übersetzt wird:
+Prioritäten setzen, Schritte kleiner machen, anfangen
+und Entscheidungen im echten Leben sichtbar werden lassen.
+</p>
+
+</div>
+
+<div class="hero-side">
+
+<div class="hero-side-label">DEIN EINSTIEG</div>
+
+<h2>Was hält dich gerade vom nächsten Schritt ab?</h2>
+
+<p>
+Der ICS System Check zeigt dir, ob dein Engpass
+wirklich in der Umsetzung liegt – oder ob zuerst Klarheit,
+Energie, Muster oder Orientierung Aufmerksamkeit brauchen.
+</p>
+
+<a class="button" href="ics-startseite.html#system-check">
+System Check starten
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<main>
+
+<div class="content">
+
+<section class="section">
+
+<div class="section-kicker">WORAN DU ACTION ERKENNST</div>
+
+<h2 class="section-title">
+Vielleicht fehlt dir nicht Motivation.
+Vielleicht ist dein nächster Schritt nur noch nicht klar genug.
+</h2>
+
+<p class="section-intro">
+ACTION beschäftigt sich mit Umsetzung:
+mit Prioritäten, Überforderung, Perfektion,
+Widerstand und der Fähigkeit, aus Erkenntnis konkrete Bewegung zu machen.
+</p>
+
+<div class="grid four">
+
+<div class="card">
+<div class="card-label">01</div>
+<h3>Unklarheit</h3>
+<p>Du willst etwas verändern, weißt aber nicht genau, welcher Schritt zuerst wirklich sinnvoll ist.</p>
+</div>
+
+<div class="card">
+<div class="card-label">02</div>
+<h3>Zu viel auf einmal</h3>
+<p>Es gibt so viele Aufgaben und Möglichkeiten, dass du kaum erkennst, wo du anfangen sollst.</p>
+</div>
+
+<div class="card">
+<div class="card-label">03</div>
+<h3>Perfektion</h3>
+<p>Du willst es richtig machen und verschiebst dadurch den Moment, überhaupt anzufangen.</p>
+</div>
+
+<div class="card">
+<div class="card-label">04</div>
+<h3>Widerstand</h3>
+<p>Du weißt eigentlich, was dran wäre, aber etwas in dir zieht immer wieder die Bremse.</p>
+</div>
+
+</div>
+
+</section>
+
+
+<section class="section">
+
+<div class="section-kicker">DIREKT AUSPROBIEREN</div>
+
+<h2 class="section-title">
+Der nächste Schritt muss nicht groß sein.
+Nur echt.
+</h2>
+
+<p class="section-intro">
+ACTION arbeitet bewusst mit kleinen, konkreten Schritten.
+Du brauchst nicht den gesamten Weg zu kennen,
+um jetzt Bewegung zu erzeugen.
+</p>
+
+<div class="grid">
+
+<a class="card" href="ics-startseite.html#system-check">
+<div class="card-label">ICS SYSTEM CHECK</div>
+<h3>Deinen wirklichen Engpass erkennen</h3>
+<p>Finde heraus, ob ACTION gerade tatsächlich dein stärkster Hebel ist.</p>
+<span class="card-link">System Check starten →</span>
+</a>
+
+<a class="card" href="https://app.innercodesystems.com/">
+<div class="card-label">ACTION IN MEIN ICS</div>
+<h3>Aus Impulsen konkrete Schritte machen</h3>
+<p>Nutze Fokus, Umsetzung und persönliche nächste Schritte in deinem ICS Bereich.</p>
+<span class="card-link">ICS App öffnen →</span>
+</a>
+
+<a class="card" href="https://innercodesystems.com/7-tage-reset">
+<div class="card-label">7-TAGE RESET</div>
+<h3>Vom Muster in eine neue Handlung</h3>
+<p>Wenn du immer wieder ins Gleiche zurückfällst, kann RESET helfen, Veränderung im Alltag zu stabilisieren.</p>
+<span class="card-link">7-Tage RESET ansehen →</span>
+</a>
+
+</div>
+
+</section>
+
+</div>
+
+
+<section class="dark">
+
+<div class="content">
+
+<div class="section-kicker">TIEFER GEHEN</div>
+
+<h2 class="section-title">
+Wenn Wissen allein
+noch keine Veränderung erzeugt.
+</h2>
+
+<p class="section-intro">
+Hinter Aufschieben, Perfektion oder Widerstand
+steckt häufig mehr als mangelnde Disziplin.
+Dann lohnt es sich, das Muster hinter der Handlung anzuschauen.
+</p>
+
+<div class="grid">
+
+<a class="card" href="https://innercodesystems.com/7-tage-reset">
+<div class="card-label">RESET</div>
+<h3>Neue Handlung verankern</h3>
+<p>Unterbrich automatische Reaktionen und übe kleine neue Entscheidungen so lange, bis sie vertrauter werden.</p>
+<span class="card-link">7-Tage RESET ansehen →</span>
+</a>
+
+<a class="card" href="https://innercodesystems.com/blockadenloeser-report">
+<div class="card-label">BLOCKADENLÖSER</div>
+<h3>Den Widerstand hinter dem Widerstand verstehen</h3>
+<p>Wenn du weißt, was du tun möchtest, aber immer wieder an derselben inneren Grenze hängenbleibst.</p>
+<span class="card-link">Blockadenlöser ansehen →</span>
+</a>
+
+<a class="card" href="https://app.innercodesystems.com/">
+<div class="card-label">MEIN ICS</div>
+<h3>Entwicklung sichtbar machen</h3>
+<p>Verknüpfe Erkenntnisse, Fokus und konkrete nächste Schritte in deinem persönlichen Entwicklungsraum.</p>
+<span class="card-link">Zu Mein ICS →</span>
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<div class="content">
+
+<section class="section">
+
+<div class="section-kicker">WEBSITE + APP</div>
+
+<div class="app-box">
+
+<div>
+
+<h3>Aus einem Schritt wird ein neuer Verlauf.</h3>
+
+<p>
+Die Website hilft dir, deinen nächsten sinnvollen Schritt zu erkennen.
+In Mein ICS kannst du daraus später Fokus,
+Umsetzung und Entwicklung über Zeit machen.
+</p>
+
+<a class="button" href="https://app.innercodesystems.com/">
+Zu Mein ICS
+</a>
+
+</div>
+
+<div class="app-list">
+<div class="app-item">Dein aktueller Fokus</div>
+<div class="app-item">Konkrete Mikro-Schritte</div>
+<div class="app-item">Umsetzungs-Check-ins</div>
+<div class="app-item">Journal & Verlauf</div>
+<div class="app-item">Persönliche nächste Schritte</div>
+</div>
+
+</div>
+
+</section>
+
+
+<section class="section">
+
+<div class="section-kicker">DIE FÜNF ICS WELTEN</div>
+
+<h2 class="section-title">
+Handlung ist nie nur Handlung.
+</h2>
+
+<p class="section-intro">
+ACTION funktioniert am besten, wenn Klarheit,
+Energie, Muster und Richtung mitgedacht werden.
+Deshalb betrachtet ICS immer dein gesamtes System.
+</p>
+
+<div class="worlds">
+
+<a class="world" href="inner.html">
+<strong>INNER</strong>
+<span>Klarheit</span>
+</a>
+
+<a class="world" href="body.html">
+<strong>BODY</strong>
+<span>Energie</span>
+</a>
+
+<a class="world current" href="action.html">
+<strong>ACTION</strong>
+<span>Umsetzung</span>
+</a>
+
+<a class="world" href="reset.html">
+<strong>RESET</strong>
+<span>Muster</span>
+</a>
+
+<a class="world" href="orientierung.html">
+<strong>ORIENTIERUNG</strong>
+<span>Richtung</span>
+</a>
+
+</div>
+
+</section>
+
+
+<section class="section">
+
+<div class="final">
+
+<div class="section-kicker">PERSÖNLICHE BEGLEITUNG</div>
+
+<h2>
+Wenn du weißt, was du willst,
+aber trotzdem nicht ins Tun kommst.
+</h2>
+
+<p>
+Dann lohnt es sich, nicht nur an mehr Disziplin zu arbeiten,
+sondern gemeinsam zu schauen, was zwischen Erkenntnis
+und echter Umsetzung steht.
+</p>
+
+<a class="button"
+href="https://wa.me/491717335441?text=Hallo%20Peter%2C%20ich%20komme%20%C3%BCber%20die%20ICS%20ACTION-Seite%20und%20m%C3%B6chte%20mein%20Thema%20pers%C3%B6nlich%20mit%20dir%20kl%C3%A4ren.">
+Persönlich mit Peter klären
+</a>
+
+</div>
+
+</section>
+
+</div>
+
+</main>
+
+<script>
+document.querySelectorAll(
+  'a[href^="https://"], a[href^="http://"]'
+).forEach(function(link){
+
+  link.setAttribute("target","_blank");
+  link.setAttribute("rel","noopener noreferrer");
+
+});
+</script>
+
+</body>
+</html>
