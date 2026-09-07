@@ -1302,7 +1302,51 @@ function actionHistory(){
     </div>`;
 }
 
+/* =========================================================
+   RESET · KOMPLETTER GEGENPOL-BEREICH
+========================================================= */
+
+function resetProfile(){
+
+  const profiles={
+
+    "Gleiches Muster":{
+      pattern:"Immer wieder in dieselbe automatische Reaktion geraten.",
+      counterpole:"Bewusst unterbrechen und neu wählen.",
+      sentence:"Ich muss das alte Muster nicht zu Ende führen. Ich kann an dieser Stelle neu wählen.",
+      micro:"Wenn du das Muster heute bemerkst, stoppe für einen Moment und tue bewusst eine kleine Sache anders als sonst."
+    },
+
+    "Stressreaktion":{
+      pattern:"Unter Druck sofort aus dem alten Reflex heraus reagieren.",
+      counterpole:"Erst regulieren. Dann bewusst reagieren.",
+      sentence:"Ich muss nicht sofort reagieren. Ich darf zuerst wieder bei mir ankommen.",
+      micro:"Wenn Stress entsteht, verzögere deine Reaktion bewusst um einen kurzen Moment und reguliere zuerst deinen Körper."
+    },
+
+    "Festhalten":{
+      pattern:"An etwas festhalten, obwohl es heute Kraft bindet.",
+      counterpole:"Loslassen und neuen Raum zulassen.",
+      sentence:"Ich darf loslassen, was mich nicht mehr trägt, ohne schon die ganze nächste Antwort kennen zu müssen.",
+      micro:"Wähle heute eine einzige Sache, die du nicht weiter kontrollieren, festhalten oder erzwingen möchtest."
+    },
+
+    "Neue Entscheidung hält nicht":{
+      pattern:"Eine neue Entscheidung treffen und später wieder ins Gewohnte zurückfallen.",
+      counterpole:"Klein wiederholen und dadurch verankern.",
+      sentence:"Ich muss nicht alles sofort verändern. Ich wiederhole meinen neuen Schritt so lange, bis er vertrauter wird.",
+      micro:"Wähle eine kleine neue Handlung, die du heute und morgen identisch wiederholen kannst."
+    }
+
+  };
+
+  return profiles[detail] || profiles["Gleiches Muster"];
+}
+
+
 function resetTool(){
+
+  const p=resetProfile();
 
   $("flow").innerHTML=
     `${backBtn()}
@@ -1310,13 +1354,36 @@ function resetTool(){
 
       <div class="kicker">RESET · DEIN GEGENPOL-TOOL</div>
 
-      <h2>Was brauchst du gerade am meisten?</h2>
+      <h2>Dein Muster braucht nicht mehr dieselbe Antwort.</h2>
 
       <p>
-        Du hast <b class="gold">${detail}</b> gewählt.
-        Entscheide spontan, was dir jetzt helfen würde,
-        anders mit diesem Muster umzugehen.
+        Bei dir zeigt sich besonders:
+        <b class="gold">${detail}</b>
       </p>
+
+      <div class="card" style="margin-top:18px;background:#27221c;">
+
+        <div class="kicker">DEIN AUTOMATISCHES MUSTER</div>
+
+        <p>${p.pattern}</p>
+
+        <div class="kicker" style="margin-top:18px;">
+          DEIN GEGENPOL
+        </div>
+
+        <p style="font-size:20px;">
+          <b class="gold">${p.counterpole}</b>
+        </p>
+
+        <p>
+          ${p.sentence}
+        </p>
+
+      </div>
+
+      <h2 style="font-size:24px;margin-top:24px;">
+        Was brauchst du jetzt am meisten?
+      </h2>
 
       <div class="answers">
 
@@ -1352,6 +1419,8 @@ function resetGoal(goal){
     anchor:"Eine neue Reaktion verankern"
   };
 
+  const p=resetProfile();
+
   $("flow").innerHTML=
     `${backBtn()}
     <div class="card">
@@ -1361,9 +1430,13 @@ function resetGoal(goal){
       <h2>Wie viel Zeit ist gerade wirklich möglich?</h2>
 
       <p>
-        Du möchtest
-        <b class="gold">${names[goal]}</b>.
-        Wähle die Zeit, die du jetzt tatsächlich einsetzen würdest.
+        Dein Gegenpol ist
+        <b class="gold">${p.counterpole}</b>
+      </p>
+
+      <p>
+        Du möchtest jetzt:
+        <b class="gold">${names[goal]}</b>
       </p>
 
       <div class="answers">
@@ -1398,73 +1471,103 @@ function resetGoal(goal){
 function resetRecommendation(goal,time){
 
   const t=Number(time);
+  const p=resetProfile();
+
   let r={};
 
   if(goal==="interrupt"){
 
     if(t===1){
+
       r={
         title:"Unterbrich den Autopiloten.",
-        actionTitle:"1-Minuten-Gegenpol",
-        action:"Benenne deine automatische Reaktion in einem Satz: Normalerweise würde ich jetzt … Ergänze direkt darunter: Heute wähle ich stattdessen … Wähle eine kleine konkrete Gegenhandlung."
+        actionTitle:"1-MINUTEN-GEGENPOL",
+        action:
+          `Benenne kurz, was du normalerweise jetzt tun würdest. Stoppe bewusst. Sage dir: „${p.sentence}“ Entscheide dich anschließend für genau eine kleine Gegenhandlung.`
       };
+
     }else if(t===3){
+
       r={
         title:"Erkennen. Stoppen. Neu wählen.",
-        actionTitle:"3-Minuten-Musterunterbrechung",
-        action:"1 Minute: Was passiert gerade automatisch? 1 Minute: Was wäre das Gegenteil dieser Reaktion? 1 Minute: Welche kleine Handlung kannst du heute als Gegenpol wirklich umsetzen?"
+        actionTitle:"3-MINUTEN-MUSTERUNTERBRECHUNG",
+        action:
+          `1 Minute: Was passiert gerade automatisch? 1 Minute: Erinnere dich an deinen Gegenpol „${p.counterpole}“ und beschreibe, wie dieser konkret aussehen würde. 1 Minute: Setze eine kleine Gegenhandlung fest, die du heute ausführst.`
       };
+
     }else{
+
       r={
-        title:"Mach das alte Muster sichtbar.",
-        actionTitle:"10-Minuten-Gegenpol-Block",
-        action:"3 Minuten: Situation und automatische Reaktion aufschreiben. 3 Minuten: erkennen, was dieses Muster bisher auslöst. 2 Minuten: deinen persönlichen Gegenpol formulieren. 2 Minuten: eine konkrete Handlung innerhalb der nächsten 24 Stunden festlegen."
+        title:"Mach das alte Muster und seinen Gegenpol sichtbar.",
+        actionTitle:"10-MINUTEN-GEGENPOL-BLOCK",
+        action:
+          `3 Minuten: Situation, Auslöser und automatische Reaktion notieren. 2 Minuten: Was versucht das alte Muster für dich zu erreichen oder zu vermeiden? 2 Minuten: Formuliere deinen Gegenpol „${p.counterpole}“ in deinen eigenen Worten. 3 Minuten: Lege eine konkrete neue Handlung für die nächsten 24 Stunden fest.`
       };
+
     }
 
   }else if(goal==="regulate"){
 
     if(t===1){
+
       r={
         title:"Erst regulieren. Dann entscheiden.",
-        actionTitle:"1-Minuten-RESET",
-        action:"Beide Füße bewusst auf den Boden. Schultern und Kiefer lockern. Sechs ruhige Atemzüge, jeweils etwas länger aus- als einatmen. Danach frage dich: Muss ich jetzt wirklich reagieren?"
+        actionTitle:"1-MINUTEN-RESET",
+        action:
+          `Beide Füße bewusst auf den Boden. Kiefer und Schultern lösen. Sechs ruhige Atemzüge, jeweils etwas länger ausatmen. Danach sage dir: „${p.sentence}“ Erst dann entscheidest du, ob überhaupt eine Reaktion notwendig ist.`
       };
+
     }else if(t===3){
+
       r={
-        title:"Schaffe Abstand zur Reaktion.",
-        actionTitle:"3-Minuten-Regulation",
-        action:"1 Minute ruhig atmen. 1 Minute wahrnehmen: Wo sitzt die Reaktion im Körper? 1 Minute formulieren: Wenn ich nicht automatisch reagieren müsste – wie würde ich stattdessen handeln?"
+        title:"Schaffe Abstand zur automatischen Reaktion.",
+        actionTitle:"3-MINUTEN-REGULATION",
+        action:
+          `1 Minute ruhig atmen und den Körper wahrnehmen. 1 Minute feststellen: Wo spüre ich gerade Druck, Enge oder Spannung? 1 Minute fragen: Wie würde ich aus meinem Gegenpol „${p.counterpole}“ heraus jetzt reagieren?`
       };
+
     }else{
+
       r={
         title:"Gib deinem System Zeit zum Umschalten.",
-        actionTitle:"10-Minuten-RESET-Raum",
-        action:"3 Minuten Körper und Atmung regulieren. 3 Minuten aufschreiben, was dich gerade triggert. 2 Minuten unterscheiden: Was ist Fakt und was ist meine automatische Reaktion? 2 Minuten deinen neuen Umgang damit festlegen."
+        actionTitle:"10-MINUTEN-RESET-RAUM",
+        action:
+          `3 Minuten Körper und Atmung beruhigen. 3 Minuten aufschreiben, was dich gerade aktiviert. 2 Minuten unterscheiden: Was ist tatsächlich passiert – und was ist meine automatische Reaktion? 2 Minuten aus deinem Gegenpol „${p.counterpole}“ eine neue Antwort formulieren.`
       };
+
     }
 
   }else{
 
     if(t===1){
+
       r={
-        title:"Mach die neue Entscheidung konkret.",
-        actionTitle:"1-Minuten-Verankerung",
-        action:"Beende diesen Satz: Wenn die Situation wiederkommt, werde ich … Formuliere nur eine konkrete Handlung, die du tatsächlich erkennen und umsetzen kannst."
+        title:"Mach die neue Reaktion konkret.",
+        actionTitle:"1-MINUTEN-VERANKERUNG",
+        action:
+          `Beende diesen Satz: „Wenn diese Situation wiederkommt, werde ich …“ Nutze dabei deinen Gegenpol „${p.counterpole}“. Formuliere nur eine Handlung, die du wirklich erkennen und ausführen kannst.`
       };
+
     }else if(t===3){
+
       r={
-        title:"Eine Entscheidung braucht Verhalten.",
-        actionTitle:"3-Minuten-Verankerung",
-        action:"1 Minute: Welche neue Entscheidung willst du halten? 1 Minute: Welches Verhalten gehört dazu? 1 Minute: Wann wirst du dieses Verhalten heute oder morgen konkret anwenden?"
+        title:"Eine neue Entscheidung braucht Verhalten.",
+        actionTitle:"3-MINUTEN-VERANKERUNG",
+        action:
+          `1 Minute: Welche alte Reaktion möchtest du nicht weiter wiederholen? 1 Minute: Welche Handlung entspricht deinem Gegenpol „${p.counterpole}“? 1 Minute: Wann wirst du diese Handlung heute oder morgen konkret anwenden?`
       };
+
     }else{
+
       r={
-        title:"Aus Entscheidung wird neues Muster.",
-        actionTitle:"10-Minuten-Verankerung",
-        action:"3 Minuten deine neue Entscheidung beschreiben. 3 Minuten drei konkrete Verhaltensweisen dazu festlegen. 2 Minuten mögliche Rückfallmomente erkennen. Letzte 2 Minuten: einen persönlichen Wenn-dann-Satz formulieren."
+        title:"Aus Gegenpol wird ein neues Muster.",
+        actionTitle:"10-MINUTEN-VERANKERUNG",
+        action:
+          `3 Minuten deine neue Entscheidung beschreiben. 3 Minuten drei konkrete Verhaltensweisen festlegen, die zu „${p.counterpole}“ passen. 2 Minuten typische Rückfallmomente erkennen. 2 Minuten einen Wenn-dann-Satz formulieren: „Wenn ich merke, dass …, dann werde ich …“`
       };
+
     }
+
   }
 
   $("flow").innerHTML=
@@ -1476,8 +1579,31 @@ function resetRecommendation(goal,time){
       <h2>${r.title}</h2>
 
       <div class="card" style="margin-top:18px;background:#27221c;">
+
+        <div class="kicker">DEIN GEGENPOL</div>
+
+        <p style="font-size:20px;margin-bottom:4px;">
+          <b class="gold">${p.counterpole}</b>
+        </p>
+
+        <p>${p.sentence}</p>
+
+      </div>
+
+      <div class="card" style="margin-top:18px;background:#27221c;">
+
         <div class="kicker">${r.actionTitle}</div>
+
         <p>${r.action}</p>
+
+      </div>
+
+      <div class="card" style="margin-top:18px;background:#27221c;">
+
+        <div class="kicker">DEIN MIKRO-SCHRITT IM ALLTAG</div>
+
+        <p>${p.micro}</p>
+
       </div>
 
       <button type="button"
@@ -1493,6 +1619,8 @@ function resetRecommendation(goal,time){
 
 function resetCheck(){
 
+  const p=resetProfile();
+
   $("flow").innerHTML=
     `${backBtn()}
     <div class="card">
@@ -1502,11 +1630,17 @@ function resetCheck(){
       <h2>Wie frei fühlst du dich jetzt, anders zu reagieren?</h2>
 
       <p>
-        Bewerte spontan deinen aktuellen Zustand.
-        1 bedeutet kaum Spielraum, 10 bedeutet sehr klarer Zugang zu einer neuen Reaktion.
+        Dein Gegenpol:
+        <b class="gold">${p.counterpole}</b>
+      </p>
+
+      <p>
+        1 bedeutet kaum Spielraum.
+        10 bedeutet einen sehr klaren Zugang zu deiner neuen Reaktion.
       </p>
 
       <div class="answers">
+
         ${[1,2,3,4,5,6,7,8,9,10].map(n=>`
           <button type="button"
                   class="ans"
@@ -1514,6 +1648,7 @@ function resetCheck(){
             ${n}
           </button>
         `).join("")}
+
       </div>
 
     </div>`;
@@ -1523,19 +1658,32 @@ function resetCheck(){
 function resetCheckResult(value){
 
   const v=Number(value);
+  const p=resetProfile();
 
   let title;
   let text;
 
   if(v<=3){
+
     title="Das alte Muster ist gerade noch sehr präsent.";
-    text="Du hast momentan noch wenig Abstand zur automatischen Reaktion. Das bedeutet nicht, dass du sie sofort lösen musst. Entscheidend ist zunächst, sie früher wahrzunehmen und deinen Gegenpol bewusst verfügbar zu machen.";
+
+    text=
+      "Du hast momentan noch wenig Abstand zur automatischen Reaktion. Entscheidend ist jetzt nicht, das Muster mit Gewalt zu verändern, sondern es früher zu erkennen und deinen Gegenpol immer wieder bewusst verfügbar zu machen.";
+
   }else if(v<=6){
-    title="Du hast bereits etwas neuen Spielraum.";
-    text="Die automatische Reaktion bestimmt nicht mehr vollständig deinen nächsten Schritt. Jetzt hilft Wiederholung: dieselbe kleine neue Reaktion bewusst immer wieder wählen.";
+
+    title="Du hast bereits neuen Spielraum.";
+
+    text=
+      "Deine automatische Reaktion bestimmt nicht mehr vollständig den nächsten Schritt. Jetzt entsteht Veränderung durch Wiederholung: denselben Gegenpol in kleinen Alltagssituationen immer wieder bewusst wählen.";
+
   }else{
-    title="Du hast gerade guten Zugang zu deinem Gegenpol.";
-    text="Du kannst momentan klarer erkennen, dass zwischen Auslöser und Reaktion eine Wahl liegt. Nutze diesen Zustand, um deinen neuen Schritt konkret im Alltag zu verankern.";
+
+    title="Du hast guten Zugang zu deinem Gegenpol.";
+
+    text=
+      "Zwischen Auslöser und Reaktion ist gerade deutlich mehr Wahl entstanden. Nutze genau diesen Zustand, um deine neue Reaktion konkret im Alltag zu verankern.";
+
   }
 
   $("flow").innerHTML=
@@ -1547,10 +1695,23 @@ function resetCheckResult(value){
       <h2>${title}</h2>
 
       <div class="card" style="margin-top:18px;background:#27221c;">
+
         <div class="kicker">DEIN RESET-WERT JETZT</div>
-        <p style="font-size:18px;">
+
+        <p style="font-size:24px;">
           <b class="gold">${v} / 10</b>
         </p>
+
+      </div>
+
+      <div class="card" style="margin-top:18px;background:#27221c;">
+
+        <div class="kicker">DEIN GEGENPOL</div>
+
+        <p>
+          <b class="gold">${p.counterpole}</b>
+        </p>
+
       </div>
 
       <p>${text}</p>
@@ -1561,14 +1722,14 @@ function resetCheckResult(value){
                 class="cta primary"
                 data-reset-save="${v}">
           <strong>RESET-Wert festhalten</strong>
-          <small>Deinen aktuellen RESET-Check speichern.</small>
+          <small>Gegenpol und aktuellen RESET-Wert speichern.</small>
         </button>
 
         <button type="button"
                 class="cta"
                 data-flow="reset-history">
           <strong>Meinen RESET-Verlauf ansehen</strong>
-          <small>Deine letzten RESET-Checks anzeigen.</small>
+          <small>Deine letzten RESET-Checks und Gegenpole anzeigen.</small>
         </button>
 
         <button type="button"
@@ -1587,16 +1748,20 @@ function resetCheckResult(value){
 function saveResetCheck(value){
 
   const v=Number(value);
+  const p=resetProfile();
 
   if(isTestMode){
 
     const btn=document.querySelector("[data-reset-save]");
 
     if(btn){
+
       btn.disabled=true;
+
       btn.innerHTML=
         `<strong>TESTMODUS</strong>
          <small>Dieser RESET-Check wurde nicht gespeichert.</small>`;
+
     }
 
     return;
@@ -1607,16 +1772,25 @@ function saveResetCheck(value){
   let history=[];
 
   try{
-    history=JSON.parse(localStorage.getItem(key) || "[]");
+
+    history=JSON.parse(
+      localStorage.getItem(key) || "[]"
+    );
+
   }catch(e){
+
     history=[];
+
   }
 
   history.unshift({
+
     area:"reset",
     detail:detail,
+    counterpole:p.counterpole,
     value:v,
     createdAt:new Date().toISOString()
+
   });
 
   localStorage.setItem(
@@ -1627,10 +1801,13 @@ function saveResetCheck(value){
   const btn=document.querySelector("[data-reset-save]");
 
   if(btn){
+
     btn.disabled=true;
+
     btn.innerHTML=
       `<strong>GESPEICHERT ✓</strong>
-       <small>Dein RESET-Wert wurde festgehalten.</small>`;
+       <small>RESET-Wert und Gegenpol wurden festgehalten.</small>`;
+
   }
 }
 
@@ -1649,16 +1826,20 @@ function resetHistory(){
 
         <p>
           Entwicklungs- und Testdaten werden nicht
-          mit deinem späteren echten RESET-Verlauf vermischt.
+          mit deinem echten RESET-Verlauf vermischt.
         </p>
 
         <div class="ctas" style="margin-top:20px;">
+
           <button type="button"
                   class="cta primary"
                   data-flow="reset-continue">
+
             <strong>Weiter im ICS</strong>
-            <small>Schau, welcher nächste Schritt jetzt zu dir passt.</small>
+            <small>Zum nächsten passenden Schritt.</small>
+
           </button>
+
         </div>
 
       </div>`;
@@ -1671,9 +1852,15 @@ function resetHistory(){
   let history=[];
 
   try{
-    history=JSON.parse(localStorage.getItem(key) || "[]");
+
+    history=JSON.parse(
+      localStorage.getItem(key) || "[]"
+    );
+
   }catch(e){
+
     history=[];
+
   }
 
   const items=history.slice(0,5);
@@ -1688,38 +1875,56 @@ function resetHistory(){
 
       ${
         items.length
-          ? items.map(item=>`
-              <div class="card"
-                   style="margin-top:14px;background:#27221c;">
 
-                <div class="kicker">${item.detail || "RESET"}</div>
+        ? items.map(item=>`
 
-                <p style="font-size:18px;">
-                  RESET-Wert:
-                  <b class="gold">${item.value} / 10</b>
-                </p>
+            <div class="card"
+                 style="margin-top:14px;background:#27221c;">
 
-                <small>
-                  ${new Date(item.createdAt).toLocaleString("de-DE")}
-                </small>
-
+              <div class="kicker">
+                ${item.detail || "RESET"}
               </div>
-            `).join("")
-          : `<p>Noch kein RESET-Check gespeichert.</p>`
+
+              <p style="font-size:18px;">
+                RESET-Wert:
+                <b class="gold">${item.value} / 10</b>
+              </p>
+
+              ${
+                item.counterpole
+                  ? `<p>
+                       <b>Gegenpol:</b>
+                       <span class="gold">${item.counterpole}</span>
+                     </p>`
+                  : ""
+              }
+
+              <small>
+                ${new Date(item.createdAt).toLocaleString("de-DE")}
+              </small>
+
+            </div>
+
+          `).join("")
+
+        : `<p>Noch kein RESET-Check gespeichert.</p>`
       }
 
       <div class="ctas" style="margin-top:20px;">
+
         <button type="button"
                 class="cta primary"
                 data-flow="reset-continue">
+
           <strong>Weiter im ICS</strong>
           <small>Schau, welcher nächste Schritt jetzt zu dir passt.</small>
+
         </button>
+
       </div>
 
     </div>`;
 }
-
 function orientationTool(){
 
   $("flow").innerHTML=
@@ -3694,7 +3899,11 @@ function coach(){
  if(weak==="action"){
    return actionCoach();
  }
-    
+
+if(weak==="reset"){
+   return resetCoach();
+}
+  
  $("flow").innerHTML=
   
  $("flow").innerHTML=`${backBtn()}<div class="card"><div class="kicker">PERSÖNLICHE BEGLEITUNG</div><h2>Dein Thema gezielt vertiefen.</h2><p>Wenn du nicht allein weitergehen möchtest, führt dieser Weg in deine persönliche ICS Begleitung.</p><div class="answers"><button type="button" class="ans" data-flow="qual">Prüfen, ob Begleitung passt</button></div></div>`;
