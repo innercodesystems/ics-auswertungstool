@@ -2851,11 +2851,215 @@ Meine ICS Empfehlung war: ${r.title}.`;
 
     </div>`;
 }
+
+/* =========================================================
+   BODY · FINALER ABSCHLUSS
+   Transformationsmassage + persönliche Begleitung
+========================================================= */
+
+function bodyRecommendation(){
+
+  const recommendations={
+
+    "1–3 sehr niedrig":{
+      title:"Transformationsmassage",
+      type:"BODY · REGENERATION & REGULATION",
+      url:"https://innercodesystems.com/reise-durch-die-transformationsmassage",
+      why:"Deine Energie ist gerade sehr niedrig. Jetzt geht es nicht darum, noch mehr von dir zu verlangen. Dein Körper braucht eher Entlastung, Regulation und einen Raum, in dem dein System herunterfahren darf. Die Transformationsmassage kann dich dabei unterstützen, wieder bewusster in Kontakt mit deinem Körper und deinem eigenen Energiezustand zu kommen.",
+      focus:"Entlasten · regulieren · Körper wahrnehmen · neue Energie ermöglichen"
+    },
+
+    "4–6 mittel":{
+      title:"Transformationsmassage",
+      type:"BODY · ENERGIE & KÖRPERWAHRNEHMUNG",
+      url:"https://innercodesystems.com/reise-durch-die-transformationsmassage",
+      why:"Deine Energie ist vorhanden, aber nicht stabil. Neben dem bewussten Umgang mit Energieräubern und Energiequellen kann es sinnvoll sein, deinem Körper gezielt Raum für Entspannung und Regulation zu geben. Die Transformationsmassage verbindet Körperwahrnehmung, Ruhe und bewusste Aufmerksamkeit.",
+      focus:"Energie stabilisieren · Spannungen wahrnehmen · Regulation fördern · Körperverbindung stärken"
+    },
+
+    "7–10 gut":{
+      title:"Transformationsmassage",
+      type:"BODY · KÖRPER & VERBINDUNG",
+      url:"https://innercodesystems.com/reise-durch-die-transformationsmassage",
+      why:"Du hast grundsätzlich gute Energie zur Verfügung. BODY bedeutet deshalb bei dir nicht einfach mehr Energie zu erzeugen, sondern die Verbindung zu deinem Körper weiter zu vertiefen und vorhandene Kraft bewusst zu führen. Die Transformationsmassage kann dafür ein Raum zum Wahrnehmen, Loslassen und bewussten Spüren sein.",
+      focus:"Körperverbindung vertiefen · bewusst wahrnehmen · loslassen · Energie gezielt führen"
+    }
+
+  };
+
+  return recommendations[detail] || recommendations["4–6 mittel"];
+}
+
+
+function bodyProgram(){
+
+  const r=bodyRecommendation();
+
+  const whatsappText=
+`Hallo Peter,
+
+ich habe gerade den ICS System Check gemacht.
+
+Mein stärkster Hebel liegt im Bereich BODY.
+Mein aktueller Energie-Bereich ist: ${detail}.
+
+Mir wurde die Transformationsmassage als mögliche Vertiefung angezeigt.
+
+Ich würde gerne wissen, ob das für meinen aktuellen Zustand passend ist oder welcher nächste Schritt für mich sinnvoll wäre.`;
+
+  $("flow").innerHTML=
+`${backBtn()}
+<div class="card">
+
+  <div class="kicker">BODY · DEINE PERSÖNLICHE EMPFEHLUNG</div>
+
+  <h2>${r.title}</h2>
+
+  <p>
+    Dein BODY Ergebnis zeigt:
+    <b class="gold">${detail}</b>
+  </p>
+
+  <div class="card" style="margin:18px 0;background:#27221c;">
+
+    <div class="kicker">WARUM DAS JETZT ZU DIR PASST</div>
+
+    <p>${r.why}</p>
+
+    <p style="font-size:14px;line-height:1.6;margin-top:14px;">
+      <b class="gold">DEIN FOKUS:</b>
+      ${r.focus}
+    </p>
+
+  </div>
+
+  <div class="card" style="margin:18px 0;background:#27221c;">
+
+    <div class="kicker">${r.type}</div>
+
+    <h2 style="font-size:24px;">
+      Reise durch die Transformationsmassage
+    </h2>
+
+    <p>
+      Erfahre zunächst, was hinter der Transformationsmassage
+      steckt und ob diese Form der Körper- und Energiearbeit
+      gerade zu dir passt.
+    </p>
+
+  </div>
+
+  <div class="ctas">
+
+    <a
+      class="cta primary"
+      href="${r.url}"
+      target="_blank"
+      rel="noopener noreferrer"
+      style="text-decoration:none;"
+    >
+      <strong>Transformationsmassage ansehen</strong>
+      <small>Mehr über die BODY Vertiefung erfahren.</small>
+    </a>
+
+    <a
+      class="cta"
+      href="${icsWhatsAppLink(whatsappText)}"
+      target="_blank"
+      rel="noopener noreferrer"
+      style="text-decoration:none;"
+    >
+      <strong>Persönlich mit Peter klären</strong>
+      <small>WhatsApp mit deinem BODY Ergebnis vorbereiten.</small>
+    </a>
+
+  </div>
+
+</div>`;
+}
+
+
+function bodyCoach(){
+
+  const r=bodyRecommendation();
+
+  const whatsappText=
+`Hallo Peter,
+
+ich habe gerade den ICS System Check gemacht.
+
+Mein stärkster Hebel liegt im Bereich BODY.
+Mein aktueller Energie-Bereich ist: ${detail}.
+
+Ich möchte gerne persönlich klären, was mein Körper und mein Energiesystem gerade brauchen und welche Begleitung für mich sinnvoll wäre.`;
+
+  $("flow").innerHTML=
+`${backBtn()}
+<div class="card">
+
+  <div class="kicker">BODY · PERSÖNLICHE BEGLEITUNG</div>
+
+  <h2>Was braucht dein System gerade wirklich?</h2>
+
+  <p>
+    Dein Ergebnis zeigt:
+    <b class="gold">${detail}</b>
+  </p>
+
+  <div class="card" style="margin:18px 0;background:#27221c;">
+
+    <div class="kicker">DEIN BODY FOKUS</div>
+
+    <p>${r.why}</p>
+
+    <p style="font-size:14px;line-height:1.6;margin-top:14px;">
+      <b class="gold">${r.focus}</b>
+    </p>
+
+  </div>
+
+  <p>
+    Wenn du nicht selbst entscheiden möchtest, welcher nächste
+    Schritt sinnvoll ist, können wir deinen aktuellen Zustand
+    persönlich einordnen und schauen, welche Form der Begleitung
+    zu dir passt.
+  </p>
+
+  <div class="ctas">
+
+    <a
+      class="cta primary"
+      href="${icsWhatsAppLink(whatsappText)}"
+      target="_blank"
+      rel="noopener noreferrer"
+      style="text-decoration:none;"
+    >
+      <strong>Persönliche Begleitung anfragen</strong>
+      <small>WhatsApp mit deinem BODY Ergebnis öffnen.</small>
+    </a>
+
+    <button
+      type="button"
+      class="cta"
+      data-flow="program"
+    >
+      <strong>Transformationsmassage ansehen</strong>
+      <small>Alternativ zuerst selbst informieren.</small>
+    </button>
+
+  </div>
+
+</div>`;
+}
   
 function program(){
 
   if(weak==="inner"){
     return innerProgram();
+  }
+
+  if(weak==="body"){
+    return bodyProgram();
   }
 
   let d;
@@ -3107,6 +3311,12 @@ function coach(){
  if(weak==="inner"){
    return innerCoach();
  }
+
+ if(weak==="body"){
+   return bodyCoach();
+ }
+  
+ $("flow").innerHTML=
   
  $("flow").innerHTML=`${backBtn()}<div class="card"><div class="kicker">PERSÖNLICHE BEGLEITUNG</div><h2>Dein Thema gezielt vertiefen.</h2><p>Wenn du nicht allein weitergehen möchtest, führt dieser Weg in deine persönliche ICS Begleitung.</p><div class="answers"><button type="button" class="ans" data-flow="qual">Prüfen, ob Begleitung passt</button></div></div>`;
 }
