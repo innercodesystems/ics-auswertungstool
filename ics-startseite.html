@@ -645,7 +645,7 @@
 
       <header class="ics-topbar">
 
-        <a class="ics-brand" href="https://www.innercodesystems.com/">
+        <a class="ics-brand" href="ics-startseite.html">
 
           <span class="ics-brand-mark">
             <img
@@ -660,27 +660,20 @@
 
         </a>
 
-        <nav class="ics-nav" aria-label="ICS Navigation">
+       <nav class="ics-nav" aria-label="ICS Navigation">
 
-          <a href="#welten">WELTEN</a>
-          <a href="#tools">TOOLS</a>
-          <a href="#wege">WEGE</a>
-          <a href="#kostenlos">KOSTENLOS</a>
+  <a href="ics-startseite.html">START</a>
+  <a href="inner.html">INNER</a>
+  <a href="body.html">BODY</a>
+  <a href="action.html">ACTION</a>
+  <a href="reset.html">RESET</a>
+  <a href="orientierung.html">ORIENTIERUNG</a>
 
-          <a href="https://www.innercodesystems.com/mein-weg/">
-            ÜBER MICH
-          </a>
+  <a class="ics-mein" href="https://app.innercodesystems.com/">
+    MEIN ICS
+  </a>
 
-          <a href="https://app.innercodesystems.com/">
-            APP
-          </a>
-
-          <a class="ics-mein" href="https://www.innercodesystems.com/mein-ics/">
-            MEIN ICS
-          </a>
-
-        </nav>
-
+</nav>
       </header>
 
       <div class="ics-hero-grid">
@@ -787,7 +780,7 @@
 
     <div class="ics-card-grid five">
 
-      <a class="ics-info-card ics-link-card" href="#system-check">
+      <a class="ics-info-card ics-link-card" href="inner.html">
         <div class="ics-card-number">01 · INNER</div>
         <h3>Klarheit</h3>
         <p>
@@ -797,7 +790,7 @@
         <span class="ics-card-link">INNER entdecken →</span>
       </a>
 
-      <a class="ics-info-card ics-link-card" href="#system-check">
+      <a class="ics-info-card ics-link-card" href="body.html">
         <div class="ics-card-number">02 · BODY</div>
         <h3>Energie</h3>
         <p>
@@ -807,7 +800,7 @@
         <span class="ics-card-link">BODY entdecken →</span>
       </a>
 
-      <a class="ics-info-card ics-link-card" href="#system-check">
+      <a class="ics-info-card ics-link-card" href="action.html">
         <div class="ics-card-number">03 · ACTION</div>
         <h3>Umsetzung</h3>
         <p>
@@ -817,7 +810,7 @@
         <span class="ics-card-link">ACTION entdecken →</span>
       </a>
 
-      <a class="ics-info-card ics-link-card" href="#system-check">
+      <a class="ics-info-card ics-link-card" href="reset.html">
         <div class="ics-card-number">04 · RESET</div>
         <h3>Muster</h3>
         <p>
@@ -827,7 +820,7 @@
         <span class="ics-card-link">RESET entdecken →</span>
       </a>
 
-      <a class="ics-info-card ics-link-card" href="#system-check">
+      <a class="ics-info-card ics-link-card" href="orientierung.html">
         <div class="ics-card-number">05 · ORIENTIERUNG</div>
         <h3>Richtung</h3>
         <p>
@@ -1240,6 +1233,17 @@
   window.addEventListener("resize",resizeICSFrame);
 
 })();
+</script>
+
+<script>
+document.querySelectorAll(
+  'a[href^="https://"], a[href^="http://"]'
+).forEach(function(link){
+
+  link.setAttribute("target","_blank");
+  link.setAttribute("rel","noopener noreferrer");
+
+});
 </script>
   
 </body>
