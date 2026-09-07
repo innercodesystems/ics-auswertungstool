@@ -2651,8 +2651,212 @@ $("flow").innerHTML=
 
   </div>`;
 }
+
+/* =========================================================
+   INNER · FINALER ABSCHLUSS
+   Report / Programm + persönliche Begleitung
+========================================================= */
+
+const ICS_WHATSAPP_NUMBER="491717335441";
+
+function icsWhatsAppLink(message){
+  return `https://wa.me/${ICS_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+}
+
+function innerRecommendation(){
+
+  const recommendations={
+
+    "Zu viele Gedanken":{
+      title:"7-Tage RESET",
+      type:"PROGRAMM",
+      url:"https://innercodesystems.com/7-tage-reset",
+      why:"Wenn dein Kopf ständig arbeitet, brauchst du nicht noch mehr Informationen. Der nächste sinnvolle Schritt ist, dein System zu entlasten, Gedanken bewusster wahrzunehmen und wieder mehr innere Ruhe und Klarheit aufzubauen."
+    },
+
+    "Ich zweifle":{
+      title:"Blockadenlöser Report",
+      type:"REPORT",
+      url:"https://innercodesystems.com/blockadenloeser-report",
+      why:"Wenn Zweifel deine Entscheidungen begleiten, liegen darunter häufig innere Überzeugungen, alte Erfahrungen oder unbewusste Muster. Der Blockadenlöser Report hilft dir dabei, diese Zusammenhänge gezielter sichtbar zu machen."
+    },
+
+    "Erwartungen anderer":{
+      title:"Blockadenlöser Report",
+      type:"REPORT",
+      url:"https://innercodesystems.com/blockadenloeser-report",
+      why:"Wenn Erwartungen anderer viel Raum einnehmen, kann es schwer werden zu unterscheiden, was wirklich zu dir gehört. Der Blockadenlöser Report unterstützt dich dabei, übernommene Muster und innere Begrenzungen bewusster zu erkennen."
+    },
+
+    "Ich weiß nicht, was ich will":{
+      title:"Lebensaufgabe Report",
+      type:"REPORT",
+      url:"https://innercodesystems.com/Lebensaufgabe-Report",
+      why:"Wenn deine eigene Richtung gerade nicht klar ist, hilft oft nicht noch mehr Nachdenken. Sinnvoller ist ein größerer Blick darauf, was dich ausmacht, welche Themen dich begleiten und welche Richtung wirklich zu dir passen könnte."
+    }
+
+  };
+
+  return recommendations[detail] || recommendations["Ich zweifle"];
+}
+
+
+function innerProgram(){
+
+  const r=innerRecommendation();
+
+  const whatsappText=
+    `Hallo Peter,
+
+ich habe gerade den ICS System Check gemacht.
+
+Mein stärkster Hebel liegt im Bereich INNER.
+Bei mir zeigt sich besonders: ${detail}.
+
+Mir wurde ${r.title} als passende Vertiefung empfohlen.
+
+Ich würde gerne kurz einschätzen, ob das für mich der richtige nächste Schritt ist oder ob eine persönliche Begleitung sinnvoller wäre.`;
+
+  $("flow").innerHTML=
+    `${backBtn()}
+    <div class="card">
+
+      <div class="kicker">INNER · DEINE PERSÖNLICHE EMPFEHLUNG</div>
+
+      <h2>${r.title}</h2>
+
+      <p>
+        Dein Ergebnis zeigt:
+        <b class="gold">${detail}</b>
+      </p>
+
+      <div class="card" style="margin:18px 0;background:#27221c;">
+
+        <div class="kicker">WARUM DAS JETZT ZU DIR PASST</div>
+
+        <p>${r.why}</p>
+
+      </div>
+
+      <div class="card" style="margin:18px 0;background:#27221c;">
+
+        <div class="kicker">${r.type}</div>
+
+        <h2 style="font-size:24px;">${r.title}</h2>
+
+        <p>
+          Wenn du dein aktuelles Thema jetzt vertiefen möchtest,
+          ist das aus deinem ICS Ergebnis heraus der passendste
+          nächste Schritt.
+        </p>
+
+      </div>
+
+      <div class="ctas">
+
+        <a
+          class="cta primary"
+          href="${r.url}"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="text-decoration:none;"
+        >
+          <strong>${r.title} ansehen</strong>
+          <small>Meine persönliche Vertiefung öffnen.</small>
+        </a>
+
+        <a
+          class="cta"
+          href="${icsWhatsAppLink(whatsappText)}"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="text-decoration:none;"
+        >
+          <strong>Persönlich mit Peter klären</strong>
+          <small>WhatsApp mit vorbereitetem Text öffnen.</small>
+        </a>
+
+      </div>
+
+    </div>`;
+}
+
+
+function innerCoach(){
+
+  const r=innerRecommendation();
+
+  const whatsappText=
+    `Hallo Peter,
+
+ich habe gerade den ICS System Check gemacht.
+
+Mein stärkster Hebel liegt im Bereich INNER.
+Bei mir zeigt sich besonders: ${detail}.
+
+Ich möchte das Thema nicht nur allein weiter bearbeiten und würde gerne wissen, welche persönliche Begleitung für mich sinnvoll wäre.
+
+Meine ICS Empfehlung war: ${r.title}.`;
+
+  $("flow").innerHTML=
+    `${backBtn()}
+    <div class="card">
+
+      <div class="kicker">INNER · PERSÖNLICHE BEGLEITUNG</div>
+
+      <h2>Du musst den nächsten Schritt nicht allein gehen.</h2>
+
+      <p>
+        Bei dir zeigt sich aktuell besonders:
+        <b class="gold">${detail}</b>
+      </p>
+
+      <div class="card" style="margin:18px 0;background:#27221c;">
+
+        <div class="kicker">WORUM ES JETZT GEHT</div>
+
+        <p>${r.why}</p>
+
+        <p>
+          Wenn du merkst, dass du dieses Thema nicht nur verstehen,
+          sondern wirklich verändern möchtest, können wir gemeinsam
+          schauen, welcher Weg für dich sinnvoll ist.
+        </p>
+
+      </div>
+
+      <div class="ctas">
+
+        <a
+          class="cta primary"
+          href="${icsWhatsAppLink(whatsappText)}"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="text-decoration:none;"
+        >
+          <strong>Persönliche Begleitung anfragen</strong>
+          <small>WhatsApp mit deinem ICS Ergebnis vorbereiten.</small>
+        </a>
+
+        <button
+          type="button"
+          class="cta"
+          data-flow="program"
+        >
+          <strong>${r.title} ansehen</strong>
+          <small>Alternativ zuerst selbstständig vertiefen.</small>
+        </button>
+
+      </div>
+
+    </div>`;
+}
   
 function program(){
+
+  if(weak==="inner"){
+    return innerProgram();
+  }
 
   let d;
 
@@ -2899,6 +3103,11 @@ ${
     </div>`;
 }
 function coach(){
+
+ if(weak==="inner"){
+   return innerCoach();
+ }
+  
  $("flow").innerHTML=`${backBtn()}<div class="card"><div class="kicker">PERSÖNLICHE BEGLEITUNG</div><h2>Dein Thema gezielt vertiefen.</h2><p>Wenn du nicht allein weitergehen möchtest, führt dieser Weg in deine persönliche ICS Begleitung.</p><div class="answers"><button type="button" class="ans" data-flow="qual">Prüfen, ob Begleitung passt</button></div></div>`;
 }
 function qual(){
