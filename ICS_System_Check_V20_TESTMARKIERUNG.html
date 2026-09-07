@@ -18,6 +18,15 @@ p{line-height:1.55;color:#ddd5c9}
 .btn.main{background:linear-gradient(135deg,#d7ae5c,#bc8e3c);color:#17130e;border:0;text-align:center}
 .grid{display:grid;gap:10px}
 .test{border:1px dashed #8b6b32;border-radius:16px;padding:14px;margin-bottom:18px}
+
+/* PRODUKTIONSMODUS
+   Testfunktionen bleiben im Code erhalten,
+   sind für öffentliche Besucher aber unsichtbar.
+*/
+#testPanel{
+  display:none !important;
+}
+  
 .testtitle{color:var(--gold);font-weight:800;margin-bottom:12px}
 .testgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .testbtn{padding:11px;text-align:center;font-size:14px}
