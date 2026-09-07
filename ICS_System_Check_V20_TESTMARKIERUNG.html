@@ -3051,6 +3051,216 @@ Ich möchte gerne persönlich klären, was mein Körper und mein Energiesystem g
 
 </div>`;
 }
+
+/* =========================================================
+   ACTION · FINALER ABSCHLUSS
+   Bestehende Vertiefungen + persönliche Begleitung
+========================================================= */
+
+function actionFinalRecommendation(){
+
+  const recommendations={
+
+    "Unklarheit":{
+      title:"7-Tage RESET",
+      type:"PROGRAMM",
+      url:"https://innercodesystems.com/7-tage-reset",
+      why:"Bei dir fehlt gerade weniger Motivation als ein klarer nächster Schritt. Wenn zu viele Gedanken, Möglichkeiten oder offene Punkte gleichzeitig da sind, hilft dir der 7-Tage RESET dabei, wieder zu reduzieren, zu sortieren und aus Klarheit heraus ins Handeln zu kommen.",
+      focus:"Klarheit schaffen · Priorität setzen · nächsten Schritt beginnen"
+    },
+
+    "Zu viel auf einmal":{
+      title:"7-Tage RESET",
+      type:"PROGRAMM",
+      url:"https://innercodesystems.com/7-tage-reset",
+      why:"Wenn zu viele Dinge gleichzeitig wichtig erscheinen, verteilt sich deine Energie auf zu viele Baustellen. Der 7-Tage RESET hilft dir dabei, bewusst zu reduzieren, wieder einen klaren Fokus zu entwickeln und deine Energie auf das zu richten, was jetzt wirklich zählt.",
+      focus:"Reduzieren · priorisieren · Energie bündeln · umsetzen"
+    },
+
+    "Perfektion":{
+      title:"Blockadenlöser Report",
+      type:"REPORT",
+      url:"https://innercodesystems.com/blockadenloeser-report",
+      why:"Perfektion wirkt oft wie ein hoher Anspruch, kann aber gleichzeitig verhindern, dass du überhaupt beginnst. Der Blockadenlöser Report hilft dir dabei, die inneren Überzeugungen und Muster hinter diesem Anspruch bewusster zu erkennen.",
+      focus:"Perfektion verstehen · innere Bremse erkennen · Handlung vor Perfektion stellen"
+    },
+
+    "Widerstand":{
+      title:"Blockadenlöser Report",
+      type:"REPORT",
+      url:"https://innercodesystems.com/blockadenloeser-report",
+      why:"Wenn du weißt, was zu tun wäre, aber trotzdem Widerstand spürst, lohnt sich der Blick hinter die reine Umsetzung. Der Blockadenlöser Report hilft dir dabei zu erkennen, welche inneren Muster, Befürchtungen oder Überzeugungen deine Bewegung gerade bremsen.",
+      focus:"Widerstand verstehen · Muster erkennen · neue Handlung ermöglichen"
+    }
+
+  };
+
+  return recommendations[detail] || recommendations["Unklarheit"];
+}
+
+
+function actionProgram(){
+
+  const r=actionFinalRecommendation();
+
+  const whatsappText=
+`Hallo Peter,
+
+ich habe gerade den ICS System Check gemacht.
+
+Mein stärkster Hebel liegt im Bereich ACTION.
+Bei mir zeigt sich besonders: ${detail}.
+
+Mir wurde ${r.title} als passende Vertiefung empfohlen.
+
+Ich würde gerne wissen, ob das für meine Situation der richtige nächste Schritt ist oder ob eine persönliche Begleitung sinnvoller wäre.`;
+
+  $("flow").innerHTML=
+`${backBtn()}
+<div class="card">
+
+  <div class="kicker">ACTION · DEINE PERSÖNLICHE EMPFEHLUNG</div>
+
+  <h2>${r.title}</h2>
+
+  <p>
+    Dein ACTION Ergebnis zeigt:
+    <b class="gold">${detail}</b>
+  </p>
+
+  <div class="card" style="margin:18px 0;background:#27221c;">
+
+    <div class="kicker">WARUM DAS JETZT ZU DIR PASST</div>
+
+    <p>${r.why}</p>
+
+    <p style="font-size:14px;line-height:1.6;margin-top:14px;">
+      <b class="gold">DEIN FOKUS:</b>
+      ${r.focus}
+    </p>
+
+  </div>
+
+  <div class="card" style="margin:18px 0;background:#27221c;">
+
+    <div class="kicker">${r.type}</div>
+
+    <h2 style="font-size:24px;">${r.title}</h2>
+
+    <p>
+      Dein Action-Impuls bringt dich in die erste Bewegung.
+      Diese Vertiefung setzt dort an, wo dein Ergebnis zeigt,
+      dass mehr als nur ein einzelner Umsetzungsschritt sinnvoll ist.
+    </p>
+
+  </div>
+
+  <div class="ctas">
+
+    <a
+      class="cta primary"
+      href="${r.url}"
+      target="_blank"
+      rel="noopener noreferrer"
+      style="text-decoration:none;"
+    >
+      <strong>${r.title} ansehen</strong>
+      <small>Meine passende ACTION Vertiefung öffnen.</small>
+    </a>
+
+    <a
+      class="cta"
+      href="${icsWhatsAppLink(whatsappText)}"
+      target="_blank"
+      rel="noopener noreferrer"
+      style="text-decoration:none;"
+    >
+      <strong>Persönlich mit Peter klären</strong>
+      <small>WhatsApp mit deinem ACTION Ergebnis öffnen.</small>
+    </a>
+
+  </div>
+
+</div>`;
+}
+
+
+function actionCoach(){
+
+  const r=actionFinalRecommendation();
+
+  const whatsappText=
+`Hallo Peter,
+
+ich habe gerade den ICS System Check gemacht.
+
+Mein stärkster Hebel liegt im Bereich ACTION.
+Bei mir zeigt sich besonders: ${detail}.
+
+Ich merke, dass ich bei diesem Thema nicht nur mehr wissen, sondern wirklich ins Handeln kommen möchte.
+
+Ich würde gerne mit dir klären, welche persönliche Begleitung dafür sinnvoll wäre.
+
+Meine ICS Empfehlung war: ${r.title}.`;
+
+  $("flow").innerHTML=
+`${backBtn()}
+<div class="card">
+
+  <div class="kicker">ACTION · PERSÖNLICHE BEGLEITUNG</div>
+
+  <h2>Aus Erkenntnis darf jetzt Bewegung werden.</h2>
+
+  <p>
+    Bei dir zeigt sich aktuell besonders:
+    <b class="gold">${detail}</b>
+  </p>
+
+  <div class="card" style="margin:18px 0;background:#27221c;">
+
+    <div class="kicker">DEIN ACTION FOKUS</div>
+
+    <p>${r.why}</p>
+
+    <p style="font-size:14px;line-height:1.6;margin-top:14px;">
+      <b class="gold">${r.focus}</b>
+    </p>
+
+  </div>
+
+  <p>
+    Wenn du merkst, dass du deine nächsten Schritte nicht nur
+    planen, sondern verbindlich umsetzen möchtest, können wir
+    gemeinsam anschauen, was dich aktuell bremst und wie daraus
+    konkrete Bewegung entsteht.
+  </p>
+
+  <div class="ctas">
+
+    <a
+      class="cta primary"
+      href="${icsWhatsAppLink(whatsappText)}"
+      target="_blank"
+      rel="noopener noreferrer"
+      style="text-decoration:none;"
+    >
+      <strong>Persönliche Begleitung anfragen</strong>
+      <small>WhatsApp mit deinem ACTION Ergebnis vorbereiten.</small>
+    </a>
+
+    <button
+      type="button"
+      class="cta"
+      data-flow="program"
+    >
+      <strong>${r.title} ansehen</strong>
+      <small>Alternativ zuerst selbstständig vertiefen.</small>
+    </button>
+
+  </div>
+
+</div>`;
+}
   
 function program(){
 
@@ -3060,6 +3270,10 @@ function program(){
 
   if(weak==="body"){
     return bodyProgram();
+  }
+
+  if(weak==="action"){
+    return actionProgram();
   }
 
   let d;
@@ -3091,35 +3305,6 @@ function program(){
       "Blockadenlöser Report",
       "https://innercodesystems.com/blockadenloeser-report"
     ];
-
-}else if(weak==="action"){
-
-  const actionMap={
-    "Unklarheit":[
-      "Action Code Kickstart",
-      ""
-    ],
-
-    "Zu viel auf einmal":[
-      "Action Code Kickstart",
-      ""
-    ],
-
-    "Perfektion":[
-      "Action Code Kickstart",
-      ""
-    ],
-
-    "Widerstand":[
-      "Action Code Kickstart",
-      ""
-    ]
-  };
-
-  d=actionMap[detail] || [
-    "Action Code Kickstart",
-    ""
-  ];
 
 }else{
 
@@ -3291,7 +3476,11 @@ function coach(){
  if(weak==="body"){
    return bodyCoach();
  }
-  
+
+ if(weak==="action"){
+   return actionCoach();
+ }
+    
  $("flow").innerHTML=
   
  $("flow").innerHTML=`${backBtn()}<div class="card"><div class="kicker">PERSÖNLICHE BEGLEITUNG</div><h2>Dein Thema gezielt vertiefen.</h2><p>Wenn du nicht allein weitergehen möchtest, führt dieser Weg in deine persönliche ICS Begleitung.</p><div class="answers"><button type="button" class="ans" data-flow="qual">Prüfen, ob Begleitung passt</button></div></div>`;
