@@ -662,12 +662,12 @@
 
        <nav class="ics-nav" aria-label="ICS Navigation">
 
-  <a href="ics-startseite.html">START</a>
-  <a href="inner.html">INNER</a>
-  <a href="body.html">BODY</a>
-  <a href="action.html">ACTION</a>
-  <a href="reset.html">RESET</a>
-  <a href="orientierung.html">ORIENTIERUNG</a>
+<a href="https://innercodesystems.github.io/ics-auswertungstool/ics-startseite.html">START</a>
+<a href="https://innercodesystems.github.io/ics-auswertungstool/inner.html">INNER</a>
+<a href="https://innercodesystems.github.io/ics-auswertungstool/body.html">BODY</a>
+<a href="https://innercodesystems.github.io/ics-auswertungstool/action.html">ACTION</a>
+<a href="https://innercodesystems.github.io/ics-auswertungstool/reset.html">RESET</a>
+<a href="https://innercodesystems.github.io/ics-auswertungstool/orientierung.html">ORIENTIERUNG</a>
 
   <a class="ics-mein" href="https://app.innercodesystems.com/">
     MEIN ICS
@@ -1236,12 +1236,18 @@
 </script>
 
 <script>
-document.querySelectorAll(
-  'a[href^="https://"], a[href^="http://"]'
-).forEach(function(link){
+document.querySelectorAll('a[href^="https://"], a[href^="http://"]').forEach(function(link){
 
-  link.setAttribute("target","_blank");
-  link.setAttribute("rel","noopener noreferrer");
+  const url = new URL(link.href);
+
+  const isICSWebsite =
+    url.hostname === "innercodesystems.github.io" &&
+    url.pathname.startsWith("/ics-auswertungstool/");
+
+  if(!isICSWebsite){
+    link.setAttribute("target","_blank");
+    link.setAttribute("rel","noopener noreferrer");
+  }
 
 });
 </script>
