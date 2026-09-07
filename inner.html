@@ -730,5 +730,25 @@ Persönlich mit Peter klären
 
 </main>
 
+<script>
+document.querySelectorAll('a[href^="https://"], a[href^="http://"]').forEach(function(link){
+
+  const url = new URL(link.href);
+
+  const isNewICSWebsite =
+    url.hostname === "innercodesystems.github.io" &&
+    url.pathname.startsWith("/ics-auswertungstool/");
+
+  if(isNewICSWebsite){
+    link.removeAttribute("target");
+    link.removeAttribute("rel");
+  }else{
+    link.setAttribute("target","_blank");
+    link.setAttribute("rel","noopener noreferrer");
+  }
+
+});
+</script>
+
 </body>
 </html>
