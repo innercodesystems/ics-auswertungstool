@@ -437,6 +437,203 @@
         min-width:190px;
       }
     }
+
+/* =========================================
+   STARTSEITE · BEREICHE UNTER SYSTEM CHECK
+========================================= */
+
+.ics-content{
+  max-width:1240px;
+  margin:0 auto;
+  padding:90px 34px;
+}
+
+.ics-section{
+  padding:90px 0;
+}
+
+.ics-section + .ics-section{
+  border-top:1px solid rgba(212,160,58,.18);
+}
+
+.ics-section-kicker{
+  color:var(--ics-gold);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.16em;
+  margin-bottom:12px;
+}
+
+.ics-section-title{
+  margin:0;
+  max-width:800px;
+  font-family:"Playfair Display",Georgia,"Times New Roman",serif;
+  font-weight:400;
+  font-size:clamp(36px,4vw,56px);
+  line-height:1.05;
+  color:var(--ics-black);
+}
+
+.ics-section-intro{
+  max-width:760px;
+  margin:18px 0 36px;
+  color:#6f685f;
+  font-size:16px;
+  line-height:1.7;
+}
+
+.ics-card-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px;
+}
+
+.ics-card-grid.five{
+  grid-template-columns:repeat(5,minmax(0,1fr));
+}
+
+.ics-info-card{
+  min-height:210px;
+  padding:26px;
+  border-radius:16px;
+  background:#fffdf8;
+  border:1px solid rgba(212,160,58,.22);
+  box-shadow:0 10px 32px rgba(26,26,26,.05);
+}
+
+.ics-info-card .ics-card-number{
+  color:var(--ics-gold);
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.12em;
+  margin-bottom:22px;
+}
+
+.ics-info-card h3{
+  margin:0 0 12px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:22px;
+  font-weight:500;
+  color:var(--ics-black);
+}
+
+.ics-info-card p{
+  margin:0;
+  color:#746d64;
+  font-size:14px;
+  line-height:1.65;
+}
+
+.ics-link-card{
+  display:block;
+  text-decoration:none;
+  transition:.2s ease;
+}
+
+.ics-link-card:hover{
+  transform:translateY(-3px);
+  border-color:rgba(212,160,58,.55);
+  box-shadow:0 15px 38px rgba(26,26,26,.08);
+}
+
+.ics-card-link{
+  display:inline-block;
+  margin-top:20px;
+  color:var(--ics-gold);
+  font-size:13px;
+  font-weight:800;
+}
+
+.ics-dark-band{
+  background:#1a1815;
+  color:#f6f1e7;
+}
+
+.ics-dark-band .ics-section-title{
+  color:#f6f1e7;
+}
+
+.ics-dark-band .ics-section-intro{
+  color:#bdb4a7;
+}
+
+.ics-dark-band .ics-info-card{
+  background:#211d18;
+  border-color:#4d402c;
+  box-shadow:none;
+}
+
+.ics-dark-band .ics-info-card h3{
+  color:#f6f1e7;
+}
+
+.ics-dark-band .ics-info-card p{
+  color:#c8c0b4;
+}
+
+.ics-final-cta{
+  margin-top:42px;
+  padding:34px;
+  border-radius:18px;
+  background:#1a1815;
+  color:#f6f1e7;
+}
+
+.ics-final-cta h3{
+  margin:0 0 10px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:30px;
+  font-weight:400;
+}
+
+.ics-final-cta p{
+  max-width:700px;
+  color:#c8c0b4;
+  line-height:1.65;
+}
+
+.ics-gold-button{
+  display:inline-block;
+  margin-top:14px;
+  padding:15px 23px;
+  border-radius:8px;
+  background:var(--ics-gold);
+  color:#17130e;
+  text-decoration:none;
+  font-weight:800;
+}
+
+@media(max-width:1050px){
+
+  .ics-card-grid.five{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .ics-card-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+
+@media(max-width:650px){
+
+  .ics-content{
+    padding:62px 20px;
+  }
+
+  .ics-section{
+    padding:62px 0;
+  }
+
+  .ics-card-grid,
+  .ics-card-grid.five{
+    grid-template-columns:1fr;
+  }
+
+  .ics-info-card{
+    min-height:0;
+  }
+}
+    
   </style>
 </head>
 
@@ -562,6 +759,373 @@
 
     </section>
 
+<!-- =========================================
+     BLOCK 03 · ICS WELTEN
+========================================= -->
+
+<section id="welten">
+
+  <div class="ics-content">
+
+    <div class="ics-section-kicker">
+      DIE FÜNF ICS WELTEN
+    </div>
+
+    <h2 class="ics-section-title">
+      Veränderung beginnt dort,
+      wo dein System gerade wirklich steht.
+    </h2>
+
+    <p class="ics-section-intro">
+      INNER CODE SYSTEMS betrachtet nicht nur ein einzelnes Problem.
+      Klarheit, Körper, Handlung, Muster und Lebensrichtung greifen
+      ineinander. Der System Check zeigt dir, wo dein stärkster Hebel
+      gerade liegt.
+    </p>
+
+    <div class="ics-card-grid five">
+
+      <a class="ics-info-card ics-link-card" href="#system-check">
+        <div class="ics-card-number">01 · INNER</div>
+        <h3>Klarheit</h3>
+        <p>
+          Gedanken sortieren, eigene Bedürfnisse erkennen
+          und wieder Zugang zu deiner inneren Führung finden.
+        </p>
+        <span class="ics-card-link">INNER entdecken →</span>
+      </a>
+
+      <a class="ics-info-card ics-link-card" href="#system-check">
+        <div class="ics-card-number">02 · BODY</div>
+        <h3>Energie</h3>
+        <p>
+          Körpersignale wahrnehmen, Regulation ermöglichen
+          und deine verfügbare Energie bewusster führen.
+        </p>
+        <span class="ics-card-link">BODY entdecken →</span>
+      </a>
+
+      <a class="ics-info-card ics-link-card" href="#system-check">
+        <div class="ics-card-number">03 · ACTION</div>
+        <h3>Umsetzung</h3>
+        <p>
+          Aus Erkenntnis konkrete Bewegung machen,
+          Prioritäten setzen und wirklich ins Handeln kommen.
+        </p>
+        <span class="ics-card-link">ACTION entdecken →</span>
+      </a>
+
+      <a class="ics-info-card ics-link-card" href="#system-check">
+        <div class="ics-card-number">04 · RESET</div>
+        <h3>Muster</h3>
+        <p>
+          Automatische Reaktionen erkennen,
+          Gegenpole entwickeln und Veränderung neu verankern.
+        </p>
+        <span class="ics-card-link">RESET entdecken →</span>
+      </a>
+
+      <a class="ics-info-card ics-link-card" href="#system-check">
+        <div class="ics-card-number">05 · ORIENTIERUNG</div>
+        <h3>Richtung</h3>
+        <p>
+          Deine aktuelle Lebensphase verstehen und erkennen,
+          welcher nächste Schritt heute wirklich zu dir passt.
+        </p>
+        <span class="ics-card-link">ORIENTIERUNG entdecken →</span>
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     BLOCK 04 · TOOLS
+========================================= -->
+
+<section id="tools" class="ics-dark-band">
+
+  <div class="ics-content">
+
+    <div class="ics-section-kicker">
+      ICS TOOLS
+    </div>
+
+    <h2 class="ics-section-title">
+      Nicht nur verstehen.
+      Direkt etwas verändern.
+    </h2>
+
+    <p class="ics-section-intro">
+      ICS führt dich nicht von Information zu Information.
+      Du bekommst konkrete Werkzeuge, mit denen du deinen
+      aktuellen Zustand wahrnehmen, einordnen und verändern kannst.
+    </p>
+
+    <div class="ics-card-grid">
+
+      <a
+        class="ics-info-card ics-link-card"
+        href="#system-check">
+
+        <div class="ics-card-number">
+          SYSTEM CHECK
+        </div>
+
+        <h3>Wo stehst du gerade wirklich?</h3>
+
+        <p>
+          29 Fragen zeigen dir deinen ICS System Index
+          und deinen aktuell stärksten Entwicklungshebel.
+        </p>
+
+        <span class="ics-card-link">
+          System Check starten →
+        </span>
+
+      </a>
+
+      <a
+        class="ics-info-card ics-link-card"
+        href="https://www.innercodesystems.com/werte-kompass/">
+
+        <div class="ics-card-number">
+          WERTE-KOMPASS
+        </div>
+
+        <h3>Was ist dir wirklich wichtig?</h3>
+
+        <p>
+          Erkenne, welche Werte dein Leben bestimmen
+          und wo zwischen Wichtigkeit und gelebter Realität
+          eine Lücke entstanden ist.
+        </p>
+
+        <span class="ics-card-link">
+          Werte-Kompass öffnen →
+        </span>
+
+      </a>
+
+      <a
+        class="ics-info-card ics-link-card"
+        href="https://app.innercodesystems.com/">
+
+        <div class="ics-card-number">
+          ICS APP
+        </div>
+
+        <h3>Dein persönlicher ICS Bereich.</h3>
+
+        <p>
+          Impulse, Werkzeuge und deine persönliche Entwicklung
+          an einem Ort.
+        </p>
+
+        <span class="ics-card-link">
+          Zur ICS App →
+        </span>
+
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     BLOCK 05 · WEGE
+========================================= -->
+
+<section id="wege">
+
+  <div class="ics-content">
+
+    <div class="ics-section-kicker">
+      DEINE WEGE
+    </div>
+
+    <h2 class="ics-section-title">
+      Manchmal beginnt Veränderung im Kopf.
+      Manchmal im Körper.
+    </h2>
+
+    <p class="ics-section-intro">
+      Deshalb gibt es bei ICS nicht nur einen Weg.
+      Du kannst selbstständig mit Tools und Reports arbeiten
+      oder tiefer in Körperarbeit und persönliche Begleitung gehen.
+    </p>
+
+    <div class="ics-card-grid">
+
+      <a
+        class="ics-info-card ics-link-card"
+        href="https://innercodesystems.com/7-tage-reset">
+
+        <div class="ics-card-number">
+          DIGITALER WEG
+        </div>
+
+        <h3>7-Tage RESET</h3>
+
+        <p>
+          Muster bewusster wahrnehmen, neue Reaktionen entwickeln
+          und Veränderung Schritt für Schritt in den Alltag bringen.
+        </p>
+
+        <span class="ics-card-link">
+          RESET ansehen →
+        </span>
+
+      </a>
+
+      <a
+        class="ics-info-card ics-link-card"
+        href="https://innercodesystems.com/reise-durch-die-transformationsmassage">
+
+        <div class="ics-card-number">
+          BODY WEG
+        </div>
+
+        <h3>Transformationsmassage</h3>
+
+        <p>
+          Ein körperorientierter Raum für Wahrnehmung,
+          Regulation, Entspannung und neue Verbindung
+          zu deinem eigenen System.
+        </p>
+
+        <span class="ics-card-link">
+          Massage entdecken →
+        </span>
+
+      </a>
+
+      <a
+        class="ics-info-card ics-link-card"
+        href="#system-check">
+
+        <div class="ics-card-number">
+          PERSÖNLICHER WEG
+        </div>
+
+        <h3>Individuelle Begleitung</h3>
+
+        <p>
+          Wenn du dein Thema nicht allein weiter bearbeiten möchtest,
+          führt dich dein System-Check-Ergebnis direkt in die passende
+          persönliche Begleitung.
+        </p>
+
+        <span class="ics-card-link">
+          Passenden Weg finden →
+        </span>
+
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     BLOCK 06 · KOSTENLOS
+========================================= -->
+
+<section id="kostenlos">
+
+  <div class="ics-content">
+
+    <div class="ics-section-kicker">
+      KOSTENLOS STARTEN
+    </div>
+
+    <h2 class="ics-section-title">
+      Du musst nichts kaufen,
+      um mit ICS anzufangen.
+    </h2>
+
+    <p class="ics-section-intro">
+      Beginne mit einem der kostenlosen Einstiege
+      und finde zuerst heraus, was für dich gerade wirklich relevant ist.
+    </p>
+
+    <div class="ics-card-grid">
+
+      <a
+        class="ics-info-card ics-link-card"
+        href="#system-check">
+
+        <div class="ics-card-number">
+          KOSTENLOS
+        </div>
+
+        <h3>ICS System Check</h3>
+
+        <p>
+          Dein System Index, fünf Lebensbereiche
+          und dein persönlicher nächster Schritt.
+        </p>
+
+        <span class="ics-card-link">
+          Jetzt starten →
+        </span>
+
+      </a>
+
+      <a
+        class="ics-info-card ics-link-card"
+        href="https://www.innercodesystems.com/werte-kompass/">
+
+        <div class="ics-card-number">
+          KOSTENLOS
+        </div>
+
+        <h3>ICS Werte-Kompass</h3>
+
+        <p>
+          Finde heraus, welche Werte für dich wirklich zählen
+          und wie stark du sie heute tatsächlich lebst.
+        </p>
+
+        <span class="ics-card-link">
+          Werte-Kompass starten →
+        </span>
+
+      </a>
+
+    </div>
+
+    <div class="ics-final-cta">
+
+      <h3>
+        Du weißt noch nicht, wo du anfangen sollst?
+      </h3>
+
+      <p>
+        Genau dafür gibt es den ICS System Check.
+        Du musst deinen Weg nicht vorher kennen.
+        Dein Ergebnis zeigt dir, welcher Bereich gerade
+        am meisten Aufmerksamkeit braucht.
+      </p>
+
+      <a class="ics-gold-button" href="#system-check">
+        Meinen ICS System Check starten
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+    
   </main>
 
 </body>
