@@ -728,8 +728,6 @@
 
     </section>
 
-    </section>
-
     <!-- =========================================
          BLOCK 02 · ICS SYSTEM CHECK
     ========================================== -->
@@ -780,7 +778,7 @@
 
     <div class="ics-card-grid five">
 
-      <a class="ics-info-card ics-link-card" href="inner.html">
+      <a class="ics-info-card ics-link-card" href="https://innercodesystems.github.io/ics-auswertungstool/inner.html">
         <div class="ics-card-number">01 · INNER</div>
         <h3>Klarheit</h3>
         <p>
@@ -790,7 +788,7 @@
         <span class="ics-card-link">INNER entdecken →</span>
       </a>
 
-      <a class="ics-info-card ics-link-card" href="body.html">
+      <a class="ics-info-card ics-link-card" href="https://innercodesystems.github.io/ics-auswertungstool/body.html">
         <div class="ics-card-number">02 · BODY</div>
         <h3>Energie</h3>
         <p>
@@ -800,7 +798,7 @@
         <span class="ics-card-link">BODY entdecken →</span>
       </a>
 
-      <a class="ics-info-card ics-link-card" href="action.html">
+      <a class="ics-info-card ics-link-card" href="https://innercodesystems.github.io/ics-auswertungstool/action.html">
         <div class="ics-card-number">03 · ACTION</div>
         <h3>Umsetzung</h3>
         <p>
@@ -810,7 +808,7 @@
         <span class="ics-card-link">ACTION entdecken →</span>
       </a>
 
-      <a class="ics-info-card ics-link-card" href="reset.html">
+      <a class="ics-info-card ics-link-card" href="https://innercodesystems.github.io/ics-auswertungstool/reset.html">
         <div class="ics-card-number">04 · RESET</div>
         <h3>Muster</h3>
         <p>
@@ -820,7 +818,7 @@
         <span class="ics-card-link">RESET entdecken →</span>
       </a>
 
-      <a class="ics-info-card ics-link-card" href="orientierung.html">
+      <a class="ics-info-card ics-link-card" href="https://innercodesystems.github.io/ics-auswertungstool/orientierung.html">
         <div class="ics-card-number">05 · ORIENTIERUNG</div>
         <h3>Richtung</h3>
         <p>
@@ -1150,61 +1148,6 @@
     }catch(e){
       console.warn("ICS Frame konnte nicht angepasst werden.",e);
     }
-
-  }
-
-  frame.addEventListener("load",function(){
-
-    resizeICSFrame();
-
-    try{
-
-      const doc=frame.contentDocument || frame.contentWindow.document;
-
-      const observer=new ResizeObserver(function(){
-        resizeICSFrame();
-      });
-
-      observer.observe(doc.documentElement);
-
-      if(doc.body){
-        observer.observe(doc.body);
-      }
-
-    }catch(e){}
-
-  });
-
-  window.addEventListener("resize",resizeICSFrame);
-
-})();
-</script>
-
-<script>
-(function(){
-
-  const frame=document.getElementById("ics-system-check-frame");
-
-  if(!frame) return;
-
-  function resizeICSFrame(){
-
-    try{
-
-      const doc=frame.contentDocument || frame.contentWindow.document;
-
-      if(!doc) return;
-
-      const height=Math.max(
-        doc.body ? doc.body.scrollHeight : 0,
-        doc.documentElement ? doc.documentElement.scrollHeight : 0
-      );
-
-      if(height){
-        frame.style.height=(height + 20) + "px";
-      }
-
-    }catch(e){}
 
   }
 
