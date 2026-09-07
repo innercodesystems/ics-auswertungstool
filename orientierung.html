@@ -1,1 +1,780 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>ORIENTIERUNG · Richtung | Inner Code Systems</title>
+
+<style>
+:root{
+  --cream:#faf1cb;
+  --light:#f8f3e8;
+  --gold:#d4a03a;
+  --black:#1a1815;
+  --dark:#211d18;
+  --text:#6f685f;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+body{
+  margin:0;
+  background:var(--light);
+  color:var(--black);
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+a{color:inherit}
+
+/* HEADER */
+
+.header{
+  min-height:74px;
+  padding:12px 5%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#fffaf0;
+  border-bottom:1px solid rgba(212,160,58,.22);
+}
+
+.brand{
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.brand img{
+  width:46px;
+  height:46px;
+  object-fit:contain;
+}
+
+.brand-main{
+  display:block;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:25px;
+}
+
+.brand-sub{
+  display:block;
+  font-size:9px;
+  letter-spacing:.15em;
+}
+
+.nav{
+  display:flex;
+  align-items:center;
+  gap:24px;
+}
+
+.nav a{
+  text-decoration:none;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.08em;
+}
+
+.nav .active{color:var(--gold)}
+
+/* HERO */
+
+.hero{
+  background:var(--black);
+  color:#f6f1e7;
+}
+
+.hero-inner{
+  max-width:1240px;
+  margin:auto;
+  padding:100px 34px 92px;
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:70px;
+  align-items:center;
+}
+
+.kicker{
+  color:var(--gold);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.18em;
+  margin-bottom:18px;
+}
+
+h1{
+  margin:0;
+  font-family:Georgia,"Times New Roman",serif;
+  font-weight:400;
+  font-size:clamp(55px,6vw,88px);
+  line-height:.98;
+}
+
+.hero-text{
+  max-width:670px;
+  margin:25px 0 0;
+  color:#c9c0b3;
+  font-size:18px;
+  line-height:1.7;
+}
+
+.hero-side{
+  padding:34px;
+  border:1px solid #59472c;
+  border-radius:18px;
+  background:#211d18;
+}
+
+.hero-side-label{
+  color:var(--gold);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.15em;
+}
+
+.hero-side h2{
+  margin:12px 0 12px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-weight:400;
+  font-size:32px;
+}
+
+.hero-side p{
+  color:#c9c0b3;
+  line-height:1.65;
+}
+
+.button{
+  display:inline-block;
+  margin-top:14px;
+  padding:15px 22px;
+  border-radius:8px;
+  background:var(--gold);
+  color:#17130e;
+  text-decoration:none;
+  font-weight:800;
+  font-size:14px;
+}
+
+/* CONTENT */
+
+.content{
+  max-width:1240px;
+  margin:auto;
+  padding:92px 34px;
+}
+
+.section{
+  padding:78px 0;
+}
+
+.section + .section{
+  border-top:1px solid rgba(212,160,58,.20);
+}
+
+.section-kicker{
+  color:var(--gold);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.16em;
+  margin-bottom:13px;
+}
+
+.section-title{
+  margin:0;
+  max-width:820px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(38px,4.5vw,58px);
+  line-height:1.05;
+  font-weight:400;
+}
+
+.section-intro{
+  max-width:760px;
+  color:var(--text);
+  line-height:1.75;
+  font-size:16px;
+  margin:20px 0 38px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px;
+}
+
+.grid.four{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+}
+
+.card{
+  padding:27px;
+  min-height:225px;
+  background:#fffdf8;
+  border:1px solid rgba(212,160,58,.25);
+  border-radius:16px;
+  text-decoration:none;
+  box-shadow:0 10px 30px rgba(0,0,0,.04);
+  transition:.2s ease;
+}
+
+a.card:hover{
+  transform:translateY(-3px);
+  border-color:rgba(212,160,58,.6);
+}
+
+.card-label{
+  color:var(--gold);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.14em;
+  margin-bottom:20px;
+}
+
+.card h3{
+  margin:0 0 12px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:24px;
+  font-weight:400;
+}
+
+.card p{
+  margin:0;
+  color:#746d64;
+  font-size:14px;
+  line-height:1.65;
+}
+
+.card-link{
+  display:inline-block;
+  margin-top:22px;
+  color:var(--gold);
+  font-size:13px;
+  font-weight:800;
+}
+
+/* DARK */
+
+.dark{
+  background:var(--black);
+  color:#f6f1e7;
+}
+
+.dark .content{
+  padding-top:90px;
+  padding-bottom:90px;
+}
+
+.dark .section-title{color:#f6f1e7}
+.dark .section-intro{color:#c4bbaf}
+
+.dark .card{
+  background:#211d18;
+  border-color:#514229;
+  box-shadow:none;
+}
+
+.dark .card h3{color:#f6f1e7}
+.dark .card p{color:#c7beb2}
+
+/* APP */
+
+.app-box{
+  padding:45px;
+  border-radius:20px;
+  background:#fffdf8;
+  border:1px solid rgba(212,160,58,.28);
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:45px;
+  align-items:center;
+}
+
+.app-box h3{
+  margin:0 0 15px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:38px;
+  font-weight:400;
+}
+
+.app-box p{
+  color:#746d64;
+  line-height:1.7;
+}
+
+.app-list{
+  display:grid;
+  gap:10px;
+}
+
+.app-item{
+  padding:14px 16px;
+  border-radius:10px;
+  background:#f4ecdc;
+  font-size:14px;
+}
+
+/* WORLDS */
+
+.worlds{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:10px;
+}
+
+.world{
+  text-decoration:none;
+  padding:20px 14px;
+  border:1px solid rgba(212,160,58,.3);
+  border-radius:12px;
+  text-align:center;
+  background:#fffdf8;
+}
+
+.world strong{
+  display:block;
+  color:var(--gold);
+  font-size:11px;
+  letter-spacing:.1em;
+}
+
+.world span{
+  display:block;
+  margin-top:7px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:17px;
+}
+
+.world.current{
+  background:var(--black);
+  color:#f6f1e7;
+}
+
+/* FINAL */
+
+.final{
+  padding:55px;
+  border-radius:20px;
+  background:var(--black);
+  color:#f6f1e7;
+}
+
+.final h2{
+  margin:0;
+  max-width:760px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:42px;
+  font-weight:400;
+}
+
+.final p{
+  max-width:680px;
+  color:#c7beb2;
+  line-height:1.7;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+  .nav{display:none}
+  .hero-inner{grid-template-columns:1fr}
+  .grid,.grid.four{grid-template-columns:repeat(2,1fr)}
+  .app-box{grid-template-columns:1fr}
+  .worlds{grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:620px){
+  .hero-inner,.content{
+    padding-left:20px;
+    padding-right:20px;
+  }
+
+  .hero-inner{padding-top:65px;padding-bottom:65px}
+  h1{font-size:56px}
+  .grid,.grid.four{grid-template-columns:1fr}
+  .worlds{grid-template-columns:1fr}
+  .app-box,.final{padding:28px}
+  .section{padding:58px 0}
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+<a class="brand" href="ics-startseite.html">
+  <img src="https://www.innercodesystems.com/wp-content/uploads/go-x/u/39adbfd1-c2be-4f0b-adb6-f4b956947aa2/l0,t256,w1024,h1024/image.png" alt="ICS">
+  <span>
+    <span class="brand-main">ICS</span>
+    <span class="brand-sub">INNER CODE SYSTEMS</span>
+  </span>
+</a>
+
+<nav class="nav">
+  <a href="ics-startseite.html">START</a>
+  <a href="inner.html">INNER</a>
+  <a href="body.html">BODY</a>
+  <a href="action.html">ACTION</a>
+  <a href="reset.html">RESET</a>
+  <a class="active" href="orientierung.html">ORIENTIERUNG</a>
+  <a href="https://app.innercodesystems.com/">MEIN ICS</a>
+</nav>
+
+</header>
+
+<section class="hero">
+
+<div class="hero-inner">
+
+<div>
+
+<div class="kicker">05 · ORIENTIERUNG · RICHTUNG & LEBENSPHASE</div>
+
+<h1>
+Du musst nicht den<br>
+ganzen Weg kennen.
+</h1>
+
+<p class="hero-text">
+Manchmal ist nicht das Problem, dass du zu wenig kannst.
+Sondern dass dein bisheriger Weg nicht mehr vollständig zu dem Menschen passt,
+der du heute bist. ORIENTIERUNG hilft dir, deine aktuelle Lebensphase,
+deine Richtung und den nächsten stimmigen Schritt klarer zu sehen.
+</p>
+
+</div>
+
+<div class="hero-side">
+
+<div class="hero-side-label">DEIN EINSTIEG</div>
+
+<h2>Wo stehst du gerade in deinem Leben?</h2>
+
+<p>
+Der ICS System Check zeigt dir, ob Orientierung gerade
+dein stärkster Hebel ist – und wie deine Richtung mit Klarheit,
+Energie, Handlung und wiederkehrenden Mustern zusammenspielt.
+</p>
+
+<a class="button" href="ics-startseite.html#system-check">
+System Check starten
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<main>
+
+<div class="content">
+
+<section class="section">
+
+<div class="section-kicker">WORAN DU ORIENTIERUNG ERKENNST</div>
+
+<h2 class="section-title">
+Vielleicht bist du nicht verloren.
+Vielleicht verändert sich gerade dein innerer Kompass.
+</h2>
+
+<p class="section-intro">
+ORIENTIERUNG beschäftigt sich mit Übergängen,
+Lebensphasen, Beziehungen, Beruf und der Frage,
+welche Richtung heute noch wirklich zu dir passt.
+</p>
+
+<div class="grid four">
+
+<div class="card">
+<div class="card-label">01</div>
+<h3>Arbeit & Business</h3>
+<p>Du fragst dich, ob dein beruflicher Weg noch zu dir passt oder wohin du dich als Nächstes entwickeln möchtest.</p>
+</div>
+
+<div class="card">
+<div class="card-label">02</div>
+<h3>Beziehung & Umfeld</h3>
+<p>Menschen, Beziehungen oder dein Umfeld fühlen sich anders an als früher und du möchtest verstehen, was sich verändert.</p>
+</div>
+
+<div class="card">
+<div class="card-label">03</div>
+<h3>Nächste Lebensphase</h3>
+<p>Du spürst einen Übergang, kannst aber noch nicht vollständig benennen, was gehen und was neu entstehen möchte.</p>
+</div>
+
+<div class="card">
+<div class="card-label">04</div>
+<h3>Leben insgesamt</h3>
+<p>Du möchtest Abstand gewinnen, das größere Bild sehen und wieder eine Richtung erkennen, die sich stimmig anfühlt.</p>
+</div>
+
+</div>
+
+</section>
+
+
+<section class="section">
+
+<div class="section-kicker">DIREKT AUSPROBIEREN</div>
+
+<h2 class="section-title">
+Orientierung entsteht,
+wenn Zusammenhänge sichtbar werden.
+</h2>
+
+<p class="section-intro">
+Du kannst mit einem kurzen Check beginnen oder
+tiefer in deine aktuelle Lebensphase und persönliche Richtung einsteigen.
+</p>
+
+<div class="grid">
+
+<a class="card" href="ics-startseite.html#system-check">
+<div class="card-label">ICS SYSTEM CHECK</div>
+<h3>Deinen stärksten Hebel erkennen</h3>
+<p>29 Fragen zeigen dir, ob Orientierung gerade wirklich dein zentraler Entwicklungsbereich ist.</p>
+<span class="card-link">System Check starten →</span>
+</a>
+
+<a class="card" href="https://app.innercodesystems.com/">
+<div class="card-label">LEBENSPHASE</div>
+<h3>Deinen aktuellen Abschnitt einordnen</h3>
+<p>Betrachte deine aktuelle Lebensphase und verbinde sie mit deiner persönlichen Entwicklung.</p>
+<span class="card-link">In Mein ICS öffnen →</span>
+</a>
+
+<a class="card" href="https://innercodesystems.com/Lebensaufgabe-Report">
+<div class="card-label">LEBENSAUFGABE REPORT</div>
+<h3>Deine persönliche Richtung vertiefen</h3>
+<p>Gewinne eine umfassendere Perspektive auf Potenziale, Entwicklung und die Frage, was wirklich zu deinem Weg gehört.</p>
+<span class="card-link">Lebensaufgabe Report ansehen →</span>
+</a>
+
+</div>
+
+</section>
+
+</div>
+
+
+<section class="dark">
+
+<div class="content">
+
+<div class="section-kicker">TIEFER GEHEN</div>
+
+<h2 class="section-title">
+Wenn eine Lebensphase endet,
+bevor die nächste schon klar ist.
+</h2>
+
+<p class="section-intro">
+Übergänge können sich gleichzeitig nach Freiheit,
+Unsicherheit und Neuorientierung anfühlen.
+Dann hilft es, nicht nur eine einzelne Entscheidung anzuschauen,
+sondern deinen größeren Entwicklungsweg.
+</p>
+
+<div class="grid">
+
+<a class="card" href="https://app.innercodesystems.com/">
+<div class="card-label">7-JAHRES-ZYKLUS</div>
+<h3>Deine Entwicklung im Zeitverlauf betrachten</h3>
+<p>Ordne aktuelle Veränderungen in einen größeren persönlichen Entwicklungszyklus ein.</p>
+<span class="card-link">Lebensphase entdecken →</span>
+</a>
+
+<a class="card" href="https://innercodesystems.com/Lebensaufgabe-Report">
+<div class="card-label">LEBENSAUFGABE</div>
+<h3>Was gehört wirklich zu deinem Weg?</h3>
+<p>Ein tieferer Blick auf persönliche Potenziale, Richtung und Entwicklung.</p>
+<span class="card-link">Lebensaufgabe Report →</span>
+</a>
+
+<a class="card" href="https://app.innercodesystems.com/">
+<div class="card-label">MEIN ICS</div>
+<h3>Deine Entwicklung zusammenführen</h3>
+<p>Verbinde Lebensphase, Journal, Energie, Erkenntnisse und persönliche nächste Schritte an einem Ort.</p>
+<span class="card-link">Zu Mein ICS →</span>
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<div class="content">
+
+<section class="section">
+
+<div class="section-kicker">DEIN ORIENTIERUNGS-KOMPASS</div>
+
+<h2 class="section-title">
+Drei Fragen können bereits
+eine neue Richtung öffnen.
+</h2>
+
+<p class="section-intro">
+Du musst nicht sofort die endgültige Antwort kennen.
+Oft reicht es, die richtige Frage wieder sichtbar zu machen.
+</p>
+
+<div class="grid">
+
+<div class="card">
+<div class="card-label">WO STEHE ICH?</div>
+<h3>Was ist heute anders als früher?</h3>
+<p>Welche Werte, Bedürfnisse, Beziehungen oder Ziele haben sich bei dir in den letzten Jahren verändert?</p>
+</div>
+
+<div class="card">
+<div class="card-label">WAS PASST NOCH?</div>
+<h3>Was gehört noch zu mir?</h3>
+<p>Welche Teile deines bisherigen Lebens fühlen sich weiterhin stimmig an – und welche eher wie eine frühere Version von dir?</p>
+</div>
+
+<div class="card">
+<div class="card-label">WAS WILL ENTSTEHEN?</div>
+<h3>Welche Richtung zieht dich?</h3>
+<p>Nicht: Was musst du tun? Sondern: Welche Entwicklung fühlt sich lebendig, sinnvoll und wirklich nach dir an?</p>
+</div>
+
+</div>
+
+</section>
+
+
+<section class="section">
+
+<div class="section-kicker">WEBSITE + APP</div>
+
+<div class="app-box">
+
+<div>
+
+<h3>Aus Orientierung wird ein persönlicher Weg.</h3>
+
+<p>
+Die Website hilft dir, deinen Standort und mögliche Richtungen zu erkennen.
+In Mein ICS kannst du Lebensphase, Erkenntnisse,
+Entscheidungen und Entwicklung später miteinander verbinden.
+</p>
+
+<a class="button" href="https://app.innercodesystems.com/">
+Zu Mein ICS
+</a>
+
+</div>
+
+<div class="app-list">
+<div class="app-item">Aktuelle Lebensphase</div>
+<div class="app-item">7-Jahres-Zyklus</div>
+<div class="app-item">Journal & Erkenntnisse</div>
+<div class="app-item">Persönliche Richtung</div>
+<div class="app-item">Passende nächste Schritte</div>
+</div>
+
+</div>
+
+</section>
+
+
+<section class="section">
+
+<div class="section-kicker">DIE FÜNF ICS WELTEN</div>
+
+<h2 class="section-title">
+Richtung entsteht aus deinem ganzen System.
+</h2>
+
+<p class="section-intro">
+Was du willst, hängt mit deiner Klarheit, deiner Energie,
+deiner Handlungsfähigkeit und deinen Mustern zusammen.
+Deshalb verbindet ORIENTIERUNG alle anderen ICS Welten.
+</p>
+
+<div class="worlds">
+
+<a class="world" href="inner.html">
+<strong>INNER</strong>
+<span>Klarheit</span>
+</a>
+
+<a class="world" href="body.html">
+<strong>BODY</strong>
+<span>Energie</span>
+</a>
+
+<a class="world" href="action.html">
+<strong>ACTION</strong>
+<span>Umsetzung</span>
+</a>
+
+<a class="world" href="reset.html">
+<strong>RESET</strong>
+<span>Muster</span>
+</a>
+
+<a class="world current" href="orientierung.html">
+<strong>ORIENTIERUNG</strong>
+<span>Richtung</span>
+</a>
+
+</div>
+
+</section>
+
+
+<section class="section">
+
+<div class="final">
+
+<div class="section-kicker">PERSÖNLICHE BEGLEITUNG</div>
+
+<h2>
+Wenn du merkst, dass dein altes Leben
+nicht mehr ganz passt – aber das neue noch nicht klar ist.
+</h2>
+
+<p>
+Dann können wir gemeinsam anschauen, wo du heute wirklich stehst,
+welche Entwicklung gerade ansteht und welcher nächste Schritt
+zu dem Menschen passt, der du heute bist.
+</p>
+
+<a class="button"
+href="https://wa.me/491717335441?text=Hallo%20Peter%2C%20ich%20komme%20%C3%BCber%20die%20ICS%20ORIENTIERUNG-Seite%20und%20m%C3%B6chte%20meine%20aktuelle%20Lebensphase%20und%20Richtung%20pers%C3%B6nlich%20mit%20dir%20anschauen.">
+Persönlich mit Peter klären
+</a>
+
+</div>
+
+</section>
+
+</div>
+
+</main>
+
+
+<script>
+document.querySelectorAll(
+  'a[href^="https://"], a[href^="http://"]'
+).forEach(function(link){
+
+  link.setAttribute("target","_blank");
+  link.setAttribute("rel","noopener noreferrer");
+
+});
+</script>
+
+</body>
+</html>
