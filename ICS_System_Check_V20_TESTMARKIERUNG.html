@@ -3934,221 +3934,37 @@ function program(){
     return actionProgram();
   }
 
-    if(weak==="reset"){
+  if(weak==="reset"){
     return resetProgram();
   }
 
   if(weak==="orientation"){
-  return orientationProgram();
-}
+    return orientationProgram();
+  }
 
-  let d;
-
-  if(weak==="inner"){
-    const innerMap={
-      "Zu viele Gedanken":[
-        "7-Tage RESET",
-        "https://www.innercodesystems.com/7-tage-reset"
-      ],
-
-      "Ich zweifle":[
-        "Blockadenlöser Report",
-        "https://innercodesystems.com/blockadenloeser-report"
-      ],
-
-      "Erwartungen anderer":[
-        "Blockadenlöser Report",
-        "https://innercodesystems.com/blockadenloeser-report"
-      ],
-
-      "Ich weiß nicht, was ich will":[
-        "Lebensaufgabe Report",
-        "https://innercodesystems.com/Lebensaufgabe-Report"
-      ]
-    };
-
-    d=innerMap[detail] || [
-      "Blockadenlöser Report",
-      "https://innercodesystems.com/blockadenloeser-report"
-    ];
-
-  $("flow").innerHTML=
-    `${backBtn()}
-    <div class="card">
-      <div class="kicker">TIEFER GEHEN</div>
-      <h2>${d[0]}</h2>
-<p>Deine Auswahl <b class="gold">${detail}</b> zeigt, wo dein System gerade besonders viel Aufmerksamkeit bindet.</p>
-
-<div class="card" style="margin:18px 0;background:#27221c;">
-  <div class="kicker">WARUM DAS JETZT ZU DIR PASST</div>
-
-  <p>
-    ${
-      weak==="inner" && detail==="Zu viele Gedanken"
-        ? "Wenn viele Gedanken gleichzeitig Raum einnehmen, entsteht Klarheit oft nicht durch noch mehr Nachdenken. Entscheidend ist, dein System zu entlasten, Gedanken zu sortieren und bewusst aus wiederkehrenden Reaktionen auszusteigen."
-
-      : weak==="inner" && detail==="Ich zweifle"
-        ? "Zweifel entstehen häufig dort, wo innere Sicherheit fehlt oder alte Überzeugungen deine Entscheidungen beeinflussen. Der nächste Schritt ist, diese Muster sichtbar zu machen und deine eigene innere Führung wieder zu stärken."
-
-      : weak==="inner" && detail==="Erwartungen anderer"
-        ? "Wenn Erwartungen anderer viel Raum einnehmen, wird es schwieriger zu erkennen, was wirklich zu dir gehört. Der nächste Schritt ist, übernommene Muster bewusster von deinen eigenen Bedürfnissen und Entscheidungen zu unterscheiden."
-
-      : weak==="inner" && detail==="Ich weiß nicht, was ich will"
-        ? "Wenn die eigene Richtung gerade nicht klar ist, braucht es nicht sofort eine große Entscheidung. Hilfreicher ist es, deine aktuelle Lebensphase, deine Bedürfnisse und das, was heute wirklich stimmig ist, bewusster zu betrachten."
-
-      : weak==="body" && detail==="1–3 sehr niedrig"
-        ? "Dein Energielevel ist gerade sehr niedrig. Jetzt geht es nicht darum, noch mehr Leistung zu erzeugen, sondern dein System zuerst zu entlasten und deinem Körper wieder mehr Regulation, Ruhe und verfügbare Energie zu ermöglichen."
-
-      : weak==="body" && detail==="4–6 mittel"
-        ? "Deine Energie ist vorhanden, aber nicht stabil. Der nächste Schritt ist, genauer zu erkennen, was dir Energie gibt, was sie bindet und wie du deinen Alltag so gestaltest, dass dein Körper nicht ständig gegensteuern muss."
-
-      : weak==="action" && detail==="Unklarheit"
-        ? "Wenn dir Klarheit über den nächsten Schritt fehlt, entsteht schnell Stillstand. Jetzt geht es nicht darum, den gesamten Weg zu kennen, sondern eine klare Priorität zu erkennen und daraus einen konkreten nächsten Schritt abzuleiten."
-
-      : weak==="action" && detail==="Zu viel auf einmal"
-        ? "Wenn zu viele Dinge gleichzeitig wichtig erscheinen, verteilt sich deine Energie auf zu viele Baustellen. Der nächste Schritt ist, bewusst zu reduzieren, eine Priorität zu wählen und deine Energie wieder auf eine Sache zu bündeln."
-
-      : weak==="action" && detail==="Perfektion"
-        ? "Wenn ein Schritt erst perfekt sein muss, bevor du ihn gehst, kann Vorbereitung zur Bremse werden. Jetzt geht es darum, Handlung vor Perfektion zu stellen und mit einem kleinen, machbaren Schritt Bewegung zu erzeugen."
-
-      : weak==="action" && detail==="Widerstand"
-        ? "Widerstand bedeutet nicht automatisch, dass der Weg falsch ist. Er kann zeigen, dass ein Schritt unangenehm, ungewohnt oder mit einem alten Muster verbunden ist. Jetzt geht es darum, den Widerstand wahrzunehmen und trotzdem eine kleine bewusste Handlung zu wählen."
-
-      : weak==="reset" && detail==="Gleiches Muster"
-        ? "Wenn sich ein Thema immer wiederholt, reicht es oft nicht, es nur zu verstehen. Jetzt geht es darum, die automatische Reaktion dahinter sichtbar zu machen und an genau dieser Stelle bewusst einen neuen Gegenpol zu setzen."
-
-      : weak==="reset" && detail==="Stressreaktion"
-        ? "Unter Stress übernimmt dein System schnell vertraute Reaktionen. Der nächste Schritt ist nicht, diese Reaktion zu bekämpfen, sondern sie früher wahrzunehmen und deinem System eine neue bewusste Antwort anzubieten."
-
-      : weak==="reset" && detail==="Festhalten"
-        ? "Festhalten bindet Energie an etwas, das möglicherweise nicht mehr zu deinem heutigen Leben passt. Jetzt geht es darum zu erkennen, was du noch festhältst und welche neue Entscheidung entstehen kann, wenn du etwas davon loslässt."
-
-      : weak==="reset" && detail==="Neue Entscheidung hält nicht"
-        ? "Eine neue Entscheidung allein verändert noch kein altes Muster. Wenn du immer wieder zurückfällst, braucht dein System Wiederholung und Integration. Jetzt geht es darum, die neue Reaktion so klein und konkret zu machen, dass sie im Alltag wirklich bestehen kann."
-
-      : weak==="orientation" && detail==="Arbeit / Business"
-        ? "Wenn dir im Bereich Arbeit oder Business die Richtung fehlt, geht es nicht nur um die nächste Aufgabe. Entscheidend ist, wieder klarer zu erkennen, was zu deiner heutigen Lebensphase, deinen Fähigkeiten und dem Leben passt, das du wirklich gestalten möchtest."
-
-      : weak==="orientation" && detail==="Beziehung / Umfeld"
-        ? "Wenn sich Beziehungen oder dein Umfeld nicht mehr ganz stimmig anfühlen, kann das ein Hinweis darauf sein, dass du dich weiterentwickelt hast. Jetzt geht es darum zu erkennen, welche Verbindungen heute noch zu dir passen und wo neue Klarheit oder Grenzen notwendig werden."
-
-      : weak==="orientation" && detail==="Nächste Lebensphase"
-        ? "Manchmal ist das Alte nicht mehr richtig, während das Neue noch nicht vollständig sichtbar ist. Genau diese Übergangsphase braucht Orientierung: Was endet gerade, was möchte entstehen und welcher nächste Schritt fühlt sich heute wirklich stimmig an?"
-
-      : weak==="orientation" && detail==="Leben insgesamt"
-        ? "Wenn sich nicht nur ein einzelner Bereich, sondern dein Leben insgesamt nach Neuorientierung anfühlt, braucht es zunächst einen Blick auf das größere Bild. Jetzt geht es darum, deine aktuelle Lebensphase, deine Prioritäten und deine nächste persönliche Richtung bewusster zu erkennen."
-      
-      : weak==="body" && detail==="7–10 gut"
-        ? "Deine Energie ist grundsätzlich gut. Jetzt geht es weniger um Erholung als darum, diese Energie bewusster zu führen und sie für das einzusetzen, was für dich wirklich wichtig ist."
-      
-      : "Dein Ergebnis zeigt einen Bereich, in dem gerade Entwicklung möglich ist. Die folgende Vertiefung unterstützt dich dabei, daraus einen konkreten nächsten Schritt zu machen."
-    
-    }
-  </p>
-
-  <p style="font-size:14px;line-height:1.6;margin-top:14px;color:#ddd5c9;">
-    <b class="gold">DEIN FOKUS:</b>
-    ${
-      detail==="Zu viele Gedanken"
-        ? " Gedanken entlasten · Klarheit zurückgewinnen · neue Reaktionen etablieren"
-      : detail==="Ich zweifle"
-        ? " Zweifel verstehen · innere Muster erkennen · Selbstvertrauen stärken"
-      : detail==="Erwartungen anderer"
-        ? " Fremde Erwartungen erkennen · Eigenes unterscheiden · selbstbestimmter entscheiden"
-      : detail==="Ich weiß nicht, was ich will"
-        ? " Orientierung gewinnen · Bedürfnisse erkennen · nächste Richtung entwickeln"
-
-      : weak==="body" && detail==="1–3 sehr niedrig"
-        ? " Entlasten · regulieren · Energie langsam wieder aufbauen"
-
-      : weak==="body" && detail==="4–6 mittel"
-        ? " Energieräuber erkennen · Rhythmus stabilisieren · Körper bewusster wahrnehmen"
-
-      : weak==="body" && detail==="7–10 gut"
-        ? " Energie bewusst führen · Fokus setzen · vorhandene Kraft gezielt nutzen"
-
-      : weak==="action" && detail==="Unklarheit"
-        ? " Priorität erkennen · nächsten Schritt definieren · beginnen"
-
-      : weak==="action" && detail==="Zu viel auf einmal"
-        ? " Reduzieren · priorisieren · Energie bündeln"
-
-      : weak==="action" && detail==="Perfektion"
-        ? " Perfektion lösen · klein beginnen · ins Handeln kommen"
-
-      : weak==="action" && detail==="Widerstand"
-        ? " Widerstand wahrnehmen · Ursache erkennen · bewusst handeln"
-
-            : weak==="reset" && detail==="Gleiches Muster"
-        ? " Muster erkennen · automatische Reaktion unterbrechen · neuen Gegenpol etablieren"
-
-      : weak==="reset" && detail==="Stressreaktion"
-        ? " Stress früher wahrnehmen · Reaktion regulieren · neue Antwort wählen"
-
-      : weak==="reset" && detail==="Festhalten"
-        ? " Festhalten erkennen · Altes loslassen · neue Entscheidung ermöglichen"
-
-      : weak==="reset" && detail==="Neue Entscheidung hält nicht"
-        ? " Neue Entscheidung verkleinern · wiederholen · im Alltag integrieren"
-
-            : weak==="orientation" && detail==="Arbeit / Business"
-        ? " Berufliche Richtung klären · Stimmigkeit prüfen · nächsten Entwicklungsschritt erkennen"
-
-      : weak==="orientation" && detail==="Beziehung / Umfeld"
-        ? " Beziehungen bewusst betrachten · Stimmigkeit erkennen · klare Grenzen und Entscheidungen entwickeln"
-
-      : weak==="orientation" && detail==="Nächste Lebensphase"
-        ? " Übergang verstehen · Neues erkennen · nächsten stimmigen Schritt entwickeln"
-
-      : weak==="orientation" && detail==="Leben insgesamt"
-        ? " Größeres Bild erkennen · Prioritäten neu ordnen · persönliche Richtung entwickeln"
-      
-      : " Verstehen · Spüren · Handeln · Integrieren"
-    }
-  </p>
-</div>
-
-${
-        d[1]
-          ? `<a class="btn main"
-                style="display:block;text-decoration:none"
-                href="${d[1]}"
-                target="_blank"
-                rel="noopener noreferrer">
-                ${d[0]} öffnen
-             </a>`
-          : `<p class="note">
-               Die finale öffentliche Zielseite ist noch nicht bestätigt.
-               Deshalb bleibt dieser Weg vorerst intern.
-             </p>`
-      }
-    </div>`;
 }
 function coach(){
 
- if(weak==="inner"){
-   return innerCoach();
- }
+  if(weak==="inner"){
+    return innerCoach();
+  }
 
- if(weak==="body"){
-   return bodyCoach();
- }
+  if(weak==="body"){
+    return bodyCoach();
+  }
 
- if(weak==="action"){
-   return actionCoach();
- }
+  if(weak==="action"){
+    return actionCoach();
+  }
 
-if(weak==="reset"){
-   return resetCoach();
-}
+  if(weak==="reset"){
+    return resetCoach();
+  }
 
-if(weak==="orientation"){
-   return orientationCoach();
-}
-  
- $("flow").innerHTML=
-  
- $("flow").innerHTML=`${backBtn()}<div class="card"><div class="kicker">PERSÖNLICHE BEGLEITUNG</div><h2>Dein Thema gezielt vertiefen.</h2><p>Wenn du nicht allein weitergehen möchtest, führt dieser Weg in deine persönliche ICS Begleitung.</p><div class="answers"><button type="button" class="ans" data-flow="qual">Prüfen, ob Begleitung passt</button></div></div>`;
+  if(weak==="orientation"){
+    return orientationCoach();
+  }
+
 }
 function qual(){
  $("flow").innerHTML=`${backBtn()}<div class="card"><div class="kicker">BEGLEITUNG</div><h2>Wie wichtig ist dir Veränderung gerade?</h2><div class="answers"><button type="button" class="ans">Sehr wichtig</button><button type="button" class="ans">Wichtig</button><button type="button" class="ans">Ich orientiere mich</button></div></div>`;
