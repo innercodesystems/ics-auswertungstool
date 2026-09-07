@@ -3677,6 +3677,248 @@ Meine ICS Empfehlung war: ${r.title}.`;
 
 </div>`;
 }
+
+/* =========================================================
+   ORIENTIERUNG · KOMPLETTER FINALER ABSCHLUSS
+   Lebensaufgabe Report + persönliche Begleitung
+========================================================= */
+
+function orientationFinalRecommendation(){
+
+  const recommendations={
+
+    "Arbeit / Business":{
+      title:"Lebensaufgabe Report",
+      type:"REPORT · BERUF & RICHTUNG",
+      url:"https://innercodesystems.com/Lebensaufgabe-Report",
+      why:"Wenn dir bei Arbeit oder Business die Richtung fehlt, geht es häufig nicht nur um die nächste Aufgabe. Entscheidend ist, wieder klarer zu erkennen, welche Fähigkeiten, Themen und Entwicklungen wirklich zu dir und deiner heutigen Lebensphase passen.",
+      focus:"Berufliche Richtung klären · Stimmigkeit erkennen · nächsten Entwicklungsschritt finden",
+      question:"Welche berufliche Richtung würde sich heute stimmiger anfühlen, wenn du Erwartungen und Sicherheit für einen Moment ausblendest?"
+    },
+
+    "Beziehung / Umfeld":{
+      title:"Lebensaufgabe Report",
+      type:"REPORT · BEZIEHUNG & ENTWICKLUNG",
+      url:"https://innercodesystems.com/Lebensaufgabe-Report",
+      why:"Wenn Beziehungen oder dein Umfeld nicht mehr ganz zu dir passen, kann das ein Zeichen dafür sein, dass du dich selbst weiterentwickelt hast. Orientierung entsteht, wenn du erkennst, welche Verbindungen deine heutige Entwicklung unterstützen und wo etwas nicht mehr stimmig ist.",
+      focus:"Eigene Entwicklung verstehen · Beziehungen einordnen · Stimmigkeit und Grenzen erkennen",
+      question:"Welche Menschen und Verbindungen passen zu dem Menschen, der du heute bist – und welche eher zu einer früheren Version von dir?"
+    },
+
+    "Nächste Lebensphase":{
+      title:"Lebensaufgabe Report",
+      type:"REPORT · LEBENSPHASE",
+      url:"https://innercodesystems.com/Lebensaufgabe-Report",
+      why:"Du spürst möglicherweise, dass eine neue Lebensphase beginnt, während das Neue noch nicht vollständig sichtbar ist. Genau in solchen Übergängen hilft ein größerer Blick auf deine Themen, Potenziale und persönliche Richtung.",
+      focus:"Übergang verstehen · neue Richtung erkennen · nächste Phase bewusst gestalten",
+      question:"Was möchte in deinem Leben gerade enden – und wofür könnte dadurch neuer Raum entstehen?"
+    },
+
+    "Leben insgesamt":{
+      title:"Lebensaufgabe Report",
+      type:"REPORT · PERSÖNLICHE RICHTUNG",
+      url:"https://innercodesystems.com/Lebensaufgabe-Report",
+      why:"Wenn sich nicht nur ein einzelner Bereich, sondern dein Leben insgesamt nach Neuorientierung anfühlt, braucht es zunächst das größere Bild. Es geht darum, deine heutigen Prioritäten, deine Entwicklung und deine persönliche Richtung wieder miteinander zu verbinden.",
+      focus:"Größeres Bild erkennen · Prioritäten neu ordnen · persönliche Richtung entwickeln",
+      question:"Wenn du dein heutiges Leben von außen betrachten würdest: Was passt noch wirklich zu dir – und was hast du möglicherweise längst überlebt?"
+    }
+
+  };
+
+  return recommendations[detail] || recommendations["Leben insgesamt"];
+}
+
+
+function orientationProgram(){
+
+  const r=orientationFinalRecommendation();
+
+  const whatsappText=
+`Hallo Peter,
+
+ich habe gerade den ICS System Check gemacht.
+
+Mein stärkster Hebel liegt im Bereich ORIENTIERUNG.
+Bei mir zeigt sich besonders: ${detail}.
+
+Mir wurde der ${r.title} als passende Vertiefung empfohlen.
+
+Mein aktueller Fokus:
+${r.focus}
+
+Ich würde gerne wissen, ob dieser Report für meine Situation der richtige nächste Schritt ist oder ob eine persönliche Begleitung sinnvoller wäre.`;
+
+  $("flow").innerHTML=
+`${backBtn()}
+<div class="card">
+
+  <div class="kicker">ORIENTIERUNG · DEINE PERSÖNLICHE EMPFEHLUNG</div>
+
+  <h2>${r.title}</h2>
+
+  <p>
+    Dein ORIENTIERUNGS-Ergebnis zeigt:
+    <b class="gold">${detail}</b>
+  </p>
+
+  <div class="card" style="margin:18px 0;background:#27221c;">
+
+    <div class="kicker">WARUM DAS JETZT ZU DIR PASST</div>
+
+    <p>${r.why}</p>
+
+    <p style="font-size:14px;line-height:1.6;margin-top:14px;">
+      <b class="gold">DEIN FOKUS:</b>
+      ${r.focus}
+    </p>
+
+  </div>
+
+  <div class="card" style="margin:18px 0;background:#27221c;">
+
+    <div class="kicker">DEINE NÄCHSTE KLARHEITSFRAGE</div>
+
+    <p style="font-size:18px;">
+      <b class="gold">${r.question}</b>
+    </p>
+
+  </div>
+
+  <div class="card" style="margin:18px 0;background:#27221c;">
+
+    <div class="kicker">${r.type}</div>
+
+    <h2 style="font-size:24px;">${r.title}</h2>
+
+    <p>
+      Dein Lebensphasen-Kompass hilft dir dabei,
+      deinen aktuellen Zustand und deine nächste Richtung
+      wahrzunehmen. Der Lebensaufgabe Report geht einen
+      Schritt tiefer und betrachtet deine persönliche
+      Ausrichtung im größeren Zusammenhang.
+    </p>
+
+  </div>
+
+  <div class="ctas">
+
+    <a
+      class="cta primary"
+      href="${r.url}"
+      target="_blank"
+      rel="noopener noreferrer"
+      style="text-decoration:none;"
+    >
+      <strong>${r.title} ansehen</strong>
+      <small>Meine passende ORIENTIERUNGS-Vertiefung öffnen.</small>
+    </a>
+
+    <a
+      class="cta"
+      href="${icsWhatsAppLink(whatsappText)}"
+      target="_blank"
+      rel="noopener noreferrer"
+      style="text-decoration:none;"
+    >
+      <strong>Persönlich mit Peter klären</strong>
+      <small>WhatsApp mit meinem ORIENTIERUNGS-Ergebnis vorbereiten.</small>
+    </a>
+
+  </div>
+
+</div>`;
+}
+
+
+function orientationCoach(){
+
+  const r=orientationFinalRecommendation();
+
+  const whatsappText=
+`Hallo Peter,
+
+ich habe gerade den ICS System Check gemacht.
+
+Mein stärkster Hebel liegt im Bereich ORIENTIERUNG.
+Bei mir zeigt sich besonders: ${detail}.
+
+Mein aktueller Fokus:
+${r.focus}
+
+Ich möchte meine nächste Richtung nicht nur weiter überdenken, sondern persönlich klären.
+
+Ich würde gerne wissen, welche Begleitung für meine aktuelle Situation bzw. Lebensphase sinnvoll wäre.
+
+Meine ICS Empfehlung war: ${r.title}.`;
+
+  $("flow").innerHTML=
+`${backBtn()}
+<div class="card">
+
+  <div class="kicker">ORIENTIERUNG · PERSÖNLICHE BEGLEITUNG</div>
+
+  <h2>Manche Lebensphasen brauchen einen klaren Blick von außen.</h2>
+
+  <p>
+    Bei dir zeigt sich aktuell besonders:
+    <b class="gold">${detail}</b>
+  </p>
+
+  <div class="card" style="margin:18px 0;background:#27221c;">
+
+    <div class="kicker">DEIN ORIENTIERUNGS-FOKUS</div>
+
+    <p>${r.why}</p>
+
+    <p style="font-size:14px;line-height:1.6;margin-top:14px;">
+      <b class="gold">${r.focus}</b>
+    </p>
+
+  </div>
+
+  <div class="card" style="margin:18px 0;background:#27221c;">
+
+    <div class="kicker">EINE FRAGE FÜR DICH</div>
+
+    <p style="font-size:18px;">
+      ${r.question}
+    </p>
+
+  </div>
+
+  <p>
+    Wenn du deine nächste Richtung nicht allein herausfinden
+    möchtest, können wir gemeinsam deine aktuelle Situation,
+    deine Möglichkeiten und deinen nächsten stimmigen Schritt
+    betrachten.
+  </p>
+
+  <div class="ctas">
+
+    <a
+      class="cta primary"
+      href="${icsWhatsAppLink(whatsappText)}"
+      target="_blank"
+      rel="noopener noreferrer"
+      style="text-decoration:none;"
+    >
+      <strong>Persönliche Begleitung anfragen</strong>
+      <small>WhatsApp mit deinem ORIENTIERUNGS-Ergebnis vorbereiten.</small>
+    </a>
+
+    <button
+      type="button"
+      class="cta"
+      data-flow="program"
+    >
+      <strong>${r.title} ansehen</strong>
+      <small>Alternativ zuerst selbstständig vertiefen.</small>
+    </button>
+
+  </div>
+
+</div>`;
+}
   
 function program(){
 
@@ -3695,6 +3937,10 @@ function program(){
     if(weak==="reset"){
     return resetProgram();
   }
+
+  if(weak==="orientation"){
+  return orientationProgram();
+}
 
   let d;
 
@@ -3725,14 +3971,6 @@ function program(){
       "Blockadenlöser Report",
       "https://innercodesystems.com/blockadenloeser-report"
     ];
-
-}else{
-
-  d={
-    orientation:["Lebensaufgabe Report","https://innercodesystems.com/Lebensaufgabe-Report"]
-  }[weak];
-
-}
 
   $("flow").innerHTML=
     `${backBtn()}
@@ -3902,6 +4140,10 @@ function coach(){
 
 if(weak==="reset"){
    return resetCoach();
+}
+
+if(weak==="orientation"){
+   return orientationCoach();
 }
   
  $("flow").innerHTML=
