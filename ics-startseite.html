@@ -743,21 +743,23 @@
 
     <section id="system-check" style="width:100%; background:#171512; padding:40px 0 60px;">
 
-      <iframe
+<iframe
+        id="ics-system-check-frame"
         src="https://innercodesystems.github.io/ics-auswertungstool/ICS_System_Check_V20_TESTMARKIERUNG.html"
         title="ICS System Check"
         style="
           display:block;
           width:100%;
           max-width:1240px;
-          min-height:1500px;
+          height:420px;
           margin:0 auto;
           border:0;
           background:#171512;
+          overflow:hidden;
         ">
-      </iframe>
+  </iframe>
 
-    </section>
+</section>
 
 <!-- =========================================
      BLOCK 03 · ICS WELTEN
@@ -1128,5 +1130,117 @@
     
   </main>
 
+<script>
+(function(){
+
+  const frame=document.getElementById("ics-system-check-frame");
+
+  if(!frame) return;
+
+  function resizeICSFrame(){
+
+    try{
+
+      const doc=frame.contentDocument || frame.contentWindow.document;
+
+      if(!doc) return;
+
+      const height=Math.max(
+        doc.body ? doc.body.scrollHeight : 0,
+        doc.documentElement ? doc.documentElement.scrollHeight : 0
+      );
+
+      if(height){
+        frame.style.height=(height + 20) + "px";
+      }
+
+    }catch(e){
+      console.warn("ICS Frame konnte nicht angepasst werden.",e);
+    }
+
+  }
+
+  frame.addEventListener("load",function(){
+
+    resizeICSFrame();
+
+    try{
+
+      const doc=frame.contentDocument || frame.contentWindow.document;
+
+      const observer=new ResizeObserver(function(){
+        resizeICSFrame();
+      });
+
+      observer.observe(doc.documentElement);
+
+      if(doc.body){
+        observer.observe(doc.body);
+      }
+
+    }catch(e){}
+
+  });
+
+  window.addEventListener("resize",resizeICSFrame);
+
+})();
+</script>
+
+<script>
+(function(){
+
+  const frame=document.getElementById("ics-system-check-frame");
+
+  if(!frame) return;
+
+  function resizeICSFrame(){
+
+    try{
+
+      const doc=frame.contentDocument || frame.contentWindow.document;
+
+      if(!doc) return;
+
+      const height=Math.max(
+        doc.body ? doc.body.scrollHeight : 0,
+        doc.documentElement ? doc.documentElement.scrollHeight : 0
+      );
+
+      if(height){
+        frame.style.height=(height + 20) + "px";
+      }
+
+    }catch(e){}
+
+  }
+
+  frame.addEventListener("load",function(){
+
+    resizeICSFrame();
+
+    try{
+
+      const doc=frame.contentDocument || frame.contentWindow.document;
+
+      const observer=new ResizeObserver(function(){
+        resizeICSFrame();
+      });
+
+      observer.observe(doc.documentElement);
+
+      if(doc.body){
+        observer.observe(doc.body);
+      }
+
+    }catch(e){}
+
+  });
+
+  window.addEventListener("resize",resizeICSFrame);
+
+})();
+</script>
+  
 </body>
 </html>
