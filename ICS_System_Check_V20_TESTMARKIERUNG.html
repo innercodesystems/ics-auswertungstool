@@ -3261,6 +3261,217 @@ Meine ICS Empfehlung war: ${r.title}.`;
 
 </div>`;
 }
+
+/* =========================================================
+   RESET · FINALER ABSCHLUSS
+   Programm / Report + persönliche Begleitung
+========================================================= */
+
+function resetFinalRecommendation(){
+
+  const recommendations={
+
+    "Gleiches Muster":{
+      title:"Blockadenlöser Report",
+      type:"REPORT",
+      url:"https://innercodesystems.com/blockadenloeser-report",
+      why:"Wenn sich ein Thema immer wiederholt, reicht es häufig nicht, nur die aktuelle Situation zu verändern. Entscheidend ist zu erkennen, welche innere Überzeugung, Schutzreaktion oder welches alte Muster dahinter immer wieder aktiviert wird.",
+      focus:"Muster erkennen · Ursache verstehen · automatische Reaktion verändern"
+    },
+
+    "Stressreaktion":{
+      title:"7-Tage RESET",
+      type:"PROGRAMM",
+      url:"https://innercodesystems.com/7-tage-reset",
+      why:"Unter Stress greift dein System besonders schnell auf vertraute Reaktionen zurück. Der 7-Tage RESET unterstützt dich dabei, diese automatischen Abläufe bewusster wahrzunehmen, Abstand zu schaffen und neue Reaktionen Schritt für Schritt im Alltag zu verankern.",
+      focus:"Stress früher erkennen · regulieren · bewusst neu reagieren"
+    },
+
+    "Festhalten":{
+      title:"Blockadenlöser Report",
+      type:"REPORT",
+      url:"https://innercodesystems.com/blockadenloeser-report",
+      why:"Wenn Loslassen schwerfällt, liegt darunter oft mehr als eine bewusste Entscheidung. Alte Bindungen, Überzeugungen oder Schutzmuster können dafür sorgen, dass dein System an etwas festhält, obwohl es heute nicht mehr wirklich zu dir passt.",
+      focus:"Festhalten verstehen · Blockade erkennen · neuen Raum ermöglichen"
+    },
+
+    "Neue Entscheidung hält nicht":{
+      title:"7-Tage RESET",
+      type:"PROGRAMM",
+      url:"https://innercodesystems.com/7-tage-reset",
+      why:"Eine neue Entscheidung verändert ein altes Muster noch nicht automatisch. Dein System braucht Wiederholung, Wahrnehmung und konkrete neue Handlungen. Genau dort setzt der 7-Tage RESET an: aus Erkenntnis wird Schritt für Schritt eine neue Alltagserfahrung.",
+      focus:"Entscheidung festigen · wiederholen · neues Verhalten integrieren"
+    }
+
+  };
+
+  return recommendations[detail] || recommendations["Gleiches Muster"];
+}
+
+
+function resetProgram(){
+
+  const r=resetFinalRecommendation();
+
+  const whatsappText=
+`Hallo Peter,
+
+ich habe gerade den ICS System Check gemacht.
+
+Mein stärkster Hebel liegt im Bereich RESET.
+Bei mir zeigt sich besonders: ${detail}.
+
+Mir wurde ${r.title} als passende Vertiefung empfohlen.
+
+Ich würde gerne wissen, ob das für mein aktuelles Thema der richtige nächste Schritt ist oder ob eine persönliche Begleitung sinnvoller wäre.`;
+
+  $("flow").innerHTML=
+`${backBtn()}
+<div class="card">
+
+  <div class="kicker">RESET · DEINE PERSÖNLICHE EMPFEHLUNG</div>
+
+  <h2>${r.title}</h2>
+
+  <p>
+    Dein RESET Ergebnis zeigt:
+    <b class="gold">${detail}</b>
+  </p>
+
+  <div class="card" style="margin:18px 0;background:#27221c;">
+
+    <div class="kicker">WARUM DAS JETZT ZU DIR PASST</div>
+
+    <p>${r.why}</p>
+
+    <p style="font-size:14px;line-height:1.6;margin-top:14px;">
+      <b class="gold">DEIN FOKUS:</b>
+      ${r.focus}
+    </p>
+
+  </div>
+
+  <div class="card" style="margin:18px 0;background:#27221c;">
+
+    <div class="kicker">${r.type}</div>
+
+    <h2 style="font-size:24px;">${r.title}</h2>
+
+    <p>
+      Dein Gegenpol-Tool hilft dir dabei, die automatische
+      Reaktion im Moment zu unterbrechen. Diese Vertiefung
+      setzt dort an, wo dein Muster nachhaltiger verändert
+      und integriert werden kann.
+    </p>
+
+  </div>
+
+  <div class="ctas">
+
+    <a
+      class="cta primary"
+      href="${r.url}"
+      target="_blank"
+      rel="noopener noreferrer"
+      style="text-decoration:none;"
+    >
+      <strong>${r.title} ansehen</strong>
+      <small>Meine passende RESET Vertiefung öffnen.</small>
+    </a>
+
+    <a
+      class="cta"
+      href="${icsWhatsAppLink(whatsappText)}"
+      target="_blank"
+      rel="noopener noreferrer"
+      style="text-decoration:none;"
+    >
+      <strong>Persönlich mit Peter klären</strong>
+      <small>WhatsApp mit deinem RESET Ergebnis vorbereiten.</small>
+    </a>
+
+  </div>
+
+</div>`;
+}
+
+
+function resetCoach(){
+
+  const r=resetFinalRecommendation();
+
+  const whatsappText=
+`Hallo Peter,
+
+ich habe gerade den ICS System Check gemacht.
+
+Mein stärkster Hebel liegt im Bereich RESET.
+Bei mir zeigt sich besonders: ${detail}.
+
+Ich merke, dass sich dieses Thema beziehungsweise Muster bei mir nicht einfach durch eine neue Entscheidung verändert.
+
+Ich würde gerne mit dir klären, welche persönliche Begleitung sinnvoll wäre.
+
+Meine ICS Empfehlung war: ${r.title}.`;
+
+  $("flow").innerHTML=
+`${backBtn()}
+<div class="card">
+
+  <div class="kicker">RESET · PERSÖNLICHE BEGLEITUNG</div>
+
+  <h2>Alte Muster brauchen manchmal mehr als eine neue Entscheidung.</h2>
+
+  <p>
+    Bei dir zeigt sich aktuell besonders:
+    <b class="gold">${detail}</b>
+  </p>
+
+  <div class="card" style="margin:18px 0;background:#27221c;">
+
+    <div class="kicker">DEIN RESET FOKUS</div>
+
+    <p>${r.why}</p>
+
+    <p style="font-size:14px;line-height:1.6;margin-top:14px;">
+      <b class="gold">${r.focus}</b>
+    </p>
+
+  </div>
+
+  <p>
+    Wenn du dieses Muster nicht nur erkennen, sondern gezielt
+    verändern und im Alltag neu verankern möchtest, können wir
+    gemeinsam anschauen, wo dein System immer wieder zurückfällt
+    und welcher neue Gegenpol für dich wirklich tragfähig ist.
+  </p>
+
+  <div class="ctas">
+
+    <a
+      class="cta primary"
+      href="${icsWhatsAppLink(whatsappText)}"
+      target="_blank"
+      rel="noopener noreferrer"
+      style="text-decoration:none;"
+    >
+      <strong>Persönliche Begleitung anfragen</strong>
+      <small>WhatsApp mit deinem RESET Ergebnis vorbereiten.</small>
+    </a>
+
+    <button
+      type="button"
+      class="cta"
+      data-flow="program"
+    >
+      <strong>${r.title} ansehen</strong>
+      <small>Alternativ zuerst selbstständig vertiefen.</small>
+    </button>
+
+  </div>
+
+</div>`;
+}
   
 function program(){
 
@@ -3274,6 +3485,10 @@ function program(){
 
   if(weak==="action"){
     return actionProgram();
+  }
+
+    if(weak==="reset"){
+    return resetProgram();
   }
 
   let d;
@@ -3309,7 +3524,6 @@ function program(){
 }else{
 
   d={
-    reset:["7-Tage RESET","https://www.innercodesystems.com/7-tage-reset"],
     orientation:["Lebensaufgabe Report","https://innercodesystems.com/Lebensaufgabe-Report"]
   }[weak];
 
