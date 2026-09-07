@@ -461,7 +461,7 @@ gerade dein stärkster Hebel ist – oder ob Klarheit,
 Energie, Handlung oder Orientierung zuerst Aufmerksamkeit brauchen.
 </p>
 
-<a class="button" href="ics-startseite.html#system-check">
+<a class="button" href="https://innercodesystems.github.io/ics-auswertungstool/ics-startseite.html#system-check">
 System Check starten
 </a>
 
@@ -585,7 +585,7 @@ wiederkehrenden Mustern und Blockaden.
 
 <div class="grid">
 
-<a class="card" href="ics-startseite.html#system-check">
+<a class="card" href="https://innercodesystems.github.io/ics-auswertungstool/ics-startseite.html#system-check">
 <div class="card-label">ICS SYSTEM CHECK</div>
 <h3>Deinen stärksten Hebel erkennen</h3>
 <p>Finde heraus, ob RESET aktuell tatsächlich der Bereich ist, der am meisten Veränderung ermöglicht.</p>
@@ -713,27 +713,27 @@ Deshalb betrachtet ICS Veränderung immer als Gesamtsystem.
 
 <div class="worlds">
 
-<a class="world" href="inner.html">
+<a class="world" href="https://innercodesystems.github.io/ics-auswertungstool/inner.html">
 <strong>INNER</strong>
 <span>Klarheit</span>
 </a>
 
-<a class="world" href="body.html">
+<a class="world" href="https://innercodesystems.github.io/ics-auswertungstool/body.html">
 <strong>BODY</strong>
 <span>Energie</span>
 </a>
 
-<a class="world" href="action.html">
+<a class="world current" href="https://innercodesystems.github.io/ics-auswertungstool/action.html">
 <strong>ACTION</strong>
 <span>Umsetzung</span>
 </a>
 
-<a class="world current" href="reset.html">
+<a class="world" href="https://innercodesystems.github.io/ics-auswertungstool/reset.html">
 <strong>RESET</strong>
 <span>Muster</span>
 </a>
 
-<a class="world" href="orientierung.html">
+<a class="world" href="https://innercodesystems.github.io/ics-auswertungstool/orientierung.html">
 <strong>ORIENTIERUNG</strong>
 <span>Richtung</span>
 </a>
@@ -775,12 +775,21 @@ Persönlich mit Peter klären
 
 
 <script>
-document.querySelectorAll(
-  'a[href^="https://"], a[href^="http://"]'
-).forEach(function(link){
+document.querySelectorAll('a[href^="https://"], a[href^="http://"]').forEach(function(link){
 
-  link.setAttribute("target","_blank");
-  link.setAttribute("rel","noopener noreferrer");
+  const url = new URL(link.href);
+
+  const isNewICSWebsite =
+    url.hostname === "innercodesystems.github.io" &&
+    url.pathname.startsWith("/ics-auswertungstool/");
+
+  if(isNewICSWebsite){
+    link.removeAttribute("target");
+    link.removeAttribute("rel");
+  }else{
+    link.setAttribute("target","_blank");
+    link.setAttribute("rel","noopener noreferrer");
+  }
 
 });
 </script>
