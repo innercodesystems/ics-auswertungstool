@@ -1,1 +1,339 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ICS Werte-Kompass · Premium</title>
+<style>
+:root{--bg:#1a1815;--panel:#24211d;--panel2:#2c2822;--gold:#b8924f;--gold2:#d4a03a;--cream:#f6f1e7;--muted:#b9b1a4;--line:#413a31;--green:#8fbe8a;--red:#d98585;--amber:#dfb36a}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 80% 0,rgba(184,146,79,.12),transparent 28%),var(--bg);color:var(--cream);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5}
+.wrap{max-width:1180px;margin:auto;padding:20px}.hero{min-height:78vh;display:flex;align-items:center;padding:50px 0}.heroBox,.card{border:1px solid var(--line);background:linear-gradient(145deg,rgba(255,255,255,.025),rgba(184,146,79,.035));border-radius:28px;padding:clamp(24px,5vw,52px);box-shadow:0 25px 70px rgba(0,0,0,.22)}
+.kicker{color:var(--gold);font-weight:800;letter-spacing:.18em;font-size:.76rem;text-transform:uppercase}h1{font-size:clamp(2.8rem,7vw,6rem);line-height:.92;letter-spacing:-.055em;margin:14px 0 22px}h2{font-size:clamp(1.8rem,4vw,3rem);line-height:1.05;margin:0 0 12px}h3{margin:0 0 8px}.gold{color:var(--gold2)}p{color:var(--muted)}.lead{font-size:1.08rem;max-width:760px}.btn{border:0;border-radius:14px;padding:13px 18px;font-weight:800;cursor:pointer;background:var(--gold);color:#17130e}.btn.secondary{background:transparent;color:var(--cream);border:1px solid var(--line)}.btn.dark{background:#302b25;color:var(--cream)}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.screen{display:none;margin:22px 0}.screen.active{display:block}.progressTop{position:sticky;top:0;z-index:5;background:rgba(26,24,21,.92);backdrop-filter:blur(10px);padding:12px 0}.progressTrack{height:6px;background:#38322b;border-radius:99px;overflow:hidden}.progressTrack span{display:block;height:100%;background:var(--gold);transition:.3s}.phase{display:flex;justify-content:space-between;color:#8e867a;font-size:.78rem;margin-top:7px}.cloud{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}.chip{border:1px solid var(--line);background:#29251f;color:var(--cream);padding:9px 13px;border-radius:999px;cursor:pointer}.chip.on{background:var(--gold);border-color:var(--gold);color:#17130e;font-weight:800}.count{color:var(--gold);font-weight:900}.duel{display:grid;grid-template-columns:1fr auto 1fr;gap:20px;align-items:stretch;margin:34px 0}.duelCard{
+min-height:230px;
+width:100%;
+border:1px solid var(--line);
+background:#29251f;
+color:var(--cream);
+-webkit-text-fill-color:var(--cream);
+-webkit-appearance:none;
+appearance:none;
+border-radius:24px;
+padding:25px;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+cursor:pointer;
+transition:.18s;
+font-size:clamp(1.4rem,3vw,2.2rem);
+font-weight:850;
+font-family:inherit;
+line-height:1.2;
+touch-action:manipulation;
+user-select:none;
+-webkit-user-select:none;
+}
+.duelCard:hover,.duelCard:focus{border-color:var(--gold);color:var(--cream);outline:none}
+.duelCard:active{background:#342e26;border-color:var(--gold);transform:scale(.985)}.or{display:grid;place-items:center;color:var(--gold);font-weight:900}.mini{font-size:.86rem;color:var(--muted)}.grid{display:grid;gap:16px}.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}.metric{background:#29251f;border:1px solid var(--line);border-radius:18px;padding:18px}.metric strong{font-size:1.3rem;color:var(--gold)}.rank{display:grid;grid-template-columns:52px 1fr 100px;gap:12px;align-items:center;padding:15px;border-bottom:1px solid var(--line)}.badge{width:42px;height:42px;border-radius:12px;background:#373128;color:var(--gold);display:grid;place-items:center;font-weight:900}.rating{padding:18px 0;border-bottom:1px solid var(--line)}input[type=range]{width:100%;accent-color:var(--gold)}textarea{width:100%;min-height:100px;background:#201d19;color:var(--cream);border:1px solid var(--line);border-radius:14px;padding:13px}.score{width:190px;height:190px;border-radius:50%;display:grid;place-items:center;margin:auto;background:conic-gradient(var(--gold) calc(var(--v)*1%),#39332c 0);position:relative}.score:before{content:"";position:absolute;inset:16px;border-radius:50%;background:var(--panel)}.scoreIn{position:relative;text-align:center}.scoreN{font-size:3rem;font-weight:900}.bar{height:9px;background:#3b352e;border-radius:99px;overflow:hidden}.bar span{display:block;height:100%;background:var(--gold)}.conflict{padding:15px;border:1px solid var(--line);background:#29251f;border-radius:15px;margin-top:10px}.history{display:grid;grid-template-columns:150px 80px 1fr;gap:12px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line)}.pill{font-size:.75rem;color:var(--gold);background:#342e26;border-radius:99px;padding:5px 9px;display:inline-block;font-weight:800}.lifeAreas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:18px}
+.lifeArea{appearance:none;-webkit-appearance:none;border:1px solid var(--line);background:#29251f;color:var(--cream);-webkit-text-fill-color:var(--cream);border-radius:14px;padding:14px 10px;font:inherit;font-weight:700;cursor:pointer}
+.lifeArea.active{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold) inset;background:rgba(184,146,79,.14)}
+@media(max-width:480px){.lifeAreas{grid-template-columns:1fr 1fr}}
+.confirmTop{display:grid;gap:10px;margin-top:20px}
+.confirmRow{display:grid;grid-template-columns:48px 1fr auto;gap:12px;align-items:center;padding:14px;border:1px solid var(--line);border-radius:16px;background:#29251f}
+.recHero{border:1px solid rgba(184,146,79,.65);background:linear-gradient(145deg,rgba(184,146,79,.13),#29251f);border-radius:22px;padding:22px}
+.recWhy{margin-top:12px;padding:14px;border-left:3px solid var(--gold);background:#29251f;border-radius:0 14px 14px 0}
+.recAlt{margin-top:14px;padding:14px;border:1px solid var(--line);border-radius:14px;background:#29251f}
+.recBtn{display:flex;align-items:center;justify-content:center;text-align:center;width:100%;margin-top:16px;padding:15px 18px;border-radius:14px;background:var(--gold);color:#1a1815!important;-webkit-text-fill-color:#1a1815;font-weight:800;text-decoration:none;box-sizing:border-box}
+.recBtn:active{transform:scale(.99)}
+.recBtn.secondary{background:transparent;color:var(--cream)!important;-webkit-text-fill-color:var(--cream);border:1px solid var(--line)}
+.hidden{display:none!important}
+@media(max-width:760px){.g2,.g3,.g4{grid-template-columns:1fr}.duel{grid-template-columns:1fr}.or{min-height:20px}.hero{min-height:auto;padding:30px 0}.history{grid-template-columns:1fr}.phase{display:none}}
+@media print{body{background:white;color:#111}.progressTop,.actions,.hero{display:none}.card{box-shadow:none;background:white;color:#111;border:1px solid #ccc}p,.mini{color:#444}}
+</style>
+</head>
+<body>
+<div class="progressTop hidden" id="prog"><div class="wrap"><div class="progressTrack"><span id="progBar" style="width:0"></span></div><div class="phase"><span>ENTDECKEN</span><span>ENTSCHEIDEN</span><span>REALITÄT</span><span>AUSWERTUNG</span><span>ACTION</span></div></div></div>
+<div class="wrap">
+<section class="hero" id="hero"><div class="heroBox">
+<div class="kicker">INNER CODE SYSTEMS · INNER</div><h1>Dein <span class="gold">Werte-Kompass</span></h1>
+<p class="lead">Welche Werte bestimmen dich – und wie sehr entspricht dein Leben ihnen tatsächlich? Entdecke deine wichtigsten Werte, entscheide in direkten Werte-Duellen und erkenne anschließend, wo dein Alltag mit deinem inneren Kompass übereinstimmt – und wo nicht.</p>
+<div class="actions"><button class="btn" onclick="go(1)">Kompass starten</button><button class="btn secondary" onclick="loadLast()">Letzte Auswertung</button></div>
+</div></section>
 
+<section class="screen" id="s1"><div class="card">
+<div class="kicker">Phase 1 · Entdecken</div><h2>Was ist dir wirklich wichtig?</h2>
+<p>Wähle genau <strong>12 Werte</strong>. Entscheide noch nicht über die Reihenfolge – das übernimmt anschließend das Werte-Duell.</p>
+<div class="cloud" id="cloud"></div>
+<p>Ausgewählt: <span class="count" id="cnt">0</span> / 12</p>
+<div class="actions"><button class="btn" onclick="startDuels()">12 Werte gewählt · Duelle starten</button></div>
+</div></section>
+
+<section class="screen" id="s2"><div class="card">
+<div class="kicker">Phase 2 · Entscheiden</div><h2>Was ist dir wichtiger?</h2>
+<p>Entscheide möglichst intuitiv. Wenn es schwerfällt, stell dir eine konkrete Situation vor, in der du dich zwischen beiden Werten entscheiden müsstest.</p>
+<div class="mini" id="duelProgress"></div>
+<div class="duel"><button type="button" class="duelCard" id="left" onclick="choose(0)"></button><div class="or">ODER</div><button type="button" class="duelCard" id="right" onclick="choose(1)"></button></div>
+</div></section>
+
+<section class="screen" id="s3"><div class="card">
+<div class="kicker">Zwischenergebnis</div><h2>Deine Werte-Rangfolge</h2>
+<p>Aus deinen direkten Entscheidungen ergibt sich diese Priorisierung. Für die Tiefenauswertung betrachten wir deine Top 5.</p>
+<div id="ranking"></div>
+
+<div id="confirmBox" style="margin-top:28px">
+  <div class="kicker">Stimmigkeitsprüfung</div>
+  <h2 style="font-size:1.65rem;margin-top:8px">Fühlt sich deine Top 5 wirklich nach dir an?</h2>
+  <p>Die Duelle liefern eine rechnerische Rangfolge. Du darfst sie jetzt bewusst prüfen. Wenn zwei Werte für dich anders herum stimmiger sind, kannst du sie noch verschieben.</p>
+  <div id="confirmTop" class="confirmTop"></div>
+</div>
+
+<div class="actions"><button class="btn" onclick="prepareReality()">Ja · diese Top 5 stimmen für mich</button></div>
+</div></section>
+
+<section class="screen" id="s4"><div class="card">
+<div class="kicker">Phase 3 · Realität</div><h2>Wie sehr lebst du deine Werte?</h2>
+<p>Ein Wert kann sehr wichtig sein und trotzdem im aktuellen Leben kaum Raum bekommen. Genau diese Lücke macht der Kompass sichtbar.</p>
+<div id="ratings"></div>
+<div class="actions"><button class="btn" onclick="calculate()">Meine Auswertung erstellen</button></div>
+</div></section>
+
+<section class="screen" id="s5"><div class="card">
+<div class="kicker">Phase 4 · Auswertung</div><h2>Dein persönlicher Werte-Kompass</h2>
+<div class="g2 grid" style="align-items:center;margin-top:24px">
+<div class="score" id="score" style="--v:0"><div class="scoreIn"><div class="scoreN" id="scoreN">0%</div><div class="mini">Werte-Kongruenz</div></div></div>
+<div class="g2 grid"><div class="metric"><div class="mini">Wichtigster Wert</div><strong id="mTop">–</strong></div><div class="metric"><div class="mini">Größte Lücke</div><strong id="mGap">–</strong></div><div class="metric"><div class="mini">Am stärksten gelebt</div><strong id="mBest">–</strong></div><div class="metric"><div class="mini">Entwicklungshebel</div><strong id="mFocus">–</strong></div></div>
+</div>
+<div id="details" style="margin-top:25px"></div>
+</div>
+
+<div class="g2 grid" style="margin-top:18px">
+<div class="card"><h2>Was deine Auswertung zeigt</h2><div id="interpret"></div></div>
+<div class="card"><h2>Werte-Spannungen</h2><p class="mini">Zwei wichtige Werte können gleichzeitig richtig sein und trotzdem in einer konkreten Entscheidung miteinander konkurrieren.</p><div id="conflicts"></div></div>
+</div>
+
+<div class="card" style="margin-top:18px"><h2>INNER · BODY · ACTION · RESET</h2>
+<div class="g4 grid">
+<div class="metric"><span class="pill">INNER</span><h3>Verstehen</h3><p id="inner"></p></div>
+<div class="metric"><span class="pill">BODY</span><h3>Spüren</h3><p>Wo bemerkst du körperlich Enge, Unruhe oder Widerstand, wenn du gegen diesen Wert handelst?</p></div>
+<div class="metric"><span class="pill">ACTION</span><h3>Handeln</h3><p id="action"></p></div>
+<div class="metric"><span class="pill">RESET</span><h3>Integrieren</h3><p>Prüfe deinen Kompass später erneut. Nicht dein Wert muss sich verändern – sondern möglicherweise, wie stark du ihn lebst.</p></div>
+</div></div>
+
+<div class="card" style="margin-top:18px">
+<div class="kicker">Deine größte Werte-Lücke</div>
+<h2>Wo spürst du diese Lücke am stärksten?</h2>
+<p id="lifeAreaIntro">Wähle den Lebensbereich, in dem sich dein aktuelles Werte-Thema am deutlichsten zeigt. Dadurch wird deine ICS-Empfehlung noch persönlicher.</p>
+<div id="lifeAreas" class="lifeAreas"></div>
+<div id="lifeAreaNote" class="mini" style="margin-top:12px">Du kannst einen Bereich auswählen.</div>
+</div>
+
+<div class="card" style="margin-top:18px">
+<div class="kicker">Dein Weg in ICS</div><h2>Was jetzt am besten zu deiner Auswertung passt</h2>
+<p>ICS empfiehlt dir nicht möglichst viele Angebote, sondern den nächsten sinnvollen Schritt auf Basis deiner Werte-Lücke und deines aktuellen Schwerpunkts.</p>
+<div id="recommendation"></div>
+</div>
+
+<div class="card" style="margin-top:18px"><div class="kicker">Phase 5 · Action</div><h2>Dein nächster Schritt</h2><p id="question"></p>
+<textarea id="stepText" placeholder="Eine konkrete Entscheidung oder Handlung für die nächsten 7 Tage …"></textarea>
+<div class="actions"><button class="btn" onclick="save()">Auswertung speichern</button><button class="btn secondary" onclick="window.print()">Drucken / PDF</button><button class="btn dark" onclick="restart()">Neu starten</button></div>
+<div class="mini" id="saveMsg"></div></div>
+
+<div class="card" style="margin-top:18px"><h2>Deine Entwicklung</h2><p>Wiederholte Auswertungen zeigen, ob dein tatsächliches Leben deinen wichtigsten Werten näherkommt.</p><div id="history"></div></div>
+
+<div class="card" style="margin-top:18px">
+<div class="kicker">Dein nächster Schritt in ICS</div>
+<h2>Zurück zu deinem Modus-Kompass</h2>
+<p>Du kennst jetzt deine wichtigsten Werte und siehst, wo dein Leben bereits zu ihnen passt – und wo noch nicht. Kehre zu deinem Modus-Kompass zurück und nimm diese Erkenntnis mit in deinen nächsten Schritt.</p>
+<a class="recBtn" href="https://www.innercodesystems.com/modus-kompass/">Zurück zu meinem Modus-Kompass</a>
+</div>
+</section>
+</div>
+<script>
+const VALUES=["Abenteuer", "Achtsamkeit", "Ästhetik", "Anerkennung", "Authentizität", "Balance", "Beitrag", "Dankbarkeit", "Disziplin", "Ehrlichkeit", "Einfluss", "Entwicklung", "Erfolg", "Familie", "Flexibilität", "Freiheit", "Freude", "Fürsorge", "Gelassenheit", "Gemeinschaft", "Genuss", "Gerechtigkeit", "Gesundheit", "Glaube", "Harmonie", "Hilfsbereitschaft", "Humor", "Individualität", "Intimität", "Klarheit", "Kompetenz", "Kreativität", "Lebensfreude", "Leichtigkeit", "Leistung", "Lernen", "Liebe", "Loyalität", "Mut", "Nähe", "Natur", "Neugier", "Ordnung", "Präsenz", "Respekt", "Ruhe", "Selbstachtung", "Selbstbestimmung", "Sicherheit", "Sinn", "Spiritualität", "Stabilität", "Tapferkeit", "Tiefe", "Toleranz", "Treue", "Unabhängigkeit", "Verantwortung", "Verbundenheit", "Verlässlichkeit", "Vertrauen", "Wachstum", "Wirksamkeit", "Wissen", "Würde", "Zugehörigkeit", "Abwechslung", "Offenheit", "Fülle", "Frieden", "Großzügigkeit", "Hoffnung", "Inspiration", "Integrität", "Partnerschaft", "Privatsphäre", "Qualität", "Selbstfürsorge", "Spontaneität", "Tradition", "Unbeschwertheit", "Weisheit", "Zielstrebigkeit"];
+let selected=[],pairs=[],pairIndex=0,scores={},ranking=[],result=null;
+const $=id=>document.getElementById(id);
+function renderCloud(){ $("cloud").innerHTML=""; VALUES.forEach(v=>{let b=document.createElement("button");b.className="chip"+(selected.includes(v)?" on":"");b.textContent=v;b.onclick=()=>toggle(v);$("cloud").appendChild(b)});$("cnt").textContent=selected.length}
+function toggle(v){if(selected.includes(v))selected=selected.filter(x=>x!==v);else{if(selected.length>=12)return alert("Bitte genau 12 Werte auswählen.");selected.push(v)}renderCloud()}
+function go(n){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));$("s"+n).classList.add("active");$("hero").classList.add("hidden");$("prog").classList.remove("hidden");$("progBar").style.width=({1:10,2:32,3:48,4:62,5:100}[n]||0)+"%";window.scrollTo({top:0,behavior:"smooth"})}
+function startDuels(){if(selected.length!==12)return alert("Bitte genau 12 Werte auswählen.");pairs=[];scores={};selected.forEach(v=>scores[v]=0);for(let i=0;i<selected.length;i++)for(let j=i+1;j<selected.length;j++)pairs.push([selected[i],selected[j]]);pairs.sort(()=>Math.random()-.5);pairIndex=0;go(2);showPair()}
+function showPair(){let p=pairs[pairIndex];$("left").textContent=p[0];$("right").textContent=p[1];$("duelProgress").textContent=`Entscheidung ${pairIndex+1} von ${pairs.length}`;$("progBar").style.width=(20+30*(pairIndex/pairs.length))+"%"}
+function choose(side){scores[pairs[pairIndex][side]]++;pairIndex++;if(pairIndex>=pairs.length)return finishDuels();showPair()}
+function finishDuels(){ranking=Object.entries(scores).sort((a,b)=>b[1]-a[1]).map(x=>({value:x[0],wins:x[1]}));renderRanking();go(3)}
+function renderRanking(){
+ $("ranking").innerHTML=ranking.map((r,i)=>`<div class="rank"><div class="badge">${i+1}</div><strong>${r.value}</strong><div>${r.wins} Punkte</div></div>`).join("");
+ $("confirmTop").innerHTML=ranking.slice(0,5).map((r,i)=>`<div class="confirmRow"><div class="badge">${i+1}</div><strong>${r.value}</strong><div style="display:flex;gap:6px"><button type="button" class="btn dark" onclick="moveTop(${i},-1)">↑</button><button type="button" class="btn dark" onclick="moveTop(${i},1)">↓</button></div></div>`).join("");
+}
+function moveTop(i,dir){
+ let j=i+dir;
+ if(j<0||j>=5)return;
+ [ranking[i],ranking[j]]=[ranking[j],ranking[i]];
+ renderRanking();
+}
+function prepareReality(){let top=ranking.slice(0,5);$("ratings").innerHTML=top.map((r,i)=>`<div class="rating"><h3>${i+1}. ${r.value}</h3><div class="g3 grid"><div><label>Wie wichtig ist dir dieser Wert? <b id="iv${i}">10</b>/10</label><input id="i${i}" type="range" min="1" max="10" value="10" oninput="$('iv${i}').textContent=this.value"></div><div><label>Wie stark lebst du ihn aktuell? <b id="lv${i}">5</b>/10</label><input id="l${i}" type="range" min="1" max="10" value="5" oninput="$('lv${i}').textContent=this.value"></div><div><label>Wie zufrieden bist du damit? <b id="sv${i}">5</b>/10</label><input id="z${i}" type="range" min="1" max="10" value="5" oninput="$('sv${i}').textContent=this.value"></div></div></div>`).join("");go(4)}
+const conflictPairs=[
+["Freiheit","Sicherheit","Freiheit braucht Bewegung, Sicherheit braucht Verlässlichkeit."],["Nähe","Unabhängigkeit","Nähe und Eigenständigkeit brauchen bewusst gestaltete Grenzen."],["Erfolg","Ruhe","Leistung und Regeneration können um dieselbe Zeit und Energie konkurrieren."],["Familie","Selbstbestimmung","Für andere da zu sein und den eigenen Weg zu gehen kann Spannung erzeugen."],["Harmonie","Ehrlichkeit","Harmonie kann dazu verleiten, eine notwendige Wahrheit zurückzuhalten."],["Leistung","Gesundheit","Leistungsanspruch kann körperliche Grenzen übergehen."],["Abenteuer","Stabilität","Veränderung und Beständigkeit brauchen oft unterschiedliche Räume."],["Ordnung","Flexibilität","Struktur gibt Halt; Flexibilität erlaubt Veränderung."]
+];
+function calculate(){let rows=ranking.slice(0,5).map((r,i)=>{let imp=+$("i"+i).value,live=+$("l"+i).value,sat=+$("z"+i).value;return{rank:i+1,value:r.value,wins:r.wins,importance:imp,lived:live,satisfaction:sat,gap:live-imp,congruence:Math.round(Math.min(live,imp)/imp*100)}});let max=rows.reduce((a,r)=>a+r.importance,0),actual=rows.reduce((a,r)=>a+Math.min(r.lived,r.importance),0),score=Math.round(actual/max*100);let largest=[...rows].sort((a,b)=>a.gap-b.gap)[0],best=[...rows].sort((a,b)=>b.lived-a.lived)[0],focus=[...rows].sort((a,b)=>(a.gap*2+a.satisfaction)-(b.gap*2+b.satisfaction))[0];result={date:new Date().toISOString(),score,rows,largest,best,focus,ranking,nextStep:""};renderResult();go(5)}
+
+const PRODUCT_RULES=[
+ {keys:["Liebe","Nähe","Partnerschaft","Verbundenheit","Vertrauen","Intimität","Treue","Loyalität","Zugehörigkeit"],title:"Beziehungsreport",type:"Report",why:"Dein Schwerpunkt liegt stark im Bereich Beziehung, Nähe oder Verbindung. Der Beziehungsreport ist deshalb eine passende Vertiefung."},
+ {keys:["Sinn","Spiritualität","Wachstum","Entwicklung","Klarheit","Weisheit","Präsenz"],title:"Lebensaufgabe Report",type:"Report",why:"Deine Werte weisen stark auf Sinn, Entwicklung und innere Orientierung. Der Lebensaufgabe Report kann diese Ebene weiter vertiefen."},
+ {keys:["Ruhe","Balance","Gesundheit","Selbstfürsorge","Gelassenheit","Achtsamkeit","Präsenz"],title:"BODY · Energie & Transformation",type:"ICS Bereich",why:"Deine größte Lücke liegt bei Regeneration, Körper oder innerer Balance. Hier passt zunächst ein vorhandener BODY-/Energie-Weg."},
+ {keys:["Mut","Selbstachtung","Vertrauen","Sicherheit","Stabilität","Disziplin","Zielstrebigkeit","Wirksamkeit","Erfolg","Leistung"],title:"Blockadenlöser Report",type:"Report",why:"Deine Auswertung deutet darauf hin, dass dir dieser Wert sehr wichtig ist, zwischen Wunsch und gelebter Realität aber eine deutliche Hürde liegt. Der Blockadenlöser Report hilft dir, mögliche innere Muster und Blockaden dahinter genauer anzusehen."},
+ {keys:["Freiheit","Selbstbestimmung","Unabhängigkeit","Entwicklung","Flexibilität","Abenteuer","Spontaneität"],title:"7-Tage-RESET",type:"ICS Einstieg",why:"Du weißt offenbar recht klar, was dir wichtig ist, lebst es aber noch nicht entsprechend. RESET setzt genau zwischen Erkenntnis und tatsächlicher Veränderung an."}
+];
+function getRecommendation(rows){
+ let f=[...rows].sort((a,b)=>(a.gap*2+a.satisfaction)-(b.gap*2+b.satisfaction))[0];
+ let severe=rows.filter(r=>r.gap<=-4).length;
+ if(severe>=3 || (f.gap<=-6 && f.satisfaction<=4)){
+   return {title:"RESET Coaching / 1:1 Begleitung",type:"Persönliche Vertiefung",why:"Mehrere deiner zentralen Werte weisen eine deutliche Lücke auf. Statt nur einen Einzelbereich zu betrachten, kann eine persönliche Begleitung sinnvoll sein.",alt:"7-Tage-RESET"};
+ }
+ let rule=PRODUCT_RULES.find(x=>x.keys.includes(f.value));
+ if(rule)return {...rule,alt:rule.title==="7-Tage-RESET"?"Blockadenlöser Report":"7-Tage-RESET"};
+ return {title:"7-Tage-RESET",type:"ICS Einstieg",why:"Deine Auswertung zeigt eine konkrete Lücke zwischen innerer Priorität und gelebtem Alltag. Der vorhandene 7-Tage-RESET ist dafür der sinnvollste erste Veränderungsschritt.",alt:"Blockadenlöser"};
+}
+
+
+const LIFE_AREAS=["Partnerschaft","Beruf","Familie","Finanzen","Körper / Gesundheit","Freizeit","Ich selbst"];
+let selectedLifeArea="";
+
+function renderLifeAreas(){
+  if(!result || !result.focus) return;
+  $("lifeAreaIntro").innerHTML=`Deine größte aktuelle Lücke zeigt sich beim Wert <strong>${result.focus.value}</strong>. Wo bemerkst du diese Lücke in deinem Leben am stärksten?`;
+  $("lifeAreas").innerHTML=LIFE_AREAS.map(a=>`<button type="button" class="lifeArea ${selectedLifeArea===a?"active":""}" onclick="chooseLifeArea('${a.replace(/'/g,"\\'")}')">${a}</button>`).join("");
+}
+function chooseLifeArea(area){
+  selectedLifeArea=area;
+  if(result) result.lifeArea=area;
+  renderLifeAreas();
+  $("lifeAreaNote").innerHTML=`Ausgewählt: <strong>${area}</strong> · Die Empfehlung wurde aktualisiert.`;
+  renderRecommendation();
+}
+
+function getThemeRecommendation(rows){
+  if(!selectedLifeArea) return null;
+
+  const significant=[...rows].filter(r=>r.gap<=-2);
+
+  const defs={
+    relationship:{
+      title:"Beziehungsreport",
+      url:"https://www.innercodesystems.com/Beziehungs-Report/",
+      button:"Beziehungsreport ansehen",
+      values:["Liebe","Nähe","Partnerschaft","Verbundenheit","Vertrauen","Intimität","Treue","Loyalität","Zugehörigkeit","Authentizität","Ehrlichkeit","Respekt","Fürsorge","Harmonie","Humor","Akzeptanz","Empathie","Offenheit","Toleranz"]
+    },
+    purpose:{
+      title:"Lebensaufgabe Report",
+      url:"https://www.innercodesystems.com/Lebensaufgabe-Report/",
+      button:"Lebensaufgabe Report ansehen",
+      values:["Sinn","Spiritualität","Wachstum","Entwicklung","Klarheit","Weisheit","Präsenz","Authentizität","Kreativität","Wirksamkeit","Freiheit","Selbstbestimmung","Individualität","Kompetenz","Neugier","Lernen","Wissen"]
+    },
+    blockage:{
+      title:"Blockadenlöser Report",
+      url:"https://www.innercodesystems.com/blockadenloeser-report/",
+      button:"Blockadenlöser Report ansehen",
+      values:["Mut","Selbstachtung","Sicherheit","Stabilität","Disziplin","Zielstrebigkeit","Wirksamkeit","Erfolg","Leistung","Vertrauen","Authentizität","Freiheit","Selbstbestimmung","Kompetenz","Klarheit","Individualität"]
+    }
+  };
+
+  // The selected life area determines which existing reports are genuinely relevant.
+  let allowed=[];
+  if(selectedLifeArea==="Partnerschaft" || selectedLifeArea==="Familie") allowed=["relationship"];
+  if(selectedLifeArea==="Beruf") allowed=["purpose","blockage"];
+  if(selectedLifeArea==="Finanzen") allowed=["blockage"];
+  if(selectedLifeArea==="Ich selbst") allowed=["purpose","blockage"];
+  if(selectedLifeArea==="Körper / Gesundheit" || selectedLifeArea==="Freizeit") return null;
+
+  let candidates=allowed.map(key=>{
+    const d=defs[key];
+    const hits=significant.filter(r=>d.values.includes(r.value));
+    const score=hits.reduce((sum,r)=>sum+Math.abs(r.gap),0);
+    return {...d,key,hits,score};
+  }).filter(c=>c.hits.length>0);
+
+  if(!candidates.length) return null;
+
+  // Context tie-breaks.
+  candidates.forEach(c=>{
+    if(selectedLifeArea==="Partnerschaft" && c.key==="relationship") c.score+=6;
+    if(selectedLifeArea==="Familie" && c.key==="relationship") c.score+=4;
+    if(selectedLifeArea==="Finanzen" && c.key==="blockage") c.score+=6;
+    if(selectedLifeArea==="Beruf" && c.key==="purpose") c.score+=2;
+  });
+  candidates.sort((a,b)=>b.score-a.score);
+
+  const w=candidates[0];
+  const names=w.hits.map(x=>x.value).slice(0,3);
+  return {
+    title:w.title,url:w.url,button:w.button,value:names[0],
+    reason:`Für den Lebensbereich „${selectedLifeArea}“ passen deine Werte-Lücken bei ${names.join(", ")} besonders zu dieser Vertiefung.`
+  };
+}
+
+function renderRecommendation(){
+ let r=getRecommendation(result.rows);
+ let theme=getThemeRecommendation(result.rows);
+ // The life area refines wording and report relevance, but never forces a sale.
+ if(selectedLifeArea && r.title==="RESET Coaching / 1:1 Begleitung"){
+   r={...r,why:r.why+` Besonders im Lebensbereich „${selectedLifeArea}“ lohnt es sich, die Werte-Lücke genauer anzusehen.`};
+ }
+ let cta = "";
+
+ if(r.title==="RESET Coaching / 1:1 Begleitung"){
+   cta = `<a class="recBtn" href="https://wa.me/491717335441?text=Hallo%20Peter%2C%0A%0Aich%20habe%20gerade%20den%20ICS%20Werte-Kompass%20gemacht.%20Meine%20Auswertung%20empfiehlt%20mir%20RESET%20Coaching%20%2F%201%3A1%20Begleitung.%0A%0AIch%20w%C3%BCrde%20gern%20mehr%20dar%C3%BCber%20erfahren%20und%20unverbindlich%20schauen%2C%20ob%20eine%20pers%C3%B6nliche%20Begleitung%20f%C3%BCr%20mich%20passend%20ist.%0A%0AViele%20Gr%C3%BC%C3%9Fe" target="_blank" rel="noopener">Unverbindlich über WhatsApp anfragen</a>`;
+ } else if(r.title==="Beziehungsreport"){
+   cta = `<a class="recBtn" href="https://www.innercodesystems.com/Beziehungs-Report/" target="_blank" rel="noopener">Beziehungsreport ansehen</a>`;
+ } else if(r.title==="Lebensaufgabe Report"){
+   cta = `<a class="recBtn" href="https://www.innercodesystems.com/Lebensaufgabe-Report/" target="_blank" rel="noopener">Lebensaufgabe Report ansehen</a>`;
+ } else if(r.title==="Blockadenlöser Report"){
+   cta = `<a class="recBtn" href="https://www.innercodesystems.com/blockadenloeser-report/" target="_blank" rel="noopener">Blockadenlöser Report ansehen</a>`;
+ } else {
+   cta = `<a class="recBtn" href="https://www.innercodesystems.com/7-tage-reset/" target="_blank" rel="noopener">7-Tage-RESET starten</a>`;
+ }
+
+ const themeBlock = (!theme || r.title===theme.title) ? "" : `
+   <div class="recAlt" style="margin-top:18px">
+     <span class="mini">Passend zu deiner Kombination aus Wert + Lebensbereich</span>
+     <h3 style="margin:7px 0 4px;font-size:1.2rem">${theme.title}</h3>
+     <p style="margin:0 0 10px">${theme.reason}</p>
+     <a class="recBtn secondary" href="${theme.url}" target="_blank" rel="noopener">${theme.button}</a>
+   </div>`;
+
+ const noReportBlock = (selectedLifeArea && !theme) ? `
+   <div class="recAlt" style="margin-top:18px">
+     <span class="mini">Deine individuelle Auswertung</span>
+     <h3 style="margin:7px 0 4px;font-size:1.2rem">Kein Report wird dir hier zusätzlich empfohlen</h3>
+     <p style="margin:0">Für die Kombination aus <strong>${result.focus.value}</strong> und <strong>${selectedLifeArea}</strong> passt aktuell keiner der vorhandenen Reports eindeutig genug. Deshalb zeigt ICS bewusst keinen unpassenden Report an.</p>
+   </div>` : "";
+
+ const resetBlock = r.title==="7-Tage-RESET" ? "" : `
+   <div class="recAlt" style="margin-top:14px">
+     <span class="mini">Alternativer Einstieg</span>
+     <h3 style="margin:7px 0 4px;font-size:1.2rem">7-Tage-RESET</h3>
+     <a class="recBtn secondary" href="https://www.innercodesystems.com/7-tage-reset/" target="_blank" rel="noopener">7-Tage-RESET starten</a>
+   </div>`;
+
+ $("recommendation").innerHTML=`<div class="recHero">
+   <span class="pill">${r.type}</span>
+   <h3 style="font-size:1.55rem;margin-top:12px">${r.title}</h3>
+   <div class="recWhy">${r.why}</div>
+   ${cta}
+   ${themeBlock}
+   ${noReportBlock}
+   ${resetBlock}
+ </div>`;
+ result.recommendation={primary:r,theme:theme || null};
+}
+function renderResult(){$("score").style.setProperty("--v",result.score);$("scoreN").textContent=result.score+"%";$("mTop").textContent=result.rows[0].value;$("mGap").textContent=result.largest.value+" "+result.largest.gap;$("mBest").textContent=result.best.value+" "+result.best.lived+"/10";$("mFocus").textContent=result.focus.value;
+$("details").innerHTML=result.rows.map(r=>`<div class="metric" style="margin-top:10px"><div style="display:flex;justify-content:space-between;gap:15px"><strong>${r.rank}. ${r.value}</strong><span>${r.congruence}%</span></div><div class="bar"><span style="width:${r.congruence}%"></span></div><div class="mini" style="margin-top:7px">Wichtigkeit ${r.importance}/10 · gelebt ${r.lived}/10 · Zufriedenheit ${r.satisfaction}/10 · Lücke ${r.gap}</div></div>`).join("");
+let txt=result.score>=85?"Deine wichtigsten Werte spiegeln sich bereits sehr stark in deinem aktuellen Leben wider.":result.score>=70?"Dein Leben besitzt eine gute Werte-Grundkongruenz. Einzelne Lücken zeigen jedoch klar, wo mehr Stimmigkeit möglich ist.":result.score>=50?"Zwischen dem, was dir wirklich wichtig ist, und deinem aktuellen Alltag bestehen spürbare Lücken. Genau darin liegen konkrete Entwicklungshebel.":"Deine wichtigsten Werte bekommen aktuell deutlich weniger Raum, als ihre Bedeutung für dich vermuten lässt. Ein einzelner bewusster Schwerpunkt ist sinnvoller als alles gleichzeitig verändern zu wollen.";
+$("interpret").innerHTML=`<p>${txt}</p><p>Besonders auffällig ist <strong>${result.focus.value}</strong>: Wichtigkeit ${result.focus.importance}/10, aktuell gelebt ${result.focus.lived}/10 und Zufriedenheit ${result.focus.satisfaction}/10.</p>`;
+let names=result.rows.map(x=>x.value),matches=conflictPairs.filter(x=>names.includes(x[0])&&names.includes(x[1]));$("conflicts").innerHTML=matches.length?matches.map(x=>`<div class="conflict"><strong>${x[0]} ↔ ${x[1]}</strong><div class="mini">${x[2]}</div></div>`).join(""):`<div class="conflict"><strong>Keine typische Konfliktachse erkannt.</strong><div class="mini">Spannungen können trotzdem in konkreten Lebenssituationen entstehen.</div></div>`;
+$("inner").textContent=`Prüfe, welche Entscheidungen, Gewohnheiten oder Verpflichtungen deinen Wert „${result.focus.value}“ momentan begrenzen.`;$("action").textContent=`Gib „${result.focus.value}“ innerhalb der nächsten 7 Tage durch eine kleine, sichtbare Handlung mehr Raum.`;$("question").innerHTML=`Welche <strong>eine konkrete Entscheidung</strong> würde deinen Wert <strong>${result.focus.value}</strong> in den nächsten 7 Tagen stärker in dein tatsächliches Leben bringen?`;renderLifeAreas();renderRecommendation();renderHistory()}
+function save(){if(!result)return;result.nextStep=$("stepText").value.trim();let h=JSON.parse(localStorage.getItem("ICS_VALUES_HISTORY_V2")||"[]");h.push(result);localStorage.setItem("ICS_VALUES_HISTORY_V2",JSON.stringify(h.slice(-36)));$("saveMsg").textContent="Auswertung lokal gespeichert.";renderHistory()}
+function renderHistory(){let el=$("history");if(!el)return;let h=JSON.parse(localStorage.getItem("ICS_VALUES_HISTORY_V2")||"[]").reverse();el.innerHTML=h.length?h.map(x=>`<div class="history"><div><strong>${new Date(x.date).toLocaleDateString("de-DE")}</strong></div><strong>${x.score}%</strong><div><div class="bar"><span style="width:${x.score}%"></span></div><div class="mini">Fokus: ${x.focus.value}</div></div></div>`).join(""):`<p class="mini">Noch keine gespeicherten Auswertungen.</p>`}
+function loadLast(){let h=JSON.parse(localStorage.getItem("ICS_VALUES_HISTORY_V2")||"[]");if(!h.length)return alert("Noch keine gespeicherte Auswertung vorhanden.");result=h[h.length-1];renderResult();go(5)}
+function restart(){location.reload()}
+renderCloud();renderHistory();
+</script>
+</body></html>
