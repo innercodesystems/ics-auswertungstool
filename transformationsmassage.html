@@ -1,0 +1,1810 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Transformationsmassage | Inner Code Systems</title>
+
+<style>
+
+:root{
+  --cream:#faf1cb;
+  --light:#f8f3e8;
+  --gold:#d4a03a;
+  --black:#1a1815;
+  --dark:#211d18;
+  --text:#6f685f;
+  --white:#fffdf8;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  background:var(--light);
+  color:var(--black);
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+a{
+  color:inherit;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.header{
+  min-height:74px;
+  padding:12px 5%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#fffaf0;
+  border-bottom:1px solid rgba(212,160,58,.22);
+}
+
+.brand{
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.brand img{
+  width:46px;
+  height:46px;
+  object-fit:contain;
+}
+
+.brand-main{
+  display:block;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:25px;
+}
+
+.brand-sub{
+  display:block;
+  font-size:9px;
+  letter-spacing:.15em;
+}
+
+.nav{
+  display:flex;
+  align-items:center;
+  gap:24px;
+}
+
+.nav a{
+  text-decoration:none;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.08em;
+}
+
+.nav a:hover{
+  color:var(--gold);
+}
+
+/* =========================================
+   HERO
+========================================= */
+
+.hero{
+  background:linear-gradient(
+    135deg,
+    #fffaf0 0%,
+    #faf1cb 52%,
+    #f4e6bd 100%
+  );
+  overflow:hidden;
+}
+
+.hero-inner{
+  max-width:1240px;
+  margin:auto;
+  padding:105px 34px 100px;
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:75px;
+  align-items:center;
+}
+
+.kicker{
+  color:#a87820;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.18em;
+  margin-bottom:20px;
+}
+
+h1{
+  margin:0;
+  max-width:760px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-weight:400;
+  font-size:clamp(54px,6vw,86px);
+  line-height:.98;
+}
+
+.hero-text{
+  max-width:690px;
+  margin:28px 0 0;
+  color:#655e55;
+  font-size:18px;
+  line-height:1.75;
+}
+
+.hero-buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:32px;
+}
+
+.button{
+  display:inline-block;
+  padding:15px 22px;
+  border-radius:8px;
+  background:var(--gold);
+  color:#17130e;
+  text-decoration:none;
+  font-weight:800;
+  font-size:14px;
+  border:1px solid var(--gold);
+}
+
+.button-secondary{
+  background:transparent;
+  border-color:rgba(26,24,21,.35);
+}
+
+.button:hover{
+  transform:translateY(-1px);
+}
+
+.hero-card{
+  padding:42px;
+  border-radius:22px;
+  background:rgba(255,253,248,.74);
+  border:1px solid rgba(212,160,58,.38);
+  box-shadow:0 22px 60px rgba(71,53,23,.10);
+}
+
+.hero-card-label{
+  color:#a87820;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.16em;
+}
+
+.hero-card h2{
+  margin:15px 0 16px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:34px;
+  line-height:1.1;
+  font-weight:400;
+}
+
+.hero-card p{
+  margin:0;
+  color:#6f685f;
+  line-height:1.75;
+}
+
+.hero-mantra{
+  margin-top:28px;
+  padding-top:24px;
+  border-top:1px solid rgba(212,160,58,.28);
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:20px;
+  line-height:1.55;
+}
+
+/* =========================================
+   GENERAL CONTENT
+========================================= */
+
+.content{
+  max-width:1240px;
+  margin:auto;
+  padding:92px 34px;
+}
+
+.section{
+  padding:78px 0;
+}
+
+.section + .section{
+  border-top:1px solid rgba(212,160,58,.20);
+}
+
+.section-kicker{
+  color:var(--gold);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.16em;
+  margin-bottom:14px;
+}
+
+.section-title{
+  margin:0;
+  max-width:900px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(38px,4.5vw,58px);
+  line-height:1.06;
+  font-weight:400;
+}
+
+.section-intro{
+  max-width:780px;
+  color:var(--text);
+  line-height:1.8;
+  font-size:16px;
+  margin:22px 0 40px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px;
+}
+
+.grid.four{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+}
+
+.card{
+  padding:29px;
+  min-height:225px;
+  background:var(--white);
+  border:1px solid rgba(212,160,58,.25);
+  border-radius:16px;
+  text-decoration:none;
+  box-shadow:0 10px 30px rgba(0,0,0,.04);
+  transition:.2s ease;
+}
+
+a.card:hover{
+  transform:translateY(-3px);
+  border-color:rgba(212,160,58,.65);
+}
+
+.card-label{
+  color:var(--gold);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.14em;
+  margin-bottom:20px;
+}
+
+.card h3{
+  margin:0 0 13px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:25px;
+  line-height:1.15;
+  font-weight:400;
+}
+
+.card p{
+  margin:0;
+  color:#746d64;
+  font-size:14px;
+  line-height:1.7;
+}
+
+.card-link{
+  display:inline-block;
+  margin-top:22px;
+  color:var(--gold);
+  font-size:13px;
+  font-weight:800;
+}
+
+/* =========================================
+   DARK SECTION
+========================================= */
+
+.dark{
+  background:var(--black);
+  color:#f6f1e7;
+}
+
+.dark .content{
+  padding-top:100px;
+  padding-bottom:100px;
+}
+
+.dark .section-title{
+  color:#f6f1e7;
+}
+
+.dark .section-intro{
+  color:#c4bbaf;
+}
+
+.dark .card{
+  background:#211d18;
+  border-color:#514229;
+  box-shadow:none;
+}
+
+.dark .card h3{
+  color:#f6f1e7;
+}
+
+.dark .card p{
+  color:#c7beb2;
+}
+
+/* =========================================
+   BODY SIGNALS
+========================================= */
+
+.signals{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:15px;
+}
+
+.signal{
+  padding:26px 24px;
+  border-radius:15px;
+  background:#fffdf8;
+  border:1px solid rgba(212,160,58,.25);
+}
+
+.signal-number{
+  color:var(--gold);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.12em;
+}
+
+.signal h3{
+  margin:13px 0 10px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-weight:400;
+  font-size:22px;
+}
+
+.signal p{
+  margin:0;
+  color:#746d64;
+  font-size:14px;
+  line-height:1.65;
+}
+
+/* =========================================
+   JOURNEY
+========================================= */
+
+.journey{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:10px;
+  margin-top:42px;
+}
+
+.journey-step{
+  position:relative;
+  padding:27px 18px;
+  text-align:center;
+  border-radius:14px;
+  background:#211d18;
+  border:1px solid #514229;
+}
+
+.journey-step span{
+  display:block;
+  color:var(--gold);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.13em;
+  margin-bottom:12px;
+}
+
+.journey-step strong{
+  display:block;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:20px;
+  font-weight:400;
+  color:#f6f1e7;
+}
+
+.journey-note{
+  max-width:780px;
+  margin:35px auto 0;
+  text-align:center;
+  color:#bdb4a7;
+  font-size:14px;
+  line-height:1.75;
+}
+
+/* =========================================
+   QUOTE / PHILOSOPHY
+========================================= */
+
+.philosophy{
+  max-width:960px;
+  margin:auto;
+  text-align:center;
+  padding:25px 0;
+}
+
+.philosophy-small{
+  color:var(--gold);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.17em;
+}
+
+.philosophy h2{
+  margin:20px auto;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(38px,5vw,62px);
+  line-height:1.08;
+  font-weight:400;
+}
+
+.philosophy p{
+  max-width:730px;
+  margin:auto;
+  color:#746d64;
+  line-height:1.8;
+}
+
+/* =========================================
+   SESSION
+========================================= */
+
+.session{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:55px;
+  align-items:start;
+}
+
+.session-copy h2{
+  margin:0;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:48px;
+  line-height:1.08;
+  font-weight:400;
+}
+
+.session-copy p{
+  color:#746d64;
+  line-height:1.8;
+}
+
+.session-steps{
+  display:grid;
+  gap:12px;
+}
+
+.session-step{
+  display:grid;
+  grid-template-columns:48px 1fr;
+  gap:15px;
+  align-items:start;
+  padding:19px;
+  border-radius:12px;
+  background:#fffdf8;
+  border:1px solid rgba(212,160,58,.25);
+}
+
+.session-step-number{
+  width:42px;
+  height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:#f4ead4;
+  color:#a87820;
+  font-weight:800;
+  font-size:12px;
+}
+
+.session-step strong{
+  display:block;
+  margin:2px 0 6px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:20px;
+  font-weight:400;
+}
+
+.session-step p{
+  margin:0;
+  color:#746d64;
+  font-size:13px;
+  line-height:1.6;
+}
+
+/* =========================================
+   PATHS
+========================================= */
+
+.paths{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:16px;
+}
+
+.path{
+  display:flex;
+  flex-direction:column;
+  min-height:285px;
+  padding:28px;
+  border-radius:16px;
+  background:#211d18;
+  border:1px solid #514229;
+  text-decoration:none;
+}
+
+.path-label{
+  color:var(--gold);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.14em;
+}
+
+.path h3{
+  margin:20px 0 12px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:25px;
+  line-height:1.15;
+  font-weight:400;
+}
+
+.path p{
+  margin:0;
+  color:#c7beb2;
+  font-size:14px;
+  line-height:1.7;
+}
+
+.path-link{
+  margin-top:auto;
+  padding-top:25px;
+  color:var(--gold);
+  font-size:13px;
+  font-weight:800;
+}
+
+/* =========================================
+   ICS CONNECTION
+========================================= */
+
+.ics-connection{
+  padding:48px;
+  border-radius:20px;
+  background:#fffdf8;
+  border:1px solid rgba(212,160,58,.28);
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:45px;
+  align-items:center;
+}
+
+.ics-connection h3{
+  margin:0 0 15px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:39px;
+  font-weight:400;
+}
+
+.ics-connection p{
+  color:#746d64;
+  line-height:1.75;
+}
+
+.ics-links{
+  display:grid;
+  gap:10px;
+}
+
+.ics-link{
+  padding:15px 17px;
+  border-radius:10px;
+  background:#f4ecdc;
+  text-decoration:none;
+  font-size:14px;
+  font-weight:700;
+}
+
+.ics-link:hover{
+  background:#eee1c8;
+}
+
+/* =========================================
+   FINAL CTA
+========================================= */
+
+.final{
+  padding:60px;
+  border-radius:22px;
+  background:var(--black);
+  color:#f6f1e7;
+  text-align:center;
+}
+
+.final .section-kicker{
+  margin-bottom:18px;
+}
+
+.final h2{
+  max-width:850px;
+  margin:0 auto;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(38px,5vw,58px);
+  line-height:1.08;
+  font-weight:400;
+}
+
+.final p{
+  max-width:700px;
+  margin:24px auto 0;
+  color:#c7beb2;
+  line-height:1.75;
+}
+
+.final .button{
+  margin-top:28px;
+}
+
+/* =========================================
+   DISCLAIMER
+========================================= */
+
+.note{
+  max-width:850px;
+  margin:30px auto 0;
+  text-align:center;
+  color:#8b8379;
+  font-size:11px;
+  line-height:1.65;
+}
+
+/* =========================================
+   PREMIUM FOOTER
+========================================= */
+
+.ics-footer{
+  background:#171512;
+  color:#f6f1e7;
+  border-top:1px solid rgba(212,160,58,.28);
+}
+
+.ics-footer-inner{
+  max-width:1240px;
+  margin:0 auto;
+  padding:64px 34px 28px;
+}
+
+.ics-footer-top{
+  display:grid;
+  grid-template-columns:1.3fr .9fr .9fr;
+  gap:54px;
+  padding-bottom:46px;
+}
+
+.ics-footer-brand{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:20px;
+}
+
+.ics-footer-logo{
+  width:58px;
+  height:58px;
+  object-fit:contain;
+}
+
+.ics-footer-name{
+  font-family:Georgia,"Times New Roman",serif;
+  color:#d4a03a;
+  font-size:25px;
+  letter-spacing:.04em;
+}
+
+.ics-footer-sub{
+  margin-top:4px;
+  color:#9f9689;
+  font-size:9px;
+  letter-spacing:.15em;
+}
+
+.ics-footer-text{
+  max-width:440px;
+  margin:0;
+  color:#bdb4a7;
+  font-size:14px;
+  line-height:1.75;
+}
+
+.ics-footer-title{
+  margin:0 0 18px;
+  color:#d4a03a;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.14em;
+}
+
+.ics-footer-links{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:11px;
+}
+
+.ics-footer-links a{
+  color:#d6cec1;
+  text-decoration:none;
+  font-size:13px;
+  line-height:1.5;
+  transition:.2s ease;
+}
+
+.ics-footer-links a:hover{
+  color:#d4a03a;
+  transform:translateX(2px);
+}
+
+.ics-footer-quote{
+  margin:0 0 18px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:20px;
+  line-height:1.45;
+  color:#f6f1e7;
+}
+
+.ics-footer-peter{
+  color:#d4a03a;
+  font-size:13px;
+  font-weight:700;
+}
+
+.ics-footer-bottom{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  padding-top:24px;
+  border-top:1px solid rgba(212,160,58,.18);
+}
+
+.ics-footer-copy{
+  color:#81796e;
+  font-size:11px;
+}
+
+.ics-footer-legal{
+  display:flex;
+  align-items:center;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+.ics-footer-legal a{
+  color:#9f9689;
+  text-decoration:none;
+  font-size:11px;
+}
+
+.ics-footer-legal a:hover{
+  color:#d4a03a;
+}
+
+.ics-footer-up{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:38px;
+  height:38px;
+  border:1px solid rgba(212,160,58,.38);
+  border-radius:50%;
+  color:#d4a03a !important;
+  text-decoration:none;
+  font-size:18px !important;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media(max-width:1000px){
+
+  .nav{
+    display:none;
+  }
+
+  .hero-inner{
+    grid-template-columns:1fr;
+  }
+
+  .grid.four,
+  .signals{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .journey{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .paths{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .session,
+  .ics-connection{
+    grid-template-columns:1fr;
+  }
+
+  .ics-footer-top{
+    grid-template-columns:1fr 1fr;
+    gap:38px 28px;
+  }
+
+  .ics-footer-about{
+    grid-column:1 / -1;
+  }
+}
+
+@media(max-width:650px){
+
+  .hero-inner,
+  .content{
+    padding-left:20px;
+    padding-right:20px;
+  }
+
+  .hero-inner{
+    padding-top:68px;
+    padding-bottom:68px;
+  }
+
+  h1{
+    font-size:54px;
+  }
+
+  .hero-card{
+    padding:28px;
+  }
+
+  .section{
+    padding:58px 0;
+  }
+
+  .grid,
+  .grid.four,
+  .signals,
+  .journey,
+  .paths{
+    grid-template-columns:1fr;
+  }
+
+  .session-copy h2{
+    font-size:39px;
+  }
+
+  .ics-connection{
+    padding:29px;
+  }
+
+  .final{
+    padding:38px 25px;
+  }
+
+  .hero-buttons{
+    flex-direction:column;
+  }
+
+  .hero-buttons .button{
+    width:100%;
+    text-align:center;
+  }
+
+  .ics-footer-inner{
+    padding:50px 22px 24px;
+  }
+
+  .ics-footer-top{
+    grid-template-columns:1fr;
+    gap:36px;
+  }
+
+  .ics-footer-about{
+    grid-column:auto;
+  }
+
+  .ics-footer-bottom{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .ics-footer-quote{
+    font-size:18px;
+  }
+}
+
+</style>
+</head>
+
+<body id="top">
+
+<!-- =========================================
+     HEADER
+========================================= -->
+
+<header class="header">
+
+  <a class="brand"
+     href="https://innercodesystems.github.io/ics-auswertungstool/ics-startseite.html">
+
+    <img
+      src="https://www.innercodesystems.com/wp-content/uploads/go-x/u/39adbfd1-c2be-4f0b-adb6-f4b956947aa2/l0,t256,w1024,h1024/image.png"
+      alt="ICS">
+
+    <span>
+      <span class="brand-main">ICS</span>
+      <span class="brand-sub">INNER CODE SYSTEMS</span>
+    </span>
+
+  </a>
+
+  <nav class="nav">
+
+    <a href="https://innercodesystems.github.io/ics-auswertungstool/ics-startseite.html">
+      START
+    </a>
+
+    <a href="https://innercodesystems.github.io/ics-auswertungstool/inner.html">
+      INNER
+    </a>
+
+    <a href="https://innercodesystems.github.io/ics-auswertungstool/body.html"
+       style="color:#d4a03a;">
+      BODY
+    </a>
+
+    <a href="https://innercodesystems.github.io/ics-auswertungstool/action.html">
+      ACTION
+    </a>
+
+    <a href="https://innercodesystems.github.io/ics-auswertungstool/reset.html">
+      RESET
+    </a>
+
+    <a href="https://innercodesystems.github.io/ics-auswertungstool/orientierung.html">
+      ORIENTIERUNG
+    </a>
+
+    <a href="https://app.innercodesystems.com/">
+      MEIN ICS
+    </a>
+
+  </nav>
+
+</header>
+
+
+<!-- =========================================
+     HERO
+========================================= -->
+
+<section class="hero">
+
+  <div class="hero-inner">
+
+    <div>
+
+      <div class="kicker">
+        ICS · BODY · TRANSFORMATIONSMASSAGE
+      </div>
+
+      <h1>
+        Berührung, die dich<br>
+        wieder bei dir<br>
+        ankommen lässt.
+      </h1>
+
+      <p class="hero-text">
+        Transformationsmassage ist für mich mehr als eine Abfolge
+        von Griffen. Sie ist ein Raum, in dem du für einen Moment
+        nicht funktionieren musst – sondern wahrnehmen, loslassen
+        und wieder Verbindung zu deinem Körper aufnehmen darfst.
+      </p>
+
+      <div class="hero-buttons">
+
+        <a class="button" href="#entdecken">
+          Massage entdecken
+        </a>
+
+        <a class="button button-secondary"
+           href="https://wa.me/491717335441?text=Hallo%20Peter%2C%20ich%20interessiere%20mich%20f%C3%BCr%20die%20Transformationsmassage%20und%20m%C3%B6chte%20gerne%20mehr%20erfahren.">
+          Persönlich anfragen
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <div class="hero-card">
+
+      <div class="hero-card-label">
+        EINE REISE ZURÜCK ZU DIR
+      </div>
+
+      <h2>
+        Du musst hier nichts leisten.
+      </h2>
+
+      <p>
+        Im Alltag sind wir häufig im Denken, Organisieren,
+        Reagieren und Funktionieren. Die Transformationsmassage
+        lädt dich dazu ein, für einen Moment aus diesem Modus
+        herauszutreten und wieder bewusster wahrzunehmen,
+        was dein Körper gerade braucht.
+      </p>
+
+      <div class="hero-mantra">
+        Ankommen.<br>
+        Wahrnehmen.<br>
+        Spüren.<br>
+        Loslassen.
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<main>
+
+
+<!-- =========================================
+     BODY / AUSGANGSPUNKT
+========================================= -->
+
+<div class="content" id="entdecken">
+
+  <section class="section">
+
+    <div class="section-kicker">
+      WENN DEIN KÖRPER AUFMERKSAMKEIT BRAUCHT
+    </div>
+
+    <h2 class="section-title">
+      Dein Körper muss nicht immer weiter funktionieren.
+    </h2>
+
+    <p class="section-intro">
+      Vielleicht kennst du Phasen, in denen äußerlich vieles läuft,
+      während dein Körper längst nach Ruhe, Entlastung oder bewusster
+      Wahrnehmung verlangt. Genau dort beginnt BODY innerhalb von
+      Inner Code Systems.
+    </p>
+
+
+    <div class="signals">
+
+      <div class="signal">
+        <div class="signal-number">01</div>
+        <h3>Viel Spannung</h3>
+        <p>
+          Dein Körper fühlt sich häufig angespannt an und
+          Entspannung entsteht nicht mehr selbstverständlich.
+        </p>
+      </div>
+
+      <div class="signal">
+        <div class="signal-number">02</div>
+        <h3>Innere Unruhe</h3>
+        <p>
+          Du bist körperlich müde, aber innerlich läuft
+          dein System trotzdem weiter.
+        </p>
+      </div>
+
+      <div class="signal">
+        <div class="signal-number">03</div>
+        <h3>Nur noch funktionieren</h3>
+        <p>
+          Du erledigst vieles, spürst dich selbst dabei
+          aber immer weniger.
+        </p>
+      </div>
+
+      <div class="signal">
+        <div class="signal-number">04</div>
+        <h3>Wieder mehr spüren</h3>
+        <p>
+          Du möchtest bewusster in deinen Körper zurückkehren
+          und wieder mehr Verbindung zu dir erleben.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+</div>
+
+
+<!-- =========================================
+     WAS IST TRANSFORMATIONSMASSAGE
+========================================= -->
+
+<section class="dark">
+
+  <div class="content">
+
+    <div class="section-kicker">
+      WAS TRANSFORMATIONSMASSAGE FÜR MICH BEDEUTET
+    </div>
+
+    <h2 class="section-title">
+      Nicht einfach behandeln.<br>
+      Sondern Raum geben.
+    </h2>
+
+    <p class="section-intro">
+      Die Transformationsmassage verbindet achtsame Berührung,
+      Präsenz und Körperwahrnehmung. Sie soll keinen bestimmten
+      Zustand erzwingen. Sie schafft vielmehr einen geschützten
+      Rahmen, in dem dein System zur Ruhe kommen und du dich
+      selbst wieder bewusster wahrnehmen kannst.
+    </p>
+
+
+    <div class="grid">
+
+      <div class="card">
+        <div class="card-label">PRÄSENZ</div>
+        <h3>Wirklich ankommen</h3>
+        <p>
+          Für eine Zeit musst du nichts organisieren,
+          entscheiden oder erklären. Deine Aufmerksamkeit
+          darf wieder bei dir landen.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card-label">BERÜHRUNG</div>
+        <h3>Bewusst wahrnehmen</h3>
+        <p>
+          Achtsame Berührung kann einen Raum schaffen,
+          in dem Körperempfindungen wieder deutlicher
+          wahrgenommen werden.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card-label">REGULATION</div>
+        <h3>Aus dem Funktionieren heraus</h3>
+        <p>
+          Die Sitzung ist eine Einladung, Tempo herauszunehmen,
+          zur Ruhe zu kommen und deinem Körper wieder
+          Aufmerksamkeit zu schenken.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     REISE
+========================================= -->
+
+<section class="dark">
+
+  <div class="content"
+       style="padding-top:20px;">
+
+    <div class="section-kicker">
+      DIE REISE DURCH DIE TRANSFORMATIONSMASSAGE
+    </div>
+
+    <h2 class="section-title">
+      Eine Reise, die nicht bei einem einzelnen Griff beginnt.
+    </h2>
+
+    <p class="section-intro">
+      Die verschiedenen Berührungen und Griffe sind Teil eines
+      größeren Prozesses. Entscheidend ist nicht, möglichst viel
+      „zu machen“, sondern wie du die einzelnen Momente erlebst
+      und was du dabei wahrnimmst.
+    </p>
+
+
+    <div class="journey">
+
+      <div class="journey-step">
+        <span>01</span>
+        <strong>Ankommen</strong>
+      </div>
+
+      <div class="journey-step">
+        <span>02</span>
+        <strong>Wahrnehmen</strong>
+      </div>
+
+      <div class="journey-step">
+        <span>03</span>
+        <strong>Loslassen</strong>
+      </div>
+
+      <div class="journey-step">
+        <span>04</span>
+        <strong>Verbinden</strong>
+      </div>
+
+      <div class="journey-step">
+        <span>05</span>
+        <strong>Integrieren</strong>
+      </div>
+
+    </div>
+
+
+    <p class="journey-note">
+      Die 14 Griffe, Gesichts- und Rückenarbeit sowie weitere
+      Anwendungen können innerhalb dieser Reise unterschiedliche
+      Schwerpunkte setzen. Nicht jede Sitzung muss gleich sein.
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     PHILOSOPHIE
+========================================= -->
+
+<div class="content">
+
+  <section class="section">
+
+    <div class="philosophy">
+
+      <div class="philosophy-small">
+        EIN GRUNDSATZ
+      </div>
+
+      <h2>
+        Nicht jede Berührung muss etwas lösen.
+      </h2>
+
+      <p>
+        Manchmal darf sie einfach Raum schaffen.
+        Für Ruhe. Für Wahrnehmung. Für einen Moment,
+        in dem du nicht verändern musst, was gerade da ist.
+        Genau darin kann bereits etwas Neues entstehen.
+      </p>
+
+    </div>
+
+  </section>
+
+
+<!-- =========================================
+     SITZUNG
+========================================= -->
+
+  <section class="section">
+
+    <div class="session">
+
+      <div class="session-copy">
+
+        <div class="section-kicker">
+          EINE PERSÖNLICHE SITZUNG
+        </div>
+
+        <h2>
+          Wie eine Transformationsmassage ablaufen kann.
+        </h2>
+
+        <p>
+          Jede Begegnung ist individuell. Deshalb geht es nicht darum,
+          ein starres Programm abzuarbeiten. Wir beginnen mit deinem
+          aktuellen Zustand und schauen, was für dich in diesem Moment
+          stimmig ist.
+        </p>
+
+        <a class="button"
+           href="https://wa.me/491717335441?text=Hallo%20Peter%2C%20ich%20m%C3%B6chte%20gerne%20mehr%20%C3%BCber%20eine%20pers%C3%B6nliche%20Transformationsmassage%20erfahren.">
+          Sitzung anfragen
+        </a>
+
+      </div>
+
+
+      <div class="session-steps">
+
+        <div class="session-step">
+          <div class="session-step-number">01</div>
+          <div>
+            <strong>Ankommen</strong>
+            <p>
+              Wir nehmen uns kurz Zeit für deinen aktuellen
+              Zustand und das, was für dich heute wichtig ist.
+            </p>
+          </div>
+        </div>
+
+        <div class="session-step">
+          <div class="session-step-number">02</div>
+          <div>
+            <strong>Wahrnehmen</strong>
+            <p>
+              Du kommst aus dem Alltag heraus und richtest
+              deine Aufmerksamkeit bewusster auf deinen Körper.
+            </p>
+          </div>
+        </div>
+
+        <div class="session-step">
+          <div class="session-step-number">03</div>
+          <div>
+            <strong>Berührung & Körperarbeit</strong>
+            <p>
+              Die Massage wird auf den Rahmen der Sitzung
+              und dein momentanes Erleben abgestimmt.
+            </p>
+          </div>
+        </div>
+
+        <div class="session-step">
+          <div class="session-step-number">04</div>
+          <div>
+            <strong>Nachspüren</strong>
+            <p>
+              Am Ende bleibt Zeit, die Erfahrung nicht sofort
+              wieder mit dem nächsten Gedanken zu überdecken.
+            </p>
+          </div>
+        </div>
+
+        <div class="session-step">
+          <div class="session-step-number">05</div>
+          <div>
+            <strong>Integration</strong>
+            <p>
+              Was du wahrgenommen hast, darf seinen Platz
+              finden – ohne dass daraus sofort eine Aufgabe
+              entstehen muss.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</div>
+
+
+<!-- =========================================
+     VIER WEGE
+========================================= -->
+
+<section class="dark">
+
+  <div class="content">
+
+    <div class="section-kicker">
+      DEINE WEGE IN DIE TRANSFORMATIONSMASSAGE
+    </div>
+
+    <h2 class="section-title">
+      Erleben. Verstehen. Selbst anwenden. Vertiefen.
+    </h2>
+
+    <p class="section-intro">
+      Du kannst Transformationsmassage auf unterschiedliche Weise
+      kennenlernen. Wähle nicht den „richtigen“ Weg – sondern den,
+      der gerade zu dir passt.
+    </p>
+
+
+    <div class="paths">
+
+      <a class="path"
+         href="https://wa.me/491717335441?text=Hallo%20Peter%2C%20ich%20m%C3%B6chte%20die%20Transformationsmassage%20gerne%20pers%C3%B6nlich%20erleben.">
+
+        <div class="path-label">
+          MASSAGE ERLEBEN
+        </div>
+
+        <h3>
+          Persönliche Sitzung
+        </h3>
+
+        <p>
+          Erlebe die Transformationsmassage persönlich
+          und finde heraus, was dein Körper gerade braucht.
+        </p>
+
+        <div class="path-link">
+          Persönlich anfragen →
+        </div>
+
+      </a>
+
+
+      <a class="path"
+         href="https://www.innercodesystems.com/grundlagen-transformationsmassage/">
+
+        <div class="path-label">
+          METHODE ENTDECKEN
+        </div>
+
+        <h3>
+          Grundlagen verstehen
+        </h3>
+
+        <p>
+          Erfahre mehr über die Haltung, den Ansatz
+          und die Grundlagen hinter der Transformationsmassage.
+        </p>
+
+        <div class="path-link">
+          Grundlagen entdecken →
+        </div>
+
+      </a>
+
+
+      <a class="path"
+         href="https://www.innercodesystems.com/selbstanwendung/">
+
+        <div class="path-label">
+          SELBST ANWENDEN
+        </div>
+
+        <h3>
+          Berührung für dich
+        </h3>
+
+        <p>
+          Entdecke Möglichkeiten, Körperwahrnehmung
+          und bewusste Berührung auch selbst zu erleben.
+        </p>
+
+        <div class="path-link">
+          Selbstanwendung entdecken →
+        </div>
+
+      </a>
+
+
+      <a class="path"
+         href="https://www.innercodesystems.com/transformationsmassage-wissenswelt/">
+
+        <div class="path-label">
+          WISSENSWELT
+        </div>
+
+        <h3>
+          Tiefer eintauchen
+        </h3>
+
+        <p>
+          Vertiefe die Transformationsmassage mit
+          Wissen, Anwendungen, Impulsen und weiteren Inhalten.
+        </p>
+
+        <div class="path-link">
+          Wissenswelt öffnen →
+        </div>
+
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     ICS VERBINDUNG
+========================================= -->
+
+<div class="content">
+
+  <section class="section">
+
+    <div class="section-kicker">
+      TRANSFORMATIONSMASSAGE + INNER CODE SYSTEMS
+    </div>
+
+    <div class="ics-connection">
+
+      <div>
+
+        <h3>
+          Dein Körper ist Teil deines ganzen Systems.
+        </h3>
+
+        <p>
+          Deshalb steht Transformationsmassage innerhalb von ICS
+          nicht isoliert. Körper, Gedanken, Handlung, Muster und
+          Lebensrichtung beeinflussen sich gegenseitig.
+          BODY ist ein möglicher Einstieg – nicht das Ende des Weges.
+        </p>
+
+      </div>
+
+
+      <div class="ics-links">
+
+        <a class="ics-link"
+           href="https://innercodesystems.github.io/ics-auswertungstool/body.html">
+          BODY · Energie entdecken →
+        </a>
+
+        <a class="ics-link"
+           href="https://innercodesystems.github.io/ics-auswertungstool/ics-startseite.html#system-check">
+          ICS System Check starten →
+        </a>
+
+        <a class="ics-link"
+           href="https://innercodesystems.github.io/ics-auswertungstool/reset.html">
+          RESET · Muster entdecken →
+        </a>
+
+        <a class="ics-link"
+           href="https://app.innercodesystems.com/">
+          Mein ICS öffnen →
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+<!-- =========================================
+     FINAL CTA
+========================================= -->
+
+  <section class="section">
+
+    <div class="final">
+
+      <div class="section-kicker">
+        DEIN NÄCHSTER SCHRITT
+      </div>
+
+      <h2>
+        Vielleicht beginnt dein nächster Schritt
+        nicht mit einer Antwort.
+        Sondern mit einem Moment,
+        in dem du wieder etwas spürst.
+      </h2>
+
+      <p>
+        Wenn du wissen möchtest, ob die Transformationsmassage
+        gerade zu dir passt, schreib mir einfach persönlich.
+        Wir klären in Ruhe, was du suchst und welcher Einstieg
+        sinnvoll sein könnte.
+      </p>
+
+      <a class="button"
+         href="https://wa.me/491717335441?text=Hallo%20Peter%2C%20ich%20bin%20%C3%BCber%20die%20Transformationsmassage-Seite%20gekommen%20und%20m%C3%B6chte%20gerne%20pers%C3%B6nlich%20mit%20dir%20kl%C3%A4ren%2C%20ob%20eine%20Sitzung%20f%C3%BCr%20mich%20passt.">
+        Transformationsmassage anfragen
+      </a>
+
+    </div>
+
+    <p class="note">
+      Die Transformationsmassage ist ein Angebot im Bereich
+      Entspannung, Körperwahrnehmung und persönliche Entwicklung.
+      Sie ersetzt keine medizinische, psychotherapeutische oder
+      physiotherapeutische Diagnose oder Behandlung.
+    </p>
+
+  </section>
+
+</div>
+
+</main>
+
+
+<!-- =========================================
+     ICS PREMIUM FOOTER
+========================================= -->
+
+<footer class="ics-footer">
+
+  <div class="ics-footer-inner">
+
+    <div class="ics-footer-top">
+
+      <div class="ics-footer-about">
+
+        <div class="ics-footer-brand">
+
+          <img
+            class="ics-footer-logo"
+            src="https://www.innercodesystems.com/wp-content/uploads/go-x/u/39adbfd1-c2be-4f0b-adb6-f4b956947aa2/l0,t256,w1024,h1024/image.png"
+            alt="Inner Code Systems">
+
+          <div>
+            <div class="ics-footer-name">ICS</div>
+            <div class="ics-footer-sub">INNER CODE SYSTEMS</div>
+          </div>
+
+        </div>
+
+        <p class="ics-footer-text">
+          Inner Code Systems verbindet Klarheit, Körper,
+          Handlung, Veränderung und Orientierung zu einem System,
+          das dich dabei unterstützt, dein Leben bewusster zu gestalten.
+        </p>
+
+      </div>
+
+
+      <div>
+
+        <div class="ics-footer-title">
+          DIE FÜNF ICS WELTEN
+        </div>
+
+        <nav class="ics-footer-links">
+
+          <a href="https://innercodesystems.github.io/ics-auswertungstool/inner.html">
+            INNER · Klarheit
+          </a>
+
+          <a href="https://innercodesystems.github.io/ics-auswertungstool/body.html">
+            BODY · Energie
+          </a>
+
+          <a href="https://innercodesystems.github.io/ics-auswertungstool/action.html">
+            ACTION · Umsetzung
+          </a>
+
+          <a href="https://innercodesystems.github.io/ics-auswertungstool/reset.html">
+            RESET · Muster
+          </a>
+
+          <a href="https://innercodesystems.github.io/ics-auswertungstool/orientierung.html">
+            ORIENTIERUNG · Richtung
+          </a>
+
+        </nav>
+
+      </div>
+
+
+      <div>
+
+        <div class="ics-footer-title">
+          INNER CODE SYSTEMS
+        </div>
+
+        <p class="ics-footer-quote">
+          „Du musst nicht dein ganzes Leben verändern.
+          Du musst erkennen, was jetzt wirklich dran ist.“
+        </p>
+
+        <div class="ics-footer-peter">
+          Peter Wicklein
+        </div>
+
+        <nav class="ics-footer-links" style="margin-top:20px;">
+
+          <a href="https://app.innercodesystems.com/">
+            Mein ICS →
+          </a>
+
+          <a href="https://wa.me/491717335441?text=Hallo%20Peter%2C%20ich%20komme%20%C3%BCber%20die%20Transformationsmassage-Seite%20und%20m%C3%B6chte%20gerne%20Kontakt%20aufnehmen.">
+            Persönlich Kontakt aufnehmen →
+          </a>
+
+        </nav>
+
+      </div>
+
+    </div>
+
+
+    <div class="ics-footer-bottom">
+
+      <div class="ics-footer-copy">
+        © 2026 Inner Code Systems · Peter Wicklein
+      </div>
+
+      <div class="ics-footer-legal">
+
+        <a href="https://www.innercodesystems.com/impressum/">
+          Impressum
+        </a>
+
+        <a href="https://www.innercodesystems.com/datenschutz/">
+          Datenschutz
+        </a>
+
+        <a href="#top"
+           class="ics-footer-up"
+           aria-label="Nach oben">
+          ↑
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</footer>
+
+
+<!-- =========================================
+     LINK LOGIK
+========================================= -->
+
+<script>
+
+document.querySelectorAll('a[href]').forEach(function(link){
+
+  const href = link.getAttribute('href');
+
+  if(!href) return;
+
+  const isInternalICS =
+    href.includes('innercodesystems.github.io/ics-auswertungstool/');
+
+  const isAnchor =
+    href.startsWith('#');
+
+  if(isInternalICS || isAnchor){
+
+    link.removeAttribute('target');
+    link.removeAttribute('rel');
+
+    return;
+  }
+
+  if(
+    href.startsWith('http://') ||
+    href.startsWith('https://')
+  ){
+
+    link.setAttribute('target','_blank');
+    link.setAttribute('rel','noopener noreferrer');
+
+  }
+
+});
+
+</script>
+
+</body>
+</html>
