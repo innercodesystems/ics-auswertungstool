@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Was nährt dich gerade? – ICS</title>
+<style>
+:root{
+  --bg:#1a1815;
+  --card:#23201b;
+  --card2:#2b2721;
+  --gold:#b8924f;
+  --gold2:#d4a03a;
+  --cream:#f6f1e7;
+  --muted:#c9c1b4;
+  --line:#3b352d;
+  --ok:#8f9a7b;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:radial-gradient(circle at top,#242019 0,#1a1815 55%);
+  color:var(--cream);
+  min-height:100vh;
+}
+.wrap{max-width:860px;margin:0 auto;padding:24px 16px 56px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--gold);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:12px;margin-bottom:22px}
+.brand-dot{width:9px;height:9px;border-radius:50%;background:var(--gold)}
+.hero{padding:26px 22px;background:linear-gradient(180deg,rgba(184,146,79,.10),rgba(184,146,79,.02));border:1px solid rgba(184,146,79,.25);border-radius:24px;margin-bottom:18px}
+h1{font-size:clamp(30px,6vw,54px);line-height:1.03;margin:0 0 12px;font-weight:750}
+.sub{font-size:17px;line-height:1.6;color:var(--muted);max-width:700px;margin:0}
+.small{font-size:13px;color:#a99f91;margin-top:10px}
+.btn{appearance:none;border:0;border-radius:14px;padding:15px 18px;font-size:16px;font-weight:700;cursor:pointer}
+.btn-primary{background:var(--gold);color:#16130f;width:100%;margin-top:18px}
+.btn-secondary{background:transparent;color:var(--cream);border:1px solid var(--line)}
+.hidden{display:none!important}
+.progress{display:flex;gap:7px;margin:14px 0 18px}
+.progress span{height:5px;flex:1;background:#39342c;border-radius:20px}
+.progress span.active{background:var(--gold)}
+.card{background:rgba(35,32,27,.96);border:1px solid var(--line);border-radius:22px;padding:20px;margin-bottom:14px}
+.kicker{font-size:12px;letter-spacing:.11em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:8px}
+h2{font-size:28px;margin:0 0 8px}
+.q{color:var(--muted);line-height:1.5;margin-bottom:18px}
+.scale{display:grid;grid-template-columns:repeat(10,1fr);gap:7px}
+.scale button{border:1px solid var(--line);background:#1f1c18;color:var(--cream);border-radius:10px;padding:11px 0;font-weight:700;cursor:pointer}
+.scale button.selected{background:var(--gold);color:#17130f;border-color:var(--gold)}
+.orientation{margin-top:16px;padding-top:14px;border-top:1px solid rgba(184,146,79,.14)}
+.orientation-label{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#9f9688;margin-bottom:7px}
+.orientation-text{font-size:14px;line-height:1.55;color:var(--muted)}
+.actions{display:flex;gap:10px;margin-top:14px}.actions .btn{flex:1}
+.result-top{text-align:center;padding:10px 0 2px}
+.score{font-size:54px;font-weight:800;color:var(--gold);line-height:1}.score small{font-size:18px;color:var(--muted)}
+.result-card{background:linear-gradient(180deg,rgba(184,146,79,.11),rgba(184,146,79,.03));border:1px solid rgba(184,146,79,.28)}
+.low-title{font-size:26px;margin:4px 0 8px}.impulse{font-size:18px;line-height:1.6;color:var(--cream)}
+.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.choice{border:1px solid var(--line);background:#1f1c18;color:var(--cream);padding:14px;border-radius:14px;cursor:pointer;text-align:left}
+.choice.selected{border-color:var(--gold);background:rgba(184,146,79,.12)}
+.deep{margin-top:18px;border-top:1px solid var(--line);padding-top:18px}
+.deep h3{font-size:20px;margin:0 0 10px}.deep p{color:var(--muted);line-height:1.55}
+.deep-links{display:grid;gap:10px}.deep-link{display:block;width:100%;text-align:left;text-decoration:none;color:var(--cream);border:1px solid var(--line);padding:14px;border-radius:14px;background:#1f1c18;cursor:pointer}.deep-link strong{color:var(--gold)}.deep-panel{margin-top:10px;padding:16px;border-radius:14px;background:#191713;border:1px solid rgba(184,146,79,.22)}.deep-panel h4{margin:0 0 8px;color:var(--gold);font-size:17px}.deep-panel p{margin:0 0 10px}.deep-panel ul{margin:8px 0 0;padding-left:20px;color:var(--muted);line-height:1.6}.route-badge{display:inline-block;margin-top:8px;padding:7px 10px;border-radius:999px;background:rgba(184,146,79,.12);border:1px solid rgba(184,146,79,.28);color:var(--gold);font-size:12px;font-weight:700;letter-spacing:.04em}.micro-plan{display:grid;gap:8px;margin-top:10px}.micro-step{padding:10px 12px;border-radius:10px;background:#211e19;border:1px solid var(--line);color:var(--muted)}.reflect{display:grid;gap:12px;margin-top:12px}.reflect label{font-size:14px;color:var(--cream);line-height:1.4}.reflect textarea{width:100%;box-sizing:border-box;margin-top:7px;min-height:76px;padding:12px;border-radius:12px;border:1px solid var(--line);background:#211e19;color:var(--cream);font:inherit;resize:vertical}.when{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.when button{border:1px solid var(--line);background:#211e19;color:var(--cream);padding:10px 13px;border-radius:999px;font:inherit}.when button.selected{background:var(--gold);color:#17140f;font-weight:700}.insight{margin-top:14px;padding:13px;border-left:3px solid var(--gold);background:rgba(184,146,79,.08);color:var(--muted);line-height:1.5}
+.footer-note{font-size:12px;color:#8f877b;margin-top:18px;line-height:1.5}
+@media(max-width:560px){.scale{gap:5px}.scale button{font-size:13px;padding:10px 0}.choice-grid{grid-template-columns:1fr}h2{font-size:24px}.hero{padding:22px 18px}}
+
+.deep-links button.active-deep{border-color:var(--gold)!important;background:rgba(184,146,79,.13)!important;box-shadow:0 0 0 1px rgba(184,146,79,.18) inset}
+.deep-links button.active-deep strong{color:var(--gold)!important}
+.deep-links button.active-deep::after{content:"✓ GEÖFFNET";float:right;font-size:11px;letter-spacing:.08em;color:var(--gold);font-weight:800}
+.deep-section-label{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:800;margin-bottom:10px}
+.route-links{display:grid;gap:10px;margin-top:16px}.route-link{display:block;padding:14px 16px;border-radius:14px;background:var(--gold);color:#1a1815!important;text-decoration:none;font-weight:800}.route-link.secondary{background:transparent;color:var(--cream)!important;border:1px solid rgba(184,146,79,.55)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand"><span class="brand-dot"></span> INNER CODE SYSTEMS</div>
+
+  <section id="start" class="hero">
+    <div class="kicker">90-Sekunden-Check</div>
+    <h1>Was nährt dich gerade?</h1>
+    <p class="sub">Du funktionierst. Aber bekommst du auch genug von dem, was dich wirklich stärkt? Bewerte 7 Bereiche spontan – ohne lange nachzudenken.</p>
+    <p class="small">Keine Diagnose. Nur ein kurzer Spiegel für deinen aktuellen Zustand.</p>
+    <button type="button" id="startBtn" class="btn btn-primary">Check starten</button>
+  </section>
+
+  <section id="quiz" class="hidden">
+    <div class="progress" id="progress"></div>
+    <div id="questionCard"></div>
+  </section>
+
+  <section id="result" class="hidden">
+    <div class="card result-card">
+      <div class="result-top">
+        <div class="kicker">Deine aktuelle Balance</div>
+        <div class="score"><span id="avgScore">0,0</span><small> / 10</small></div>
+      </div>
+      <h2 id="resultHeadline">Dein System zeigt gerade besonders auf:</h2>
+      <div class="low-title" id="lowestArea"></div>
+      <p class="impulse" id="resultText"></p>
+    </div>
+
+    <div class="card">
+      <div class="kicker">Ein Schritt reicht</div>
+      <h2>Was würde dir heute guttun?</h2>
+      <p class="q">Wähle spontan eine Sache. Nicht optimieren – nur wahrnehmen.</p>
+      <div id="choices" class="choice-grid"></div>
+      <button type="button" id="finishBtn" class="btn btn-primary" disabled>Meinen Impuls anzeigen</button>
+    </div>
+
+    <div id="finalImpulse" class="card hidden">
+      <div class="kicker">Dein Impuls für heute</div>
+      <h2 id="finalTitle"></h2>
+      <p class="impulse" id="finalText"></p>
+
+      <div class="deep">
+        <h3>Möchtest du verstehen, was dahinterliegt?</h3>
+        <p>Du kannst hier aufhören – oder einen Schritt tiefer gehen.</p>
+        <div class="deep-links">
+          <button type="button" class="deep-link" data-deep="understand"><strong>Mehr verstehen</strong><br><span id="understandText"></span></button>
+          <button type="button" class="deep-link" data-deep="change"><strong>Etwas verändern</strong><br><span id="changeText"></span></button>
+          <button type="button" class="deep-link" data-deep="deeper"><strong>Tiefer gehen</strong><br><span id="deeperText"></span></button>
+        </div>
+        <div id="deepPanel" class="deep-panel hidden"></div>
+      </div>
+
+      <button type="button" id="restartBtn" class="btn btn-secondary" style="width:100%;margin-top:14px">Nochmal testen</button>
+      <div class="footer-note">Tipp: Wenn du den Check in 7 Tagen erneut machst, erkennst du schnell, was sich verändert hat.</div>
+    </div>
+  </section>
+
+  <section id="deepView" class="hidden">
+    <div class="card" style="margin-top:8px">
+      <button type="button" id="deepBackBtn" class="btn btn-secondary" style="width:100%;margin-bottom:16px">← Zurück zu deiner Auswertung</button>
+      <div id="deepViewContent"></div>
+    </div>
+  </section>
+</div>
+
+<script>
+const areas = [
+  {key:'ruhe',name:'Ruhe & Sicherheit',question:'Wie gut gelingt es dir gerade, wirklich herunterzufahren?',examples:['Schlaf','Rückzug','Natur','Entspannung','Zeit für dich']},
+  {key:'koerper',name:'Körper',question:'Wie verbunden fühlst du dich gerade mit deinem Körper?',examples:['Bewegung','Körpergefühl','Berührung','Massage','Erholung','Ernährung']},
+  {key:'energie',name:'Energie',question:'Wie viel Kraft und Lebendigkeit spürst du gerade?',examples:['Bewegung','Musik','Sonne','frische Luft','Wasser','Aktivität']},
+  {key:'freude',name:'Freude',question:'Wie viel echte Freude und Genuss haben gerade Platz in deinem Alltag?',examples:['Hobbys','Genuss','Spiel','Abenteuer','Lachen','etwas nur für dich']},
+  {key:'verbindung',name:'Verbindung',question:'Wie sehr fühlst du dich mit anderen Menschen wirklich verbunden?',examples:['Partnerschaft','Freunde','Familie','Nähe','ehrliche Gespräche','Gemeinschaft']},
+  {key:'ausdruck',name:'Ausdruck',question:'Wie sehr kannst du zeigen und sagen, was wirklich in dir ist?',examples:['Sprechen','Schreiben','Kreativität','Gefühle zeigen','Grenzen setzen']},
+  {key:'ausrichtung',name:'Ausrichtung',question:'Wie klar spürst du, was dir gerade wirklich wichtig ist?',examples:['Werte','Sinn','Entscheidungen','Prioritäten','Ziele','nächster Schritt']}
+];
+
+const follow = {
+  ruhe:{choices:['10 Minuten ohne Handy','Langsam atmen','Kurz nach draußen','Einfach nichts tun'],title:'Schenk deinem System heute einen Moment ohne Aufgabe.',text:'Nimm dir 10 Minuten, in denen du nichts lösen musst. Kein Ziel, kein Optimieren. Nur wahrnehmen: Was passiert, wenn du kurz nichts leisten musst?',understand:'3 Reflexionsfragen zu Stress, Sicherheit und innerem Druck.',change:'Eine kleine RESET- oder Nervensystem-Übung wählen.',deeper:'RESET, Energiearbeit oder persönliche Begleitung ansehen.'},
+  koerper:{choices:['20 Minuten spazieren','Sanft bewegen','Selbstmassage','Massage empfangen'],title:'Dein Körper braucht heute Raum statt Leistung.',text:'Wähle einen Moment, in dem dein Körper nichts leisten muss. Spüre für ein paar Minuten nur: Wo halte ich fest? Wo darf es weicher werden?',understand:'Körpersignale und mögliche Zusammenhänge reflektieren.',change:'Body-Übung, Selbstmassage oder Körper-Check nutzen.',deeper:'Transformationsmassage oder 1:1 Körperarbeit ansehen.'},
+  energie:{choices:['Musik anmachen','Kurz bewegen','An die frische Luft','Wasser / Dusche'],title:'Mach heute etwas, das dich wieder lebendig werden lässt.',text:'Nicht alles, was Energie kostet, ist falsch. Aber heute darf etwas dazukommen, das Energie zurückgibt. Wähle eine Sache nur für dein Gefühl von Lebendigkeit.',understand:'Erkennen, was dir Energie gibt und was sie bindet.',change:'Energie-Tool oder 7-Tage-Impuls nutzen.',deeper:'RESET oder Energiearbeit vertiefen.'},
+  freude:{choices:['Etwas nur zum Spaß','Lieblingsessen','Hobby 20 Minuten','Etwas Neues machen'],title:'Freude muss keinen Zweck erfüllen.',text:'Mach heute eine Sache, die nichts verbessern soll. Nur etwas, das sich gut anfühlt. Freude ist kein Bonus – sie ist Rückmeldung.',understand:'Fragen zu Genuss, Pflichtgefühl und innerer Erlaubnis.',change:'Eine kleine Freude-Routine für 7 Tage wählen.',deeper:'Klarheitsweg oder persönliche Begleitung nutzen.'},
+  verbindung:{choices:['Jemanden anrufen','Ehrliches Gespräch','Umarmung zulassen','Gemeinsam Zeit verbringen'],title:'Verbindung beginnt dort, wo du nicht funktionieren musst.',text:'Suche heute einen Moment echter Nähe. Nicht Smalltalk. Ein Satz reicht: „Wie geht es dir wirklich?“ – oder: „Ich möchte dir etwas Ehrliches sagen.“',understand:'Reflektieren, wo du Nähe zulässt und wo du dich zurückziehst.',change:'Eine konkrete Verbindungs-Handlung für diese Woche wählen.',deeper:'Beziehungsarbeit, Report oder 1:1 Begleitung ansehen.'},
+  ausdruck:{choices:['Gedanken aufschreiben','Etwas aussprechen','Kreativ sein','Eine Grenze setzen'],title:'Etwas in dir möchte heute Ausdruck bekommen.',text:'Was du dauerhaft zurückhältst, bleibt trotzdem in dir. Gib heute einer Sache eine Form: ein Satz, eine Notiz, ein Gespräch oder eine klare Grenze.',understand:'Fragen zu Anpassung, Zurückhalten und Sichtbarkeit.',change:'Journaling- oder Ausdrucksübung nutzen.',deeper:'Digital Mentor, Coaching oder 1:1 Begleitung vertiefen.'},
+  ausrichtung:{choices:['Werte notieren','Eine Entscheidung treffen','3 Prioritäten schreiben','Eine Sache streichen'],title:'Klarheit entsteht oft nicht durch mehr Denken, sondern durch Auswahl.',text:'Schreib heute drei Dinge auf, die dir wirklich wichtig sind. Dann frage dich: Welche eine Entscheidung würde meinen Alltag mehr danach ausrichten?',understand:'Eigene Werte und aktuelle Lebensphase genauer ansehen.',change:'Werte-Kompass oder Klarheitsübung nutzen.',deeper:'Klarheitsweg, Report oder Digital Mentor vertiefen.'}
+};
+
+const deepDetails = {
+  ruhe:{
+    questions:['Wann merkst du zuerst, dass dein System nicht mehr herunterfährt?','Was gibt dir am schnellsten ein Gefühl von Sicherheit?','Was könntest du heute bewusst weglassen?'],
+    plan:['Heute: 10 Minuten ohne Input','Morgen: einen bewussten Ruhepunkt setzen','Diese Woche: einen Abend entschleunigen'],
+    route:'Passend in ICS: RESET · Nervensystem · Energiearbeit'
+  },
+  koerper:{
+    questions:['Wo im Körper hältst du gerade am meisten fest?','Wann hast du deinen Körper zuletzt ohne Leistungsziel wahrgenommen?','Welche Form von Berührung oder Bewegung tut dir wirklich gut?'],
+    plan:['Heute: 10 Minuten bewusst in den Körper spüren','Morgen: sanfte Bewegung oder Spaziergang','Diese Woche: Selbstmassage oder Massage einplanen'],
+    route:'Passend in ICS: Body · Körpersignale · Transformationsmassage'
+  },
+  energie:{
+    questions:['Was zieht dir im Alltag am meisten Energie?','Was lädt dich spürbar wieder auf?','Welche Aktivität macht dich wacher statt müder?'],
+    plan:['Heute: 1 Energiegeber wählen','Morgen: 20 Minuten draußen oder in Bewegung','Diese Woche: einen Energieräuber reduzieren'],
+    route:'Passend in ICS: Energie-Check · 7-Tage-RESET · Energiearbeit'
+  },
+  freude:{
+    questions:['Was machst du nur, weil es dir Freude macht?','Wo ist dein Alltag zu funktional geworden?','Was würdest du tun, wenn es keinen Zweck erfüllen müsste?'],
+    plan:['Heute: 15 Minuten nur zum Spaß','Morgen: etwas genießen ohne nebenbei zu arbeiten','Diese Woche: ein Hobby bewusst einplanen'],
+    route:'Passend in ICS: Klarheitsweg · RESET · persönliche Begleitung'
+  },
+  verbindung:{
+    questions:['Bei wem kannst du wirklich du selbst sein?','Wo hältst du dich zurück, obwohl du Nähe möchtest?','Welche Verbindung möchtest du diese Woche nähren?'],
+    plan:['Heute: eine ehrliche Nachricht senden','Morgen: ein echtes Gespräch führen','Diese Woche: bewusste gemeinsame Zeit'],
+    route:'Passend in ICS: Beziehung · Reflexion · 1:1 Begleitung'
+  },
+  ausdruck:{
+    questions:['Was würdest du sagen, wenn du dich nicht zurückhalten müsstest?','Wo passt du dich gerade zu stark an?','Welche Grenze oder Wahrheit möchte ausgesprochen werden?'],
+    plan:['Heute: 5 Minuten frei schreiben','Morgen: einen ehrlichen Satz aussprechen','Diese Woche: eine klare Grenze setzen'],
+    route:'Passend in ICS: Journal · Digital Mentor · Coaching'
+  },
+  ausrichtung:{
+    questions:['Was ist dir gerade wirklich wichtig?','Welche Entscheidung schiebst du vor dir her?','Was passt nicht mehr zu deinen Werten?'],
+    plan:['Heute: 3 wichtigste Werte notieren','Morgen: eine klare Priorität setzen','Diese Woche: eine Sache streichen, die nicht mehr passt'],
+    route:'Passend in ICS: Werte-Kompass · Klarheitsweg · Digital Mentor'
+  }
+};
+
+const routeLinks = {
+  ruhe:[
+    {label:'7-Tage-RESET starten',url:'https://www.innercodesystems.com/7-tage-reset/'},
+    {label:'Mit dem Digital Mentor weitergehen',url:'https://innercodesystems.github.io/ics-auswertungstool/ics-mentor/'}
+  ],
+  koerper:[
+    {label:'Transformationsmassage ansehen',url:'https://innercodesystems.com/reise-durch-die-transformationsmassage'},
+    {label:'In der ICS App weiterarbeiten',url:'https://app.innercodesystems.com/'}
+  ],
+  energie:[
+    {label:'7-Tage-RESET starten',url:'https://www.innercodesystems.com/7-tage-reset/'},
+    {label:'ICS App öffnen',url:'https://app.innercodesystems.com/'}
+  ],
+  freude:[
+    {label:'Mit dem Digital Mentor weitergehen',url:'https://innercodesystems.github.io/ics-auswertungstool/ics-mentor/'},
+    {label:'7-Tage-RESET ansehen',url:'https://www.innercodesystems.com/7-tage-reset/'}
+  ],
+  verbindung:[
+    {label:'Beziehungsreport ansehen',url:'https://www.innercodesystems.com/Beziehungs-Report/'},
+    {label:'Mit dem Digital Mentor weitergehen',url:'https://innercodesystems.github.io/ics-auswertungstool/ics-mentor/'}
+  ],
+  ausdruck:[
+    {label:'Digital Mentor öffnen',url:'https://innercodesystems.github.io/ics-auswertungstool/ics-mentor/'},
+    {label:'ICS App öffnen',url:'https://app.innercodesystems.com/'}
+  ],
+  ausrichtung:[
+    {label:'Werte-Kompass öffnen',url:'https://www.innercodesystems.com/werte-kompass/'},
+    {label:'Digital Mentor öffnen',url:'https://innercodesystems.github.io/ics-auswertungstool/ics-mentor/'},
+    {label:'ICS App öffnen',url:'https://app.innercodesystems.com/'}
+  ]
+};
+
+let currentResultKey=null;
+
+let index=0;
+let answers={};
+let selectedChoice=null;
+
+const start=document.getElementById('start');
+const quiz=document.getElementById('quiz');
+const result=document.getElementById('result');
+const questionCard=document.getElementById('questionCard');
+const progress=document.getElementById('progress');
+
+function buildProgress(){progress.innerHTML=areas.map((_,i)=>`<span class="${i<=index?'active':''}"></span>`).join('')}
+function renderQuestion(){
+  buildProgress();
+  const a=areas[index];
+  const current=Number.isFinite(answers[a.key]) ? answers[a.key] : null;
+
+  questionCard.innerHTML=`
+    <div class="card">
+      <div class="kicker">${index+1} von ${areas.length}</div>
+      <h2>${a.name}</h2>
+      <p class="q">${a.question}</p>
+      <div class="scale">${[1,2,3,4,5,6,7,8,9,10].map(n=>`<button type="button" class="${current===n?'selected':''}" data-score="${n}">${n}</button>`).join('')}</div>
+      <div class="orientation">
+        <div class="orientation-label">Zur Orientierung – denk zum Beispiel an:</div>
+        <div class="orientation-text">${a.examples.join(' · ')}</div>
+      </div>
+      <div class="actions">
+        ${index>0?'<button type="button" class="btn btn-secondary" id="backBtn">Zurück</button>':''}
+        <button type="button" class="btn btn-primary" id="nextBtn" ${current===null?'disabled':''}>${index===areas.length-1?'Auswertung anzeigen':'Weiter'}</button>
+      </div>
+    </div>`;
+
+  questionCard.querySelectorAll('[data-score]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      answers[a.key]=Number(btn.dataset.score);
+      renderQuestion();
+    });
+  });
+
+  const next=document.getElementById('nextBtn');
+  if(next){
+    next.addEventListener('click',()=>{
+      if(!Number.isFinite(answers[a.key])) return;
+      if(index < areas.length-1){
+        index++;
+        renderQuestion();
+      }else{
+        showResult();
+      }
+    });
+  }
+
+  const back=document.getElementById('backBtn');
+  if(back){
+    back.addEventListener('click',()=>{
+      if(index>0) index--;
+      renderQuestion();
+    });
+  }
+}
+
+function showResult(){
+  // Sicherheitsprüfung: Nur auswerten, wenn wirklich alle 7 Antworten vorhanden sind.
+  const complete = areas.every(a => Number.isFinite(answers[a.key]));
+  if(!complete){
+    const firstMissing = areas.findIndex(a => !Number.isFinite(answers[a.key]));
+    index = firstMissing >= 0 ? firstMissing : 0;
+    quiz.classList.remove('hidden');
+    result.classList.add('hidden');
+    renderQuestion();
+    return;
+  }
+
+  const vals=areas.map(a=>Number(answers[a.key]));
+  const avg=vals.reduce((sum,value)=>sum+value,0)/vals.length;
+
+  let lowest=areas[0];
+  for(const a of areas){
+    if(Number(answers[a.key]) < Number(answers[lowest.key])) lowest=a;
+  }
+
+  document.getElementById('avgScore').textContent=avg.toFixed(1).replace('.',',');
+  document.getElementById('lowestArea').textContent=lowest.name.toUpperCase();
+  document.getElementById('resultText').textContent='Dieser Bereich bekommt gerade weniger Raum als die anderen. Es geht nicht darum, jetzt noch mehr zu tun – sondern etwas von dem zurückzuholen, was dir fehlt.';
+
+  quiz.classList.add('hidden');
+  result.classList.remove('hidden');
+  renderChoices(lowest.key);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function renderChoices(key){
+  currentResultKey=key;
+  const data=follow[key];
+  selectedChoice=null;
+  const c=document.getElementById('choices');
+  c.innerHTML=data.choices.map(x=>`<button type="button" class="choice" data-choice="${x}">${x}</button>`).join('');
+  const finish=document.getElementById('finishBtn');finish.disabled=true;
+  c.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{
+    c.querySelectorAll('.choice').forEach(x=>x.classList.remove('selected'));
+    b.classList.add('selected');selectedChoice=b.dataset.choice;finish.disabled=false;
+  });
+  finish.onclick=()=>showFinal(key);
+}
+
+function showFinal(key){
+  const data=follow[key];
+  currentResultKey=key;
+  document.getElementById('finalImpulse').classList.remove('hidden');
+  document.getElementById('finalTitle').textContent=data.title;
+  document.getElementById('finalText').textContent=data.text + (selectedChoice?` Dein gewählter Schritt: ${selectedChoice}.`: '');
+  document.getElementById('understandText').textContent=data.understand;
+  document.getElementById('changeText').textContent=data.change;
+  document.getElementById('deeperText').textContent=data.deeper;
+  document.getElementById('deepPanel').classList.add('hidden');
+  document.getElementById('deepPanel').innerHTML='';
+  document.querySelectorAll('[data-deep]').forEach(btn=>btn.classList.remove('active-deep'));
+  document.getElementById('finalImpulse').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function renderDeepPanel(type){
+  if(!currentResultKey) return;
+  const d=deepDetails[currentResultKey];
+  const panel=document.getElementById('deepViewContent');
+  const deepView=document.getElementById('deepView');
+
+  // Aktiven Weg sichtbar markieren. Die Markierung bleibt auch erhalten,
+  // wenn der Nutzer über "Zurück" zur Auswertung zurückkehrt.
+  document.querySelectorAll('[data-deep]').forEach(btn=>btn.classList.toggle('active-deep',btn.dataset.deep===type));
+
+  if(type==='understand'){
+    panel.innerHTML=`<div class="deep-section-label">MEHR VERSTEHEN · DEINE REFLEXION</div><h2>Schau einen Moment genauer hin</h2><p class="q">Du musst nichts perfekt beantworten. Schreib auf, was spontan kommt.</p><div class="reflect">${d.questions.map((q,i)=>`<label>${q}<textarea placeholder="Dein Gedanke …" data-reflect="${i}"></textarea></label>`).join('')}</div><button type="button" class="btn btn-primary" id="insightBtn" style="margin-top:14px;width:100%">Meine Erkenntnis festhalten</button><div id="insightBox"></div>`;
+    document.getElementById('insightBtn').onclick=()=>{
+      const vals=[...panel.querySelectorAll('[data-reflect]')].map(x=>x.value.trim()).filter(Boolean);
+      document.getElementById('insightBox').innerHTML=vals.length?`<div class="insight"><strong style="color:var(--gold)">Dein Moment der Klarheit:</strong><br>${vals[vals.length-1]}<br><br>Du musst daraus noch nichts Großes machen. Nimm diese Beobachtung erst einmal mit.</div>`:`<div class="insight">Schon eine ehrliche Antwort reicht. Schreib einfach den Gedanken auf, der gerade am stärksten ist.</div>`;
+    };
+  }else if(type==='change'){
+    panel.innerHTML=`<div class="deep-section-label">ETWAS VERÄNDERN · DEIN NÄCHSTER SCHRITT</div><h2>Wähle einen kleinen Schritt</h2><p class="q">Nicht alles verändern. Eine Sache reicht.</p><div class="micro-plan">${d.plan.map(x=>`<button type="button" class="micro-step" data-action="${x.replace(/"/g,'&quot;')}" style="text-align:left;font:inherit">${x}</button>`).join('')}</div><div id="whenBox"></div>`;
+    panel.querySelectorAll('[data-action]').forEach(b=>b.onclick=()=>{
+      panel.querySelectorAll('[data-action]').forEach(x=>x.style.borderColor=''); b.style.borderColor='var(--gold)';
+      document.getElementById('whenBox').innerHTML=`<p style="margin-top:14px"><strong>Wann möchtest du das tun?</strong></p><div class="when"><button>Heute</button><button>Morgen</button><button>Diese Woche</button></div><div id="commit"></div>`;
+      document.querySelectorAll('#whenBox .when button').forEach(w=>w.onclick=()=>{document.querySelectorAll('#whenBox .when button').forEach(x=>x.classList.remove('selected'));w.classList.add('selected');document.getElementById('commit').innerHTML=`<div class="insight">Dein Schritt steht: <strong>${b.dataset.action}</strong> – ${w.textContent.toLowerCase()}. Mehr braucht es für jetzt nicht.</div>`;});
+    });
+  }else{
+    let intro='Wenn du merkst, dass dieses Thema immer wieder auftaucht, kannst du hier gezielt weitergehen.';
+    let links=[...(routeLinks[currentResultKey]||[])];
+    if(currentResultKey==='koerper' && selectedChoice==='Massage empfangen'){
+      links=[{label:'Transformationsmassage ansehen',url:'https://innercodesystems.com/reise-durch-die-transformationsmassage'},{label:'ICS App öffnen',url:'https://app.innercodesystems.com/'}];
+    }
+    panel.innerHTML=`<div class="deep-section-label">TIEFER GEHEN · DEINE ICS-VERTIEFUNG</div><h2>Dein möglicher nächster Weg</h2><p class="q">${intro}</p><div class="route-links">${links.map((x,i)=>`<a class="route-link ${i?'secondary':''}" href="${x.url}" target="_blank" rel="noopener noreferrer">${x.label} →</a>`).join('')}</div><p style="margin-top:14px;font-size:14px;color:var(--muted)">Kein Muss. Der Check darf auch einfach mit deinem heutigen Impuls enden.</p>`;
+  }
+
+  // Eigene Unterseite im Tool statt Inhalt unterhalb der drei Auswahlkarten.
+  result.classList.add('hidden');
+  deepView.classList.remove('hidden');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+document.querySelectorAll('[data-deep]').forEach(btn=>{
+  btn.addEventListener('click',()=>renderDeepPanel(btn.dataset.deep));
+});
+
+document.getElementById('deepBackBtn').onclick=()=>{
+  document.getElementById('deepView').classList.add('hidden');
+  result.classList.remove('hidden');
+  document.getElementById('finalImpulse').scrollIntoView({behavior:'smooth',block:'start'});
+};
+
+document.getElementById('startBtn').onclick=()=>{start.classList.add('hidden');quiz.classList.remove('hidden');renderQuestion()};
+document.getElementById('restartBtn').onclick=()=>{document.querySelectorAll('[data-deep]').forEach(btn=>btn.classList.remove('active-deep'));index=0;answers={};selectedChoice=null;currentResultKey=null;document.getElementById('deepView').classList.add('hidden');result.classList.add('hidden');document.getElementById('finalImpulse').classList.add('hidden');start.classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'})};
+</script>
+</body>
+</html>
