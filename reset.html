@@ -399,10 +399,192 @@ a.card:hover{
   .app-box,.final{padding:28px}
   .section{padding:58px 0}
 }
+
+/* =========================================
+   ICS PREMIUM FOOTER
+========================================= */
+
+.ics-footer{
+  background:#171512;
+  color:#f6f1e7;
+  border-top:1px solid rgba(212,160,58,.28);
+}
+
+.ics-footer-inner{
+  max-width:1240px;
+  margin:0 auto;
+  padding:64px 34px 28px;
+}
+
+.ics-footer-top{
+  display:grid;
+  grid-template-columns:1.3fr .9fr .9fr;
+  gap:54px;
+  padding-bottom:46px;
+}
+
+.ics-footer-brand{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:20px;
+}
+
+.ics-footer-logo{
+  width:58px;
+  height:58px;
+  object-fit:contain;
+}
+
+.ics-footer-name{
+  font-family:Georgia,"Times New Roman",serif;
+  color:#d4a03a;
+  font-size:25px;
+  letter-spacing:.04em;
+}
+
+.ics-footer-sub{
+  margin-top:4px;
+  color:#9f9689;
+  font-size:9px;
+  letter-spacing:.15em;
+}
+
+.ics-footer-text{
+  max-width:440px;
+  margin:0;
+  color:#bdb4a7;
+  font-size:14px;
+  line-height:1.75;
+}
+
+.ics-footer-title{
+  margin:0 0 18px;
+  color:#d4a03a;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.14em;
+}
+
+.ics-footer-links{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:11px;
+}
+
+.ics-footer-links a{
+  color:#d6cec1;
+  text-decoration:none;
+  font-size:13px;
+  line-height:1.5;
+  transition:.2s ease;
+}
+
+.ics-footer-links a:hover{
+  color:#d4a03a;
+  transform:translateX(2px);
+}
+
+.ics-footer-quote{
+  margin:0 0 18px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:20px;
+  line-height:1.45;
+  color:#f6f1e7;
+}
+
+.ics-footer-peter{
+  color:#d4a03a;
+  font-size:13px;
+  font-weight:700;
+}
+
+.ics-footer-bottom{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  padding-top:24px;
+  border-top:1px solid rgba(212,160,58,.18);
+}
+
+.ics-footer-copy{
+  color:#81796e;
+  font-size:11px;
+}
+
+.ics-footer-legal{
+  display:flex;
+  align-items:center;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+.ics-footer-legal a{
+  color:#9f9689;
+  text-decoration:none;
+  font-size:11px;
+}
+
+.ics-footer-legal a:hover{
+  color:#d4a03a;
+}
+
+.ics-footer-up{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:38px;
+  height:38px;
+  border:1px solid rgba(212,160,58,.38);
+  border-radius:50%;
+  color:#d4a03a !important;
+  text-decoration:none;
+  font-size:18px !important;
+}
+
+@media(max-width:800px){
+
+  .ics-footer-inner{
+    padding:50px 22px 24px;
+  }
+
+  .ics-footer-top{
+    grid-template-columns:1fr 1fr;
+    gap:38px 28px;
+  }
+
+  .ics-footer-about{
+    grid-column:1 / -1;
+  }
+}
+
+@media(max-width:560px){
+
+  .ics-footer-top{
+    grid-template-columns:1fr;
+    gap:36px;
+  }
+
+  .ics-footer-about{
+    grid-column:auto;
+  }
+
+  .ics-footer-bottom{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .ics-footer-quote{
+    font-size:18px;
+  }
+}
+  
 </style>
 </head>
 
-<body>
+<body id="top">
 
 <header class="header">
 
@@ -773,7 +955,134 @@ Persönlich mit Peter klären
 
 </main>
 
+<!-- =========================================
+     ICS PREMIUM FOOTER
+========================================= -->
 
+<footer class="ics-footer">
+
+  <div class="ics-footer-inner">
+
+    <div class="ics-footer-top">
+
+      <div class="ics-footer-about">
+
+        <div class="ics-footer-brand">
+
+          <img
+            class="ics-footer-logo"
+            src="https://www.innercodesystems.com/wp-content/uploads/go-x/u/39adbfd1-c2be-4f0b-adb6-f4b956947aa2/l0,t256,w1024,h1024/image.png"
+            alt="Inner Code Systems">
+
+          <div>
+            <div class="ics-footer-name">ICS</div>
+            <div class="ics-footer-sub">INNER CODE SYSTEMS</div>
+          </div>
+
+        </div>
+
+        <p class="ics-footer-text">
+          Inner Code Systems verbindet Klarheit, Körper, Handlung,
+          Veränderung und Orientierung zu einem System, das dich dabei
+          unterstützt, dein Leben bewusster zu gestalten.
+        </p>
+
+      </div>
+
+
+      <div>
+
+        <div class="ics-footer-title">
+          DIE FÜNF ICS WELTEN
+        </div>
+
+        <nav class="ics-footer-links">
+
+          <a href="https://innercodesystems.github.io/ics-auswertungstool/inner.html">
+            INNER · Klarheit
+          </a>
+
+          <a href="https://innercodesystems.github.io/ics-auswertungstool/body.html">
+            BODY · Energie
+          </a>
+
+          <a href="https://innercodesystems.github.io/ics-auswertungstool/action.html">
+            ACTION · Umsetzung
+          </a>
+
+          <a href="https://innercodesystems.github.io/ics-auswertungstool/reset.html">
+            RESET · Muster
+          </a>
+
+          <a href="https://innercodesystems.github.io/ics-auswertungstool/orientierung.html">
+            ORIENTIERUNG · Richtung
+          </a>
+
+        </nav>
+
+      </div>
+
+
+      <div>
+
+        <div class="ics-footer-title">
+          INNER CODE SYSTEMS
+        </div>
+
+        <p class="ics-footer-quote">
+          „Du musst nicht dein ganzes Leben verändern.
+          Du musst erkennen, was jetzt wirklich dran ist.“
+        </p>
+
+        <div class="ics-footer-peter">
+          Peter Wicklein
+        </div>
+
+        <nav class="ics-footer-links" style="margin-top:20px;">
+
+          <a href="https://app.innercodesystems.com/">
+            Mein ICS →
+          </a>
+
+          <a href="https://wa.me/491717335441?text=Hallo%20Peter%2C%20ich%20komme%20%C3%BCber%20die%20ICS%20RESET-Seite%20und%20m%C3%B6chte%20gerne%20mit%20dir%20Kontakt%20aufnehmen.">
+            Persönlich Kontakt aufnehmen →
+          </a>
+
+        </nav>
+
+      </div>
+
+    </div>
+
+
+    <div class="ics-footer-bottom">
+
+      <div class="ics-footer-copy">
+        © 2026 Inner Code Systems · Peter Wicklein
+      </div>
+
+      <div class="ics-footer-legal">
+
+        <a href="https://www.innercodesystems.com/impressum/">
+          Impressum
+        </a>
+
+        <a href="https://www.innercodesystems.com/datenschutz/">
+          Datenschutz
+        </a>
+
+        <a href="#top" class="ics-footer-up" aria-label="Nach oben">
+          ↑
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</footer>
+  
 <script>
 document.querySelectorAll('a[href^="https://"], a[href^="http://"]').forEach(function(link){
 
