@@ -978,86 +978,207 @@ a.card:hover{
 }
   
 /* =========================================
-   ICS CONNECTION
+   ICS CONNECTION + FINAL CTA
 ========================================= */
 
-.ics-connection{
-  padding:48px;
-  border-radius:20px;
+.ics-system{
+  padding:55px;
+  border-radius:22px;
   background:#fffdf8;
   border:1px solid rgba(212,160,58,.28);
+}
+
+.ics-system-head{
   display:grid;
-  grid-template-columns:1.15fr .85fr;
-  gap:45px;
-  align-items:center;
+  grid-template-columns:1.05fr .95fr;
+  gap:60px;
+  align-items:end;
+  margin-bottom:38px;
 }
 
-.ics-connection h3{
-  margin:0 0 15px;
+.ics-system h3{
+  margin:0;
   font-family:Georgia,"Times New Roman",serif;
-  font-size:39px;
-  font-weight:400;
-}
-
-.ics-connection p{
-  color:#746d64;
-  line-height:1.75;
-}
-
-.ics-links{
-  display:grid;
-  gap:10px;
-}
-
-.ics-link{
-  padding:15px 17px;
-  border-radius:10px;
-  background:#f4ecdc;
-  text-decoration:none;
-  font-size:14px;
-  font-weight:700;
-}
-
-.ics-link:hover{
-  background:#eee1c8;
-}
-
-/* =========================================
-   FINAL CTA
-========================================= */
-
-.final{
-  padding:60px;
-  border-radius:22px;
-  background:var(--black);
-  color:#f6f1e7;
-  text-align:center;
-}
-
-.final .section-kicker{
-  margin-bottom:18px;
-}
-
-.final h2{
-  max-width:850px;
-  margin:0 auto;
-  font-family:Georgia,"Times New Roman",serif;
-  font-size:clamp(38px,5vw,58px);
+  font-size:clamp(38px,4vw,54px);
   line-height:1.08;
   font-weight:400;
 }
 
+.ics-system-copy{
+  margin:0;
+  color:#746d64;
+  font-size:15px;
+  line-height:1.8;
+}
+
+.ics-world-path{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+
+.ics-world-link{
+  min-height:150px;
+  padding:22px;
+  border-radius:13px;
+  background:#f4ecdc;
+  text-decoration:none;
+  display:flex;
+  flex-direction:column;
+  transition:.2s ease;
+}
+
+.ics-world-link:hover{
+  transform:translateY(-2px);
+  background:#eee1c8;
+}
+
+.ics-world-label{
+  color:#a87820;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:.14em;
+}
+
+.ics-world-link strong{
+  display:block;
+  margin:15px 0 8px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:21px;
+  font-weight:400;
+}
+
+.ics-world-link span{
+  color:#746d64;
+  font-size:12px;
+  line-height:1.55;
+}
+
+
+/* FINAL */
+
+.final{
+  position:relative;
+  overflow:hidden;
+  padding:75px 60px;
+  border-radius:24px;
+  background:#1a1815;
+  color:#f6f1e7;
+  text-align:center;
+}
+
+.final::before{
+  content:"";
+  position:absolute;
+  width:380px;
+  height:380px;
+  left:50%;
+  top:-280px;
+  transform:translateX(-50%);
+  border-radius:50%;
+  background:rgba(212,160,58,.09);
+}
+
+.final-inner{
+  position:relative;
+  max-width:900px;
+  margin:0 auto;
+}
+
+.final h2{
+  margin:0 auto;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(40px,5vw,62px);
+  line-height:1.07;
+  font-weight:400;
+}
+
 .final p{
-  max-width:700px;
-  margin:24px auto 0;
+  max-width:680px;
+  margin:25px auto 0;
   color:#c7beb2;
-  line-height:1.75;
+  font-size:15px;
+  line-height:1.8;
 }
 
-.final .button{
-  margin-top:28px;
+.final-actions{
+  margin-top:30px;
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
 }
 
+.final-secondary{
+  display:inline-block;
+  padding:15px 22px;
+  border-radius:8px;
+  border:1px solid rgba(212,160,58,.45);
+  color:#d4a03a;
+  text-decoration:none;
+  font-size:14px;
+  font-weight:800;
+}
+
+.final-secondary:hover{
+  border-color:#d4a03a;
+}
+
+.final-person{
+  margin-top:30px;
+  color:#d4a03a;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:17px;
+}
+
+.note{
+  max-width:850px;
+  margin:28px auto 0;
+  text-align:center;
+  color:#8b8379;
+  font-size:11px;
+  line-height:1.65;
+}
+
+@media(max-width:900px){
+
+  .ics-system-head{
+    grid-template-columns:1fr;
+    gap:22px;
+  }
+
+  .ics-world-path{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:600px){
+
+  .ics-system{
+    padding:30px 24px;
+  }
+
+  .ics-world-path{
+    grid-template-columns:1fr;
+  }
+
+  .ics-world-link{
+    min-height:0;
+  }
+
+  .final{
+    padding:52px 25px;
+  }
+
+  .final-actions{
+    flex-direction:column;
+  }
+
+  .final-actions a{
+    width:100%;
+  }
+}
+  
 /* =========================================
    DISCLAIMER
 ========================================= */
@@ -2039,55 +2160,115 @@ a.card:hover{
 </section>
 
 <!-- =========================================
-     ICS VERBINDUNG
+     TRANSFORMATIONSMASSAGE IM ICS SYSTEM
 ========================================= -->
 
 <div class="content">
 
   <section class="section">
 
-    <div class="section-kicker">
-      TRANSFORMATIONSMASSAGE + INNER CODE SYSTEMS
-    </div>
+    <div class="ics-system">
 
-    <div class="ics-connection">
+      <div class="ics-system-head">
 
-      <div>
+        <div>
 
-        <h3>
-          Dein Körper ist Teil deines ganzen Systems.
-        </h3>
+          <div class="section-kicker">
+            TRANSFORMATIONSMASSAGE + INNER CODE SYSTEMS
+          </div>
 
-        <p>
-          Deshalb steht Transformationsmassage innerhalb von ICS
-          nicht isoliert. Körper, Gedanken, Handlung, Muster und
-          Lebensrichtung beeinflussen sich gegenseitig.
-          BODY ist ein möglicher Einstieg – nicht das Ende des Weges.
+          <h3>
+            Dein Körper ist Teil deines ganzen Systems.
+          </h3>
+
+        </div>
+
+        <p class="ics-system-copy">
+          Gedanken beeinflussen den Körper. Der Körper beeinflusst
+          unsere Entscheidungen. Alte Muster beeinflussen, wie wir
+          reagieren. Deshalb steht Transformationsmassage innerhalb
+          von ICS nicht allein. BODY kann dein Einstieg sein –
+          und von dort darf dein Weg weitergehen.
         </p>
 
       </div>
 
 
-      <div class="ics-links">
+      <div class="ics-world-path">
 
-        <a class="ics-link"
+        <a class="ics-world-link"
            href="https://innercodesystems.github.io/ics-auswertungstool/body.html">
-          BODY · Energie entdecken →
+
+          <div class="ics-world-label">
+            BODY
+          </div>
+
+          <strong>
+            Energie & Körper
+          </strong>
+
+          <span>
+            Entdecke die ICS Welt hinter Körperwahrnehmung,
+            Energie und Regulation.
+          </span>
+
         </a>
 
-        <a class="ics-link"
-           href="https://innercodesystems.github.io/ics-auswertungstool/ics-startseite.html#system-check">
-          ICS System Check starten →
+
+        <a class="ics-world-link"
+           href="https://innercodesystems.github.io/ics-auswertungstool/ICS_System_Check_V20_TESTMARKIERUNG.html">
+
+          <div class="ics-world-label">
+            SYSTEM CHECK
+          </div>
+
+          <strong>
+            Wo stehst du gerade?
+          </strong>
+
+          <span>
+            29 Fragen zeigen dir, welcher Bereich deines
+            Systems gerade die meiste Aufmerksamkeit braucht.
+          </span>
+
         </a>
 
-        <a class="ics-link"
+
+        <a class="ics-world-link"
            href="https://innercodesystems.github.io/ics-auswertungstool/reset.html">
-          RESET · Muster entdecken →
+
+          <div class="ics-world-label">
+            RESET
+          </div>
+
+          <strong>
+            Muster unterbrechen
+          </strong>
+
+          <span>
+            Wenn hinter körperlicher Anspannung auch alte
+            Reaktionen und wiederkehrende Muster sichtbar werden.
+          </span>
+
         </a>
 
-        <a class="ics-link"
+
+        <a class="ics-world-link"
            href="https://app.innercodesystems.com/">
-          Mein ICS öffnen →
+
+          <div class="ics-world-label">
+            MEIN ICS
+          </div>
+
+          <strong>
+            Deinen Weg weiterführen
+          </strong>
+
+          <span>
+            Dein persönlicher Bereich für Entwicklung,
+            Reflexion und deine nächsten Schritte.
+          </span>
+
         </a>
 
       </div>
@@ -2098,37 +2279,55 @@ a.card:hover{
 
 
 <!-- =========================================
-     FINAL CTA
+     FINAL
 ========================================= -->
 
   <section class="section">
 
     <div class="final">
 
-      <div class="section-kicker">
-        DEIN NÄCHSTER SCHRITT
+      <div class="final-inner">
+
+        <div class="section-kicker">
+          DEIN NÄCHSTER SCHRITT
+        </div>
+
+        <h2>
+          Vielleicht beginnt Veränderung
+          manchmal einfach damit,
+          wieder etwas zu spüren.
+        </h2>
+
+        <p>
+          Wenn dich die Transformationsmassage anspricht,
+          musst du nicht vorher wissen, welche Anwendung,
+          welcher Griff oder welcher Weg für dich richtig ist.
+          Schreib mir persönlich. Wir schauen gemeinsam,
+          was für dich gerade stimmig ist.
+        </p>
+
+        <div class="final-actions">
+
+          <a class="button"
+             href="https://wa.me/491717335441?text=Hallo%20Peter%2C%20ich%20bin%20%C3%BCber%20die%20Transformationsmassage-Seite%20gekommen%20und%20m%C3%B6chte%20gerne%20pers%C3%B6nlich%20mit%20dir%20kl%C3%A4ren%2C%20ob%20eine%20Sitzung%20f%C3%BCr%20mich%20passt.">
+            Transformationsmassage anfragen
+          </a>
+
+          <a class="final-secondary"
+             href="https://innercodesystems.github.io/ics-auswertungstool/body.html">
+            Erst BODY entdecken
+          </a>
+
+        </div>
+
+        <div class="final-person">
+          Peter Wicklein · Inner Code Systems
+        </div>
+
       </div>
 
-      <h2>
-        Vielleicht beginnt dein nächster Schritt
-        nicht mit einer Antwort.
-        Sondern mit einem Moment,
-        in dem du wieder etwas spürst.
-      </h2>
-
-      <p>
-        Wenn du wissen möchtest, ob die Transformationsmassage
-        gerade zu dir passt, schreib mir einfach persönlich.
-        Wir klären in Ruhe, was du suchst und welcher Einstieg
-        sinnvoll sein könnte.
-      </p>
-
-      <a class="button"
-         href="https://wa.me/491717335441?text=Hallo%20Peter%2C%20ich%20bin%20%C3%BCber%20die%20Transformationsmassage-Seite%20gekommen%20und%20m%C3%B6chte%20gerne%20pers%C3%B6nlich%20mit%20dir%20kl%C3%A4ren%2C%20ob%20eine%20Sitzung%20f%C3%BCr%20mich%20passt.">
-        Transformationsmassage anfragen
-      </a>
-
     </div>
+
 
     <p class="note">
       Die Transformationsmassage ist ein Angebot im Bereich
@@ -2140,7 +2339,7 @@ a.card:hover{
   </section>
 
 </div>
-
+  
 </main>
 
 
