@@ -98,47 +98,46 @@ a{
 ========================================= */
 
 .hero{
-  background:linear-gradient(
-    135deg,
-    #fffaf0 0%,
-    #faf1cb 52%,
-    #f4e6bd 100%
-  );
-  overflow:hidden;
+  background:#faf6ec;
+  border-bottom:1px solid rgba(212,160,58,.18);
 }
 
 .hero-inner{
   max-width:1240px;
-  margin:auto;
-  padding:105px 34px 100px;
+  margin:0 auto;
+  padding:82px 34px 90px;
   display:grid;
-  grid-template-columns:1.15fr .85fr;
-  gap:75px;
+  grid-template-columns:.95fr 1.05fr;
+  gap:70px;
   align-items:center;
 }
 
+.hero-copy{
+  max-width:590px;
+}
+
 .kicker{
-  color:#a87820;
+  color:#b07d20;
   font-size:11px;
   font-weight:800;
   letter-spacing:.18em;
-  margin-bottom:20px;
+  margin-bottom:22px;
 }
 
 h1{
   margin:0;
-  max-width:760px;
   font-family:Georgia,"Times New Roman",serif;
   font-weight:400;
-  font-size:clamp(54px,6vw,86px);
-  line-height:.98;
+  font-size:clamp(48px,5vw,70px);
+  line-height:1.02;
+  letter-spacing:-.025em;
 }
 
 .hero-text{
-  max-width:690px;
-  margin:28px 0 0;
+  max-width:610px;
+  margin:26px 0 0;
   color:#655e55;
-  font-size:18px;
+  font-size:17px;
   line-height:1.75;
 }
 
@@ -159,55 +158,165 @@ h1{
   font-weight:800;
   font-size:14px;
   border:1px solid var(--gold);
+  transition:.2s ease;
 }
 
 .button-secondary{
   background:transparent;
-  border-color:rgba(26,24,21,.35);
+  border-color:rgba(26,24,21,.30);
 }
 
 .button:hover{
-  transform:translateY(-1px);
+  transform:translateY(-2px);
 }
 
-.hero-card{
-  padding:42px;
-  border-radius:22px;
-  background:rgba(255,253,248,.74);
-  border:1px solid rgba(212,160,58,.38);
-  box-shadow:0 22px 60px rgba(71,53,23,.10);
+.hero-visual{
+  position:relative;
+  min-height:570px;
 }
 
-.hero-card-label{
-  color:#a87820;
-  font-size:10px;
+.hero-image{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  border-radius:24px;
+  box-shadow:0 28px 70px rgba(66,48,22,.14);
+}
+
+.hero-overlay{
+  position:absolute;
+  left:30px;
+  right:30px;
+  bottom:30px;
+  padding:25px 28px;
+  border-radius:15px;
+  background:rgba(26,24,21,.86);
+  color:#f6f1e7;
+  backdrop-filter:blur(8px);
+}
+
+.hero-overlay-label{
+  color:#d4a03a;
+  font-size:9px;
   font-weight:800;
-  letter-spacing:.16em;
+  letter-spacing:.17em;
+  margin-bottom:10px;
 }
 
-.hero-card h2{
-  margin:15px 0 16px;
+.hero-overlay strong{
+  display:block;
   font-family:Georgia,"Times New Roman",serif;
-  font-size:34px;
-  line-height:1.1;
+  font-size:25px;
   font-weight:400;
+  line-height:1.25;
 }
 
-.hero-card p{
-  margin:0;
-  color:#6f685f;
-  line-height:1.75;
-}
-
-.hero-mantra{
-  margin-top:28px;
-  padding-top:24px;
-  border-top:1px solid rgba(212,160,58,.28);
-  font-family:Georgia,"Times New Roman",serif;
-  font-size:20px;
+.hero-overlay span{
+  display:block;
+  margin-top:8px;
+  color:#c7beb2;
+  font-size:13px;
   line-height:1.55;
 }
 
+.hero-transition{
+  max-width:1240px;
+  margin:0 auto;
+  padding:0 34px 52px;
+}
+
+.hero-transition-inner{
+  padding-top:24px;
+  border-top:1px solid rgba(212,160,58,.23);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:25px;
+}
+
+.hero-transition-text{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:20px;
+}
+
+.hero-transition-small{
+  color:#8b8379;
+  font-size:12px;
+  line-height:1.5;
+}
+
+@media(max-width:1000px){
+
+  .hero-inner{
+    grid-template-columns:1fr;
+    gap:45px;
+    padding-top:65px;
+  }
+
+  .hero-copy{
+    max-width:700px;
+  }
+
+  .hero-visual{
+    min-height:540px;
+  }
+}
+
+@media(max-width:650px){
+
+  .hero-inner{
+    padding:54px 20px 46px;
+  }
+
+  h1{
+    font-size:48px;
+  }
+
+  .hero-text{
+    font-size:16px;
+  }
+
+  .hero-visual{
+    min-height:430px;
+  }
+
+  .hero-image{
+    border-radius:18px;
+  }
+
+  .hero-overlay{
+    left:15px;
+    right:15px;
+    bottom:15px;
+    padding:20px;
+  }
+
+  .hero-overlay strong{
+    font-size:21px;
+  }
+
+  .hero-buttons{
+    flex-direction:column;
+  }
+
+  .hero-buttons .button{
+    width:100%;
+    text-align:center;
+  }
+
+  .hero-transition{
+    padding:0 20px 35px;
+  }
+
+  .hero-transition-inner{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+}
+  
 /* =========================================
    GENERAL CONTENT
 ========================================= */
@@ -1006,29 +1115,29 @@ a.card:hover{
 
   <div class="hero-inner">
 
-    <div>
+    <div class="hero-copy">
 
       <div class="kicker">
         ICS · BODY · TRANSFORMATIONSMASSAGE
       </div>
 
       <h1>
-        Berührung, die dich<br>
-        wieder bei dir<br>
-        ankommen lässt.
+        Zur Ruhe kommen.<br>
+        Wieder spüren.<br>
+        Bei dir ankommen.
       </h1>
 
       <p class="hero-text">
-        Transformationsmassage ist für mich mehr als eine Abfolge
-        von Griffen. Sie ist ein Raum, in dem du für einen Moment
-        nicht funktionieren musst – sondern wahrnehmen, loslassen
-        und wieder Verbindung zu deinem Körper aufnehmen darfst.
+        Achtsame Berührung kann einen Raum schaffen,
+        in dem du für einen Moment nicht funktionieren musst.
+        Einen Raum für Entspannung, Körperwahrnehmung
+        und neue Verbindung zu dir.
       </p>
 
       <div class="hero-buttons">
 
         <a class="button" href="#entdecken">
-          Massage entdecken
+          Transformationsmassage entdecken
         </a>
 
         <a class="button button-secondary"
@@ -1041,29 +1150,44 @@ a.card:hover{
     </div>
 
 
-    <div class="hero-card">
+    <div class="hero-visual">
 
-      <div class="hero-card-label">
-        EINE REISE ZURÜCK ZU DIR
+      <img
+        class="hero-image"
+        src="https://innercodesystems.github.io/ics-auswertungstool/peter-bodensee-hero.png"
+        alt="Peter Wicklein · Inner Code Systems">
+
+      <div class="hero-overlay">
+
+        <div class="hero-overlay-label">
+          EINE REISE ZURÜCK ZU DIR
+        </div>
+
+        <strong>
+          Du musst hier nichts leisten.
+        </strong>
+
+        <span>
+          Ankommen · wahrnehmen · spüren · loslassen.
+        </span>
+
       </div>
 
-      <h2>
-        Du musst hier nichts leisten.
-      </h2>
+    </div>
 
-      <p>
-        Im Alltag sind wir häufig im Denken, Organisieren,
-        Reagieren und Funktionieren. Die Transformationsmassage
-        lädt dich dazu ein, für einen Moment aus diesem Modus
-        herauszutreten und wieder bewusster wahrzunehmen,
-        was dein Körper gerade braucht.
-      </p>
+  </div>
 
-      <div class="hero-mantra">
-        Ankommen.<br>
-        Wahrnehmen.<br>
-        Spüren.<br>
-        Loslassen.
+
+  <div class="hero-transition">
+
+    <div class="hero-transition-inner">
+
+      <div class="hero-transition-text">
+        Dein Körper muss nicht immer weiter funktionieren.
+      </div>
+
+      <div class="hero-transition-small">
+        BODY · Wahrnehmen, was dein System gerade braucht.
       </div>
 
     </div>
@@ -1072,9 +1196,7 @@ a.card:hover{
 
 </section>
 
-
 <main>
-
 
 <!-- =========================================
      BODY / AUSGANGSPUNKT
