@@ -644,81 +644,108 @@ a.card:hover{
 }
   
 /* =========================================
-   QUOTE / PHILOSOPHY
+   PHILOSOPHIE
 ========================================= */
 
-.philosophy{
-  max-width:960px;
-  margin:auto;
+.philosophy-wrap{
+  max-width:980px;
+  margin:0 auto;
   text-align:center;
-  padding:25px 0;
+  padding:25px 0 35px;
 }
 
 .philosophy-small{
-  color:var(--gold);
+  color:#d4a03a;
   font-size:10px;
   font-weight:800;
   letter-spacing:.17em;
 }
 
-.philosophy h2{
-  margin:20px auto;
+.philosophy-wrap h2{
+  margin:20px auto 22px;
   font-family:Georgia,"Times New Roman",serif;
-  font-size:clamp(38px,5vw,62px);
-  line-height:1.08;
+  font-size:clamp(40px,5vw,64px);
+  line-height:1.06;
   font-weight:400;
 }
 
-.philosophy p{
-  max-width:730px;
-  margin:auto;
+.philosophy-wrap p{
+  max-width:760px;
+  margin:0 auto;
   color:#746d64;
-  line-height:1.8;
+  font-size:16px;
+  line-height:1.85;
 }
 
+.philosophy-line{
+  width:72px;
+  height:1px;
+  margin:30px auto 0;
+  background:#d4a03a;
+  opacity:.55;
+}
+  
 /* =========================================
-   SESSION
+   PERSÖNLICHE SITZUNG
 ========================================= */
 
 .session{
   display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:55px;
+  grid-template-columns:.9fr 1.1fr;
+  gap:70px;
   align-items:start;
+}
+
+.session-copy{
+  position:sticky;
+  top:40px;
 }
 
 .session-copy h2{
   margin:0;
   font-family:Georgia,"Times New Roman",serif;
-  font-size:48px;
+  font-size:clamp(40px,4vw,54px);
   line-height:1.08;
   font-weight:400;
 }
 
 .session-copy p{
+  margin:22px 0 0;
   color:#746d64;
   line-height:1.8;
+  font-size:15px;
+}
+
+.session-copy .button{
+  margin-top:28px;
+}
+
+.session-note{
+  margin-top:22px;
+  color:#8f877c;
+  font-size:12px;
+  line-height:1.65;
 }
 
 .session-steps{
   display:grid;
-  gap:12px;
+  gap:13px;
 }
 
 .session-step{
   display:grid;
-  grid-template-columns:48px 1fr;
-  gap:15px;
+  grid-template-columns:54px 1fr;
+  gap:18px;
   align-items:start;
-  padding:19px;
-  border-radius:12px;
+  padding:23px 24px;
+  border-radius:14px;
   background:#fffdf8;
   border:1px solid rgba(212,160,58,.25);
 }
 
 .session-step-number{
-  width:42px;
-  height:42px;
+  width:46px;
+  height:46px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -726,14 +753,14 @@ a.card:hover{
   background:#f4ead4;
   color:#a87820;
   font-weight:800;
-  font-size:12px;
+  font-size:11px;
 }
 
 .session-step strong{
   display:block;
-  margin:2px 0 6px;
+  margin:1px 0 7px;
   font-family:Georgia,"Times New Roman",serif;
-  font-size:20px;
+  font-size:22px;
   font-weight:400;
 }
 
@@ -741,9 +768,21 @@ a.card:hover{
   margin:0;
   color:#746d64;
   font-size:13px;
-  line-height:1.6;
+  line-height:1.7;
 }
 
+@media(max-width:850px){
+
+  .session{
+    grid-template-columns:1fr;
+    gap:40px;
+  }
+
+  .session-copy{
+    position:static;
+  }
+}
+  
 /* =========================================
    PATHS
 ========================================= */
@@ -1547,14 +1586,14 @@ a.card:hover{
 
 
 <!-- =========================================
-     PHILOSOPHIE
+     PHILOSOPHIE + PERSÖNLICHE SITZUNG
 ========================================= -->
 
 <div class="content">
 
   <section class="section">
 
-    <div class="philosophy">
+    <div class="philosophy-wrap">
 
       <div class="philosophy-small">
         EIN GRUNDSATZ
@@ -1567,18 +1606,16 @@ a.card:hover{
       <p>
         Manchmal darf sie einfach Raum schaffen.
         Für Ruhe. Für Wahrnehmung. Für einen Moment,
-        in dem du nicht verändern musst, was gerade da ist.
-        Genau darin kann bereits etwas Neues entstehen.
+        in dem du nichts verändern musst.
+        Genau dort kann wieder Verbindung entstehen.
       </p>
+
+      <div class="philosophy-line"></div>
 
     </div>
 
   </section>
 
-
-<!-- =========================================
-     SITZUNG
-========================================= -->
 
   <section class="section">
 
@@ -1595,16 +1632,21 @@ a.card:hover{
         </h2>
 
         <p>
-          Jede Begegnung ist individuell. Deshalb geht es nicht darum,
-          ein starres Programm abzuarbeiten. Wir beginnen mit deinem
-          aktuellen Zustand und schauen, was für dich in diesem Moment
-          stimmig ist.
+          Jede Begegnung ist individuell.
+          Deshalb arbeite ich nicht nach einem starren Ablauf,
+          sondern orientiere mich an deinem aktuellen Zustand
+          und an dem, was sich für dich in diesem Moment stimmig anfühlt.
         </p>
 
         <a class="button"
            href="https://wa.me/491717335441?text=Hallo%20Peter%2C%20ich%20m%C3%B6chte%20gerne%20mehr%20%C3%BCber%20eine%20pers%C3%B6nliche%20Transformationsmassage%20erfahren.">
-          Sitzung anfragen
+          Sitzung persönlich anfragen
         </a>
+
+        <div class="session-note">
+          Du musst vorher nicht wissen, welche Anwendung oder welcher Griff
+          für dich passt. Das klären wir gemeinsam.
+        </div>
 
       </div>
 
@@ -1612,59 +1654,92 @@ a.card:hover{
       <div class="session-steps">
 
         <div class="session-step">
-          <div class="session-step-number">01</div>
+
+          <div class="session-step-number">
+            01
+          </div>
+
           <div>
             <strong>Ankommen</strong>
+
             <p>
-              Wir nehmen uns kurz Zeit für deinen aktuellen
-              Zustand und das, was für dich heute wichtig ist.
+              Wir nehmen uns kurz Zeit für deinen aktuellen Zustand,
+              deine Wahrnehmung und das, was für dich heute wichtig ist.
             </p>
           </div>
+
         </div>
 
+
         <div class="session-step">
-          <div class="session-step-number">02</div>
+
+          <div class="session-step-number">
+            02
+          </div>
+
           <div>
-            <strong>Wahrnehmen</strong>
+            <strong>Runterfahren</strong>
+
             <p>
-              Du kommst aus dem Alltag heraus und richtest
-              deine Aufmerksamkeit bewusster auf deinen Körper.
+              Du darfst aus dem Alltag herauskommen und deine Aufmerksamkeit
+              Schritt für Schritt wieder mehr auf deinen Körper richten.
             </p>
           </div>
+
         </div>
 
+
         <div class="session-step">
-          <div class="session-step-number">03</div>
+
+          <div class="session-step-number">
+            03
+          </div>
+
           <div>
             <strong>Berührung & Körperarbeit</strong>
+
             <p>
-              Die Massage wird auf den Rahmen der Sitzung
-              und dein momentanes Erleben abgestimmt.
+              Die Massage wird auf den Rahmen der Sitzung und dein momentanes
+              Erleben abgestimmt. Nicht möglichst viel – sondern passend.
             </p>
           </div>
+
         </div>
 
+
         <div class="session-step">
-          <div class="session-step-number">04</div>
+
+          <div class="session-step-number">
+            04
+          </div>
+
           <div>
             <strong>Nachspüren</strong>
+
             <p>
-              Am Ende bleibt Zeit, die Erfahrung nicht sofort
-              wieder mit dem nächsten Gedanken zu überdecken.
+              Am Ende bleibt bewusst Zeit, die Erfahrung wirken zu lassen
+              und nicht sofort wieder in den nächsten Gedanken zu springen.
             </p>
           </div>
+
         </div>
 
+
         <div class="session-step">
-          <div class="session-step-number">05</div>
+
+          <div class="session-step-number">
+            05
+          </div>
+
           <div>
             <strong>Integration</strong>
+
             <p>
-              Was du wahrgenommen hast, darf seinen Platz
-              finden – ohne dass daraus sofort eine Aufgabe
-              entstehen muss.
+              Was du wahrgenommen hast, darf seinen Platz finden.
+              Ohne dass daraus sofort eine Aufgabe oder Bewertung entstehen muss.
             </p>
           </div>
+
         </div>
 
       </div>
@@ -1674,8 +1749,7 @@ a.card:hover{
   </section>
 
 </div>
-
-
+  
 <!-- =========================================
      VIER WEGE
 ========================================= -->
