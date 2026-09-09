@@ -492,51 +492,157 @@ a.card:hover{
 }
 
 /* =========================================
-   JOURNEY
+   TRANSFORMATIONSMASSAGE · TIEFE
 ========================================= */
 
-.journey{
+.depth-head{
   display:grid;
-  grid-template-columns:repeat(5,minmax(0,1fr));
-  gap:10px;
-  margin-top:42px;
+  grid-template-columns:1.05fr .95fr;
+  gap:70px;
+  align-items:end;
+  margin-bottom:55px;
 }
 
-.journey-step{
-  position:relative;
-  padding:27px 18px;
-  text-align:center;
-  border-radius:14px;
+.depth-head .section-intro{
+  margin:0;
+}
+
+.depth-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;
+}
+
+.depth-card{
+  min-height:260px;
+  padding:30px;
+  border-radius:16px;
   background:#211d18;
-  border:1px solid #514229;
+  border:1px solid rgba(212,160,58,.30);
 }
 
-.journey-step span{
-  display:block;
-  color:var(--gold);
+.depth-number{
+  color:#d4a03a;
   font-size:10px;
   font-weight:800;
-  letter-spacing:.13em;
-  margin-bottom:12px;
+  letter-spacing:.15em;
 }
 
-.journey-step strong{
-  display:block;
+.depth-card h3{
+  margin:22px 0 13px;
   font-family:Georgia,"Times New Roman",serif;
-  font-size:20px;
+  font-size:28px;
+  line-height:1.12;
   font-weight:400;
   color:#f6f1e7;
 }
 
-.journey-note{
-  max-width:780px;
-  margin:35px auto 0;
-  text-align:center;
+.depth-card p{
+  margin:0;
   color:#bdb4a7;
   font-size:14px;
   line-height:1.75;
 }
 
+.journey-divider{
+  height:1px;
+  margin:75px 0 68px;
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(212,160,58,.48),
+    transparent
+  );
+}
+
+.journey-intro{
+  max-width:850px;
+  margin:0 auto 45px;
+  text-align:center;
+}
+
+.journey-intro .section-title{
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.journey-intro .section-intro{
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.journey{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:10px;
+}
+
+.journey-step{
+  position:relative;
+  padding:28px 16px;
+  text-align:center;
+  border-radius:13px;
+  background:#181613;
+  border:1px solid rgba(212,160,58,.25);
+}
+
+.journey-step span{
+  display:block;
+  margin-bottom:13px;
+  color:#d4a03a;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:.14em;
+}
+
+.journey-step strong{
+  display:block;
+  color:#f6f1e7;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:20px;
+  font-weight:400;
+}
+
+.journey-note{
+  max-width:770px;
+  margin:34px auto 0;
+  text-align:center;
+  color:#9f9689;
+  font-size:13px;
+  line-height:1.75;
+}
+
+@media(max-width:900px){
+
+  .depth-head{
+    grid-template-columns:1fr;
+    gap:25px;
+  }
+
+  .depth-grid{
+    grid-template-columns:1fr;
+  }
+
+  .depth-card{
+    min-height:0;
+  }
+
+  .journey{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:600px){
+
+  .journey-divider{
+    margin:55px 0;
+  }
+
+  .journey{
+    grid-template-columns:1fr;
+  }
+}
+  
 /* =========================================
    QUOTE / PHILOSOPHY
 ========================================= */
@@ -1268,69 +1374,163 @@ a.card:hover{
 
 
 <!-- =========================================
-     WAS IST TRANSFORMATIONSMASSAGE
+     TRANSFORMATIONSMASSAGE · TIEFE
 ========================================= -->
 
 <section class="dark">
 
   <div class="content">
 
-    <div class="section-kicker">
-      WAS TRANSFORMATIONSMASSAGE FÜR MICH BEDEUTET
+    <div class="depth-head">
+
+      <div>
+
+        <div class="section-kicker">
+          TRANSFORMATIONSMASSAGE
+        </div>
+
+        <h2 class="section-title">
+          Nicht einfach behandeln.<br>
+          Sondern Raum geben.
+        </h2>
+
+      </div>
+
+
+      <p class="section-intro">
+        Für mich beginnt Transformationsmassage nicht damit,
+        möglichst viele Griffe anzuwenden. Sie beginnt mit Präsenz.
+        Mit dem Wahrnehmen dessen, was gerade da ist – und mit einem
+        Raum, in dem dein Körper nicht funktionieren oder etwas
+        erreichen muss.
+      </p>
+
     </div>
 
-    <h2 class="section-title">
-      Nicht einfach behandeln.<br>
-      Sondern Raum geben.
-    </h2>
 
-    <p class="section-intro">
-      Die Transformationsmassage verbindet achtsame Berührung,
-      Präsenz und Körperwahrnehmung. Sie soll keinen bestimmten
-      Zustand erzwingen. Sie schafft vielmehr einen geschützten
-      Rahmen, in dem dein System zur Ruhe kommen und du dich
-      selbst wieder bewusster wahrnehmen kannst.
+    <div class="depth-grid">
+
+      <div class="depth-card">
+
+        <div class="depth-number">
+          01 · ANKOMMEN
+        </div>
+
+        <h3>
+          Aus dem Alltag heraus.
+        </h3>
+
+        <p>
+          Gedanken, Termine und Anforderungen bestimmen häufig
+          unseren Tag. Die Massage lädt dich dazu ein, für eine Zeit
+          aus diesem Tempo auszusteigen und deine Aufmerksamkeit
+          wieder zu dir zurückzuholen.
+        </p>
+
+      </div>
+
+
+      <div class="depth-card">
+
+        <div class="depth-number">
+          02 · WAHRNEHMEN
+        </div>
+
+        <h3>
+          Wieder spüren, was da ist.
+        </h3>
+
+        <p>
+          Achtsame Berührung kann Körperempfindungen wieder
+          deutlicher werden lassen. Nicht um sie sofort zu bewerten
+          oder zu verändern – sondern zunächst, um sie wahrzunehmen.
+        </p>
+
+      </div>
+
+
+      <div class="depth-card">
+
+        <div class="depth-number">
+          03 · RAUM GEBEN
+        </div>
+
+        <h3>
+          Nichts erzwingen müssen.
+        </h3>
+
+        <p>
+          Eine Sitzung muss kein bestimmtes Ergebnis produzieren.
+          Ruhe, Entspannung oder ein neues Körpergefühl dürfen
+          entstehen – ohne dass etwas „gelöst“ werden muss.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="journey-divider"></div>
+
+
+    <div class="journey-intro">
+
+      <div class="section-kicker">
+        DIE REISE DURCH DIE TRANSFORMATIONSMASSAGE
+      </div>
+
+      <h2 class="section-title">
+        Berührung ist ein Teil der Reise.
+      </h2>
+
+      <p class="section-intro">
+        Die einzelnen Griffe stehen nicht isoliert für sich.
+        Entscheidend ist der gesamte Prozess – vom Ankommen
+        bis zum bewussten Nachspüren.
+      </p>
+
+    </div>
+
+
+    <div class="journey">
+
+      <div class="journey-step">
+        <span>01</span>
+        <strong>Ankommen</strong>
+      </div>
+
+      <div class="journey-step">
+        <span>02</span>
+        <strong>Wahrnehmen</strong>
+      </div>
+
+      <div class="journey-step">
+        <span>03</span>
+        <strong>Loslassen</strong>
+      </div>
+
+      <div class="journey-step">
+        <span>04</span>
+        <strong>Verbinden</strong>
+      </div>
+
+      <div class="journey-step">
+        <span>05</span>
+        <strong>Integrieren</strong>
+      </div>
+
+    </div>
+
+
+    <p class="journey-note">
+      Die 14 Griffe, Gesichts- und Rückenarbeit sowie weitere
+      Anwendungen können innerhalb dieser Reise unterschiedliche
+      Schwerpunkte setzen. Jede Begegnung darf anders sein.
     </p>
-
-
-    <div class="grid">
-
-      <div class="card">
-        <div class="card-label">PRÄSENZ</div>
-        <h3>Wirklich ankommen</h3>
-        <p>
-          Für eine Zeit musst du nichts organisieren,
-          entscheiden oder erklären. Deine Aufmerksamkeit
-          darf wieder bei dir landen.
-        </p>
-      </div>
-
-      <div class="card">
-        <div class="card-label">BERÜHRUNG</div>
-        <h3>Bewusst wahrnehmen</h3>
-        <p>
-          Achtsame Berührung kann einen Raum schaffen,
-          in dem Körperempfindungen wieder deutlicher
-          wahrgenommen werden.
-        </p>
-      </div>
-
-      <div class="card">
-        <div class="card-label">REGULATION</div>
-        <h3>Aus dem Funktionieren heraus</h3>
-        <p>
-          Die Sitzung ist eine Einladung, Tempo herauszunehmen,
-          zur Ruhe zu kommen und deinem Körper wieder
-          Aufmerksamkeit zu schenken.
-        </p>
-      </div>
-
-    </div>
 
   </div>
 
 </section>
-
 
 <!-- =========================================
      REISE
