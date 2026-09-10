@@ -366,9 +366,68 @@
         min-height:68px;
       }
 
-      .ics-nav{
-        display:none;
-      }
+.ics-nav{
+  display:none;
+}
+
+.ics-menu-button{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  width:44px;
+  height:44px;
+
+  border:1px solid rgba(212,160,58,.35);
+  border-radius:8px;
+
+  background:#fffdf8;
+  color:#1A1A1A;
+
+  font-size:24px;
+  cursor:pointer;
+}
+
+.ics-mobile-menu{
+  display:none;
+
+  position:absolute;
+  top:68px;
+  left:0;
+  right:0;
+  z-index:1000;
+
+  padding:20px;
+
+  background:#fffdf8;
+  border-top:1px solid rgba(212,160,58,.16);
+  box-shadow:0 15px 30px rgba(26,26,26,.12);
+}
+
+.ics-mobile-menu.open{
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+
+.ics-mobile-menu a{
+  color:#1A1A1A;
+  text-decoration:none;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.04em;
+}
+
+.ics-mobile-menu .ics-mein-mobile{
+  display:inline-block;
+  width:max-content;
+
+  padding:11px 15px;
+  border-radius:6px;
+
+  background:#D4A03A;
+  color:#fff;
+}
 
       .ics-hero-grid{
         grid-template-columns:1fr;
@@ -863,12 +922,28 @@
 <a href="https://innercodesystems.github.io/ics-auswertungstool/orientierung.html">ORIENTIERUNG</a>
 <a href="https://innercodesystems.github.io/ics-auswertungstool/persoenliche-begleitung.html">BEGLEITUNG</a>
 
-  <a class="ics-mein" href="https://app.innercodesystems.com/">
-    MEIN ICS
-  </a>
+<a class="ics-mein" href="https://app.innercodesystems.com/">
+  MEIN ICS
+</a>
 
 </nav>
-      </header>
+
+<button class="ics-menu-button" id="icsMenuButton" aria-label="Menü öffnen">
+  ☰
+</button>
+
+</header>
+
+<div class="ics-mobile-menu" id="icsMobileMenu">
+  <a href="https://innercodesystems.github.io/ics-auswertungstool/ics-startseite.html">START</a>
+  <a href="https://innercodesystems.github.io/ics-auswertungstool/inner.html">INNER</a>
+  <a href="https://innercodesystems.github.io/ics-auswertungstool/body.html">BODY</a>
+  <a href="https://innercodesystems.github.io/ics-auswertungstool/action.html">ACTION</a>
+  <a href="https://innercodesystems.github.io/ics-auswertungstool/reset.html">RESET</a>
+  <a href="https://innercodesystems.github.io/ics-auswertungstool/orientierung.html">ORIENTIERUNG</a>
+  <a href="https://innercodesystems.github.io/ics-auswertungstool/persoenliche-begleitung.html">BEGLEITUNG</a>
+  <a class="ics-mein-mobile" href="https://app.innercodesystems.com/">MEIN ICS</a>
+</div>
 
       <div class="ics-hero-grid">
 
@@ -1539,6 +1614,37 @@ document.querySelectorAll('a[href^="https://"], a[href^="http://"]').forEach(fun
 </script>
 
 <script src="https://innercodesystems.github.io/ics-auswertungstool/ics-sofort-navigator.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+  const button = document.getElementById("icsMenuButton");
+  const menu = document.getElementById("icsMobileMenu");
+
+  if(!button || !menu) return;
+
+  button.addEventListener("click", function(){
+
+    menu.classList.toggle("open");
+
+    button.textContent =
+      menu.classList.contains("open") ? "×" : "☰";
+
+  });
+
+  menu.querySelectorAll("a").forEach(function(link){
+
+    link.addEventListener("click", function(){
+
+      menu.classList.remove("open");
+      button.textContent = "☰";
+
+    });
+
+  });
+
+});
+</script>
   
 </body>
 </html>
