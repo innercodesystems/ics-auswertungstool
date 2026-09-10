@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Persönliche Begleitung | Inner Code Systems</title>
+
+  <meta
+    name="description"
+    content="Persönliche Begleitung mit Peter Wicklein und Inner Code Systems. Klarheit, Muster erkennen, neue Entscheidungen treffen und Veränderung im Alltag integrieren."
+  >
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    :root{
+      --cream:#f6f1e7;
+      --cream-2:#eee2cf;
+      --gold:#d4a03a;
+      --gold-soft:#b8924f;
+      --black:#171512;
+      --black-2:#211e1a;
+      --text:#211d18;
+      --muted:#6f6255;
+      --white:#ffffff;
+      --line:rgba(33,29,24,.15);
+      --radius:24px;
+      --shadow:0 18px 60px rgba(0,0,0,.08);
+      --max:1180px;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      background:var(--cream);
+      color:var(--text);
+      font-family:"Inter",sans-serif;
+      line-height:1.65;
+    }
+
+    img{
+      max-width:100%;
+      display:block;
+    }
+
+    a{
+      color:inherit;
+    }
+
+    .wrap{
+      width:min(calc(100% - 40px),var(--max));
+      margin-inline:auto;
+    }
+
+    .kicker{
+      margin:0 0 16px;
+      color:var(--gold);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+    }
+
+    h1,h2,h3{
+      margin:0;
+      font-family:"Playfair Display",serif;
+      line-height:1.08;
+    }
+
+    h1{
+      font-size:clamp(48px,6vw,82px);
+      letter-spacing:-.035em;
+    }
+
+    h2{
+      font-size:clamp(38px,4.5vw,62px);
+      letter-spacing:-.025em;
+    }
+
+    h3{
+      font-size:25px;
+    }
+
+    p{
+      margin:0;
+    }
+
+    .lead{
+      margin-top:24px;
+      max-width:720px;
+      color:var(--muted);
+      font-size:17px;
+      line-height:1.75;
+    }
+
+    .btn-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:30px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:48px;
+      padding:0 20px;
+      border-radius:999px;
+      text-decoration:none;
+      font-size:14px;
+      font-weight:700;
+      transition:.2s ease;
+    }
+
+    .btn-dark{
+      background:var(--black);
+      color:#fff;
+      border:1px solid var(--black);
+    }
+
+    .btn-dark:hover{
+      transform:translateY(-1px);
+      background:#000;
+    }
+
+    .btn-outline{
+      border:1px solid rgba(23,21,18,.25);
+      background:transparent;
+      color:var(--black);
+    }
+
+    .btn-outline:hover{
+      background:rgba(23,21,18,.05);
+    }
+
+    .btn-gold{
+      background:var(--gold);
+      border:1px solid var(--gold);
+      color:var(--black);
+    }
+
+    /* HEADER */
+
+    .site-header{
+      background:var(--cream);
+      border-bottom:1px solid rgba(0,0,0,.06);
+      position:relative;
+      z-index:10;
+    }
+
+    .header-inner{
+      min-height:82px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:30px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      text-decoration:none;
+      flex-shrink:0;
+    }
+
+    .brand img{
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      object-fit:cover;
+    }
+
+    .brand-text strong{
+      display:block;
+      font-size:16px;
+      letter-spacing:.16em;
+    }
+
+    .brand-text span{
+      display:block;
+      margin-top:1px;
+      font-size:8px;
+      font-weight:700;
+      letter-spacing:.2em;
+    }
+
+    nav{
+      display:flex;
+      align-items:center;
+      gap:24px;
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.04em;
+    }
+
+    nav a{
+      text-decoration:none;
+      white-space:nowrap;
+    }
+
+    nav a:hover,
+    nav a.active{
+      color:var(--gold);
+    }
+
+    /* HERO */
+
+    .hero{
+      padding:58px 0 72px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.02fr .98fr;
+      align-items:center;
+      gap:64px;
+    }
+
+    .hero-copy{
+      padding:20px 0;
+    }
+
+    .hero-image{
+      position:relative;
+      min-height:610px;
+      overflow:hidden;
+      border-radius:0 0 0 58px;
+      background:#222;
+      box-shadow:var(--shadow);
+    }
+
+    .hero-image img{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center;
+    }
+
+    .hero-image::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(
+        to top,
+        rgba(0,0,0,.70) 0%,
+        rgba(0,0,0,.18) 45%,
+        rgba(0,0,0,.03) 70%
+      );
+    }
+
+    .hero-overlay{
+      position:absolute;
+      z-index:2;
+      left:36px;
+      right:36px;
+      bottom:36px;
+      color:#fff;
+    }
+
+    .hero-overlay .mini{
+      color:var(--gold);
+      font-size:11px;
+      font-weight:700;
+      letter-spacing:.17em;
+      text-transform:uppercase;
+      margin-bottom:9px;
+    }
+
+    .hero-overlay strong{
+      display:block;
+      max-width:430px;
+      font-family:"Playfair Display",serif;
+      font-size:31px;
+      line-height:1.14;
+    }
+
+    /* TRANSITION */
+
+    .transition{
+      background:var(--black);
+      color:#fff;
+      padding:38px 20px;
+      text-align:center;
+    }
+
+    .transition p{
+      max-width:820px;
+      margin:auto;
+      font-family:"Playfair Display",serif;
+      font-size:clamp(24px,3vw,38px);
+      line-height:1.3;
+    }
+
+    /* LIGHT SECTIONS */
+
+    .section{
+      padding:92px 0;
+    }
+
+    .section-head{
+      max-width:830px;
+      margin-bottom:48px;
+    }
+
+    .recognition-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+    }
+
+    .recognition-card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:28px 24px;
+    }
+
+    .recognition-card .num{
+      width:43px;
+      height:43px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:var(--black);
+      color:var(--gold);
+      font-weight:700;
+      margin-bottom:22px;
+    }
+
+    .recognition-card h3{
+      margin-bottom:10px;
+    }
+
+    .recognition-card p{
+      font-size:14px;
+      color:var(--muted);
+    }
+
+    /* DARK WORK SECTION */
+
+    .dark-section{
+      padding:100px 0;
+      background:var(--black);
+      color:#fff;
+    }
+
+    .dark-section .section-head p{
+      color:#d4c5b3;
+    }
+
+    .steps{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:14px;
+    }
+
+    .step{
+      min-height:230px;
+      background:var(--black-2);
+      border:1px solid rgba(212,160,58,.28);
+      border-radius:20px;
+      padding:28px 20px;
+    }
+
+    .step .letter{
+      color:var(--gold);
+      font-family:"Playfair Display",serif;
+      font-size:46px;
+      line-height:1;
+      margin-bottom:20px;
+    }
+
+    .step h3{
+      font-size:21px;
+      margin-bottom:10px;
+    }
+
+    .step p{
+      color:#d4c5b3;
+      font-size:13px;
+    }
+
+    /* PERSONAL */
+
+    .personal-grid{
+      display:grid;
+      grid-template-columns:.92fr 1.08fr;
+      gap:60px;
+      align-items:center;
+    }
+
+    .personal-panel{
+      border-radius:28px;
+      background:var(--cream-2);
+      padding:42px;
+    }
+
+    .personal-panel h3{
+      font-size:35px;
+      margin-bottom:20px;
+    }
+
+    .personal-panel p{
+      color:var(--muted);
+    }
+
+    .personal-list{
+      margin:28px 0 0;
+      padding:0;
+      list-style:none;
+      display:grid;
+      gap:14px;
+    }
+
+    .personal-list li{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      font-size:14px;
+    }
+
+    .personal-list span{
+      color:var(--gold);
+      font-weight:800;
+    }
+
+    /* WORLDS */
+
+    .worlds{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:14px;
+      margin-top:42px;
+    }
+
+    .world{
+      min-height:220px;
+      padding:28px 22px;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:20px;
+      text-decoration:none;
+      transition:.2s ease;
+    }
+
+    .world:hover{
+      transform:translateY(-3px);
+      box-shadow:var(--shadow);
+    }
+
+    .world .label{
+      color:var(--gold);
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:.13em;
+      margin-bottom:18px;
+    }
+
+    .world h3{
+      margin-bottom:11px;
+    }
+
+    .world p{
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    /* DARK STATEMENT */
+
+    .statement{
+      background:var(--black);
+      color:#fff;
+      padding:100px 0;
+    }
+
+    .statement-grid{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:64px;
+      align-items:center;
+    }
+
+    .statement p{
+      color:#d5c7b5;
+    }
+
+    .statement-card{
+      background:var(--black-2);
+      border:1px solid rgba(212,160,58,.30);
+      border-radius:28px;
+      padding:40px;
+    }
+
+    .statement-card h3{
+      color:#fff;
+      font-size:32px;
+      margin-bottom:18px;
+    }
+
+    .statement-card p + p{
+      margin-top:14px;
+    }
+
+    /* CTA */
+
+    .final{
+      padding:100px 0;
+    }
+
+    .final-box{
+      background:var(--cream-2);
+      border-radius:30px;
+      padding:58px 48px;
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:50px;
+      align-items:end;
+    }
+
+    .final-box p{
+      max-width:720px;
+      color:var(--muted);
+      margin-top:22px;
+    }
+
+    /* FOOTER */
+
+    footer{
+      background:#0c0b0a;
+      color:#fff;
+      padding:58px 0 22px;
+    }
+
+    .footer-grid{
+      display:grid;
+      grid-template-columns:1.1fr .8fr .95fr;
+      gap:60px;
+      padding-bottom:48px;
+    }
+
+    .footer-brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:20px;
+    }
+
+    .footer-brand img{
+      width:40px;
+      height:40px;
+      border-radius:50%;
+    }
+
+    .footer-brand strong{
+      display:block;
+      letter-spacing:.15em;
+    }
+
+    .footer-brand span{
+      font-size:8px;
+      letter-spacing:.18em;
+      font-weight:700;
+    }
+
+    footer h4{
+      color:var(--gold);
+      margin:0 0 16px;
+      font-size:11px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+    }
+
+    footer p,
+    footer a{
+      color:#d0c1af;
+      font-size:13px;
+      text-decoration:none;
+    }
+
+    footer a:hover{
+      color:var(--gold);
+    }
+
+    .footer-links{
+      display:grid;
+      gap:7px;
+    }
+
+    .quote{
+      margin-bottom:12px;
+    }
+
+    .footer-name{
+      display:block;
+      color:#fff;
+      font-weight:700;
+      margin:12px 0;
+    }
+
+    .footer-bottom{
+      border-top:1px solid rgba(212,160,58,.35);
+      padding-top:18px;
+      display:flex;
+      justify-content:space-between;
+      gap:20px;
+      align-items:center;
+      color:#a99884;
+      font-size:11px;
+    }
+
+    .legal{
+      display:flex;
+      gap:18px;
+      align-items:center;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width:1050px){
+      nav{
+        gap:13px;
+        font-size:10px;
+      }
+
+      .hero-grid{
+        gap:36px;
+      }
+
+      .hero-image{
+        min-height:540px;
+      }
+
+      .steps,
+      .worlds{
+        grid-template-columns:repeat(3,1fr);
+      }
+
+      .recognition-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+
+    @media (max-width:820px){
+      .header-inner{
+        align-items:flex-start;
+        padding:18px 0;
+        flex-direction:column;
+      }
+
+      nav{
+        width:100%;
+        overflow-x:auto;
+        padding-bottom:5px;
+      }
+
+      .hero{
+        padding-top:35px;
+      }
+
+      .hero-grid,
+      .personal-grid,
+      .statement-grid,
+      .final-box,
+      .footer-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-image{
+        min-height:560px;
+        border-radius:28px;
+      }
+
+      .final-box{
+        align-items:start;
+      }
+    }
+
+    @media (max-width:650px){
+      .wrap{
+        width:min(calc(100% - 28px),var(--max));
+      }
+
+      h1{
+        font-size:48px;
+      }
+
+      h2{
+        font-size:40px;
+      }
+
+      .section,
+      .dark-section,
+      .statement,
+      .final{
+        padding:72px 0;
+      }
+
+      .recognition-grid,
+      .steps,
+      .worlds{
+        grid-template-columns:1fr;
+      }
+
+      .hero-image{
+        min-height:510px;
+      }
+
+      .hero-overlay{
+        left:24px;
+        right:24px;
+        bottom:25px;
+      }
+
+      .personal-panel,
+      .statement-card,
+      .final-box{
+        padding:30px 24px;
+      }
+
+      .footer-bottom{
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      .legal{
+        flex-wrap:wrap;
+      }
+    }
+  </style>
+</head>
+
+<body id="top">
+
+<header class="site-header">
+  <div class="wrap header-inner">
+
+    <a
+      class="brand"
+      href="https://innercodesystems.github.io/ics-auswertungstool/ics-startseite.html"
+    >
+      <img
+        src="https://www.innercodesystems.com/wp-content/uploads/go-x/u/39adbfd1-c2be-4f0b-adb6-f4b956947aa2/l0,t256,w1024,h1024/image.png"
+        alt="Inner Code Systems"
+      >
+
+      <div class="brand-text">
+        <strong>ICS</strong>
+        <span>INNER CODE SYSTEMS</span>
+      </div>
+    </a>
+
+    <nav>
+      <a href="https://innercodesystems.github.io/ics-auswertungstool/ics-startseite.html">START</a>
+      <a href="https://innercodesystems.github.io/ics-auswertungstool/inner.html">INNER</a>
+      <a href="https://innercodesystems.github.io/ics-auswertungstool/body.html">BODY</a>
+      <a href="https://innercodesystems.github.io/ics-auswertungstool/action.html">ACTION</a>
+      <a href="https://innercodesystems.github.io/ics-auswertungstool/reset.html">RESET</a>
+      <a href="https://innercodesystems.github.io/ics-auswertungstool/orientierung.html">ORIENTIERUNG</a>
+      <a
+        href="https://app.innercodesystems.com/"
+        target="_blank"
+        rel="noopener"
+      >MEIN ICS</a>
+    </nav>
+
+  </div>
+</header>
+
+
+<main>
+
+  <!-- HERO -->
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+
+      <div class="hero-copy">
+
+        <p class="kicker">ICS · PERSÖNLICHE BEGLEITUNG</p>
+
+        <h1>
+          Manchmal brauchst du
+          keinen weiteren Impuls.
+          Sondern jemanden,
+          der mit dir hinschaut.
+        </h1>
+
+        <p class="lead">
+          Du musst nicht immer noch mehr wissen.
+          Manchmal geht es darum, gemeinsam zu erkennen,
+          was dich gerade wirklich bindet, welcher nächste Schritt
+          für dich stimmig ist – und wie daraus echte Veränderung
+          in deinem Leben entstehen kann.
+        </p>
+
+        <div class="btn-row">
+          <a class="btn btn-dark" href="#begleitung">
+            Begleitung entdecken
+          </a>
+
+          <a
+            class="btn btn-outline"
+            href="https://wa.me/491717335441?text=Hallo%20Peter%2C%20ich%20m%C3%B6chte%20mehr%20%C3%BCber%20eine%20pers%C3%B6nliche%20Begleitung%20mit%20ICS%20erfahren."
+            target="_blank"
+            rel="noopener"
+          >
+            Persönlich anfragen
+          </a>
+        </div>
+
+      </div>
+
+      <div class="hero-image">
+
+        <img
+          src="https://innercodesystems.github.io/ics-auswertungstool/peter-bodensee-hero.png"
+          alt="Peter Wicklein am Bodensee"
+        >
+
+        <div class="hero-overlay">
+          <div class="mini">PERSÖNLICH · KLAR · INDIVIDUELL</div>
+
+          <strong>
+            Nicht irgendein Weg.
+            Sondern dein nächster.
+          </strong>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <section class="transition">
+    <p>
+      Veränderung wird oft leichter,
+      wenn du nicht mehr alles alleine sortieren musst.
+    </p>
+  </section>
+
+
+  <!-- RECOGNITION -->
+
+  <section class="section">
+
+    <div class="wrap">
+
+      <div class="section-head">
+
+        <p class="kicker">WENN DU MERKST: ALLEINE KOMME ICH GERADE NICHT WEITER</p>
+
+        <h2>
+          Vielleicht fehlt dir nicht die Antwort.
+          Sondern Klarheit darüber,
+          was jetzt wirklich dran ist.
+        </h2>
+
+        <p class="lead">
+          Persönliche Begleitung kann sinnvoll sein,
+          wenn du viel verstanden hast – und trotzdem merkst,
+          dass sich etwas wiederholt, du an einem Übergang stehst
+          oder eine Entscheidung nicht länger aufschieben möchtest.
+        </p>
+
+      </div>
+
+      <div class="recognition-grid">
+
+        <article class="recognition-card">
+          <div class="num">01</div>
+
+          <h3>Du drehst dich im Kreis</h3>
+
+          <p>
+            Du denkst viel über dein Thema nach,
+            kommst aber immer wieder an denselben Punkt.
+          </p>
+        </article>
+
+
+        <article class="recognition-card">
+          <div class="num">02</div>
+
+          <h3>Du spürst: Da steckt mehr dahinter</h3>
+
+          <p>
+            Das sichtbare Thema ist vielleicht nur die Oberfläche
+            eines tiefer liegenden Musters.
+          </p>
+        </article>
+
+
+        <article class="recognition-card">
+          <div class="num">03</div>
+
+          <h3>Eine Entscheidung steht an</h3>
+
+          <p>
+            Du möchtest nicht länger nur abwägen,
+            sondern deine Richtung bewusst wählen.
+          </p>
+        </article>
+
+
+        <article class="recognition-card">
+          <div class="num">04</div>
+
+          <h3>Du willst wirklich verändern</h3>
+
+          <p>
+            Nicht nur erkennen oder verstehen,
+            sondern eine neue Erfahrung in deinen Alltag bringen.
+          </p>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- PROCESS -->
+
+  <section class="dark-section" id="begleitung">
+
+    <div class="wrap">
+
+      <div class="section-head">
+
+        <p class="kicker">SO ARBEITE ICH MIT DIR</p>
+
+        <h2>
+          Wir beginnen nicht bei einem fertigen Programm.
+          Wir beginnen bei dir.
+        </h2>
+
+        <p class="lead">
+          Inner Code Systems gibt uns eine klare Struktur.
+          Deine Situation entscheidet aber,
+          wo wir einsteigen und was gerade wirklich relevant ist.
+        </p>
+
+      </div>
+
+
+      <div class="steps">
+
+        <article class="step">
+          <div class="letter">1</div>
+
+          <h3>Standort klären</h3>
+
+          <p>
+            Was ist gerade wirklich da?
+            Was belastet, blockiert oder fordert dich?
+          </p>
+        </article>
+
+
+        <article class="step">
+          <div class="letter">2</div>
+
+          <h3>Muster erkennen</h3>
+
+          <p>
+            Wir schauen hinter die Oberfläche
+            und machen Zusammenhänge sichtbar.
+          </p>
+        </article>
+
+
+        <article class="step">
+          <div class="letter">3</div>
+
+          <h3>Richtung wählen</h3>
+
+          <p>
+            Was möchtest du nicht nur vermeiden,
+            sondern stattdessen bewusst gestalten?
+          </p>
+        </article>
+
+
+        <article class="step">
+          <div class="letter">4</div>
+
+          <h3>Handeln</h3>
+
+          <p>
+            Aus Erkenntnis entsteht ein konkreter,
+            machbarer nächster Schritt.
+          </p>
+        </article>
+
+
+        <article class="step">
+          <div class="letter">5</div>
+
+          <h3>Integrieren</h3>
+
+          <p>
+            Neue Entscheidungen dürfen sich
+            im wirklichen Leben zeigen und festigen.
+          </p>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- PERSONAL APPROACH -->
+
+  <section class="section">
+
+    <div class="wrap personal-grid">
+
+      <div>
+
+        <p class="kicker">KEIN STANDARD-COACHING</p>
+
+        <h2>
+          Du musst nicht in ein Konzept passen.
+        </h2>
+
+        <p class="lead">
+          Für mich bedeutet persönliche Begleitung nicht,
+          dir fertige Antworten überzustülpen.
+          Es geht darum, gemeinsam sichtbar zu machen,
+          was in deiner Situation wesentlich ist –
+          und daraus einen Weg zu entwickeln,
+          der zu dir und deinem Leben passt.
+        </p>
+
+      </div>
+
+
+      <div class="personal-panel">
+
+        <h3>
+          Was du von unserer Zusammenarbeit erwarten kannst.
+        </h3>
+
+        <p>
+          Klarheit und Tiefe gehören für mich zusammen.
+          Wir können reflektieren, hinterfragen,
+          Körperwahrnehmung einbeziehen und gleichzeitig
+          immer wieder zur konkreten Umsetzung zurückkehren.
+        </p>
+
+        <ul class="personal-list">
+          <li>
+            <span>✓</span>
+            <div>Ein ehrlicher Blick auf deine aktuelle Situation.</div>
+          </li>
+
+          <li>
+            <span>✓</span>
+            <div>Zusammenhänge erkennen statt nur Symptome bearbeiten.</div>
+          </li>
+
+          <li>
+            <span>✓</span>
+            <div>Klare nächste Schritte statt endloser Analyse.</div>
+          </li>
+
+          <li>
+            <span>✓</span>
+            <div>Raum für Wahrnehmung, Entscheidung und Veränderung.</div>
+          </li>
+
+          <li>
+            <span>✓</span>
+            <div>Eine Begleitung, die sich an deiner Entwicklung orientiert.</div>
+          </li>
+        </ul>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- WORLDS -->
+
+  <section class="section" style="padding-top:20px;">
+
+    <div class="wrap">
+
+      <div class="section-head">
+
+        <p class="kicker">FÜNF WELTEN · EIN PERSÖNLICHER WEG</p>
+
+        <h2>
+          Deine Begleitung kann an ganz unterschiedlichen Punkten beginnen.
+        </h2>
+
+        <p class="lead">
+          Persönliche Begleitung ist innerhalb von Inner Code Systems
+          kein eigener sechster Bereich.
+          Sie kann aus jeder der fünf ICS Welten entstehen –
+          je nachdem, wo dein aktuelles Thema liegt.
+        </p>
+
+      </div>
+
+
+      <div class="worlds">
+
+        <a
+          class="world"
+          href="https://innercodesystems.github.io/ics-auswertungstool/inner.html"
+        >
+          <div class="label">INNER</div>
+
+          <h3>Klarheit</h3>
+
+          <p>
+            Wenn Gedanken, Überzeugungen oder innere Konflikte
+            dich festhalten.
+          </p>
+        </a>
+
+
+        <a
+          class="world"
+          href="https://innercodesystems.github.io/ics-auswertungstool/body.html"
+        >
+          <div class="label">BODY</div>
+
+          <h3>Körper & Energie</h3>
+
+          <p>
+            Wenn dein Körper längst signalisiert,
+            dass etwas Aufmerksamkeit braucht.
+          </p>
+        </a>
+
+
+        <a
+          class="world"
+          href="https://innercodesystems.github.io/ics-auswertungstool/action.html"
+        >
+          <div class="label">ACTION</div>
+
+          <h3>Umsetzung</h3>
+
+          <p>
+            Wenn du eigentlich weißt,
+            was zu tun wäre – aber nicht ins Handeln kommst.
+          </p>
+        </a>
+
+
+        <a
+          class="world"
+          href="https://innercodesystems.github.io/ics-auswertungstool/reset.html"
+        >
+          <div class="label">RESET</div>
+
+          <h3>Muster verändern</h3>
+
+          <p>
+            Wenn sich dieselben Reaktionen
+            oder Situationen immer wiederholen.
+          </p>
+        </a>
+
+
+        <a
+          class="world"
+          href="https://innercodesystems.github.io/ics-auswertungstool/orientierung.html"
+        >
+          <div class="label">ORIENTIERUNG</div>
+
+          <h3>Richtung</h3>
+
+          <p>
+            Wenn du an einem Übergang stehst
+            und wissen möchtest, wie es weitergeht.
+          </p>
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- STATEMENT -->
+
+  <section class="statement">
+
+    <div class="wrap statement-grid">
+
+      <div>
+
+        <p class="kicker">INNER CODE SYSTEMS</p>
+
+        <h2>
+          Ich begleite dich nicht,
+          damit du von mir abhängig wirst.
+        </h2>
+
+        <p class="lead">
+          Das Ziel ist, dass du dich selbst wieder klarer wahrnimmst,
+          bewusster entscheidest und deinen eigenen Weg gestalten kannst.
+          Persönliche Begleitung darf dabei Orientierung,
+          Spiegel und Veränderungsraum sein.
+        </p>
+
+      </div>
+
+
+      <div class="statement-card">
+
+        <h3>
+          Wir schauen gemeinsam,
+          was jetzt wirklich dran ist.
+        </h3>
+
+        <p>
+          Vielleicht brauchst du Klarheit.
+          Vielleicht geht es um ein wiederkehrendes Muster.
+          Vielleicht um deinen Körper, eine Entscheidung,
+          deine Umsetzung oder einen neuen Lebensabschnitt.
+        </p>
+
+        <p>
+          Du musst vorher nicht wissen,
+          in welche ICS Welt dein Thema gehört.
+          Genau das können wir gemeinsam herausfinden.
+        </p>
+
+        <div class="btn-row">
+
+          <a
+            class="btn btn-gold"
+            href="https://innercodesystems.github.io/ics-auswertungstool/ICS_System_Check_V20_TESTMARKIERUNG.html"
+          >
+            Erst meinen Standort prüfen
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- FINAL CTA -->
+
+  <section class="final">
+
+    <div class="wrap">
+
+      <div class="final-box">
+
+        <div>
+
+          <p class="kicker">DEIN ERSTER SCHRITT</p>
+
+          <h2>
+            Wir müssen heute noch nicht wissen,
+            wohin der ganze Weg führt.
+          </h2>
+
+          <p>
+            Für den Anfang reicht ein ehrliches Gespräch darüber,
+            wo du gerade stehst und was dich beschäftigt.
+            Danach sehen wir, ob und in welcher Form
+            eine persönliche Begleitung für dich sinnvoll ist.
+          </p>
+
+        </div>
+
+
+        <div>
+
+          <a
+            class="btn btn-dark"
+            href="https://wa.me/491717335441?text=Hallo%20Peter%2C%20ich%20interessiere%20mich%20f%C3%BCr%20eine%20pers%C3%B6nliche%20Begleitung%20mit%20Inner%20Code%20Systems.%20Ich%20w%C3%BCrde%20gerne%20erst%20einmal%20mit%20dir%20kl%C3%A4ren%2C%20wo%20ich%20gerade%20stehe."
+            target="_blank"
+            rel="noopener"
+          >
+            Persönlich mit Peter klären
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+
+<footer>
+
+  <div class="wrap">
+
+    <div class="footer-grid">
+
+      <div>
+
+        <div class="footer-brand">
+
+          <img
+            src="https://www.innercodesystems.com/wp-content/uploads/go-x/u/39adbfd1-c2be-4f0b-adb6-f4b956947aa2/l0,t256,w1024,h1024/image.png"
+            alt="ICS"
+          >
+
+          <div>
+            <strong>ICS</strong>
+            <span>INNER CODE SYSTEMS</span>
+          </div>
+
+        </div>
+
+        <p>
+          Inner Code Systems verbindet Klarheit,
+          Körper, Handlung, Veränderung und Orientierung
+          zu einem System, das dich dabei unterstützt,
+          dein Leben bewusster zu gestalten.
+        </p>
+
+      </div>
+
+
+      <div>
+
+        <h4>Die fünf ICS Welten</h4>
+
+        <div class="footer-links">
+          <a href="https://innercodesystems.github.io/ics-auswertungstool/inner.html">INNER · Klarheit</a>
+          <a href="https://innercodesystems.github.io/ics-auswertungstool/body.html">BODY · Energie</a>
+          <a href="https://innercodesystems.github.io/ics-auswertungstool/action.html">ACTION · Umsetzung</a>
+          <a href="https://innercodesystems.github.io/ics-auswertungstool/reset.html">RESET · Muster</a>
+          <a href="https://innercodesystems.github.io/ics-auswertungstool/orientierung.html">ORIENTIERUNG · Richtung</a>
+        </div>
+
+      </div>
+
+
+      <div>
+
+        <h4>Inner Code Systems</h4>
+
+        <p class="quote">
+          „Du musst nicht dein ganzes Leben verändern.
+          Du musst erkennen, was jetzt wirklich dran ist.“
+        </p>
+
+        <span class="footer-name">Peter Wicklein</span>
+
+        <div class="footer-links">
+
+          <a
+            href="https://app.innercodesystems.com/"
+            target="_blank"
+            rel="noopener"
+          >
+            Mein ICS →
+          </a>
+
+          <a
+            href="https://wa.me/491717335441?text=Hallo%20Peter%2C%20ich%20m%C3%B6chte%20gerne%20Kontakt%20mit%20dir%20aufnehmen."
+            target="_blank"
+            rel="noopener"
+          >
+            Persönlich Kontakt aufnehmen →
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+      <div>
+        © 2026 Inner Code Systems · Peter Wicklein
+      </div>
+
+      <div class="legal">
+
+        <a
+          href="https://www.innercodesystems.com/impressum/"
+          target="_blank"
+          rel="noopener"
+        >
+          Impressum
+        </a>
+
+        <a
+          href="https://www.innercodesystems.com/datenschutz/"
+          target="_blank"
+          rel="noopener"
+        >
+          Datenschutz
+        </a>
+
+        <a href="#top">↑</a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</footer>
+
+
+<script>
+document.addEventListener("click",function(e){
+
+  const link=e.target.closest("a");
+  if(!link)return;
+
+  const href=link.getAttribute("href");
+  if(!href)return;
+
+  if(
+    href.startsWith("#") ||
+    href.includes("innercodesystems.github.io/ics-auswertungstool/")
+  ){
+    return;
+  }
+
+  if(
+    href.startsWith("https://wa.me/") ||
+    href.startsWith("https://app.innercodesystems.com") ||
+    href.startsWith("https://www.innercodesystems.com")
+  ){
+    link.setAttribute("target","_blank");
+    link.setAttribute("rel","noopener");
+  }
+
+});
+</script>
+
+</body>
+</html>
