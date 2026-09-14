@@ -172,6 +172,14 @@ function start(){
   renderQ();
   window.scrollTo(0,0);
 }
+
+/* DIREKTER START ÜBER ?start=1 */
+if(new URLSearchParams(window.location.search).get("start")==="1"){
+  setTimeout(function(){
+    start();
+  },0);
+}
+   
 function choose(v){ans[i]=v;i++;if(i<Q.length)renderQ();else result();}
 function scores(){
   const g={inner:[],body:[],action:[],reset:[],orientation:[]};
