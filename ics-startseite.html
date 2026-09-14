@@ -154,6 +154,22 @@
       color:var(--ics-gold);
     }
 
+    .ics-nav .ics-start-active{
+  color:var(--ics-gold);
+  position:relative;
+}
+
+.ics-nav .ics-start-active::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-8px;
+  height:2px;
+  background:var(--ics-gold);
+  border-radius:2px;
+}
+
     .ics-nav .ics-mein{
       color:#fff;
       background:var(--ics-gold);
@@ -921,7 +937,7 @@
 
        <nav class="ics-nav" aria-label="ICS Navigation">
 
-<a href="https://innercodesystems.github.io/ics-auswertungstool/ics-startseite.html">START</a>
+<a class="ics-start-active" href="https://innercodesystems.github.io/ics-auswertungstool/ics-startseite.html">START</a>
 <a href="https://innercodesystems.github.io/ics-auswertungstool/inner.html">INNER</a>
 <a href="https://innercodesystems.github.io/ics-auswertungstool/body.html">BODY</a>
 <a href="https://innercodesystems.github.io/ics-auswertungstool/action.html">ACTION</a>
