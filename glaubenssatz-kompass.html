@@ -56,8 +56,24 @@ body{padding-bottom:92px}
   min-height:48px;
   border-radius:14px;
 }
-.floating-main{flex:1;background:#1a1a1a;color:#fff}
-.floating-top{width:52px;background:#f4e5b7;color:#1a1a1a}
+.floating-main{
+  flex:1;
+  background:#1a1a1a;
+  color:#fff;
+}
+
+.floating-inner{
+  flex:1;
+  background:#D4A03A;
+  color:#1a1a1a;
+}
+
+.floating-top{
+  width:52px;
+  background:#f4e5b7;
+  color:#1a1a1a;
+}
+  
 #startauswahl{scroll-margin-top:16px}
 
 .category-return{
@@ -1837,9 +1853,27 @@ body{padding-bottom:92px}
 })();
 </script>
 <div aria-label="Schnellnavigation" class="floating-nav">
-<a class="floating-main clear-search-nav" href="#startauswahl">← Zur Auswahl</a>
-<a class="floating-top" href="#top">↑</a>
+
+  <a
+    class="floating-main clear-search-nav"
+    href="#startauswahl">
+    ← Zur Auswahl
+  </a>
+
+  <a
+    class="floating-inner"
+    href="https://innercodesystems.github.io/ics-auswertungstool/inner.html">
+    ← INNER
+  </a>
+
+  <a
+    class="floating-top"
+    href="#top">
+    ↑
+  </a>
+
 </div>
+  
 <script>
 document.addEventListener('DOMContentLoaded', function(){
   document.querySelectorAll('.floating-nav .clear-search-nav').forEach(function(a){
