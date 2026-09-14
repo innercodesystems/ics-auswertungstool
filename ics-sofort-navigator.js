@@ -229,7 +229,7 @@
         }
 
         ${top[0] === 'body'
-          ? '<a class="ics-navigator-btn secondary" href="https://innercodesystems.com/reise-durch-die-transformationsmassage" target="_blank" rel="noopener noreferrer">Massage entdecken</a>'
+          ? '<a class="ics-navigator-btn secondary" href="https://innercodesystems.github.io/ics-auswertungstool/transformationsmassage.html" target="_blank" rel="noopener noreferrer">Massage entdecken</a>'
           : ''
         }
 
