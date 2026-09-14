@@ -158,6 +158,17 @@ let i=0,
     isTestMode=false;
 
 const $=id=>document.getElementById(id);
+/* EINGEBETTET AUF DER STARTSEITE:
+   Zurück-zur-Startseite-Button ausblenden */
+const isEmbedded =
+  new URLSearchParams(window.location.search).get("embed")==="1";
+
+if(isEmbedded){
+  const embeddedBackLink = document.querySelector("#quiz > a.back");
+  if(embeddedBackLink){
+    embeddedBackLink.style.display="none";
+  }
+}
 function show(id){["start","quiz","result"].forEach(x=>$(x).classList.toggle("hide",x!==id));}
 function renderQ(){
   const q=Q[i]; $("sec").textContent=N[q[0]]; $("count").textContent=(i+1)+" / "+Q.length;
