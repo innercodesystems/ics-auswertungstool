@@ -54,6 +54,16 @@ user-select:none;
 <body>
 <div class="progressTop hidden" id="prog"><div class="wrap"><div class="progressTrack"><span id="progBar" style="width:0"></span></div><div class="phase"><span>ENTDECKEN</span><span>ENTSCHEIDEN</span><span>REALITÄT</span><span>AUSWERTUNG</span><span>ACTION</span></div></div></div>
 <div class="wrap">
+
+<div id="toolNav" class="hidden" style="margin:12px 0 18px;">
+  <a
+    class="btn secondary"
+    href="https://innercodesystems.github.io/ics-auswertungstool/tool-bibliothek.html"
+    style="text-decoration:none;display:inline-flex;align-items:center;">
+    ← Zurück zur Tool-Bibliothek
+  </a>
+</div>
+
 <section class="hero" id="hero">
   <div class="heroBox">
 
@@ -202,8 +212,7 @@ let selected=[],pairs=[],pairIndex=0,scores={},ranking=[],result=null;
 const $=id=>document.getElementById(id);
 function renderCloud(){ $("cloud").innerHTML=""; VALUES.forEach(v=>{let b=document.createElement("button");b.className="chip"+(selected.includes(v)?" on":"");b.textContent=v;b.onclick=()=>toggle(v);$("cloud").appendChild(b)});$("cnt").textContent=selected.length}
 function toggle(v){if(selected.includes(v))selected=selected.filter(x=>x!==v);else{if(selected.length>=12)return alert("Bitte genau 12 Werte auswählen.");selected.push(v)}renderCloud()}
-function go(n){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));$("s"+n).classList.add("active");$("hero").classList.add("hidden");$("prog").classList.remove("hidden");$("progBar").style.width=({1:10,2:32,3:48,4:62,5:100}[n]||0)+"%";window.scrollTo({top:0,behavior:"smooth"})}
-function startDuels(){if(selected.length!==12)return alert("Bitte genau 12 Werte auswählen.");pairs=[];scores={};selected.forEach(v=>scores[v]=0);for(let i=0;i<selected.length;i++)for(let j=i+1;j<selected.length;j++)pairs.push([selected[i],selected[j]]);pairs.sort(()=>Math.random()-.5);pairIndex=0;go(2);showPair()}
+function go(n){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));$("s"+n).classList.add("active");$("hero").classList.add("hidden");$("prog").classList.remove("hidden");$("toolNav").classList.remove("hidden");$("progBar").style.width=({1:10,2:32,3:48,4:62,5:100}[n]||0)+"%";window.scrollTo({top:0,behavior:"smooth"})}function startDuels(){if(selected.length!==12)return alert("Bitte genau 12 Werte auswählen.");pairs=[];scores={};selected.forEach(v=>scores[v]=0);for(let i=0;i<selected.length;i++)for(let j=i+1;j<selected.length;j++)pairs.push([selected[i],selected[j]]);pairs.sort(()=>Math.random()-.5);pairIndex=0;go(2);showPair()}
 function showPair(){let p=pairs[pairIndex];$("left").textContent=p[0];$("right").textContent=p[1];$("duelProgress").textContent=`Entscheidung ${pairIndex+1} von ${pairs.length}`;$("progBar").style.width=(20+30*(pairIndex/pairs.length))+"%"}
 function choose(side){scores[pairs[pairIndex][side]]++;pairIndex++;if(pairIndex>=pairs.length)return finishDuels();showPair()}
 function finishDuels(){ranking=Object.entries(scores).sort((a,b)=>b[1]-a[1]).map(x=>({value:x[0],wins:x[1]}));renderRanking();go(3)}
