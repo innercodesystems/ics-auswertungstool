@@ -2,9 +2,33 @@
   'use strict';
 
   /* STARTSEITE · lokale Marken- und Rechtelinks absichern */
-  document.querySelectorAll('.ics-brand-mark img, .ics-footer-logo').forEach(function(img){
+  document.querySelectorAll('.ics-brand-mark img').forEach(function(img){
     img.setAttribute('src','ics-logo.png');
   });
+
+  /* FOOTER · Branding rein als HTML/CSS, ohne Bilddatei */
+  document.querySelectorAll('.ics-footer-logo').forEach(function(logo){
+    const brand = document.createElement('div');
+    brand.className = 'ics-footer-brand-text';
+    brand.innerHTML = '<span class="ics-footer-brand-main">ICS</span><span class="ics-footer-brand-sub">INNER CODE SYSTEMS</span>';
+    logo.replaceWith(brand);
+  });
+
+  if(!document.getElementById('ics-footer-brand-text-style')){
+    const footerStyle = document.createElement('style');
+    footerStyle.id = 'ics-footer-brand-text-style';
+    footerStyle.textContent = `
+      .ics-footer-brand-text{display:flex;flex-direction:column;align-items:flex-start;gap:5px;margin:0 0 22px}
+      .ics-footer-brand-main{font-family:Georgia,'Times New Roman',serif;font-size:46px;line-height:.95;letter-spacing:.04em;color:#D4A03A}
+      .ics-footer-brand-sub{font-family:Arial,Helvetica,sans-serif;font-size:11px;line-height:1.2;font-weight:600;letter-spacing:.20em;color:#bdb4a7}
+      @media(max-width:520px){
+        .ics-footer-brand-text{margin-bottom:18px;gap:5px}
+        .ics-footer-brand-main{font-size:40px}
+        .ics-footer-brand-sub{font-size:10px;letter-spacing:.17em}
+      }
+    `;
+    document.head.appendChild(footerStyle);
+  }
 
   document.querySelectorAll('.ics-footer-legal a').forEach(function(link){
     const label=(link.textContent || '').trim().toLowerCase();
