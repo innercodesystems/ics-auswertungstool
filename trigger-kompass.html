@@ -45,7 +45,19 @@ textarea{min-height:110px}input[type=range]{width:100%;accent-color:var(--gold)}
 <div class="kicker">INNER CODE SYSTEMS · INNER</div>
 <h1>Dein <span class="gold">Trigger-Kompass</span></h1>
 <p class="lead">Manchmal ist nicht das, was passiert, das eigentliche Thema – sondern das, was es in dir auslöst. Der Trigger-Kompass hilft dir, hinter deine spontane Reaktion zu schauen: Was wurde berührt? Was brauchst du wirklich? Und wie kannst du bewusst statt automatisch reagieren?</p>
-<div class="actions"><button class="btn" onclick="go(1)">Trigger verstehen</button><button class="btn secondary" onclick="loadLast()">Letzte Auswertung</button></div>
+<div class="actions"><button class="btn" onclick="go(1)"<div class="actions">
+  <button class="btn" onclick="go(1)">
+    Trigger verstehen
+  </button>
+
+  <button class="btn secondary" onclick="loadLast()">
+    Letzte Auswertung
+  </button>
+
+  <button class="btn secondary" onclick="backToLibrary()">
+    ← Zurück zur Tool-Bibliothek
+  </button>
+</div>>Trigger verstehen</button><button class="btn secondary" onclick="loadLast()">Letzte Auswertung</button></div>
 </div></section>
 
 <section class="screen" id="s1"><div class="card">
@@ -53,17 +65,15 @@ textarea{min-height:110px}input[type=range]{width:100%;accent-color:var(--gold)}
 <p>Wähle den Bereich, der am ehesten passt. Du musst die Situation noch nicht erklären oder bewerten.</p>
 <div class="g3 grid" id="triggerChoices"></div>
 <div style="margin-top:22px"><label class="mini">Optional: Was ist passiert?</label><textarea id="situation" placeholder="Zum Beispiel: Jemand antwortet nicht, kritisiert mich, entscheidet über meinen Kopf hinweg …"></textarea></div>
-<div class="actions"><button class="bt<div class="actions">
-  <a class="btn secondary"
-     href="https://innercodesystems.github.io/ics-auswertungstool/tool-bibliothek.html"
-     style="text-decoration:none;">
+<div class="actions">
+  <button class="btn secondary" onclick="backToLibrary()">
     ← Zurück zur Tool-Bibliothek
-  </a>
+  </button>
 
   <button class="btn" onclick="nextReaction()">
     Weiter · meine Reaktion
   </button>
-</div>n" onclick="nextReaction()">Weiter · meine Reaktion</button></div>
+</div>
 </div></section>
 
 <section class="screen" id="s2"><div class="card">
@@ -151,6 +161,11 @@ function renderAll(){
   renderChoices("needChoices",NEEDS,"need");
   renderChoices("beliefChoices",BELIEFS,"belief");
 }
+
+function backToLibrary(){
+  window.location.href="https://innercodesystems.github.io/ics-auswertungstool/tool-bibliothek.html";
+}
+  
 function go(n){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));$("s"+n).classList.add("active");$("hero").classList.add("hidden");$("prog").classList.remove("hidden");$("progBar").style.width=({1:18,2:38,3:62,4:100}[n]||0)+"%";window.scrollTo({top:0,behavior:"smooth"})}
 function nextReaction(){
   if(!state.trigger)return alert("Bitte wähle zuerst aus, was dich am ehesten getriggert hat.");
