@@ -33,6 +33,11 @@ h1{font-size:clamp(30px,6vw,54px);line-height:1.03;margin:0 0 12px;font-weight:7
 .small{font-size:13px;color:#a99f91;margin-top:10px}
 .btn{appearance:none;border:0;border-radius:14px;padding:15px 18px;font-size:16px;font-weight:700;cursor:pointer}
 .btn-primary{background:var(--gold);color:#16130f;width:100%;margin-top:18px}
+.btn-primary:disabled{
+  opacity:.38;
+  cursor:not-allowed;
+  filter:grayscale(.35);
+}
 .btn-secondary{background:transparent;color:var(--cream);border:1px solid var(--line)}
 .hidden{display:none!important}
 .progress{display:flex;gap:7px;margin:14px 0 18px}
