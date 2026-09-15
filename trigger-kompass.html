@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ICS Trigger-Kompass V3</title>
+<style>
+:root{--bg:#1a1815;--panel:#24211d;--panel2:#2c2822;--gold:#b8924f;--gold2:#d4a03a;--cream:#f6f1e7;--muted:#b9b1a4;--line:#413a31;--green:#8fbe8a;--red:#d98585;--amber:#dfb36a}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 80% 0,rgba(184,146,79,.12),transparent 28%),var(--bg);color:var(--cream);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5}
+.wrap{max-width:1100px;margin:auto;padding:20px}.hero{min-height:78vh;display:flex;align-items:center;padding:50px 0}
+.heroBox,.card{border:1px solid var(--line);background:linear-gradient(145deg,rgba(255,255,255,.025),rgba(184,146,79,.035));border-radius:28px;padding:clamp(24px,5vw,52px);box-shadow:0 25px 70px rgba(0,0,0,.22)}
+.kicker{color:var(--gold);font-weight:800;letter-spacing:.18em;font-size:.76rem;text-transform:uppercase}
+h1{font-size:clamp(2.8rem,7vw,5.7rem);line-height:.94;letter-spacing:-.055em;margin:14px 0 22px}
+h2{font-size:clamp(1.8rem,4vw,3rem);line-height:1.05;margin:0 0 12px} h3{margin:0 0 8px}
+.gold{color:var(--gold2)} p{color:var(--muted)} .lead{font-size:1.08rem;max-width:780px}
+.btn{border:0;border-radius:14px;padding:13px 18px;font-weight:800;cursor:pointer;background:var(--gold);color:#17130e;font:inherit}
+.btn.secondary{background:transparent;color:var(--cream);border:1px solid var(--line)} .btn.dark{background:#302b25;color:var(--cream)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.screen{display:none;margin:22px 0}.screen.active{display:block}.hidden{display:none!important}
+.progressTop{position:sticky;top:0;z-index:5;background:rgba(26,24,21,.92);backdrop-filter:blur(10px);padding:12px 0}
+.progressTrack{height:6px;background:#38322b;border-radius:99px;overflow:hidden}.progressTrack span{display:block;height:100%;background:var(--gold);transition:.3s}
+.phase{display:flex;justify-content:space-between;color:#8e867a;font-size:.76rem;margin-top:7px}
+.grid{display:grid;gap:14px}.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.choice{border:1px solid var(--line);background:#29251f;color:var(--cream);border-radius:17px;padding:17px;text-align:left;cursor:pointer;font:inherit;font-weight:750;min-height:62px}
+.choice.on{border-color:var(--gold);background:rgba(184,146,79,.14);box-shadow:0 0 0 1px var(--gold) inset}
+.metric{background:#29251f;border:1px solid var(--line);border-radius:18px;padding:18px}.metric strong{font-size:1.25rem;color:var(--gold)}
+.pill{font-size:.75rem;color:var(--gold);background:#342e26;border-radius:99px;padding:5px 9px;display:inline-block;font-weight:800}
+textarea,input[type=text]{width:100%;background:#201d19;color:var(--cream);border:1px solid var(--line);border-radius:14px;padding:14px;font:inherit}
+textarea{min-height:110px}input[type=range]{width:100%;accent-color:var(--gold)}
+.scale{display:grid;grid-template-columns:1fr 70px;gap:16px;align-items:center}.scale strong{font-size:1.6rem;color:var(--gold);text-align:center}
+.resultHero{border:1px solid rgba(184,146,79,.65);background:linear-gradient(145deg,rgba(184,146,79,.13),#29251f);border-radius:22px;padding:24px;margin-top:18px}
+.code{font-size:clamp(1.5rem,4vw,2.5rem);font-weight:850;line-height:1.15;color:var(--cream);margin-top:10px}
+.path{padding:16px;border-left:3px solid var(--gold);background:#29251f;border-radius:0 14px 14px 0;margin-top:12px}
+.recBtn{display:flex;align-items:center;justify-content:center;text-align:center;width:100%;margin-top:14px;padding:15px 18px;border-radius:14px;background:var(--gold);color:#1a1815!important;font-weight:800;text-decoration:none}
+.recBtn.secondary{background:transparent;color:var(--cream)!important;border:1px solid var(--line)}
+.mini{font-size:.86rem;color:var(--muted)}.history{padding:13px 0;border-bottom:1px solid var(--line)}
+@media(max-width:760px){.g2,.g3,.g4{grid-template-columns:1fr}.hero{min-height:auto;padding:30px 0}.phase{display:none}}
+@media print{body{background:white;color:#111}.progressTop,.actions,.hero{display:none}.card{box-shadow:none;background:white;color:#111;border:1px solid #ccc}p,.mini{color:#444}}
+</style>
+</head>
+<body>
+<div class="progressTop hidden" id="prog"><div class="wrap"><div class="progressTrack"><span id="progBar" style="width:0"></span></div><div class="phase"><span>SITUATION</span><span>REAKTION</span><span>TIEFE</span><span>NEUER CODE</span><span>ACTION</span></div></div></div>
+<div class="wrap">
+<section class="hero" id="hero"><div class="heroBox">
+<div class="kicker">INNER CODE SYSTEMS · INNER</div>
+<h1>Dein <span class="gold">Trigger-Kompass</span></h1>
+<p class="lead">Manchmal ist nicht das, was passiert, das eigentliche Thema – sondern das, was es in dir auslöst. Der Trigger-Kompass hilft dir, hinter deine spontane Reaktion zu schauen: Was wurde berührt? Was brauchst du wirklich? Und wie kannst du bewusst statt automatisch reagieren?</p>
+<div class="actions"><button class="btn" onclick="go(1)">Trigger verstehen</button><button class="btn secondary" onclick="loadLast()">Letzte Auswertung</button></div>
+</div></section>
+
+<section class="screen" id="s1"><div class="card">
+<div class="kicker">Phase 1 · Situation</div><h2>Was hat dich gerade getriggert?</h2>
+<p>Wähle den Bereich, der am ehesten passt. Du musst die Situation noch nicht erklären oder bewerten.</p>
+<div class="g3 grid" id="triggerChoices"></div>
+<div style="margin-top:22px"><label class="mini">Optional: Was ist passiert?</label><textarea id="situation" placeholder="Zum Beispiel: Jemand antwortet nicht, kritisiert mich, entscheidet über meinen Kopf hinweg …"></textarea></div>
+<div class="actions"><button class="btn" onclick="nextReaction()">Weiter · meine Reaktion</button></div>
+</div></section>
+
+<section class="screen" id="s2"><div class="card">
+<div class="kicker">Phase 2 · Reaktion</div><h2>Was passiert zuerst in dir?</h2>
+<p>Wähle deine stärkste spontane Reaktion – nicht die vernünftigste.</p>
+<div class="g3 grid" id="reactionChoices"></div>
+<div style="margin-top:26px"><h3>Wie stark trifft dich die Situation?</h3><div class="scale"><input id="intensity" type="range" min="1" max="10" value="6" oninput="intensityN.textContent=this.value"><strong id="intensityN">6</strong></div></div>
+<div class="actions"><button class="btn secondary" onclick="go(1)">Zurück</button><button class="btn" onclick="go(3)">Weiter · tiefer schauen</button></div>
+</div></section>
+
+<section class="screen" id="s3"><div class="card">
+<div class="kicker">Phase 3 · Tiefe</div><h2>Was könnte hier wirklich berührt sein?</h2>
+<p>Ein Trigger weist häufig auf ein Bedürfnis, eine Grenze, eine alte Erfahrung oder eine innere Bedeutung hin. Wähle intuitiv, was sich am ehesten stimmig anfühlt.</p>
+<h3 style="margin-top:24px">Was fehlt dir in diesem Moment am meisten?</h3><div class="g3 grid" id="needChoices"></div>
+<h3 style="margin-top:28px">Welcher innere Satz kommt dem Gefühl am nächsten?</h3><div class="g2 grid" id="beliefChoices"></div>
+<div class="actions"><button class="btn secondary" onclick="go(2)">Zurück</button><button class="btn" onclick="calculate()">Meine Auswertung</button></div>
+</div></section>
+
+<section class="screen" id="s4">
+<div class="card">
+<div class="kicker">Phase 4 · Auswertung</div><h2>Was dein Trigger dir zeigen könnte</h2>
+<div class="resultHero"><div class="mini">Dein aktuelles Thema</div><div class="code" id="theme"></div><p id="interpret"></p></div>
+<div class="g4 grid" style="margin-top:18px">
+<div class="metric"><span class="pill">INNER</span><h3>Erkennen</h3><p id="inner"></p></div>
+<div class="metric"><span class="pill">BODY</span><h3>Spüren</h3><p id="body"></p></div>
+<div class="metric"><span class="pill">ACTION</span><h3>Neu handeln</h3><p id="action"></p></div>
+<div class="metric"><span class="pill">RESET</span><h3>Unterbrechen</h3><p id="reset"></p></div>
+</div>
+<div class="resultHero"><div class="kicker">Dein neuer Code</div><div class="code" id="newCode"></div><p id="spuerfrage"></p></div>
+</div>
+
+<div class="card" style="margin-top:18px">
+<div class="kicker">ICS Verknüpfung</div><h2>Welcher Weg jetzt sinnvoll sein könnte</h2>
+<p>Dein Trigger ist nicht das Ende der Auswertung. Er kann ein Eingang zu einem tieferen Thema sein.</p>
+<div id="routes"></div>
+</div>
+
+<div class="card" style="margin-top:18px">
+<div class="kicker">Phase 5 · Action</div><h2>Vom Reagieren ins Gestalten</h2>
+<p id="question"></p>
+<textarea id="stepText" placeholder="Meine bewusste Reaktion / mein nächster kleiner Schritt …"></textarea>
+<div class="actions"><button class="btn" onclick="save()">Auswertung speichern</button><button class="btn secondary" onclick="window.print()">Drucken / PDF</button><button class="btn dark" onclick="restart()">Neu starten</button></div><div class="mini" id="saveMsg"></div>
+</div>
+
+<div class="card" style="margin-top:18px"><h2>Deine Trigger-Muster</h2><p>Wenn du den Kompass mehrfach nutzt, können wiederkehrende Themen sichtbar werden.</p><div id="history"></div></div>
+</section>
+</div>
+
+<script>
+const TRIGGERS=["Kritik","Ablehnung","Ignoriert werden","Kontrolle","Ungerechtigkeit","Nicht verstanden werden","Zurückweisung","Nähe / Distanz","Eifersucht","Grenzüberschreitung","Enttäuschung","Erwartungsdruck","Vergleich","Respektlosigkeit","Verlust von Kontrolle"];
+const REACTIONS=["Ich werde wütend","Ich ziehe mich zurück","Ich rechtfertige mich","Ich werde still","Ich will sofort klären","Ich passe mich an","Ich greife an","Ich grüble","Ich werde traurig","Ich fühle mich klein","Ich kontrolliere","Ich will weg"];
+const NEEDS=["Sicherheit","Anerkennung","Respekt","Nähe","Freiheit","Verständnis","Zugehörigkeit","Wertschätzung","Klarheit","Selbstbestimmung","Vertrauen","Ruhe"];
+const BELIEFS=["Ich bin nicht wichtig.","Ich bin nicht gut genug.","Ich werde nicht gesehen.","Ich muss mich beweisen.","Ich darf niemanden enttäuschen.","Ich muss alles im Griff haben.","Ich werde verlassen.","Ich kann anderen nicht vertrauen.","Meine Bedürfnisse zählen nicht.","Ich muss stark sein.","Ich darf keine Schwäche zeigen.","Ich werde nicht respektiert."];
+let state={trigger:"",reaction:"",need:"",belief:"",intensity:6,situation:""},result=null;
+const $=id=>document.getElementById(id);
+
+function renderChoices(id,arr,key){
+  const el=$(id);
+  el.innerHTML="";
+  arr.forEach((v,i)=>{
+    const b=document.createElement("button");
+    b.type="button";
+    b.className="choice"+(state[key]===v?" on":"");
+    b.textContent=v;
+    b.dataset.key=key;
+    b.dataset.index=String(i);
+    el.appendChild(b);
+  });
+}
+function bindChoiceContainer(id,arr){
+  const el=$(id);
+  el.addEventListener("click",(ev)=>{
+    const b=ev.target.closest("button.choice");
+    if(!b || !el.contains(b)) return;
+    const key=b.dataset.key;
+    const idx=Number(b.dataset.index);
+    if(!key || Number.isNaN(idx) || !arr[idx]) return;
+    state[key]=arr[idx];
+    renderAll();
+  });
+}
+function renderAll(){
+  renderChoices("triggerChoices",TRIGGERS,"trigger");
+  renderChoices("reactionChoices",REACTIONS,"reaction");
+  renderChoices("needChoices",NEEDS,"need");
+  renderChoices("beliefChoices",BELIEFS,"belief");
+}
+function go(n){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));$("s"+n).classList.add("active");$("hero").classList.add("hidden");$("prog").classList.remove("hidden");$("progBar").style.width=({1:18,2:38,3:62,4:100}[n]||0)+"%";window.scrollTo({top:0,behavior:"smooth"})}
+function nextReaction(){
+  if(!state.trigger)return alert("Bitte wähle zuerst aus, was dich am ehesten getriggert hat.");
+  state.situation=$("situation").value.trim();
+  renderAll();
+  go(2);
+}
+const beliefData={
+"Ich bin nicht wichtig.":["Bedeutung & Selbstwert","Meine Bedeutung hängt nicht davon ab, wie ein anderer Mensch gerade reagiert.","Was würde sich verändern, wenn du deinen eigenen Wert nicht mehr von dieser Situation abhängig machst?"],
+"Ich bin nicht gut genug.":["Selbstwert & Leistung","Ich muss mich nicht beweisen, um wertvoll zu sein.","Was würdest du jetzt tun, wenn du nichts beweisen müsstest?"],
+"Ich werde nicht gesehen.":["Gesehenwerden & Verbindung","Ich darf mich zeigen und zugleich bei mir bleiben.","Was möchtest du eigentlich gesehen oder verstanden wissen?"],
+"Ich muss mich beweisen.":["Leistung & Anerkennung","Ich darf wirken, ohne meinen Wert beweisen zu müssen.","Wo könntest du heute aufhören, um Anerkennung zu kämpfen?"],
+"Ich darf niemanden enttäuschen.":["Anpassung & Grenzen","Ein ehrliches Nein kann ein Ja zu mir selbst sein.","Welche Wahrheit hältst du zurück, um Harmonie zu bewahren?"],
+"Ich muss alles im Griff haben.":["Kontrolle & Sicherheit","Ich kann Sicherheit in mir aufbauen, auch wenn nicht alles kontrollierbar ist.","Was könntest du für einen Moment nicht kontrollieren und trotzdem tragen?"],
+"Ich werde verlassen.":["Bindung & Sicherheit","Ich darf verbunden sein, ohne mich selbst zu verlassen.","Wo verlässt du gerade dich selbst aus Angst, jemanden zu verlieren?"],
+"Ich kann anderen nicht vertrauen.":["Vertrauen & Schutz","Ich darf prüfen, Grenzen setzen und Vertrauen Schritt für Schritt entstehen lassen.","Was wäre heute ein gesunder Unterschied zwischen Vertrauen und blindem Vertrauen?"],
+"Meine Bedürfnisse zählen nicht.":["Bedürfnisse & Selbstachtung","Meine Bedürfnisse dürfen Raum bekommen.","Welches Bedürfnis möchtest du nicht länger kleinreden?"],
+"Ich muss stark sein.":["Schutz & Verletzlichkeit","Stärke bedeutet auch, wahrzunehmen, was ich wirklich brauche.","Was würdest du fühlen, wenn du gerade nichts halten müsstest?"],
+"Ich darf keine Schwäche zeigen.":["Verletzlichkeit & Selbstannahme","Ich darf menschlich sein, ohne an Wert zu verlieren.","Wo wäre heute ein kleiner Moment echter Offenheit möglich?"],
+"Ich werde nicht respektiert.":["Würde & Grenzen","Ich darf klar für meine Würde und meine Grenzen einstehen.","Welche Grenze braucht keine Rechtfertigung, sondern Klarheit?"]
+};
+function calculate(){
+ if(!state.reaction){go(2);return alert("Bitte wähle deine spontane Reaktion.");}
+ if(!state.need){go(3);return alert("Bitte wähle das Bedürfnis, das dir am meisten fehlt.");}
+ if(!state.belief){go(3);return alert("Bitte wähle den inneren Satz, der am ehesten passt.");}
+ state.intensity=+$("intensity").value;
+ const d=beliefData[state.belief]||["Muster & Bewusstheit","Ich darf wahrnehmen, bevor ich reagiere.","Was brauchst du gerade wirklich?"];
+ result={date:new Date().toISOString(),...state,theme:d[0],newCode:d[1],spuerfrage:d[2],nextStep:""};
+ renderResult();go(4)
+}
+function renderResult(){
+ $("theme").textContent=result.theme;
+ $("interpret").innerHTML=`Auslöser: <strong>${result.trigger}</strong> · spontane Reaktion: <strong>${result.reaction}</strong> · Intensität: <strong>${result.intensity}/10</strong>. Hinter deiner Reaktion könnte besonders das Bedürfnis nach <strong>${result.need}</strong> berührt sein. Der Satz „${result.belief}“ ist keine Diagnose oder Wahrheit – sondern eine mögliche Spur, die du prüfen kannst.`;
+ $("inner").textContent=`Beobachte, ob hinter „${result.trigger}“ häufiger der innere Satz „${result.belief}“ auftaucht.`;
+ $("body").textContent=`Bevor du handelst: Wo sitzt die Reaktion im Körper? Enge, Druck, Hitze, Unruhe oder Rückzug? Bleib für drei ruhige Atemzüge dort.`;
+ $("action").textContent=`Handle nicht gegen den Trigger, sondern für dein Bedürfnis nach ${result.need}. Wähle eine klare, kleine Handlung statt der automatischen Reaktion „${result.reaction}“.`;
+ $("reset").textContent=`STOPP → wahrnehmen → benennen → neu wählen. Dein Trigger darf ein Signal sein, aber er muss nicht deine nächste Handlung bestimmen.`;
+ $("newCode").textContent=result.newCode;
+ $("spuerfrage").innerHTML=`<strong>Spürfrage:</strong> ${result.spuerfrage}`;
+ $("question").innerHTML=`Was wäre in dieser Situation eine Reaktion aus deinem <strong>Gestaltungsmodus</strong> – statt aus deinem bisherigen Schutzmuster?`;
+ let routes=[];
+ if(result.intensity>=8) routes.push(["RESET / Modus-Kompass","Die hohe Intensität spricht dafür, zuerst aus der automatischen Reaktion herauszukommen.","https://www.innercodesystems.com/modus-kompass/"]);
+ if(["Ich bin nicht gut genug.","Ich bin nicht wichtig.","Ich muss mich beweisen.","Meine Bedürfnisse zählen nicht."].includes(result.belief)) routes.push(["Glaubenssatz-Kompass","Dein gewählter innerer Satz eignet sich für eine tiefere Glaubenssatz-Auswertung.","#"]);
+ if(["Grenzüberschreitung","Kontrolle","Respektlosigkeit"].includes(result.trigger)||result.need==="Selbstbestimmung") routes.push(["Werte-Kompass","Prüfe, welcher wichtige Wert oder welche Grenze in dieser Situation verletzt wird.","https://www.innercodesystems.com/werte-kompass/"]);
+ routes.push(["Wiederholungs-Kompass · demnächst","Wenn dir ähnliche Situationen immer wieder begegnen, lohnt sich der Blick auf das wiederkehrende Muster.","#"]);
+ $("routes").innerHTML=routes.map((r,i)=>`<div class="${i===0?'resultHero':'path'}"><strong>${r[0]}</strong><p>${r[1]}</p>${r[2]!=="#"?`<a class="recBtn ${i?'secondary':''}" href="${r[2]}">${r[0]} öffnen</a>`:""}</div>`).join("");
+ renderHistory();
+}
+function save(){if(!result)return;result.nextStep=$("stepText").value.trim();let h=JSON.parse(localStorage.getItem("ICS_TRIGGER_HISTORY_V1")||"[]");h.push(result);localStorage.setItem("ICS_TRIGGER_HISTORY_V1",JSON.stringify(h.slice(-36)));$("saveMsg").textContent="Auswertung lokal gespeichert.";renderHistory()}
+function renderHistory(){let el=$("history");if(!el)return;let h=JSON.parse(localStorage.getItem("ICS_TRIGGER_HISTORY_V1")||"[]").reverse();el.innerHTML=h.length?h.map(x=>`<div class="history"><strong>${new Date(x.date).toLocaleDateString("de-DE")} · ${x.trigger}</strong><div class="mini">${x.theme} · ${x.intensity}/10 · Bedürfnis: ${x.need}</div></div>`).join(""):`<p class="mini">Noch keine gespeicherten Trigger-Auswertungen.</p>`}
+function loadLast(){let h=JSON.parse(localStorage.getItem("ICS_TRIGGER_HISTORY_V1")||"[]");if(!h.length)return alert("Noch keine gespeicherte Auswertung vorhanden.");result=h[h.length-1];state={...result};renderAll();renderResult();go(4)}
+function restart(){location.reload()}
+bindChoiceContainer("triggerChoices",TRIGGERS);
+bindChoiceContainer("reactionChoices",REACTIONS);
+bindChoiceContainer("needChoices",NEEDS);
+bindChoiceContainer("beliefChoices",BELIEFS);
+renderAll();renderHistory();
+</script>
+</body></html>
