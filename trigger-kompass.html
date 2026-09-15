@@ -115,7 +115,13 @@ textarea{min-height:110px}input[type=range]{width:100%;accent-color:var(--gold)}
 <div class="kicker">Phase 5 · Action</div><h2>Vom Reagieren ins Gestalten</h2>
 <p id="question"></p>
 <textarea id="stepText" placeholder="Meine bewusste Reaktion / mein nächster kleiner Schritt …"></textarea>
-<div class="actions"><button class="btn" onclick="save()">Auswertung speichern</button><button class="btn secondary" onclick="window.print()">Drucken / PDF</button><button class="btn dark" onclick="restart()">Neu starten</button></div><div class="mini" id="saveMsg"></div>
+<div class="actions">
+  <button class="btn" onclick="save()">Auswertung speichern</button>
+  <button class="btn secondary" onclick="window.print()">Drucken / PDF</button>
+  <button class="btn dark" onclick="restart()">Neu starten</button>
+  <button class="btn secondary" onclick="backToLibrary()">← Zurück zur Tool-Bibliothek</button>
+</div>
+<div class="mini" id="saveMsg"></div>
 </div>
 
 <div class="card" style="margin-top:18px"><h2>Deine Trigger-Muster</h2><p>Wenn du den Kompass mehrfach nutzt, können wiederkehrende Themen sichtbar werden.</p><div id="history"></div></div>
