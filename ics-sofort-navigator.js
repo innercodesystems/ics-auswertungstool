@@ -1,6 +1,17 @@
 (function(){
   'use strict';
 
+  /* STARTSEITE · lokale Marken- und Rechtelinks absichern */
+  document.querySelectorAll('.ics-brand-mark img, .ics-footer-logo').forEach(function(img){
+    img.setAttribute('src','ics-logo.png');
+  });
+
+  document.querySelectorAll('.ics-footer-legal a').forEach(function(link){
+    const label=(link.textContent || '').trim().toLowerCase();
+    if(label === 'impressum') link.setAttribute('href','impressum.html');
+    if(label === 'datenschutz') link.setAttribute('href','datenschutz.html');
+  });
+
   const input = document.querySelector('.ics-search input');
   const searchBox = document.querySelector('.ics-search');
   if(!input || !searchBox) return;
