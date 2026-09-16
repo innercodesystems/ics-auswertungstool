@@ -2,6 +2,7 @@
   'use strict';
 
   const BASE='https://www.innercodesystems.com/';
+  const ASSET_BASE='https://innercodesystems.github.io/ics-auswertungstool/';
   const APP='https://app.innercodesystems.com/';
 
   const items=[
@@ -47,7 +48,7 @@
 
   function ensureCurrentLogo(){
     document.querySelectorAll('.header .brand img, .ics-topbar .ics-brand-mark img, .ics-footer-logo').forEach(function(img){
-      img.src=BASE+'ics-logo.png';
+      img.src=ASSET_BASE+'ics-logo.png';
       img.alt='ICS';
     });
   }
