@@ -151,6 +151,13 @@
     document.head.appendChild(style);
   }
 
+  function ensureCurrentLogo(){
+    document.querySelectorAll('.header .brand img, .ics-topbar .ics-brand-mark img').forEach(function(img){
+      img.src=BASE+'ics-logo.png';
+      img.alt='ICS';
+    });
+  }
+
   function ensureBegleitung(nav){
 
     if(!nav) return;
@@ -381,6 +388,7 @@
   function init(){
 
     addStyles();
+    ensureCurrentLogo();
 
     const nav=
       document.querySelector(
