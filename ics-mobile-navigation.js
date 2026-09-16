@@ -1,7 +1,7 @@
 (function(){
   'use strict';
 
-  const BASE='https://innercodesystems.github.io/ics-auswertungstool/';
+  const BASE='https://www.innercodesystems.com/';
   const APP='https://app.innercodesystems.com/';
 
   const items=[
