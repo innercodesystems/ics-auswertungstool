@@ -93,11 +93,15 @@ h2{font-size:28px;margin:0 0 8px}
 
 <section id="quiz" class="hidden">
 
-    <a href="https://innercodesystems.github.io/ics-auswertungstool/tool-bibliothek.html"
-       class="btn btn-secondary"
-       style="display:block;width:100%;margin-bottom:14px;text-align:center;text-decoration:none;">
-      ← Zurück zur Tool-Bibliothek
-    </a>
+<div class="actions" style="margin-bottom:14px;">
+  <button type="button" id="quizBackBtn" class="btn btn-secondary">
+    ← Zurück
+  </button>
+
+  <button type="button" id="quizStartBtn" class="btn btn-secondary">
+    ↩ Zum Start des Tools
+  </button>
+</div>
 
     <div class="progress" id="progress"></div>
     <div id="questionCard"></div>
@@ -420,6 +424,26 @@ document.getElementById('deepBackBtn').onclick=()=>{
   document.getElementById('finalImpulse').scrollIntoView({behavior:'smooth',block:'start'});
 };
 
+document.getElementById('quizBackBtn').onclick=()=>{
+  if(index>0){
+    index--;
+    renderQuestion();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }else{
+    quiz.classList.add('hidden');
+    start.classList.remove('hidden');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+};
+
+document.getElementById('quizStartBtn').onclick=()=>{
+  index=0;
+  quiz.classList.add('hidden');
+  start.classList.remove('hidden');
+  window.scrollTo({top:0,behavior:'smooth'});
+};
+
+  
 document.getElementById('startBtn').onclick=()=>{start.classList.add('hidden');quiz.classList.remove('hidden');renderQuestion()};
 document.getElementById('restartBtn').onclick=()=>{document.querySelectorAll('[data-deep]').forEach(btn=>btn.classList.remove('active-deep'));index=0;answers={};selectedChoice=null;currentResultKey=null;document.getElementById('deepView').classList.add('hidden');result.classList.add('hidden');document.getElementById('finalImpulse').classList.add('hidden');start.classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'})};
 </script>
