@@ -48,7 +48,7 @@ textarea{min-height:110px}input[type=range]{width:100%;accent-color:var(--gold)}
 <div class="actions">
   <button class="btn" onclick="go(1)">Trigger verstehen</button>
   <button class="btn secondary" onclick="loadLast()">Letzte Auswertung</button>
-  <button class="btn secondary" onclick="backToLibrary()">← Zurück zur Tool-Bibliothek</button>
+  <button class="btn secondary" onclick="backToLibrary()">← Zurück</button>
 </div>
 </div></section>
 
@@ -59,7 +59,7 @@ textarea{min-height:110px}input[type=range]{width:100%;accent-color:var(--gold)}
 <div style="margin-top:22px"><label class="mini">Optional: Was ist passiert?</label><textarea id="situation" placeholder="Zum Beispiel: Jemand antwortet nicht, kritisiert mich, entscheidet über meinen Kopf hinweg …"></textarea></div>
 <div class="actions">
   <button class="btn secondary" onclick="backToLibrary()">
-    ← Zurück zur Tool-Bibliothek
+    ← Zurück
   </button>
 
   <button class="btn" onclick="nextReaction()">
@@ -75,7 +75,7 @@ textarea{min-height:110px}input[type=range]{width:100%;accent-color:var(--gold)}
 <div style="margin-top:26px"><h3>Wie stark trifft dich die Situation?</h3><div class="scale"><input id="intensity" type="range" min="1" max="10" value="6" oninput="intensityN.textContent=this.value"><strong id="intensityN">6</strong></div></div>
 <div class="actions">
   <button class="btn secondary" onclick="go(1)">← Zurück</button>
-  <button class="btn secondary" onclick="backToLibrary()">← Zurück zur Tool-Bibliothek</button>
+  <button class="btn secondary" onclick="backToLibrary()">← Zurück</button>
   <button class="btn" onclick="go(3)">Weiter · tiefer schauen</button>
 </div>
 </div></section>
@@ -87,7 +87,7 @@ textarea{min-height:110px}input[type=range]{width:100%;accent-color:var(--gold)}
 <h3 style="margin-top:28px">Welcher innere Satz kommt dem Gefühl am nächsten?</h3><div class="g2 grid" id="beliefChoices"></div>
 <div class="actions">
   <button class="btn secondary" onclick="go(2)">← Zurück</button>
-  <button class="btn secondary" onclick="backToLibrary()">← Zurück zur Tool-Bibliothek</button>
+  <button class="btn secondary" onclick="backToLibrary()">← Zurück</button>
   <button class="btn" onclick="calculate()">Meine Auswertung</button>
 </div>
 </div></section>
@@ -126,6 +126,13 @@ textarea{min-height:110px}input[type=range]{width:100%;accent-color:var(--gold)}
 <div class="mini" id="saveMsg"></div>
 
 <div class="card" style="margin-top:18px"><h2>Deine Trigger-Muster</h2><p>Wenn du den Kompass mehrfach nutzt, können wiederkehrende Themen sichtbar werden.</p><div id="history"></div></div>
+
+<div class="actions" style="justify-content:center;margin-top:35px;">
+  <button class="btn secondary" onclick="backToLibrary()">
+    ← Zurück
+  </button>
+</div>
+
 </section>
 </div>
 
