@@ -44,12 +44,191 @@ header{min-height:76px;padding:12px 34px;display:flex;align-items:center;justify
 .section{padding:90px 8%}.section.dark{background:var(--black);color:#f8f1e4}.section-head{max-width:790px;margin-bottom:42px}.section h2{font-size:clamp(34px,5vw,58px);margin:12px 0 16px}.section-head>p{line-height:1.75;color:#777067}.dark .section-head>p{color:#c7bdaf}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{padding:30px;border:1px solid rgba(212,160,58,.28);border-radius:18px;background:#fffdf8;min-height:220px;display:flex;flex-direction:column}.dark .card{background:#211e19;border-color:rgba(212,160,58,.28)}.card .num{font-size:11px;letter-spacing:.16em;color:var(--gold);font-weight:bold}.card h3{font-family:Georgia,serif;font-size:25px;margin:16px 0 10px}.card p{color:#766f65;line-height:1.65;font-size:14px;flex:1}.dark .card p{color:#bdb4a8}.card a{color:var(--gold);text-decoration:none;font-weight:700;font-size:13px;margin-top:16px}.card .soon{color:#aaa;font-size:12px;margin-top:16px}
 .method{background:#efe4c8}.worlds{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:38px}.world{background:linear-gradient(145deg,#24201a,#171512);padding:27px 21px;border:1px solid rgba(212,160,58,.30);border-top:3px solid var(--gold);border-radius:10px;box-shadow:0 12px 30px rgba(0,0,0,.16)}.world small{color:var(--gold);font-weight:bold;letter-spacing:.08em}.world h3{font-family:Georgia,serif;margin:12px 0 12px;color:#f6f1e7;font-size:20px}.world p{font-size:13px;line-height:1.6;color:#c8c0b4;margin:0}
 .quote{padding:100px 8%;background:linear-gradient(135deg,#191713,#27221a);text-align:center;color:white}.quote p{font-family:'Playfair Display',Georgia,serif;font-size:clamp(30px,5vw,56px);line-height:1.25;max-width:1000px;margin:15px auto}.quote span{color:var(--gold)}
-.cta{padding:90px 8%;text-align:center}.cta h2{font-family:'Playfair Display',Georgia,serif;font-size:clamp(36px,5vw,58px);margin:10px}.cta p{color:#746c62;max-width:650px;margin:0 auto 28px;line-height:1.7}footer{padding:35px 8%;background:#11100e;color:#aaa;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:12px}footer a{color:#d7b05d;text-decoration:none}
+.cta{padding:90px 8%;text-align:center}.cta h2{font-family:'Playfair Display',Georgia,serif;font-size:clamp(36px,5vw,58px);margin:10px}.cta p{color:#746c62;max-width:650px;margin:0 auto 28px;line-height:1.7}/* =========================================
+   ICS PREMIUM FOOTER
+========================================= */
+
+.ics-footer{
+  background:#171512;
+  color:#f6f1e7;
+  border-top:1px solid rgba(212,160,58,.28);
+}
+
+.ics-footer-inner{
+  max-width:1240px;
+  margin:0 auto;
+  padding:64px 34px 28px;
+}
+
+.ics-footer-top{
+  display:grid;
+  grid-template-columns:1.3fr .9fr .9fr;
+  gap:54px;
+  padding-bottom:46px;
+}
+
+.ics-footer-brand{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:20px;
+}
+
+.ics-footer-logo{
+  width:58px;
+  height:58px;
+  object-fit:contain;
+}
+
+.ics-footer-name{
+  font-family:Georgia,"Times New Roman",serif;
+  color:#d4a03a;
+  font-size:25px;
+  letter-spacing:.04em;
+}
+
+.ics-footer-sub{
+  margin-top:4px;
+  color:#9f9689;
+  font-size:9px;
+  letter-spacing:.15em;
+}
+
+.ics-footer-text{
+  max-width:440px;
+  margin:0;
+  color:#bdb4a7;
+  font-size:14px;
+  line-height:1.75;
+}
+
+.ics-footer-title{
+  margin:0 0 18px;
+  color:#d4a03a;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.14em;
+}
+
+.ics-footer-links{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:11px;
+}
+
+.ics-footer-links a{
+  color:#d6cec1;
+  text-decoration:none;
+  font-size:13px;
+  line-height:1.5;
+  transition:.2s ease;
+}
+
+.ics-footer-links a:hover{
+  color:#d4a03a;
+  transform:translateX(2px);
+}
+
+.ics-footer-quote{
+  margin:0 0 18px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:20px;
+  line-height:1.45;
+  color:#f6f1e7;
+}
+
+.ics-footer-peter{
+  color:#d4a03a;
+  font-size:13px;
+  font-weight:700;
+}
+
+.ics-footer-bottom{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  padding-top:24px;
+  border-top:1px solid rgba(212,160,58,.18);
+}
+
+.ics-footer-copy{
+  color:#81796e;
+  font-size:11px;
+}
+
+.ics-footer-legal{
+  display:flex;
+  align-items:center;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+.ics-footer-legal a{
+  color:#9f9689;
+  text-decoration:none;
+  font-size:11px;
+}
+
+.ics-footer-legal a:hover{
+  color:#d4a03a;
+}
+
+.ics-footer-up{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:38px;
+  height:38px;
+  border:1px solid rgba(212,160,58,.38);
+  border-radius:50%;
+  color:#d4a03a !important;
+  text-decoration:none;
+  font-size:18px !important;
+}
+
+@media(max-width:800px){
+
+  .ics-footer-inner{
+    padding:50px 22px 24px;
+  }
+
+  .ics-footer-top{
+    grid-template-columns:1fr 1fr;
+    gap:38px 28px;
+  }
+
+  .ics-footer-about{
+    grid-column:1 / -1;
+  }
+}
+
+@media(max-width:560px){
+
+  .ics-footer-top{
+    grid-template-columns:1fr;
+    gap:36px;
+  }
+
+  .ics-footer-about{
+    grid-column:auto;
+  }
+
+  .ics-footer-bottom{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .ics-footer-quote{
+    font-size:18px;
+  }
+}
 @media(max-width:900px){header{padding:10px 18px}.nav{display:none}.menu-button{display:flex}.mobile-menu{display:none;padding:20px;background:#fffdf8;border-top:1px solid rgba(212,160,58,.18);box-shadow:0 15px 30px rgba(26,26,26,.10)}.mobile-menu.open{display:flex;flex-direction:column;gap:18px}.hero{min-height:580px;padding:80px 7%}.paths{grid-template-columns:1fr 1fr}.path:nth-child(2){border-right:0}.grid{grid-template-columns:1fr 1fr}.worlds{grid-template-columns:1fr 1fr}.section,.intro{padding:65px 7%}}
 @media(max-width:600px){.hero h1{font-size:52px}.paths,.grid,.worlds{grid-template-columns:1fr}.path{border-right:0;border-bottom:1px solid #eadfca}.brand strong{font-size:19px}}
 </style>
 </head>
-<body>
+<body id="top">
 <div class="wrap">
 <header>
 <a class="brand" href="ics-startseite.html"><img src="ics-logo.png" alt="ICS"><div><strong>INNER CODE SYSTEMS</strong><small>BEWUSST VERSTEHEN · NEU GESTALTEN</small></div></a>
@@ -103,7 +282,133 @@ header{min-height:76px;padding:12px 34px;display:flex;align-items:center;justify
 </div></section>
 <section class="quote"><div class="eyebrow">INNER CODE SYSTEMS</div><p>Entwicklung beginnt dort, wo du nicht nur erkennst, <span>was ist</span> – sondern bewusst wählst, <span>was daraus werden soll.</span></p></section>
 <section class="cta"><div class="eyebrow">WO STEHST DU GERADE?</div><h2>Dein nächster Schritt muss nicht groß sein.</h2><p>Beginne dort, wo gerade etwas in dir Aufmerksamkeit braucht. ICS hilft dir, daraus Klarheit und einen nächsten bewussten Schritt entstehen zu lassen.</p><a class="btn btn-gold" href="ics-startseite.html">Zur INNER CODE SYSTEMS Startseite</a></section>
-<footer><div>© INNER CODE SYSTEMS · Peter Wicklein</div><div><a href="datenschutz.html">Datenschutz</a> · <a href="impressum.html">Impressum</a></div></footer>
+<!-- =========================================
+     ICS FOOTER
+========================================= -->
+
+<footer class="ics-footer">
+
+  <div class="ics-footer-inner">
+
+    <div class="ics-footer-top">
+
+      <div class="ics-footer-about">
+
+        <div class="ics-footer-brand">
+
+          <img
+            class="ics-footer-logo"
+            src="https://innercodesystems.github.io/ics-auswertungstool/ics-logo.png"
+            alt="Inner Code Systems">
+
+          <div>
+            <div class="ics-footer-name">ICS</div>
+            <div class="ics-footer-sub">INNER CODE SYSTEMS</div>
+          </div>
+
+        </div>
+
+        <p class="ics-footer-text">
+          Inner Code Systems verbindet Klarheit, Körper,
+          Handlung, Veränderung und Orientierung zu einem System,
+          das dich dabei unterstützt, dein Leben bewusster zu gestalten.
+        </p>
+
+      </div>
+
+
+      <div>
+
+        <div class="ics-footer-title">
+          DIE FÜNF ICS WELTEN
+        </div>
+
+        <nav class="ics-footer-links">
+
+          <a href="inner.html">
+            INNER · Klarheit
+          </a>
+
+          <a href="body.html">
+            BODY · Energie
+          </a>
+
+          <a href="action.html">
+            ACTION · Umsetzung
+          </a>
+
+          <a href="reset.html">
+            RESET · Muster
+          </a>
+
+          <a href="orientierung.html">
+            ORIENTIERUNG · Richtung
+          </a>
+
+        </nav>
+
+      </div>
+
+
+      <div>
+
+        <div class="ics-footer-title">
+          INNER CODE SYSTEMS
+        </div>
+
+        <p class="ics-footer-quote">
+          „Du musst nicht dein ganzes Leben verändern.
+          Du musst erkennen, was jetzt wirklich dran ist.“
+        </p>
+
+        <div class="ics-footer-peter">
+          Peter Wicklein
+        </div>
+
+        <nav class="ics-footer-links" style="margin-top:20px;">
+
+          <a href="https://app.innercodesystems.com/">
+            Mein ICS →
+          </a>
+
+          <a href="persoenliche-begleitung.html">
+            Persönliche Begleitung →
+          </a>
+
+        </nav>
+
+      </div>
+
+    </div>
+
+
+    <div class="ics-footer-bottom">
+
+      <div class="ics-footer-copy">
+        © 2026 Inner Code Systems · Peter Wicklein
+      </div>
+
+      <div class="ics-footer-legal">
+
+        <a href="https://www.innercodesystems.com/impressum/">
+          Impressum
+        </a>
+
+        <a href="https://www.innercodesystems.com/datenschutz/">
+          Datenschutz
+        </a>
+
+        <a href="#top" class="ics-footer-up" aria-label="Nach oben">
+          ↑
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</footer>
 </div>
 
 <script>
