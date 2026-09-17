@@ -47,7 +47,7 @@
   }
 
   function ensureCurrentLogo(){
-    document.querySelectorAll('.header .brand img, .ics-topbar .ics-brand-mark img, .ics-footer-logo').forEach(function(img){
+    document.querySelectorAll('.header .brand img, .ics-topbar .ics-brand-mark img, .site-header .brand img, .ics-footer-logo').forEach(function(img){
       img.src=ASSET_BASE+'ics-logo.png';
       img.alt='ICS';
     });
@@ -57,10 +57,9 @@
     if(!nav) return;
 
     const current=currentKey();
-    const existing=[...nav.querySelectorAll('a')];
 
     function ensure(label,href){
-      let link=existing.find(function(a){return a.textContent.trim().toUpperCase()===label;});
+      let link=[...nav.querySelectorAll('a')].find(function(a){return a.textContent.trim().toUpperCase()===label;});
       if(!link){
         link=document.createElement('a');
         link.textContent=label;
@@ -73,6 +72,10 @@
 
     ensure('BEGLEITUNG',BASE+'persoenliche-begleitung.html');
     ensure('AKADEMIE',BASE+'ics-akademie.html');
+  }
+
+  function ensureAllNavigationLinks(){
+    document.querySelectorAll('.header .nav, .ics-topbar .ics-nav, .site-header nav').forEach(ensureNavigationLinks);
   }
 
   function fixTransformationsmassageLinks(){
@@ -147,8 +150,7 @@
   function refreshSharedNavigation(){
     ensureCurrentLogo();
     fixTransformationsmassageLinks();
-    const nav=document.querySelector('.header .nav, .ics-topbar .ics-nav');
-    ensureNavigationLinks(nav);
+    ensureAllNavigationLinks();
   }
 
   function init(){
