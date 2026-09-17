@@ -56,12 +56,24 @@ user-select:none;
 <div class="wrap">
 
 <div id="toolNav" class="hidden" style="margin:12px 0 18px;">
-  <a
-    class="btn secondary"
-    href="https://innercodesystems.github.io/ics-auswertungstool/tool-bibliothek.html"
-    style="text-decoration:none;display:inline-flex;align-items:center;">
-    ← Zurück zur Tool-Bibliothek
-  </a>
+  <div class="actions" style="margin-top:0;">
+
+    <button
+      type="button"
+      id="phaseBackBtn"
+      class="btn secondary"
+      onclick="goBackPhase()">
+      ← Zurück
+    </button>
+
+    <button
+      type="button"
+      class="btn secondary"
+      onclick="backToToolStart()">
+      ↩ Zum Start des Tools
+    </button>
+
+  </div>
 </div>
 
 <section class="hero" id="hero">
@@ -212,7 +224,9 @@ let selected=[],pairs=[],pairIndex=0,scores={},ranking=[],result=null;
 const $=id=>document.getElementById(id);
 function renderCloud(){ $("cloud").innerHTML=""; VALUES.forEach(v=>{let b=document.createElement("button");b.className="chip"+(selected.includes(v)?" on":"");b.textContent=v;b.onclick=()=>toggle(v);$("cloud").appendChild(b)});$("cnt").textContent=selected.length}
 function toggle(v){if(selected.includes(v))selected=selected.filter(x=>x!==v);else{if(selected.length>=12)return alert("Bitte genau 12 Werte auswählen.");selected.push(v)}renderCloud()}
-function go(n){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));$("s"+n).classList.add("active");$("hero").classList.add("hidden");$("prog").classList.remove("hidden");$("toolNav").classList.remove("hidden");$("progBar").style.width=({1:10,2:32,3:48,4:62,5:100}[n]||0)+"%";window.scrollTo({top:0,behavior:"smooth"})}function startDuels(){if(selected.length!==12)return alert("Bitte genau 12 Werte auswählen.");pairs=[];scores={};selected.forEach(v=>scores[v]=0);for(let i=0;i<selected.length;i++)for(let j=i+1;j<selected.length;j++)pairs.push([selected[i],selected[j]]);pairs.sort(()=>Math.random()-.5);pairIndex=0;go(2);showPair()}
+function go(n){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));$("s"+n).classList.add("active");$("hero").classList.add("hidden");$("prog").classList.remove("hidden");$("toolNav").classList.remove("hidden");
+$("phaseBackBtn").style.display = n === 1 ? "none" : "";               
+$("progBar").style.width=({1:10,2:32,3:48,4:62,5:100}[n]||0)+"%";window.scrollTo({top:0,behavior:"smooth"})}function startDuels(){if(selected.length!==12)return alert("Bitte genau 12 Werte auswählen.");pairs=[];scores={};selected.forEach(v=>scores[v]=0);for(let i=0;i<selected.length;i++)for(let j=i+1;j<selected.length;j++)pairs.push([selected[i],selected[j]]);pairs.sort(()=>Math.random()-.5);pairIndex=0;go(2);showPair()}
 function showPair(){let p=pairs[pairIndex];$("left").textContent=p[0];$("right").textContent=p[1];$("duelProgress").textContent=`Entscheidung ${pairIndex+1} von ${pairs.length}`;$("progBar").style.width=(20+30*(pairIndex/pairs.length))+"%"}
 function choose(side){scores[pairs[pairIndex][side]]++;pairIndex++;if(pairIndex>=pairs.length)return finishDuels();showPair()}
 function finishDuels(){ranking=Object.entries(scores).sort((a,b)=>b[1]-a[1]).map(x=>({value:x[0],wins:x[1]}));renderRanking();go(3)}
@@ -390,7 +404,32 @@ $("inner").textContent=`Prüfe, welche Entscheidungen, Gewohnheiten oder Verpfli
 function save(){if(!result)return;result.nextStep=$("stepText").value.trim();let h=JSON.parse(localStorage.getItem("ICS_VALUES_HISTORY_V2")||"[]");h.push(result);localStorage.setItem("ICS_VALUES_HISTORY_V2",JSON.stringify(h.slice(-36)));$("saveMsg").textContent="Auswertung lokal gespeichert.";renderHistory()}
 function renderHistory(){let el=$("history");if(!el)return;let h=JSON.parse(localStorage.getItem("ICS_VALUES_HISTORY_V2")||"[]").reverse();el.innerHTML=h.length?h.map(x=>`<div class="history"><div><strong>${new Date(x.date).toLocaleDateString("de-DE")}</strong></div><strong>${x.score}%</strong><div><div class="bar"><span style="width:${x.score}%"></span></div><div class="mini">Fokus: ${x.focus.value}</div></div></div>`).join(""):`<p class="mini">Noch keine gespeicherten Auswertungen.</p>`}
 function loadLast(){let h=JSON.parse(localStorage.getItem("ICS_VALUES_HISTORY_V2")||"[]");if(!h.length)return alert("Noch keine gespeicherte Auswertung vorhanden.");result=h[h.length-1];renderResult();go(5)}
-function restart(){location.reload()}
+
+  function getCurrentPhase(){
+  const active=document.querySelector(".screen.active");
+  if(!active) return 1;
+  return Number(active.id.replace("s","")) || 1;
+}
+
+function goBackPhase(){
+  const current=getCurrentPhase();
+
+  if(current>1){
+    go(current-1);
+  }else{
+    backToToolStart();
+  }
+}
+
+function backToToolStart(){
+  document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));
+  $("prog").classList.add("hidden");
+  $("toolNav").classList.add("hidden");
+  $("hero").classList.remove("hidden");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+  
+  function restart(){location.reload()}
 renderCloud();renderHistory();
 </script>
 </body></html>
