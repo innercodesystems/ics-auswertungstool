@@ -2,6 +2,7 @@
   'use strict';
 
   const akademieUrl='https://innercodesystems.github.io/ics-auswertungstool/ics-akademie.html';
+  const meditationenUrl='https://innercodesystems.github.io/ics-auswertungstool/meditationen.html';
 
   /* AKADEMIE · Desktop Navigation */
   const desktopNav=document.querySelector('.ics-nav');
@@ -41,6 +42,23 @@
         </div>
       </div>`;
     toolsSection.insertAdjacentElement('beforebegin',section);
+  }
+
+  /* STARTSEITE · Meditationsbibliothek im ICS Tools Bereich */
+  if(toolsSection && !document.getElementById('ics-meditationen-card')){
+    const grid=toolsSection.querySelector('.ics-card-grid');
+    if(grid){
+      const card=document.createElement('a');
+      card.id='ics-meditationen-card';
+      card.className='ics-info-card ics-link-card';
+      card.href=meditationenUrl;
+      card.innerHTML=`
+        <div class="ics-card-number">MEDITATIONEN</div>
+        <h3>Was brauchst du gerade?</h3>
+        <p>Finde Meditationen für Ruhe, Verbindung, Regulation und innere Ausrichtung – passend zu deiner ICS-Welt und auf Deutsch oder Englisch.</p>
+        <span class="ics-card-link">Meditationen entdecken →</span>`;
+      grid.appendChild(card);
+    }
   }
 
   /* STARTSEITE · lokale Marken- und Rechtelinks absichern */
