@@ -30,11 +30,9 @@ h1{font-family:Georgia,serif;font-size:clamp(34px,7vw,58px);line-height:1.02;mar
   <div class="row">
     <button class="btn ghost" id="back" onclick="prev()">← Zurück</button>
 
-    <a class="btn ghost"
-       href="https://innercodesystems.github.io/ics-auswertungstool/tool-bibliothek.html"
-       style="text-decoration:none;display:inline-flex;align-items:center;">
-      ← Zurück zur Tool-Bibliothek
-    </a>
+<button class="btn ghost" type="button" onclick="backToToolStart()">
+  ↩ Zum Start des Tools
+</button>
   </div>
 </section>
   <section id="result" class="card hidden"><div class="eyebrow">Deine Momentaufnahme</div><div class="resultTitle" id="modeTitle"></div><p class="lead" id="modeText"></p><div class="scale"><div class="bar"><span class="dot" id="dot"></span></div><div class="labels"><span>ÜBERLEBENSMODUS</span><span>GESTALTUNGSMODUS</span></div></div><div class="quote" id="quote"></div><div class="eyebrow">Dein stärkster Hebel</div><h2 id="worldTitle"></h2><p id="worldText"></p><div class="worldhint">Aus deinen Antworten ergibt sich aktuell dieser Schwerpunkt. Die dunkle Fläche zeigt deine passende ICS-Welt – sie ist hier eine Ergebnisanzeige, kein Auswahl-Button.</div><div class="worlds" id="worlds"></div><div class="recommend"><b>Dein nächster Schritt</b><div id="nextStep" style="margin-top:7px"></div><a id="nextLink" class="nextbtn" href="#" target="_blank" rel="noopener">Passendes ICS-Tool starten</a></div><div id="keySection"><div class="eyebrow" style="margin-top:28px">Die 4 Schlüssel des Gestaltungsmodus</div><p>Sie helfen dir, Gestaltung nicht nur zu beginnen, sondern im Alltag zu verankern. Der gold markierte Schlüssel ist für dich gerade besonders wichtig.</p><div class="keys" id="keys"><div class="key" data-key="Verantwortung"><b>Verantwortung</b>Was kann ich jetzt beeinflussen?</div><div class="key" data-key="Vision"><b>Vision</b>Worauf möchte ich mich ausrichten?</div><div class="key" data-key="Disziplin"><b>Disziplin</b>Bleibe ich meiner Entscheidung verbunden?</div><div class="key" data-key="Standards"><b>Standards</b>Was möchte ich künftig leben und zulassen?</div></div><div class="recommend" style="margin-top:12px"><b>Dein Gestaltungsschlüssel</b><div id="keyText" style="margin-top:7px"></div></div></div><div class="finish"><div class="eyebrow">Und jetzt?</div><h3>Mach aus der Erkenntnis einen nächsten Schritt.</h3><p>Du musst nicht alles auf einmal verändern. Nimm eine Erkenntnis aus deinem Ergebnis mit und entscheide, was du heute anders machen möchtest.</p><div class="recommend" style="margin:18px 0 20px"><b>Dein Impuls für heute</b><div id="dailyImpulse" style="margin-top:7px"></div></div>
@@ -71,6 +69,16 @@ function begin(){document.querySelector('#start').classList.add('hidden');docume
 function render(){let x=qs[i];count.textContent=`Frage ${i+1} von ${qs.length}`;prog.style.width=`${(i/qs.length)*100}%`;q.textContent=x.q;answers.innerHTML='';x.a.forEach((v,n)=>{let b=document.createElement('button');b.className='answer'+(ans[i]===n?' sel':'');b.textContent=v[0];b.onclick=()=>choose(n);answers.appendChild(b)});back.style.visibility=i?'visible':'hidden'}
 function choose(n){ans[i]=n;if(i<qs.length-1){i++;render()}else showResult()}
 function prev(){if(i){i--;render()}}
+
+function backToToolStart(){
+  i=0;
+  ans=[];
+  quiz.classList.add('hidden');
+  result.classList.add('hidden');
+  start.classList.remove('hidden');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+  
 let currentWorld='', currentHref='';
 function showResult(){let total=ans.reduce((s,n,j)=>s+qs[j].a[n][1],0),max=qs.length*3,pct=Math.round(total/max*100);let deficits={INNER:0,BODY:0,RESET:0,ORIENTIERUNG:0,ACTION:0};ans.forEach((n,j)=>deficits[qs[j].w]+=3-qs[j].a[n][1]);let world=Object.entries(deficits).sort((a,b)=>b[1]-a[1])[0][0];let mode=pct<35?'Überlebensmodus':pct<70?'Du bist im Übergang':'Gestaltungsmodus';let texts={
 'Überlebensmodus':'Du bekommst wahrscheinlich vieles hin. Gleichzeitig geht viel Energie dafür drauf, zu reagieren, durchzuhalten und Dinge am Laufen zu halten. Dein nächster Schritt muss nicht sein, noch mehr zu tun.',
