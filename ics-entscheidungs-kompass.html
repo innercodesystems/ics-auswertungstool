@@ -1,7 +1,46 @@
 <!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ICS Entscheidungs-Kompass</title>
 <style>:root{--bg:#1a1815;--gold:#b8924f;--cream:#f6f1e7;--muted:#c9c0b1;--card:#24211d}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--cream);font-family:Arial,sans-serif;line-height:1.55}.wrap{max-width:900px;margin:auto;padding:28px 18px 70px}.eyebrow,label{color:var(--gold);letter-spacing:.12em;font-size:.76rem;font-weight:700}h1,h2,h3{font-family:Georgia,serif;font-weight:400}h1{font-size:clamp(2.2rem,7vw,4.4rem);line-height:1.02;margin:10px 0 16px}.lead,.note{color:var(--muted)}.card{background:var(--card);border:1px solid rgba(184,146,79,.28);border-radius:20px;padding:22px;margin-top:18px}label{display:block;margin:18px 0 7px}input,textarea{width:100%;background:#151310;color:var(--cream);border:1px solid rgba(184,146,79,.28);border-radius:12px;padding:14px;font:inherit}textarea{min-height:88px;resize:vertical}.options,.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}button{border-radius:999px;padding:13px 20px;font-weight:700;cursor:pointer}.gold{background:var(--gold);border:0;color:#151310}.ghost{background:transparent;color:var(--cream);border:1px solid rgba(184,146,79,.35)}.result{display:none}.result.show{display:block}.box{padding:16px;border:1px solid rgba(184,146,79,.28);border-radius:14px;background:#1d1a17}.box strong{display:block;color:var(--gold);font-size:.76rem;letter-spacing:.1em;margin-bottom:7px}footer{text-align:center;color:var(--muted);margin-top:38px;font-size:.8rem}@media(max-width:650px){.options,.result-grid{grid-template-columns:1fr}}</style></head>
 <body><main class="wrap"><div class="eyebrow">INNER CODE SYSTEMS · ORIENTIERUNG · ACTION</div><h1>Entscheidungs-Kompass</h1><p class="lead">Nicht schneller entscheiden. Klarer erkennen, woher deine Entscheidung kommt. Unterscheide Sicherheit, Angst, Werte, Körperwahrnehmung und bewusste Gestaltung.</p>
-<section class="card"><h2>Deine Entscheidung</h2>
+<section class="card">
+<h2>Deine Entscheidung</h2>
+
+<details style="margin:0 0 24px;padding:16px;border:1px solid rgba(184,146,79,.28);border-radius:14px;background:#1d1a17;">
+  <summary style="cursor:pointer;color:#b8924f;font-weight:700;">
+    Beispiel ansehen
+  </summary>
+
+  <div style="margin-top:18px;color:#c9c0b1;font-size:.94rem;line-height:1.65;">
+    <p><strong style="color:#f6f1e7;">Entscheidung:</strong><br>
+    Soll ich eine neue berufliche Aufgabe übernehmen?</p>
+
+    <p><strong style="color:#f6f1e7;">Option A:</strong><br>
+    In meiner bisherigen Aufgabe bleiben.</p>
+
+    <p><strong style="color:#f6f1e7;">Option B:</strong><br>
+    Die neue Aufgabe ausprobieren.</p>
+
+    <p><strong style="color:#f6f1e7;">Was sagt mein Kopf?</strong><br>
+    Die bisherige Situation ist sicher und vertraut. Bei der neuen Aufgabe weiß ich noch nicht genau, was mich erwartet.</p>
+
+    <p><strong style="color:#f6f1e7;">Was nehme ich im Körper wahr?</strong><br>
+    Beim Gedanken ans Bleiben eher Ruhe. Bei der neuen Möglichkeit Aufregung, aber gleichzeitig mehr Energie.</p>
+
+    <p><strong style="color:#f6f1e7;">Was hält mich zurück?</strong><br>
+    Die Angst, eine falsche Entscheidung zu treffen.</p>
+
+    <p><strong style="color:#f6f1e7;">Wert oder Bedürfnis:</strong><br>
+    Entwicklung und Sicherheit.</p>
+
+    <p><strong style="color:#f6f1e7;">Überlebensmodus:</strong><br>
+    Ich bleibe nur deshalb, damit kein Risiko entsteht und alles vertraut bleibt.</p>
+
+    <p><strong style="color:#f6f1e7;">Gestaltungsmodus:</strong><br>
+    Ich prüfe bewusst, ob die neue Möglichkeit zu meiner gewünschten Entwicklung und meinem Leben passt.</p>
+
+    <p style="margin-bottom:0;"><strong style="color:#f6f1e7;">Nächster Klarheitsschritt:</strong><br>
+    Ich führe ein Gespräch und kläre die wichtigsten offenen Rahmenbedingungen, bevor ich entscheide.</p>
+  </div>
+</details>
 <label>WORÜBER MÖCHTEST DU ENTSCHEIDEN?</label><textarea id="decision" placeholder="Zum Beispiel: Soll ich bleiben oder etwas verändern?"></textarea>
 <div class="options"><div><label>OPTION A</label><input id="a" placeholder="z. B. Bleiben"></div><div><label>OPTION B</label><input id="b" placeholder="z. B. Verändern"></div></div>
 <label>WAS SAGT DEIN KOPF?</label><textarea id="head" placeholder="Argumente, Erwartungen, Sicherheitsgedanken …"></textarea>
