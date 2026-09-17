@@ -106,13 +106,24 @@ p{line-height:1.55;color:#ddd5c9}
 
 <section id="quiz" class="hide">
 
-<a
-  href="https://innercodesystems.github.io/ics-auswertungstool/ics-startseite.html"
-  target="_top"
-  class="back"
-  style="display:inline-block;text-decoration:none;margin-bottom:14px;">
-  ← Zurück zur Startseite
-</a>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
+
+    <button
+      type="button"
+      class="back"
+      id="questionBackBtn"
+      data-nav="previous">
+      ← Zurück
+    </button>
+
+    <button
+      type="button"
+      class="back"
+      data-nav="tool-start">
+      ↩ Zum Start des Tools
+    </button>
+
+  </div>
 
   <div class="meta"><span id="sec"></span><span id="count"></span></div>
     <div class="progress"><i id="prog"></i></div>
@@ -141,7 +152,26 @@ p{line-height:1.55;color:#ddd5c9}
         <button type="button" class="cta" data-route="coach"><strong>Persönliche Begleitung ansehen</strong><small>Wenn du tiefer gehen und begleitet werden möchtest.</small></button>
       </div>
     </div>
-    <div id="flow" class="flow"></div>
+<div id="flow" class="flow"></div>
+
+<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;">
+
+  <button
+    type="button"
+    class="back"
+    data-nav="tool-start">
+    ↩ Zum Start des Checks
+  </button>
+
+  <a
+    href="https://innercodesystems.github.io/ics-auswertungstool/tool-bibliothek.html"
+    class="back"
+    style="display:inline-block;text-decoration:none;">
+    ← Zurück zur Tool-Bibliothek
+  </a>
+
+</div>
+
   </section>
 </div>
 
@@ -171,9 +201,18 @@ if(isEmbedded){
 }
 function show(id){["start","quiz","result"].forEach(x=>$(x).classList.toggle("hide",x!==id));}
 function renderQ(){
-  const q=Q[i]; $("sec").textContent=N[q[0]]; $("count").textContent=(i+1)+" / "+Q.length;
-  $("prog").style.width=Math.round(i/Q.length*100)+"%"; $("qkicker").textContent=N[q[0]]; $("qtext").textContent=q[1];
+  const q=Q[i];
+  $("sec").textContent=N[q[0]];
+  $("count").textContent=(i+1)+" / "+Q.length;
+  $("prog").style.width=Math.round(i/Q.length*100)+"%";
+  $("qkicker").textContent=N[q[0]];
+  $("qtext").textContent=q[1];
   $("answers").innerHTML=A.map((t,n)=>`<button type="button" class="ans" data-answer="${n+1}">${t}</button>`).join("");
+
+  const questionBackBtn=$("questionBackBtn");
+  if(questionBackBtn){
+    questionBackBtn.style.display=i===0?"none":"inline-block";
+  }
 }
 function start(){
   isTestMode=false;
@@ -192,6 +231,21 @@ if(new URLSearchParams(window.location.search).get("start")==="1"){
 }
    
 function choose(v){ans[i]=v;i++;if(i<Q.length)renderQ();else result();}
+   function previousQuestion(){
+  if(i>0){
+    i--;
+    renderQ();
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+}
+
+function backToToolStart(){
+  i=0;
+  ans.fill(null);
+  $("flow").innerHTML="";
+  show("start");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
 function scores(){
   const g={inner:[],body:[],action:[],reset:[],orientation:[]};
   Q.forEach((q,n)=>{let v=ans[n]??3;if(q[2])v=6-v;g[q[0]].push(v)});
@@ -4009,6 +4063,15 @@ function qual(){
 document.addEventListener("click",e=>{
  const b=e.target.closest("button"); const app=$("icsApp"); if(!b||!app||!app.contains(b))return;
  e.preventDefault();
+
+ if(b.dataset.nav==="previous"){
+   return previousQuestion();
+ }
+
+ if(b.dataset.nav==="tool-start"){
+   return backToToolStart();
+ }
+   
 if(b.dataset.act==="start"){
   setActiveTestButton(null);
 
