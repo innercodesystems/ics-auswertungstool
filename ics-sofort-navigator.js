@@ -3,6 +3,8 @@
 
   const akademieUrl='https://innercodesystems.github.io/ics-auswertungstool/ics-akademie.html';
   const meditationenUrl='https://innercodesystems.github.io/ics-auswertungstool/meditationen.html';
+  const toolsUrl='https://innercodesystems.github.io/ics-auswertungstool/tool-bibliothek.html';
+  const appUrl='https://app.innercodesystems.com/';
 
   /* AKADEMIE · Desktop Navigation */
   const desktopNav=document.querySelector('.ics-nav');
@@ -44,20 +46,48 @@
     toolsSection.insertAdjacentElement('beforebegin',section);
   }
 
-  /* STARTSEITE · Meditationsbibliothek im ICS Tools Bereich */
-  if(toolsSection && !document.getElementById('ics-meditationen-card')){
+  /* STARTSEITE · vier schlanke Hauptzugänge statt einzelner Kompasse */
+  if(toolsSection){
     const grid=toolsSection.querySelector('.ics-card-grid');
     if(grid){
-      const card=document.createElement('a');
-      card.id='ics-meditationen-card';
-      card.className='ics-info-card ics-link-card';
-      card.href=meditationenUrl;
-      card.innerHTML=`
-        <div class="ics-card-number">MEDITATIONEN</div>
-        <h3>Was brauchst du gerade?</h3>
-        <p>Finde Meditationen für Ruhe, Verbindung, Regulation und innere Ausrichtung – passend zu deiner ICS-Welt und auf Deutsch oder Englisch.</p>
-        <span class="ics-card-link">Meditationen entdecken →</span>`;
-      grid.appendChild(card);
+      grid.classList.add('ics-start-hubs');
+      grid.innerHTML=`
+        <a class="ics-info-card ics-link-card" href="#system-check">
+          <div class="ics-card-number">SYSTEM CHECK</div>
+          <h3>Wo stehst du gerade?</h3>
+          <p>Erkenne deinen aktuellen Zustand und finde heraus, welche ICS-Welt gerade dein stärkster Hebel ist.</p>
+          <span class="ics-card-link">System Check starten →</span>
+        </a>
+        <a class="ics-info-card ics-link-card" href="${toolsUrl}">
+          <div class="ics-card-number">TOOL-BIBLIOTHEK</div>
+          <h3>Was möchtest du verändern?</h3>
+          <p>Entdecke die ICS Werkzeuge für Klarheit, Werte, Glaubenssätze, Muster, Entscheidungen und Veränderung.</p>
+          <span class="ics-card-link">Tools entdecken →</span>
+        </a>
+        <a class="ics-info-card ics-link-card" href="${meditationenUrl}">
+          <div class="ics-card-number">MEDITATIONEN</div>
+          <h3>Was brauchst du gerade?</h3>
+          <p>Finde Meditationen für Ruhe, Verbindung, Regulation und innere Ausrichtung – passend zu deiner ICS-Welt.</p>
+          <span class="ics-card-link">Meditationen entdecken →</span>
+        </a>
+        <a class="ics-info-card ics-link-card" href="${appUrl}">
+          <div class="ics-card-number">MEIN ICS</div>
+          <h3>Dein persönliches System.</h3>
+          <p>Deine Entwicklung, Impulse und persönlichen Werkzeuge an einem Ort – als dein INNER CODE SYSTEM.</p>
+          <span class="ics-card-link">Mein ICS öffnen →</span>
+        </a>`;
+    }
+
+    const contents=toolsSection.querySelectorAll(':scope > .ics-content');
+    if(contents.length > 1){
+      contents[1].style.display='none';
+    }
+
+    if(!document.getElementById('ics-start-hubs-style')){
+      const style=document.createElement('style');
+      style.id='ics-start-hubs-style';
+      style.textContent='.ics-card-grid.ics-start-hubs{grid-template-columns:repeat(2,minmax(0,1fr))}@media(max-width:650px){.ics-card-grid.ics-start-hubs{grid-template-columns:1fr}}';
+      document.head.appendChild(style);
     }
   }
 
