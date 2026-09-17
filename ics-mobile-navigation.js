@@ -55,47 +55,43 @@
 
   function ensureNavigationLinks(nav){
     if(!nav) return;
+
+    const current=currentKey();
+    const existing=[...nav.querySelectorAll('a')];
+
     function ensure(label,href){
-      const links=[...nav.querySelectorAll('a')];
-      const exists=links.some(function(link){return link.textContent.trim().toUpperCase()===label;});
-      if(exists) return;
-      const mein=links.find(function(link){return link.textContent.trim().toUpperCase()==='MEIN ICS';});
-      const link=document.createElement('a');
+      let link=existing.find(function(a){return a.textContent.trim().toUpperCase()===label;});
+      if(!link){
+        link=document.createElement('a');
+        link.textContent=label;
+        const mein=[...nav.querySelectorAll('a')].find(function(a){return a.textContent.trim().toUpperCase()==='MEIN ICS';});
+        if(mein) nav.insertBefore(link,mein); else nav.appendChild(link);
+      }
       link.href=href;
-      link.textContent=label;
-      if(currentKey()===label) link.classList.add('active');
-      if(mein) nav.insertBefore(link,mein); else nav.appendChild(link);
+      if(label===current) link.classList.add('active');
     }
+
     ensure('BEGLEITUNG',BASE+'persoenliche-begleitung.html');
     ensure('AKADEMIE',BASE+'ics-akademie.html');
   }
 
   function fixTransformationsmassageLinks(){
     if(!location.pathname.toLowerCase().endsWith('/transformationsmassage.html')) return;
-
     document.querySelectorAll('a').forEach(function(link){
       const label=link.textContent.replace(/\s+/g,' ').trim();
-
-      if(label.includes('Grundlagen entdecken')){
-        link.href=BASE+'grundlagen-transformationsmassage.html';
-      }
-
-      if(label.includes('Selbstanwendung entdecken')){
-        link.href=BASE+'selbstanwendung.html';
-      }
-
-      if(label.includes('Wissenswelt öffnen')){
-        link.href=BASE+'ics-akademie.html';
-      }
+      if(label.includes('Grundlagen entdecken')) link.href=BASE+'grundlagen-transformationsmassage.html';
+      if(label.includes('Selbstanwendung entdecken')) link.href=BASE+'selbstanwendung.html';
+      if(label.includes('Wissenswelt öffnen')) link.href=BASE+'ics-akademie.html';
     });
   }
 
   function build(){
-    if(document.getElementById('icsMenuButton') || document.getElementById('icsSharedMenuButton')) return;
     const header=document.querySelector('.header, .ics-topbar');
     if(!header) return;
     const nav=header.querySelector('.nav, .ics-nav');
     ensureNavigationLinks(nav);
+
+    if(document.getElementById('icsMenuButton') || document.getElementById('icsSharedMenuButton')) return;
 
     const button=document.createElement('button');
     button.id='icsSharedMenuButton';
@@ -148,13 +144,19 @@
     });
   }
 
-  function init(){
-    addStyles();
+  function refreshSharedNavigation(){
     ensureCurrentLogo();
     fixTransformationsmassageLinks();
     const nav=document.querySelector('.header .nav, .ics-topbar .ics-nav');
     ensureNavigationLinks(nav);
+  }
+
+  function init(){
+    addStyles();
+    refreshSharedNavigation();
     build();
+    setTimeout(refreshSharedNavigation,250);
+    setTimeout(refreshSharedNavigation,1000);
   }
 
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init);
