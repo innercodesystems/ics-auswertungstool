@@ -272,6 +272,8 @@ function renderQuestion(){
   const a=areas[index];
   const current=Number.isFinite(answers[a.key]) ? answers[a.key] : null;
 
+  document.getElementById('quizBackBtn').style.display = index === 0 ? 'none' : '';
+
   questionCard.innerHTML=`
     <div class="card">
       <div class="kicker">${index+1} von ${areas.length}</div>
