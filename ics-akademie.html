@@ -9,6 +9,35 @@
 :root{--gold:#d4a03a;--black:#1a1815;--dark:#211d18;--cream:#faf1cb;--paper:#fffdf8;--muted:#81796e}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f6f1e7;color:#292621;font-family:Arial,Helvetica,sans-serif}.wrap{max-width:1380px;margin:auto;background:var(--paper);box-shadow:0 18px 60px rgba(26,24,21,.08)}
 header{min-height:76px;padding:12px 34px;display:flex;align-items:center;justify-content:space-between;gap:24px;border-bottom:1px solid rgba(212,160,58,.18);position:sticky;top:0;background:rgba(255,253,248,.96);backdrop-filter:blur(12px);z-index:10}.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--black)}.brand img{width:56px;height:56px;object-fit:contain}.brand strong{display:block;font-family:Georgia,serif;font-size:24px;color:var(--gold)}.brand small{letter-spacing:.16em;color:#777;font-size:8px}.nav{display:flex;gap:20px;flex-wrap:wrap}.nav a{text-decoration:none;color:#4d4943;font-size:13px}.nav a:hover{color:var(--gold)}
+.menu-button,
+.mobile-menu{
+  display:none;
+}
+
+.menu-button{
+  width:44px;
+  height:44px;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  border:1px solid rgba(212,160,58,.35);
+  border-radius:8px;
+  background:#fffdf8;
+  color:#1a1815;
+  font-size:24px;
+  cursor:pointer;
+}
+
+.mobile-menu a{
+  color:#4d4943;
+  text-decoration:none;
+  font-size:13px;
+  font-weight:700;
+}
+
+.mobile-menu a.active{
+  color:var(--gold);
+}
 .hero{min-height:650px;padding:105px 8%;display:flex;align-items:center;position:relative;overflow:hidden;background:radial-gradient(circle at 72% 30%,rgba(212,160,58,.22),transparent 25%),radial-gradient(circle at 20% 70%,rgba(212,160,58,.10),transparent 30%),linear-gradient(135deg,#171511,#262017);color:#fff}.hero:after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(212,160,58,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(212,160,58,.045) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,black,transparent)}.hero-inner{max-width:850px;position:relative;z-index:2}.eyebrow{font-size:11px;letter-spacing:.22em;color:var(--gold);font-weight:700}.hero h1,.section h2{font-family:'Playfair Display',Georgia,serif}.hero h1{font-size:clamp(50px,7vw,92px);line-height:.98;margin:18px 0 25px;font-weight:500}.hero h1 span{color:var(--gold)}.hero p{font-size:19px;line-height:1.75;color:#e6dfd2;max-width:720px}.hero-buttons{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}.btn{display:inline-block;padding:15px 22px;border-radius:999px;text-decoration:none;font-size:13px;font-weight:700}.btn-gold{background:var(--gold);color:#181510}.btn-line{border:1px solid rgba(212,160,58,.65);color:#f6f1e7}
 .intro{padding:80px 8%;text-align:center}.intro h2{font-family:'Playfair Display',Georgia,serif;font-size:clamp(34px,5vw,56px);margin:12px auto 20px;max-width:850px}.intro p{max-width:760px;margin:auto;color:#6e675e;line-height:1.8;font-size:17px}
 .paths{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid #eadfca;border-bottom:1px solid #eadfca}.path{padding:46px 30px;border-right:1px solid #eadfca}.path:last-child{border-right:0}.path span{font-family:Georgia,serif;color:var(--gold);font-size:28px}.path h3{font-family:Georgia,serif;font-size:24px;margin:14px 0 10px}.path p{color:#766f65;line-height:1.65;margin:0;font-size:14px}
@@ -16,7 +45,7 @@ header{min-height:76px;padding:12px 34px;display:flex;align-items:center;justify
 .method{background:#efe4c8}.worlds{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:38px}.world{background:linear-gradient(145deg,#24201a,#171512);padding:27px 21px;border:1px solid rgba(212,160,58,.30);border-top:3px solid var(--gold);border-radius:10px;box-shadow:0 12px 30px rgba(0,0,0,.16)}.world small{color:var(--gold);font-weight:bold;letter-spacing:.08em}.world h3{font-family:Georgia,serif;margin:12px 0 12px;color:#f6f1e7;font-size:20px}.world p{font-size:13px;line-height:1.6;color:#c8c0b4;margin:0}
 .quote{padding:100px 8%;background:linear-gradient(135deg,#191713,#27221a);text-align:center;color:white}.quote p{font-family:'Playfair Display',Georgia,serif;font-size:clamp(30px,5vw,56px);line-height:1.25;max-width:1000px;margin:15px auto}.quote span{color:var(--gold)}
 .cta{padding:90px 8%;text-align:center}.cta h2{font-family:'Playfair Display',Georgia,serif;font-size:clamp(36px,5vw,58px);margin:10px}.cta p{color:#746c62;max-width:650px;margin:0 auto 28px;line-height:1.7}footer{padding:35px 8%;background:#11100e;color:#aaa;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:12px}footer a{color:#d7b05d;text-decoration:none}
-@media(max-width:900px){header{padding:10px 18px}.nav{display:none}.hero{min-height:580px;padding:80px 7%}.paths{grid-template-columns:1fr 1fr}.path:nth-child(2){border-right:0}.grid{grid-template-columns:1fr 1fr}.worlds{grid-template-columns:1fr 1fr}.section,.intro{padding:65px 7%}}
+@media(max-width:900px){header{padding:10px 18px}.nav{display:none}.menu-button{display:flex}.mobile-menu{display:none;padding:20px;background:#fffdf8;border-top:1px solid rgba(212,160,58,.18);box-shadow:0 15px 30px rgba(26,26,26,.10)}.mobile-menu.open{display:flex;flex-direction:column;gap:18px}.hero{min-height:580px;padding:80px 7%}.paths{grid-template-columns:1fr 1fr}.path:nth-child(2){border-right:0}.grid{grid-template-columns:1fr 1fr}.worlds{grid-template-columns:1fr 1fr}.section,.intro{padding:65px 7%}}
 @media(max-width:600px){.hero h1{font-size:52px}.paths,.grid,.worlds{grid-template-columns:1fr}.path{border-right:0;border-bottom:1px solid #eadfca}.brand strong{font-size:19px}}
 </style>
 </head>
@@ -35,8 +64,27 @@ header{min-height:76px;padding:12px 34px;display:flex;align-items:center;justify
   <a href="ics-akademie.html" style="color:#d4a03a;">AKADEMIE</a>
   <a href="https://app.innercodesystems.com/">MEIN ICS</a>
 </nav>
+
+<button class="menu-button" id="menuButton" aria-label="Menü öffnen">
+  ☰
+</button>
+
 </header>
-<section class="hero"><div class="hero-inner"><div class="eyebrow">INNER CODE SYSTEMS · AKADEMIE</div><h1>Wissen, das<br><span>etwas bewegt.</span></h1><p>Die ICS Akademie ist dein Raum, um dich selbst, deine Muster und die Zusammenhänge deines Lebens tiefer zu verstehen – und aus Erkenntnis bewusste Veränderung entstehen zu lassen.</p><div class="hero-buttons"><a class="btn btn-gold" href="#wissen">Akademie entdecken</a><a class="btn btn-line" href="#methode">Die ICS Methode</a></div></div></section>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="ics-startseite.html">START</a>
+  <a href="inner.html">INNER</a>
+  <a href="body.html">BODY</a>
+  <a href="action.html">ACTION</a>
+  <a href="reset.html">RESET</a>
+  <a href="orientierung.html">ORIENTIERUNG</a>
+  <a href="persoenliche-begleitung.html">BEGLEITUNG</a>
+  <a class="active" href="ics-akademie.html">AKADEMIE</a>
+  <a href="https://app.innercodesystems.com/">MEIN ICS</a>
+</div>
+
+<section class="hero">
+<div class="hero-inner"><div class="eyebrow">INNER CODE SYSTEMS · AKADEMIE</div><h1>Wissen, das<br><span>etwas bewegt.</span></h1><p>Die ICS Akademie ist dein Raum, um dich selbst, deine Muster und die Zusammenhänge deines Lebens tiefer zu verstehen – und aus Erkenntnis bewusste Veränderung entstehen zu lassen.</p><div class="hero-buttons"><a class="btn btn-gold" href="#wissen">Akademie entdecken</a><a class="btn btn-line" href="#methode">Die ICS Methode</a></div></div></section>
 <section class="intro"><div class="eyebrow">DEIN WEG DURCH DIE AKADEMIE</div><h2>Nicht mehr nur funktionieren.<br>Bewusster gestalten.</h2><p>ICS verbindet Wissen nicht mit noch mehr Theorie, sondern mit deinem wirklichen Leben. Du kannst verstehen, was in dir wirkt, erkennen, was sich wiederholt, neue Entscheidungen treffen und Entwicklung Schritt für Schritt integrieren.</p></section>
 <section class="paths"><div class="path"><span>01</span><h3>Verstehen</h3><p>Zusammenhänge erkennen und eine neue Perspektive auf dich selbst gewinnen.</p></div><div class="path"><span>02</span><h3>Erkennen</h3><p>Muster, Werte, Bedürfnisse und innere Dynamiken bewusst wahrnehmen.</p></div><div class="path"><span>03</span><h3>Anwenden</h3><p>Erkenntnisse in konkrete Entscheidungen, Handlung und neue Erfahrungen übersetzen.</p></div><div class="path"><span>04</span><h3>Entfalten</h3><p>Das Neue integrieren und deinen eigenen Weg immer bewusster gestalten.</p></div></section>
 <section class="section" id="wissen"><div class="section-head"><div class="eyebrow">WISSENSWELTEN</div><h2>Entdecke, was in deinem Leben zusammenwirkt.</h2><p>Die Akademie wächst mit ICS. Einige Bereiche kannst du bereits direkt öffnen, weitere werden Schritt für Schritt ergänzt.</p></div><div class="grid">
@@ -57,5 +105,29 @@ header{min-height:76px;padding:12px 34px;display:flex;align-items:center;justify
 <section class="cta"><div class="eyebrow">WO STEHST DU GERADE?</div><h2>Dein nächster Schritt muss nicht groß sein.</h2><p>Beginne dort, wo gerade etwas in dir Aufmerksamkeit braucht. ICS hilft dir, daraus Klarheit und einen nächsten bewussten Schritt entstehen zu lassen.</p><a class="btn btn-gold" href="ics-startseite.html">Zur INNER CODE SYSTEMS Startseite</a></section>
 <footer><div>© INNER CODE SYSTEMS · Peter Wicklein</div><div><a href="datenschutz.html">Datenschutz</a> · <a href="impressum.html">Impressum</a></div></footer>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+  const button = document.getElementById("menuButton");
+  const menu = document.getElementById("mobileMenu");
+
+  if(!button || !menu) return;
+
+  button.addEventListener("click", function(){
+    menu.classList.toggle("open");
+    button.textContent = menu.classList.contains("open") ? "×" : "☰";
+  });
+
+  menu.querySelectorAll("a").forEach(function(link){
+    link.addEventListener("click", function(){
+      menu.classList.remove("open");
+      button.textContent = "☰";
+    });
+  });
+
+});
+</script>
+  
 </body>
 </html>
