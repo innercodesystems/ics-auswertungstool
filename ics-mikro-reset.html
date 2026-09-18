@@ -45,8 +45,8 @@ textarea,input{width:100%;background:#171512;color:var(--cream);border:1px solid
    <p class="lead">Spüre für einen Augenblick, wo dieser Zustand im Körper sitzt. Du musst ihn nicht wegmachen.</p>
    <div class="breathe" id="breath">ATME</div>
    <p id="breathText" class="quote">Langsam einatmen.</p>
-   <button class="btn" onclick="breathe()">3 Atemzüge starten</button>
-   <button class="btn ghost" onclick="next()">Weiter</button>
+   <button class="btn" id="breathStart" onclick="breathe()">3 Atemzüge starten</button>
+   <button class="btn ghost" id="breathNext" onclick="next()" style="display:none;">Weiter</button>
   </section>
 
   <section class="step">
@@ -99,11 +99,37 @@ selectGroup('feelings',v=>oldState=v); selectGroup('states',v=>newState=v);
 function show(){steps.forEach((s,i)=>s.classList.toggle('active',i===idx));bar.style.width=((idx+1)/steps.length*100)+'%';window.scrollTo({top:0,behavior:'smooth'})}
 function next(){if(idx===2 && document.getElementById('ownState').value.trim())newState=document.getElementById('ownState').value.trim(); if(idx<steps.length-1)idx++;show()}
 function breathe(){
- let n=0, el=document.getElementById('breath'), tx=document.getElementById('breathText');
- function cycle(){ if(n>=3){tx.textContent="Spüre: Du hast Raum zwischen Reiz und Reaktion geschaffen.";return}
- tx.textContent="Einatmen …";el.classList.add('go');
- setTimeout(()=>{tx.textContent="Ausatmen …";el.classList.remove('go');setTimeout(()=>{n++;cycle()},4000)},4000)}
- cycle()
+  let n=0,
+      el=document.getElementById('breath'),
+      tx=document.getElementById('breathText'),
+      nextBtn=document.getElementById('breathNext');
+
+  nextBtn.style.display='none';
+  document.getElementById('breathStart').style.display='none';
+  function cycle(){
+    if(n>=3){
+      tx.textContent="Spüre: Du hast Raum zwischen Reiz und Reaktion geschaffen.";
+      el.classList.remove('go');
+      nextBtn.style.display='block';
+      return;
+    }
+
+    tx.textContent="Einatmen …";
+    el.classList.add('go');
+
+    setTimeout(()=>{
+      tx.textContent="Ausatmen …";
+      el.classList.remove('go');
+
+      setTimeout(()=>{
+        n++;
+        cycle();
+      },4000);
+
+    },4000);
+  }
+
+  cycle();
 }
 function startTimer(){
  let t=30, el=document.getElementById('timer'), btn=document.getElementById('timerBtn');btn.disabled=true;
