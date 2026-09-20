@@ -224,7 +224,7 @@ header{min-height:76px;padding:12px 34px;display:flex;align-items:center;justify
     font-size:18px;
   }
 }
-@media(max-width:900px){header{padding:10px 18px}.nav{display:none}.menu-button{display:flex}.mobile-menu{display:none;padding:20px;background:#fffdf8;border-top:1px solid rgba(212,160,58,.18);box-shadow:0 15px 30px rgba(26,26,26,.10)}.mobile-menu.open{display:flex;flex-direction:column;gap:18px}.hero{min-height:580px;padding:80px 7%}.paths{grid-template-columns:1fr 1fr}.path:nth-child(2){border-right:0}.grid{grid-template-columns:1fr 1fr}.worlds{grid-template-columns:1fr 1fr}.section,.intro{padding:65px 7%}}
+@media(max-width:900px){header{padding:10px 18px}.nav{display:none}.menu-button{display:flex}.mobile-menu{display:none;padding:20px;background:#fffdf8;border-top:1px solid rgba(212,160,58,.18);box-shadow:0 15px 30px rgba(26,26,26,.10)}.mobile-menu.open{display:flex;flex-direction:column;gap:18px;position:fixed;top:76px;left:0;right:0;z-index:1000;max-height:calc(100vh - 76px);overflow-y:auto}.hero{min-height:580px;padding:80px 7%}.paths{grid-template-columns:1fr 1fr}.path:nth-child(2){border-right:0}.grid{grid-template-columns:1fr 1fr}.worlds{grid-template-columns:1fr 1fr}.section,.intro{padding:65px 7%}}
 @media(max-width:600px){.hero h1{font-size:52px}.paths,.grid,.worlds{grid-template-columns:1fr}.path{border-right:0;border-bottom:1px solid #eadfca}.brand strong{font-size:19px}}
 </style>
 </head>
