@@ -92,9 +92,7 @@
   }
 
   /* STARTSEITE · lokale Marken- und Rechtelinks absichern */
-  document.querySelectorAll('.ics-brand-mark img').forEach(function(img){
-    img.setAttribute('src','ics-logo.png');
-  });
+  /* Das animierte Header-Logo der Startseite nicht überschreiben. */
 
   document.querySelectorAll('.ics-footer-legal a').forEach(function(link){
     const label=(link.textContent || '').trim().toLowerCase();
@@ -123,9 +121,16 @@
   function render(text){
     const t=(text||'').toLowerCase();
     let label='ICS SYSTEM CHECK',title='Mehrere Bereiche können gerade zusammenwirken.',url='#system-check',button='System Check starten';
-    if(/müde|muede|erschöpft|erschoepft|energie|körper|koerper/.test(t)){label='BODY';title='Deine Energie und dein Körper stehen gerade im Vordergrund.';url='body.html';button='BODY entdecken';}
-    else if(/aufschieben|handeln|umsetzen|anfangen|fokus/.test(t)){label='ACTION';title='Du brauchst gerade einen machbaren nächsten Schritt.';url='action.html';button='ACTION entdecken';}
-    else if(/muster|trigger|immer wieder|festhalten|blockade/.test(t)){label='RESET';title='Ein wiederkehrendes Muster scheint gerade wichtig zu sein.';url='reset.html';button='RESET entdecken';}
+    if(/angst|ängst|aengst|panik|unsicher|sorge|sorgen|überfordert|ueberfordert/.test(t)){label='RESET · INNER';title='Da ist gerade etwas, das Sicherheit und innere Ruhe braucht.';url='reset.html';button='RESET entdecken';}
+    else if(/trigger|kritik|ablehnung|ignoriert|eifersucht|zurückweisung|zurueckweisung|respektlos|ungerecht/.test(t)){label='TRIGGER-KOMPASS';title='Etwas trifft dich gerade stärker – finde heraus, was dahinter wirken könnte.';url='trigger-kompass.html';button='Trigger verstehen';}
+    else if(/glaubenssatz|nicht gut genug|nicht wichtig|beweisen|selbstwert|wertlos/.test(t)){label='GLAUBENSSATZ-KOMPASS';title='Ein innerer Satz könnte gerade dein Erleben beeinflussen.';url='glaubenssatz-kompass.html';button='Glaubenssatz entdecken';}
+    else if(/wert|werte|wichtig|priorität|prioritaet/.test(t)){label='WERTE-KOMPASS';title='Kläre, was dir wirklich wichtig ist und wie sehr du es gerade lebst.';url='werte-kompass.html';button='Werte klären';}
+    else if(/müde|muede|erschöpft|erschoepft|energie|kraftlos|ausgelaugt/.test(t)){label='ENERGIE';title='Schau zuerst darauf, was dich nährt und was dir gerade Energie nimmt.';url='was-naehrt-dich.html';button='Was nährt mich?';}
+    else if(/körper|koerper|verspann|schmerz|signal/.test(t)){label='BODY';title='Dein Körper steht gerade im Vordergrund.';url='body.html';button='BODY entdecken';}
+    else if(/ruhe|unruhig|stress|entspann|meditation|abschalten/.test(t)){label='MEDITATIONEN';title='Du möchtest gerade zur Ruhe kommen und dich neu ausrichten.';url='meditationen.html';button='Meditation finden';}
+    else if(/aufschieben|handeln|umsetzen|anfangen|fokus|motivation/.test(t)){label='ACTION';title='Du brauchst gerade einen machbaren nächsten Schritt.';url='action.html';button='ACTION entdecken';}
+    else if(/muster|immer wieder|festhalten|blockade/.test(t)){label='RESET';title='Ein wiederkehrendes Muster scheint gerade wichtig zu sein.';url='reset.html';button='RESET entdecken';}
+    else if(/entscheidung|entscheiden|was will ich/.test(t)){label='ORIENTIERUNG · ACTION';title='Du möchtest klarer erkennen, was du wirklich willst.';url='orientierung.html';button='Orientierung finden';}
     else if(/richtung|weitergeht|weiter geht|beruf|beziehung|zukunft|lebensphase|sinn/.test(t)){label='ORIENTIERUNG';title='Du suchst gerade Richtung.';url='orientierung.html';button='ORIENTIERUNG entdecken';}
     else if(/gedanken|kopf|zweifel|klarheit|grübel|gruebel/.test(t)){label='INNER';title='Es geht gerade um Klarheit und innere Führung.';url='inner.html';button='INNER entdecken';}
     resultBox.classList.add('show');
