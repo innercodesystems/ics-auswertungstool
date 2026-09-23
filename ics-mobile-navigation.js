@@ -47,9 +47,14 @@
   }
 
   function ensureCurrentLogo(){
-    /* Legacy Baum-Logo nicht mehr automatisch in Header oder Footer einsetzen. */
-    document.querySelectorAll('img[src*="ics-logo.png"]').forEach(function(img){
-      img.remove();
+    /* Einheitliches Header-Logo: exakt die eingebettete Logo-Version der Startseite. */
+    const source=document.querySelector('.ics-topbar .ics-living-logo');
+    if(!source) return;
+    const targetSelectors='.header .brand, .ics-topbar .ics-brand-mark, .site-header .brand';
+    document.querySelectorAll(targetSelectors).forEach(function(brand){
+      if(brand.querySelector('.ics-living-logo')) return;
+      brand.querySelectorAll('img[src*="ics-logo.png"], .ics-new-header-logo').forEach(function(el){el.remove();});
+      brand.insertBefore(source.cloneNode(true),brand.firstChild);
     });
   }
 
