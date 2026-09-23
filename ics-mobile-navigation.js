@@ -47,9 +47,9 @@
   }
 
   function ensureCurrentLogo(){
-    document.querySelectorAll('.header .brand img, .ics-topbar .ics-brand-mark img, .site-header .brand img, .ics-footer-logo').forEach(function(img){
-      img.src=ASSET_BASE+'ics-logo.png';
-      img.alt='ICS';
+    /* Legacy Baum-Logo nicht mehr automatisch in Header oder Footer einsetzen. */
+    document.querySelectorAll('img[src*="ics-logo.png"]').forEach(function(img){
+      img.remove();
     });
   }
 
