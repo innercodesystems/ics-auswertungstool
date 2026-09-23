@@ -107,12 +107,12 @@
 
   const container=document.createElement('div');
   container.className='ics-navigator-wrap';
-  container.innerHTML=`<div class="ics-navigator-examples" aria-label="Beispiele"><button type="button" class="ics-navigator-chip" data-example="Ich habe zu wenig Energie">Zu wenig Energie</button><button type="button" class="ics-navigator-chip" data-example="Ich weiß nicht, wie es weitergeht">Wie geht es weiter?</button><button type="button" class="ics-navigator-chip" data-example="Ich komme nicht ins Handeln">Ich komme nicht ins Handeln</button></div><div class="ics-navigator-result" id="ics-navigator-result" aria-live="polite"></div><div class="ics-navigator-hint">Schreib einfach in deinen eigenen Worten, was dich gerade beschäftigt, und drücke Enter.</div>`;
+  container.innerHTML=`<button type="button" class="ics-navigator-go" id="ics-navigator-go">Weiter →</button><div class="ics-navigator-examples" aria-label="Beispiele"><button type="button" class="ics-navigator-chip" data-example="Ich habe zu wenig Energie">Zu wenig Energie</button><button type="button" class="ics-navigator-chip" data-example="Ich weiß nicht, wie es weitergeht">Wie geht es weiter?</button><button type="button" class="ics-navigator-chip" data-example="Ich komme nicht ins Handeln">Ich komme nicht ins Handeln</button></div><div class="ics-navigator-result" id="ics-navigator-result" aria-live="polite"></div><div class="ics-navigator-hint">Schreib in deinen eigenen Worten, was dich gerade beschäftigt, und tippe auf Weiter.</div>`;
 
   if(!document.getElementById('ics-sofort-navigator-style')){
     const style=document.createElement('style');
     style.id='ics-sofort-navigator-style';
-    style.textContent='.ics-navigator-wrap{max-width:570px;margin-top:12px;font-family:Arial,Helvetica,sans-serif}.ics-navigator-examples{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.ics-navigator-chip{appearance:none;border:1px solid rgba(212,160,58,.28);background:rgba(255,255,255,.7);color:#6e665d;border-radius:999px;padding:8px 11px;font-size:12px;cursor:pointer}.ics-navigator-result{display:none;margin-top:12px;padding:17px 18px;border-radius:12px;background:#1a1815;color:#f6f1e7;border:1px solid rgba(212,160,58,.42)}.ics-navigator-result.show{display:block}.ics-navigator-kicker{color:#D4A03A;font-size:10px;font-weight:800;letter-spacing:.16em;margin-bottom:7px}.ics-navigator-result h3{margin:0 0 7px;font-family:Georgia,serif;font-size:22px;color:#f6f1e7}.ics-navigator-result p{margin:0;color:#c9c0b3;font-size:13px;line-height:1.55}.ics-navigator-btn{display:inline-flex;margin-top:13px;padding:9px 12px;border-radius:8px;text-decoration:none;font-size:12px;font-weight:800;background:#D4A03A;color:#17130e}.ics-navigator-hint{margin-top:9px;font-size:11px;color:#8b8379}@media(max-width:900px){.ics-navigator-wrap{max-width:none}}';
+    style.textContent='.ics-navigator-wrap{max-width:570px;margin-top:12px;font-family:Arial,Helvetica,sans-serif}.ics-navigator-go{width:100%;min-height:48px;border:0;border-radius:9px;background:#D4A03A;color:#17130e;font-size:14px;font-weight:800;cursor:pointer}.ics-navigator-examples{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.ics-navigator-chip{appearance:none;border:1px solid rgba(212,160,58,.28);background:rgba(255,255,255,.7);color:#6e665d;border-radius:999px;padding:8px 11px;font-size:12px;cursor:pointer}.ics-navigator-result{display:none;margin-top:12px;padding:17px 18px;border-radius:12px;background:#1a1815;color:#f6f1e7;border:1px solid rgba(212,160,58,.42)}.ics-navigator-result.show{display:block}.ics-navigator-kicker{color:#D4A03A;font-size:10px;font-weight:800;letter-spacing:.16em;margin-bottom:7px}.ics-navigator-result h3{margin:0 0 7px;font-family:Georgia,serif;font-size:22px;color:#f6f1e7}.ics-navigator-result p{margin:0;color:#c9c0b3;font-size:13px;line-height:1.55}.ics-navigator-btn{display:inline-flex;margin-top:13px;padding:9px 12px;border-radius:8px;text-decoration:none;font-size:12px;font-weight:800;background:#D4A03A;color:#17130e}.ics-navigator-hint{margin-top:9px;font-size:11px;color:#8b8379}@media(max-width:900px){.ics-navigator-wrap{max-width:none}}';
     document.head.appendChild(style);
   }
 
@@ -136,6 +136,14 @@
     resultBox.classList.add('show');
     resultBox.innerHTML=`<div class="ics-navigator-kicker">${label}</div><h3>${title}</h3><p>Nutze den passenden ICS Bereich oder den System Check, um deinen nächsten sinnvollen Schritt zu finden.</p><a class="ics-navigator-btn" href="${url}">${button}</a>`;
   }
-  input.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();render(input.value);}});
-  container.querySelectorAll('[data-example]').forEach(function(btn){btn.addEventListener('click',function(){input.value=btn.getAttribute('data-example')||'';render(input.value);});});
+  const goButton=container.querySelector('#ics-navigator-go');
+  function submitSearch(){
+    const value=(input.value||'').trim();
+    if(!value){input.focus();return;}
+    render(value);
+    setTimeout(function(){resultBox.scrollIntoView({behavior:'smooth',block:'nearest'});},50);
+  }
+  if(goButton) goButton.addEventListener('click',submitSearch);
+  input.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();submitSearch();}});
+  container.querySelectorAll('[data-example]').forEach(function(btn){btn.addEventListener('click',function(){input.value=btn.getAttribute('data-example')||'';submitSearch();});});
 })();
