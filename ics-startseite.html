@@ -903,8 +903,8 @@
 .ics-orbit-v4 .energy{transform-origin:50px 52px;animation:icsV4Breath 3.2s ease-in-out infinite}
 .ics-orbit-v4 .v4star{transform-box:fill-box;transform-origin:center;animation:icsV4Twinkle 2.7s ease-in-out infinite}
 @keyframes icsV4Spin{to{transform:rotate(360deg)}}
-@keyframes icsV4Breath{0%,100%{opacity:.86;transform:scale(.97)}50%{opacity:1;transform:scale(1.035)}}
-@keyframes icsV4Twinkle{0%,100%{opacity:.48;transform:scale(.72)}50%{opacity:1;transform:scale(1.12)}}
+@keyframes icsV4Breath{0%,100%{opacity:.92;transform:scale(.97);filter:brightness(1.08)}50%{opacity:1;transform:scale(1.055);filter:brightness(1.42) drop-shadow(0 0 4px rgba(255,224,90,.9))}}
+@keyframes icsV4Twinkle{0%,100%{opacity:.42;transform:scale(.76);filter:brightness(.9)}42%{opacity:1;transform:scale(1.28);filter:brightness(1.8) drop-shadow(0 0 3px #fff1a0)}58%{opacity:.72;transform:scale(.98)}72%{opacity:1;transform:scale(1.18);filter:brightness(1.55)} }
 @media(max-width:520px){.ics-orbit-v4{width:78px;height:78px}}
 @media(prefers-reduced-motion:reduce){.ics-orbit-v4 .orbit,.ics-orbit-v4 .energy,.ics-orbit-v4 .v4star{animation:none}}
 
@@ -931,11 +931,11 @@
 <circle cx="50" cy="50" r="30.7" fill="none" stroke="url(#v4gold)" stroke-width="1.2" filter="url(#v4glow)"/>
 <path d="M50 25.5L72.2 66.6H27.8Z" fill="url(#v4tri)" stroke="url(#v4gold)" stroke-width="1"/>
 <g class="energy">
- <ellipse cx="50" cy="52" rx="18.5" ry="17.6" fill="url(#v4aura)" opacity=".72"/>
+ <ellipse cx="50" cy="52" rx="18.5" ry="17.6" fill="url(#v4aura)" opacity=".86"/><ellipse cx="50" cy="52" rx="7.8" ry="7.5" fill="url(#v4aura)" opacity="1" filter="url(#v4glow)"/>
  <path d="M49.4 52C49.7 47 49.9 40 50 32C50.4 40 50.6 47 50.6 52Z" fill="#fff59a" opacity=".8"/>
  <path d="M49.6 51.9C45.5 54.8 41.4 57.4 37 60.1C41.3 58.1 45.8 55.7 50.5 52.6Z" fill="#ffe65c" opacity=".8"/>
  <path d="M50.4 51.9C54.5 54.8 58.6 57.4 63 60.1C58.7 58.1 54.2 55.7 49.5 52.6Z" fill="#ffe65c" opacity=".8"/>
- <circle cx="50" cy="52" r=".8" fill="#fff" filter="url(#v4glow)"/>
+ <circle cx="50" cy="52" r="1.45" fill="#fffef0" filter="url(#v4glow)"/><circle cx="50" cy="52" r=".55" fill="#fff"/>
 </g>
 <g class="orbit"><ellipse cx="50" cy="50" rx="39.2" ry="15.1" fill="none" stroke="url(#v4gold)" stroke-width="1.4" transform="rotate(-25 50 50)" filter="url(#v4glow)"/></g>
 <g fill="#fff1a0" filter="url(#v4glow)">
