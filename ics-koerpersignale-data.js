@@ -239,5 +239,165 @@ window.ICS_BODY_SIGNALS = [
     inner: 'Wann begann es und was war unmittelbar davor?',
     action: 'Das Gefühl in drei konkrete Körperwörter übersetzen und Verlauf beobachten.',
     reset: 'Ist dein Zustand dadurch klarer beschreibbar geworden?'
+  },
+  {
+    category: "Kopf",
+    title: "Schwindel",
+    body: "Wie fühlt sich der Schwindel an – Drehen, Schwanken oder Benommenheit? Wann tritt er auf?",
+    inner: "Gab es wenig Schlaf, zu wenig Flüssigkeit, langes Sitzen oder eine belastende Situation?",
+    action: "Setz dich sicher hin, vermeide riskante Bewegungen und beobachte den Verlauf. Neuer, starker oder anhaltender Schwindel sollte medizinisch abgeklärt werden.",
+    reset: "Wird es in Ruhe besser, bleibt es gleich oder kommen weitere Beschwerden hinzu?"
+  },
+  {
+    category: "Kopf",
+    title: "Ohrgeräusche",
+    body: "Ist das Geräusch einseitig oder beidseitig, dauerhaft oder vorübergehend?",
+    inner: "Wann fällt es besonders auf – nach Lärm, Stress, wenig Schlaf oder in Ruhe?",
+    action: "Gönne den Ohren Ruhe und vermeide zusätzliche starke Lärmbelastung. Plötzlich neu auftretende oder einseitige Ohrgeräusche mit Hörverlust zeitnah medizinisch abklären.",
+    reset: "Verändert sich Lautstärke oder Wahrnehmung in ruhiger Umgebung?"
+  },
+  {
+    category: "Nacken & Schulter",
+    title: "Schultersteife",
+    body: "Welche Bewegung ist eingeschränkt oder unangenehm?",
+    inner: "Gab es ungewohnte Belastung, langes Sitzen oder eine einseitige Haltung?",
+    action: "Bewege die Schulter nur im angenehmen Bereich und wechsle die Haltung. Starke, zunehmende oder verletzungsbedingte Beschwerden abklären lassen.",
+    reset: "Wird die Bewegung nach sanftem Positionswechsel leichter?"
+  },
+  {
+    category: "Rücken",
+    title: "Rückenschmerz allgemein",
+    body: "Wo genau sitzt der Schmerz und wodurch verändert er sich?",
+    inner: "Welche Bewegungen, Belastungen oder langen Positionen gingen ihm voraus?",
+    action: "Wechsle vorsichtig die Position und bleibe im verträglichen Maß in Bewegung. Bei Lähmungserscheinungen, Taubheit im Schritt oder Problemen mit Blase/Darm sofort medizinische Hilfe suchen.",
+    reset: "Welche Position oder leichte Bewegung verändert den Schmerz?"
+  },
+  {
+    category: "Brust & Atmung",
+    title: "Kurzatmigkeit",
+    body: "Tritt die Atemnot in Ruhe oder bei Belastung auf und ist sie neu?",
+    inner: "Welche Situation ging voraus? Beobachte zunächst, ohne eine psychische Ursache anzunehmen.",
+    action: "Neue oder starke Atemnot, Brustschmerz, bläuliche Lippen oder deutliche Verschlechterung sind medizinische Warnzeichen und brauchen sofortige Abklärung.",
+    reset: "Wird die Atmung in Ruhe normaler oder bleibt die Atemnot bestehen?"
+  },
+  {
+    category: "Bauch & Verdauung",
+    title: "Blähungen",
+    body: "Wann treten Blähungen auf und gibt es einen Zusammenhang mit Mahlzeiten?",
+    inner: "Welche Lebensmittel, Essgeschwindigkeit, Getränke oder Stresssituationen könnten mitwirken?",
+    action: "Beobachte einige Tage Essen, Zeitpunkt und Beschwerden. Anhaltende oder starke Beschwerden ärztlich abklären lassen.",
+    reset: "Zeigt sich ein wiederkehrendes Muster?"
+  },
+  {
+    category: "Bauch & Verdauung",
+    title: "Sodbrennen",
+    body: "Wann tritt das Brennen auf – nach Mahlzeiten, beim Liegen oder nachts?",
+    inner: "Welche Mahlzeiten, Getränke oder Essenszeiten gehen ihm voraus?",
+    action: "Beobachte Auslöser und vermeide direktes Hinlegen nach großen Mahlzeiten. Häufiges oder anhaltendes Sodbrennen medizinisch abklären.",
+    reset: "Welche Gewohnheit scheint den größten Unterschied zu machen?"
+  },
+  {
+    category: "Bauch & Verdauung",
+    title: "Übelkeit",
+    body: "Wann begann die Übelkeit und welche weiteren Beschwerden sind dabei?",
+    inner: "Gab es ungewohntes Essen, Infektzeichen, Medikamente, Bewegung oder starke Belastung?",
+    action: "Trinke bei Verträglichkeit kleine Mengen. Starke, anhaltende Übelkeit, Austrocknung, starke Schmerzen oder Blut erfordern medizinische Abklärung.",
+    reset: "Kannst du Flüssigkeit behalten und verändert sich die Übelkeit?"
+  },
+  {
+    category: "Energie",
+    title: "Morgenmüdigkeit",
+    body: "Wie erholt fühlst du dich direkt nach dem Aufwachen?",
+    inner: "Wie waren Schlafdauer, Schlafqualität, Abendroutine und mögliche Unterbrechungen?",
+    action: "Beobachte einige Tage Schlafenszeit, Aufwachzeit und Erholung. Anhaltend starke Tagesmüdigkeit sollte medizinisch besprochen werden.",
+    reset: "Welche Veränderung zeigt sich nach mehreren Nächten mit regelmäßigerem Schlaf?"
+  },
+  {
+    category: "Schlaf",
+    title: "Zu frühes Erwachen",
+    body: "Wie viel früher als gewünscht wachst du auf und kannst du wieder einschlafen?",
+    inner: "Welche Veränderungen bei Stress, Licht, Geräuschen, Alkohol, Koffein oder Schlafrhythmus gab es?",
+    action: "Notiere für eine Woche Schlaf- und Aufwachzeiten sowie mögliche Einflussfaktoren.",
+    reset: "Entsteht ein zeitliches oder situatives Muster?"
+  },
+  {
+    category: "Beine & Füße",
+    title: "Knieschmerz",
+    body: "Wo am Knie sitzt der Schmerz und tritt er bei Belastung, Ruhe oder bestimmten Bewegungen auf?",
+    inner: "Gab es eine neue Belastung, längere Inaktivität, Sport oder eine Verletzung?",
+    action: "Belastung anpassen und schmerzhafte Bewegungen nicht erzwingen. Nach Verletzung, bei deutlicher Schwellung, Blockade oder Instabilität medizinisch abklären.",
+    reset: "Welche Bewegung ist gut tolerierbar und welche verstärkt die Beschwerden?"
+  },
+  {
+    category: "Beine & Füße",
+    title: "Fußschmerz",
+    body: "Wo am Fuß sitzt der Schmerz – Ferse, Sohle, Vorfuß oder Gelenk?",
+    inner: "Welche Schuhe, Laufwege, Belastungen oder Veränderungen gingen voraus?",
+    action: "Belastung vorübergehend anpassen und gut verträgliches Schuhwerk wählen. Anhaltende oder starke Schmerzen abklären lassen.",
+    reset: "Verändert sich der Schmerz mit Belastung, Ruhe oder anderem Schuhwerk?"
+  },
+  {
+    category: "Hände & Arme",
+    title: "Handgelenkschmerz",
+    body: "Welche Bewegung oder Tätigkeit löst die Beschwerden aus?",
+    inner: "Gab es viel Tippen, Handy, Werkzeug, Sport oder eine ungewohnte Belastung?",
+    action: "Belastung reduzieren und neutrale Handposition ausprobieren. Nach Verletzung oder bei anhaltender Schwäche, Schwellung oder Taubheit abklären lassen.",
+    reset: "Welche Tätigkeit beeinflusst den Schmerz am deutlichsten?"
+  },
+  {
+    category: "Ganzkörper",
+    title: "Herzklopfen",
+    body: "Ist der Herzschlag nur stärker spürbar, sehr schnell oder unregelmäßig?",
+    inner: "Wann tritt es auf – nach Anstrengung, Koffein, wenig Schlaf, Medikamenten oder in Ruhe?",
+    action: "Setz dich hin und beobachte den Verlauf. Herzklopfen mit Brustschmerz, Ohnmacht, starker Atemnot oder anhaltend sehr schnellem Puls sofort medizinisch abklären.",
+    reset: "Beruhigt sich der Herzschlag in Ruhe oder bleibt er auffällig?"
+  },
+  {
+    category: "Ganzkörper",
+    title: "Fiebergefühl",
+    body: "Hast du deine Temperatur gemessen und welche weiteren Beschwerden bestehen?",
+    inner: "Gab es Kontakt zu Erkrankten, Infektzeichen oder ungewöhnliche Belastung?",
+    action: "Ruhe, ausreichend trinken und Temperatur beobachten. Hohes, anhaltendes Fieber oder deutliche Verschlechterung medizinisch abklären.",
+    reset: "Wie entwickeln sich Temperatur und Allgemeinzustand?"
+  },
+  {
+    category: "Stress",
+    title: "Konzentrationsprobleme",
+    body: "Wann fällt Konzentration besonders schwer und wie lange hält das an?",
+    inner: "Wie sind Schlaf, Pausen, Reizmenge, Ernährung und aktuelle Belastung?",
+    action: "Reduziere für zehn Minuten Ablenkungen und wähle nur eine klar begrenzte Aufgabe.",
+    reset: "Wird der Fokus mit weniger Reizen besser?"
+  },
+  {
+    category: "Stress",
+    title: "Reizbarkeit",
+    body: "Woran merkst du körperlich zuerst, dass deine Reizschwelle sinkt?",
+    inner: "Welche Faktoren wie Schlafmangel, Hunger, Überforderung oder fehlende Pausen könnten mitwirken?",
+    action: "Unterbrich Input für einige Minuten und prüfe zuerst körperliche Grundbedürfnisse.",
+    reset: "Was verändert sich nach einer kurzen Pause?"
+  },
+  {
+    category: "Regeneration",
+    title: "Muskelkater",
+    body: "Welche Muskeln sind betroffen und passt es zu einer ungewohnten Belastung?",
+    inner: "War die Trainings- oder Alltagsbelastung höher als sonst?",
+    action: "Leichte Bewegung und normale Regeneration sind oft sinnvoll. Sehr starke Schmerzen, deutliche Schwellung oder dunkler Urin medizinisch abklären.",
+    reset: "Wird die Beweglichkeit im Tagesverlauf langsam besser?"
+  },
+  {
+    category: "Wahrnehmung",
+    title: "Taubheitsgefühl",
+    body: "Wo ist die Taubheit, seit wann besteht sie und kam sie plötzlich?",
+    inner: "Welche Körperposition oder Belastung ging voraus? Vermeide eine vorschnelle emotionale Deutung.",
+    action: "Plötzlich neue Taubheit, besonders einseitig oder zusammen mit Schwäche, Sprach- oder Sehstörungen, ist ein Notfall. Anhaltende Taubheit medizinisch abklären.",
+    reset: "Verschwindet sie nach Positionswechsel vollständig oder bleibt sie bestehen?"
+  },
+  {
+    category: "Wahrnehmung",
+    title: "Zittern",
+    body: "Welche Körperstelle zittert und tritt es in Ruhe oder bei Aktivität auf?",
+    inner: "Gab es Kälte, Hunger, Koffein, Anstrengung, Medikamente oder starke Aktivierung?",
+    action: "Setz dich sicher hin und beobachte. Neues, anhaltendes oder deutlich zunehmendes Zittern medizinisch abklären.",
+    reset: "Nimmt das Zittern nach Ruhe, Wärme oder Essen ab?"
   }
 ];
