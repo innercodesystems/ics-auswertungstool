@@ -532,12 +532,12 @@
   <section data-screen="intro" class="active">
     <div class="ics-eyebrow">Inner Code Systems</div>
     <h1 class="ics-title">🔄 ICS RESET-Check</h1>
-    <p class="ics-lead">In wenigen Minuten bekommst du eine ehrliche Standortbestimmung: Wo befindest du dich gerade zwischen Überlebensmodus und Gestaltungsmodus – und was ist dein nächster kleiner Schritt?</p>
+    <p class="ics-lead">In wenigen Minuten bekommst du eine ehrliche Standortbestimmung: Wo befindest du dich gerade zwischen Überlebensmodus und Schöpfermodus – und was ist dein nächster kleiner Schritt?</p>
 
     <div class="ics-card ics-preface">
       <h2 class="ics-preface-title">Willkommen zum ICS RESET-Check</h2>
       <p class="ics-preface-text">Dieser Check ist keine Prüfung, die du bestehen oder nicht bestehen kannst.<br>Er ist eine ehrliche Momentaufnahme deiner aktuellen Situation.</p>
-      <p class="ics-preface-text">Mit 15 kurzen Fragen erhältst du einen Überblick darüber, wie stark du dich momentan im <span class="ics-preface-strong">Überlebensmodus</span> oder bereits im <span class="ics-preface-strong">Gestaltungsmodus</span> befindest.</p>
+      <p class="ics-preface-text">Mit 15 kurzen Fragen erhältst du einen Überblick darüber, wie stark du dich momentan im <span class="ics-preface-strong">Überlebensmodus</span> oder bereits im <span class="ics-preface-strong">Schöpfermodus</span> befindest.</p>
 
       <p class="ics-preface-sub">Am Ende erhältst du</p>
       <ul class="ics-preface-list">
@@ -588,7 +588,7 @@
       <div class="ics-result-caption">RESET-Level</div>
       <div class="ics-result-number" id="resetLevelNumber">0%</div>
       <p style="font-size:13.5px; color:rgba(26,24,21,0.6); max-width:340px; margin:4px auto 0;">
-        Zeigt, wie weit du aktuell schon im Gestaltungsmodus angekommen bist.
+        Zeigt, wie weit du aktuell schon im Schöpfermodus angekommen bist.
       </p>
     </div>
 
@@ -599,7 +599,7 @@
           <div class="ics-bar-track"><div class="ics-bar-fill dark" id="survivalBar"></div></div>
         </div>
         <div>
-          <div class="ics-bar-label"><span>Gestaltungsmodus</span><span id="growthPct">0%</span></div>
+          <div class="ics-bar-label"><span>Schöpfermodus</span><span id="growthPct">0%</span></div>
           <div class="ics-bar-track"><div class="ics-bar-fill gold" id="growthBar"></div></div>
         </div>
       </div>
@@ -619,7 +619,7 @@
     </div>
 
     <h2 class="ics-section-title">Das RESET-System</h2>
-    <p class="ics-section-sub">Dein Weg zurück in den Gestaltungsmodus</p>
+    <p class="ics-section-sub">Dein Weg zurück in den Schöpfermodus</p>
     <div class="ics-card" id="resetSteps"></div>
 
     <div class="ics-cta-card" id="ctaCard">
@@ -646,7 +646,7 @@
       <a class="ics-btn ics-btn-gold" id="journeyContinueBtn" href="ics-auswertung-tool.html">Weiter zur persönlichen Auswertung</a>
     </div>
 
-    <p class="ics-disclaimer">Der ICS RESET-Check ist keine Diagnose. Er dient ausschließlich als Reflexions- und Orientierungshilfe auf deinem Weg vom Überlebens- in den Gestaltungsmodus.</p>
+    <p class="ics-disclaimer">Der ICS RESET-Check ist keine Diagnose. Er dient ausschließlich als Reflexions- und Orientierungshilfe auf deinem Weg vom Überlebens- in den Schöpfermodus.</p>
 
     <div class="ics-restart">
       <button onclick="ICS.restart()">RESET-Check erneut starten</button>
@@ -682,7 +682,7 @@
       massage:        'https://innercodesystems.com/transformation-durch-beruehrung',
       akademie:       'https://innercodesystems.com/inner-code-reset'   // war: /akademie (nicht vorhanden) — vorläufig auf bestehende Seite umgeleitet
     },
-    // Schwellenwerte für die vierstufige Empfehlung, basierend auf Gestaltungsmodus %
+    // Schwellenwerte für die vierstufige Empfehlung, basierend auf Schöpfermodus %
     thresholds: { t1: 35, t2: 60, t3: 85 }
   };
 
@@ -827,14 +827,14 @@
   }
 
   function finish(){
-    const overall = Math.round(average(state.answers)); // Gestaltungsmodus %
+    const overall = Math.round(average(state.answers)); // Schöpfermodus %
     const survival = 100 - overall;
 
     const catAverages = {};
     Object.keys(CATEGORIES).forEach(k => catAverages[k] = catAverage(k));
 
-    // RESET-Level entspricht bewusst dem Gestaltungsmodus-Anteil, damit die
-    // Zahlen nie widersprüchlich wirken (z.B. 75% Gestaltungsmodus, aber 50% RESET-Level).
+    // RESET-Level entspricht bewusst dem Schöpfermodus-Anteil, damit die
+    // Zahlen nie widersprüchlich wirken (z.B. 75% Schöpfermodus, aber 50% RESET-Level).
     const resetLevel = overall;
 
     // Schwächster Bereich = größter Hebel / aktueller Schwerpunkt
@@ -941,9 +941,9 @@
     if (overall < 34){
       return 'Aktuell zeigt sich bei dir überwiegend der Überlebensmodus – dein System ist stark auf Absicherung und Kontrolle ausgerichtet. Das ist keine Schwäche, sondern ein Schutzmuster, das gerade viel Energie bindet.';
     } else if (overall < 67){
-      return 'Du befindest dich gerade in einer Übergangsphase zwischen Überlebens- und Gestaltungsmodus. Manche Bereiche fühlen sich schon stabil an, andere ziehen dich noch zurück in alte Muster.';
+      return 'Du befindest dich gerade in einer Übergangsphase zwischen Überlebens- und Schöpfermodus. Manche Bereiche fühlen sich schon stabil an, andere ziehen dich noch zurück in alte Muster.';
     } else {
-      return 'Du bewegst dich überwiegend im Gestaltungsmodus – du triffst bewusste Entscheidungen und bist gut mit dir selbst verbunden. Jetzt geht es darum, diesen Zustand zu vertiefen und zu stabilisieren.';
+      return 'Du bewegst dich überwiegend im Schöpfermodus – du triffst bewusste Entscheidungen und bist gut mit dir selbst verbunden. Jetzt geht es darum, diesen Zustand zu vertiefen und zu stabilisieren.';
     }
   }
 
@@ -1014,21 +1014,21 @@
     } else if (overall < CONFIG.thresholds.t2){
       cta = {
         title: 'Vertiefe mit dem RESET-Programm',
-        text: 'Du stehst an einem Übergangspunkt. Das RESET-Programm begleitet dich strukturiert dabei, dauerhaft mehr in den Gestaltungsmodus zu finden.',
+        text: 'Du stehst an einem Übergangspunkt. Das RESET-Programm begleitet dich strukturiert dabei, dauerhaft mehr in den Schöpfermodus zu finden.',
         label: 'Zum RESET-Programm',
         url: CONFIG.ctaUrls.resetProgramm
       };
     } else if (overall < CONFIG.thresholds.t3){
       cta = {
         title: 'Vertiefe mit der Transformationsmassage',
-        text: 'Du bist bereits gut im Gestaltungsmodus verankert. Die Transformationsmassage hilft dir, diesen Zustand körperlich zu vertiefen und zu stabilisieren.',
+        text: 'Du bist bereits gut im Schöpfermodus verankert. Die Transformationsmassage hilft dir, diesen Zustand körperlich zu vertiefen und zu stabilisieren.',
         label: 'Mehr zur Transformationsmassage',
         url: CONFIG.ctaUrls.massage
       };
     } else {
       cta = {
         title: 'Entdecke die ICS Akademie',
-        text: 'Du lebst bereits sehr stark im Gestaltungsmodus. In der ICS Akademie findest du weiterführende Tools und Vertiefungen, um diesen Weg konsequent weiterzugehen.',
+        text: 'Du lebst bereits sehr stark im Schöpfermodus. In der ICS Akademie findest du weiterführende Tools und Vertiefungen, um diesen Weg konsequent weiterzugehen.',
         label: 'Zur ICS Akademie',
         url: CONFIG.ctaUrls.akademie
       };
