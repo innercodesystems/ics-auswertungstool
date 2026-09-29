@@ -686,7 +686,7 @@
 
     <!-- 2. BALKEN -->
     <div class="gauge-card">
-      <div class="gauge-labels"><span>Gestaltungsmodus</span><span>Überlebensmodus</span></div>
+      <div class="gauge-labels"><span>Schöpfermodus</span><span>Überlebensmodus</span></div>
       <div class="gauge-track"><div class="gauge-marker" id="gaugeMarker"></div></div>
       <p class="gauge-text" id="gaugeText"></p>
     </div>
@@ -700,12 +700,12 @@
           <div class="alignment-track"><div class="alignment-fill survival" id="alignSurvivalBar" style="width:0%"></div></div>
         </div>
         <div class="alignment-row">
-          <div class="alignment-row-head"><span>Gestaltungsmodus</span><span id="alignGrowthPct">–</span></div>
+          <div class="alignment-row-head"><span>Schöpfermodus</span><span id="alignGrowthPct">–</span></div>
           <div class="alignment-track"><div class="alignment-fill growth" id="alignGrowthBar" style="width:0%"></div></div>
         </div>
       </div>
       <p class="alignment-text">Diese Werte sind keine Bewertung deiner Persönlichkeit, sondern eine Momentaufnahme deines aktuellen Zustands. Jeder bewusste Schritt, jede neue Erfahrung und jede Entscheidung kann dein inneres Gleichgewicht verändern.</p>
-      <p class="alignment-text">Je häufiger du erkennst, aus welchem Modus du handelst, desto leichter richtest du dein System Schritt für Schritt auf den Gestaltungsmodus aus.</p>
+      <p class="alignment-text">Je häufiger du erkennst, aus welchem Modus du handelst, desto leichter richtest du dein System Schritt für Schritt auf den Schöpfermodus aus.</p>
       <p class="alignment-signature">✨ Veränderung ist kein Sprung.<br>Sie entsteht durch viele kleine bewusste Entscheidungen.</p>
       <p class="alignment-recommendation"><strong>Empfehlung:</strong> Speichere deine Auswertung und wiederhole sie in einigen Wochen. So kannst du deine persönliche Entwicklung sichtbar verfolgen.</p>
     </div>
@@ -720,7 +720,7 @@
 
     <!-- 3. GEGENÜBERSTELLUNG -->
     <div class="polarity-section" id="polaritySection">
-      <h3 class="polarity-title">Von Überlebensmodus zu Gestaltungsmodus</h3>
+      <h3 class="polarity-title">Von Überlebensmodus zu Schöpfermodus</h3>
       <div class="polarity-card">
         <div id="pairRows"></div>
       </div>
@@ -730,7 +730,7 @@
     <!-- 4. ENTSCHEIDUNG FÜR HEUTE -->
     <div class="decision-section" id="decisionSection">
       <h3 class="decision-title">✨ Deine Entscheidung für heute</h3>
-      <p class="decision-intro">Du musst heute nicht alles verändern. Wähle bewusst einen Begriff aus dem Gestaltungsmodus, den du heute leben möchtest.</p>
+      <p class="decision-intro">Du musst heute nicht alles verändern. Wähle bewusst einen Begriff aus dem Schöpfermodus, den du heute leben möchtest.</p>
       <div class="decision-options" id="decisionOptions"></div>
       <div class="decision-input-row">
         <label>Heute entscheide ich mich für:</label>
@@ -794,7 +794,8 @@
          Ersetzt NICHT die drei bestehenden CTA-Buttons oben, ergänzt sie nur.
          Sichtbar erst nach erfolgreicher Journey-Speicherung. -->
     <div id="journeyGegenpolWrap" style="display:none; margin-top:16px; text-align:center;">
-      <a href="ics-gegenpol-generator.html" class="cta-btn primary">Weiter zu deinem persönlichen Gegenpol</a>
+      <a href="https://app.innercodesystems.com/?view=meinics&from=auswertung" class="cta-btn primary" id="journeyMeinIcsLink">Ergebnis in Mein ICS übernehmen →</a>
+      <div style="margin-top:10px;"><a href="ics-gegenpol-generator.html" class="cta-btn">Gegenpol bewusst vertiefen</a></div>
     </div>
     <p id="journeySaveNotice" style="display:none; text-align:center; font-size:12.5px; color:var(--text-muted); margin-top:12px;"></p>
   </div>
@@ -1006,7 +1007,7 @@ function speichereKiAuswertungJourney(matches, freitextVorhanden, kennzahlen){
     inner_code_prozent: journeyDaten.inner_code_prozent,
     body_code_prozent: journeyDaten.body_code_prozent,
     action_code_prozent: journeyDaten.action_code_prozent,
-    gestaltungsmodus_prozent: kennzahlen.gestaltung,
+    schoepfermodus_prozent: kennzahlen.gestaltung,
     ueberlebensmodus_prozent: kennzahlen.ueberleben,
     erstellt_am: new Date().toISOString(),
     auswertung_version: '1.0'
@@ -1020,6 +1021,23 @@ function speichereKiAuswertungJourney(matches, freitextVorhanden, kennzahlen){
   }
 
   if (ergebnis.ok){
+    try {
+      const top = matches.slice(0,3);
+      const result = {
+        tool:'ics-auswertung', completed:true, at:new Date().toISOString(),
+        themes: top.map(m=>m.label.replace(/„|"/g,'')),
+        counterfields: top.map(m=>m.gegenpol),
+        weakestCode: kennzahlen.schwaechster.name,
+        weakestCodeLabel: kennzahlen.schwaechster.label,
+        innerCode: journeyDaten.inner_code_prozent,
+        bodyCode: journeyDaten.body_code_prozent,
+        actionCode: journeyDaten.action_code_prozent,
+        creatorMode: kennzahlen.gestaltung,
+        survivalMode: kennzahlen.ueberleben
+      };
+      localStorage.setItem('ics_wayfinder_result_v1', JSON.stringify(result));
+      localStorage.setItem('ics_auswertung_result_v1', JSON.stringify(result));
+    } catch(e) {}
     gegenpolWrap.style.display = 'block';
   } else {
     notice.textContent = 'Die Weitergabe an den Gegenpol konnte gerade nicht gespeichert werden.'
@@ -1164,13 +1182,13 @@ document.getElementById('analyzeBtn').addEventListener('click',()=>{
   let modeLabel, modeText;
   if(percent>=65){
     modeLabel="Überlebensmodus aktiv";
-    modeText="Du befindest dich aktuell überwiegend im Überlebensmodus. Das ist keine Schwäche, sondern ein Schutzmechanismus – die folgende Auswertung zeigt dir, wie du bewusst zurück in den Gestaltungsmodus findest.";
+    modeText="Du befindest dich aktuell überwiegend im Überlebensmodus. Das ist keine Schwäche, sondern ein Schutzmechanismus – die folgende Auswertung zeigt dir, wie du bewusst zurück in den Schöpfermodus findest.";
   } else if(percent>=45){
     modeLabel="Zwischen den Modi";
-    modeText="Du bewegst dich gerade zwischen Überlebens- und Gestaltungsmodus. Ein kleiner bewusster Impuls kann bereits reichen, um mehr Klarheit zu gewinnen.";
+    modeText="Du bewegst dich gerade zwischen Überlebens- und Schöpfermodus. Ein kleiner bewusster Impuls kann bereits reichen, um mehr Klarheit zu gewinnen.";
   } else {
-    modeLabel="Nah am Gestaltungsmodus";
-    modeText="Du bist bereits nah am Gestaltungsmodus. Die folgenden Impulse helfen dir, diesen Zustand zu stabilisieren.";
+    modeLabel="Nah am Schöpfermodus";
+    modeText="Du bist bereits nah am Schöpfermodus. Die folgenden Impulse helfen dir, diesen Zustand zu stabilisieren.";
   }
 
   document.getElementById('resultsTitle').textContent = modeLabel;
