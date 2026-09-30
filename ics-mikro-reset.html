@@ -149,7 +149,8 @@ function selectGroup(id, setter){
  });
 }
 selectGroup('feelings',v=>oldState=v); selectGroup('states',v=>newState=v);
-(function(){try{let qs=new URLSearchParams(location.search),fromG=qs.get('from')==='gegenpol',r=JSON.parse(localStorage.getItem('icsGegenpolResult')||'{}');if(fromG&&r.pattern){oldState=r.pattern;newState=r.quality||'';let h=document.getElementById('gegenpolHandoff');h.style.display='block';document.getElementById('gegenpolHandoffText').innerHTML='<strong>Dein erkanntes Muster:</strong> '+escapeHtml(r.pattern)+'<br><strong>Dein gewählter Gegenpol:</strong> '+escapeHtml(r.quality||'bewusste neue Qualität');let own=document.getElementById('ownState');own.value=r.quality||'';document.querySelectorAll('#states .choice').forEach(b=>{if(b.textContent.trim().toLowerCase()===(r.quality||'').trim().toLowerCase())b.classList.add('on')});idx=1;}}catch(e){}})();
+let gegenpolStart=false;
+(function(){try{let qs=new URLSearchParams(location.search),fromG=qs.get('from')==='gegenpol',r=JSON.parse(localStorage.getItem('icsGegenpolResult')||'{}');if(fromG&&r.pattern){gegenpolStart=true;oldState=r.pattern;newState=r.quality||'';let h=document.getElementById('gegenpolHandoff');h.style.display='block';document.getElementById('gegenpolHandoffText').innerHTML='<strong>Dein erkanntes Muster:</strong> '+escapeHtml(r.pattern)+'<br><strong>Dein gewählter Gegenpol:</strong> '+escapeHtml(r.quality||'bewusste neue Qualität');let own=document.getElementById('ownState');own.value=r.quality||'';document.querySelectorAll('#states .choice').forEach(b=>{if(b.textContent.trim().toLowerCase()===(r.quality||'').trim().toLowerCase())b.classList.add('on')});idx=1;}}catch(e){}})();
 function show(){steps.forEach((s,i)=>s.classList.toggle('active',i===idx));bar.style.width=((idx+1)/steps.length*100)+'%';window.scrollTo({top:0,behavior:'smooth'})}
 function next(){if(idx===2 && document.getElementById('ownState').value.trim())newState=document.getElementById('ownState').value.trim(); if(idx<steps.length-1)idx++;show()}
 function breathe(){
@@ -198,6 +199,7 @@ function finish(){
 function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
 function restart(){idx=0;oldState="";newState="";document.querySelectorAll('.choice').forEach(x=>x.classList.remove('on'));document.getElementById('action').value="";document.getElementById('ownState').value="";document.getElementById('timer').textContent="30";let b=document.getElementById('timerBtn');b.textContent="30 Sekunden erleben";b.onclick=startTimer;show()}
 show();
+if(gegenpolStart){setTimeout(()=>{document.getElementById('gegenpolHandoff')?.scrollIntoView({behavior:'smooth',block:'start'})},120)}
 </script>
 <script src="./ics-navigation-standard.js?v=20260930-nav1"></script>\n<script>(function(){try{var fromInner=new URLSearchParams(location.search).get('from')==='inner-code';var hasInner=!!localStorage.getItem('icsInnerCodeState');if(fromInner||hasInner){var el=document.getElementById('innerCodeReturn');if(el)el.style.display='block'}}catch(e){}})();</script>
 </body>
