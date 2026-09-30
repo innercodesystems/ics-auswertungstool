@@ -110,6 +110,7 @@
 </style>
 </head>
 <body>
+<div id="innerCodeReturn" style="display:none;max-width:640px;margin:18px auto 0;padding:0 20px;"><a href="inner-code.html?restore=1" style="display:block;padding:13px 15px;border:1px solid #b8924f;border-radius:12px;background:#fff;color:#1a1815;text-decoration:none;font-size:14px;font-weight:700;">← Zurück zu meinem INNER CODE<br><span style="display:block;margin-top:3px;color:#605a52;font-size:12px;font-weight:400;">Zurück zu deiner persönlichen Auswertung</span></a></div>
 <div class="wrap" id="inhaltsBereich" style="display:none;">
 
   <header class="top">
@@ -276,5 +277,6 @@ console.log(
   });
 </script>
   
+<script>(function(){try{var fromInner=new URLSearchParams(location.search).get('from')==='inner-code';var hasInner=!!localStorage.getItem('icsInnerCodeState');if(fromInner||hasInner){var el=document.getElementById('innerCodeReturn');if(el)el.style.display='block'}}catch(e){}})();</script>
 </body>
 </html>
