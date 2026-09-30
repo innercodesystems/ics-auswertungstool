@@ -449,5 +449,6 @@ document.getElementById('quizStartBtn').onclick=()=>{
 document.getElementById('startBtn').onclick=()=>{start.classList.add('hidden');quiz.classList.remove('hidden');renderQuestion()};
 document.getElementById('restartBtn').onclick=()=>{document.querySelectorAll('[data-deep]').forEach(btn=>btn.classList.remove('active-deep'));index=0;answers={};selectedChoice=null;currentResultKey=null;document.getElementById('deepView').classList.add('hidden');result.classList.add('hidden');document.getElementById('finalImpulse').classList.add('hidden');start.classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'})};
 </script>
+<script src="./ics-navigation-standard.js?v=20260930-nav1"></script>
 </body>
 </html>
