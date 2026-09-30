@@ -246,13 +246,14 @@ function abortCheck(){
   const p=new URLSearchParams(window.location.search);
   const from=(p.get("from")||"").toLowerCase();
   const targets={
-    inner:"https://www.innercodesystems.com/inner",
-    body:"https://www.innercodesystems.com/body",
-    action:"https://www.innercodesystems.com/action",
-    reset:"https://www.innercodesystems.com/reset",
-    orientierung:"https://www.innercodesystems.com/orientierung",
-    orientation:"https://www.innercodesystems.com/orientierung",
-    tools:"https://www.innercodesystems.com"
+    inner:"https://www.innercodesystems.com/inner.html",
+    body:"https://www.innercodesystems.com/body.html",
+    action:"https://www.innercodesystems.com/action.html",
+    reset:"https://www.innercodesystems.com/reset.html",
+    orientierung:"https://www.innercodesystems.com/orientierung.html",
+    orientation:"https://www.innercodesystems.com/orientierung.html",
+    meinics:"https://app.innercodesystems.com/?view=meinics",
+    tools:"https://www.innercodesystems.com/tool-bibliothek.html"
   };
   if(from && targets[from]){ window.location.href=targets[from]; return; }
   if(document.referrer && !document.referrer.includes("ICS_System_Check_V20_TESTMARKIERUNG.html")){ window.location.href=document.referrer; return; }
