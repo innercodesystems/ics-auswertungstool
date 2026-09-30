@@ -202,7 +202,7 @@ show();
 if(gegenpolStart){
   document.querySelectorAll('[data-inner-return="1"]').forEach(function(ir){ir.remove()});
   var sr=document.getElementById('standardReturnLinks');
-  if(sr){sr.style.setProperty('display','block','important');sr.innerHTML='<a href="mein-ics.html?from=gegenpol" style="display:block;padding:12px 14px;border:1px solid #b8924f;border-radius:12px;color:#bdb5a7;text-decoration:none;font-size:13px;line-height:1.4;background:#b8924f0d;"><strong style="color:#d4a03a;">← Zurück zu Mein ICS</strong><br><span style="font-size:11px;">Zurück zu deinem aktuellen Gegenpol</span></a>'}
+  if(sr){sr.style.setProperty('display','block','important');sr.innerHTML='<a href="inner-code.html?restore=1" style="display:block;padding:12px 14px;border:1px solid #b8924f;border-radius:12px;color:#bdb5a7;text-decoration:none;font-size:13px;line-height:1.4;background:#b8924f0d;"><strong style="color:#d4a03a;">← Zurück zu meinem INNER CODE</strong><br><span style="font-size:11px;">Mikro-RESET verlassen und zurück zur persönlichen Auswertung</span></a>'}
   setTimeout(()=>{document.getElementById('gegenpolHandoff')?.scrollIntoView({behavior:'smooth',block:'start'})},120)
 }
 </script>
