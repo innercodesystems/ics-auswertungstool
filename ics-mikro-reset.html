@@ -199,7 +199,12 @@ function finish(){
 function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
 function restart(){idx=0;oldState="";newState="";document.querySelectorAll('.choice').forEach(x=>x.classList.remove('on'));document.getElementById('action').value="";document.getElementById('ownState').value="";document.getElementById('timer').textContent="30";let b=document.getElementById('timerBtn');b.textContent="30 Sekunden erleben";b.onclick=startTimer;show()}
 show();
-if(gegenpolStart){setTimeout(()=>{document.getElementById('gegenpolHandoff')?.scrollIntoView({behavior:'smooth',block:'start'})},120)}
+if(gegenpolStart){
+  var ir=document.getElementById('innerCodeReturn'); if(ir) ir.style.setProperty('display','none','important');
+  var sr=document.getElementById('standardReturnLinks');
+  if(sr){sr.style.setProperty('display','block','important');sr.innerHTML='<a href="mein-ics.html?from=gegenpol" style="display:block;padding:12px 14px;border:1px solid #b8924f;border-radius:12px;color:#bdb5a7;text-decoration:none;font-size:13px;line-height:1.4;background:#b8924f0d;"><strong style="color:#d4a03a;">← Zurück zu Mein ICS</strong><br><span style="font-size:11px;">Zurück zu deinem aktuellen Gegenpol</span></a>'}
+  setTimeout(()=>{document.getElementById('gegenpolHandoff')?.scrollIntoView({behavior:'smooth',block:'start'})},120)
+}
 </script>
 <script src="./ics-navigation-standard.js?v=20260930-nav1"></script>\n<script>(function(){try{var fromInner=new URLSearchParams(location.search).get('from')==='inner-code';var hasInner=!!localStorage.getItem('icsInnerCodeState');if(fromInner||hasInner){var el=document.getElementById('innerCodeReturn');if(el)el.style.display='block'}}catch(e){}})();</script>
 </body>
