@@ -245,6 +245,13 @@ function abortCheck(){
   $("flow").innerHTML="";
   const p=new URLSearchParams(window.location.search);
   const from=(p.get("from")||"").toLowerCase();
+  const exactReturn=p.get("return")||"";
+  if(exactReturn){
+    try{
+      const u=new URL(exactReturn);
+      if(/(^|\.)innercodesystems\.com$/i.test(u.hostname)){ window.location.href=u.href; return; }
+    }catch(e){}
+  }
   const targets={
     inner:"https://www.innercodesystems.com/inner.html",
     body:"https://www.innercodesystems.com/body.html",
