@@ -61,8 +61,7 @@ function toggleDeep(id,btn){let p=document.getElementById(id),open=p.classList.t
 function deepBlock(title,text,action){return '<h3>'+title+'</h3><p>'+text+'</p><div class="deep-action"><b>DEIN IMPULS</b><br>'+action+'</div>'}
 function toggleQuickMore(){document.getElementById('quickMore').classList.toggle('on')}
 function quickJump(id){document.getElementById('quickMore').classList.remove('on');jumpTo(id)}
-function updateQuickNav(){let q=document.getElementById('quickNav'),n=document.querySelector('.result-nav'),r=document.getElementById('s3');if(!q||!n||!r)return;let nr=n.getBoundingClientRect(),rr=r.getBoundingClientRect();q.classList.toggle('show',nr.bottom<0&&rr.bottom>80)}
-window.addEventListener('scroll',updateQuickNav,{passive:true});
+function updateQuickNav(){let q=document.getElementById('quickNav'),r=document.getElementById('s3');if(!q||!r)return;q.classList.toggle('show',r.classList.contains('on'))}
 function jumpTo(id){let e=document.getElementById(id);if(e)e.scrollIntoView({behavior:'smooth',block:'start'})}
 function go(n){document.querySelectorAll('.step').forEach(x=>x.classList.remove('on'));document.getElementById('s'+n).classList.add('on');scrollTo(0,0)}
 function norm(x){return (x%360+360)%360} function rad(x){return x*Math.PI/180} function deg(x){return x*180/Math.PI}
@@ -219,5 +218,5 @@ document.getElementById('icsBridge').innerHTML='<div class="code-chip"><b>RESET<
 document.getElementById('actionSteps').innerHTML='<div class="reflection"><b>1 · REALISIEREN</b><br>Beobachte, wo dein Kern „'+core[si]+'“ gerade tatsächlich gelebt wird – und wo nicht.</div><div class="reflection"><b>2 · ERKENNEN</b><br>Prüfe vor wichtigen Entscheidungen dein emotionales Bedürfnis nach '+emotional[mi]+'.</div><div class="reflection"><b>3 · TRANSFORMIEREN</b><br>Wähle eine konkrete Handlung, in der du '+drive[idx(pSign.Mars)]+' kannst, ohne Kern oder Gefühl zu übergehen.</div>';
 document.getElementById('dailyCode').textContent='Bevor du eine wichtige Entscheidung triffst, prüfe drei Ebenen: Passt sie zu dem, was du wirklich willst? Bekommt dein emotionales Bedürfnis nach '+emotional[mi]+' genügend Raum? Und kannst du den nächsten Schritt auf eine Weise gehen, die sich '+outward[ai]+' anfühlt? Wenn alle drei Ebenen miteinander sprechen, handelst du näher an deinem INNER CODE.';
 document.getElementById('reflectionQuestions').innerHTML='<div class="reflection">1. Wo lebe ich bereits '+core[si]+' – und wo halte ich mich dabei noch zurück?</div><div class="reflection">2. Woran merke ich frühzeitig, dass mein Bedürfnis nach '+emotional[mi]+' zu kurz kommt?</div><div class="reflection">3. Wo hilft mir meine Art, '+outward[ai]+' auf das Leben zuzugehen – und wann darf ich bewusst anders reagieren?</div><div class="reflection">4. Welche Entscheidung würde ich heute treffen, wenn Kern, Gefühl und Wirkung gleichzeitig berücksichtigt wären?</div>';
-go(3)}catch(e){er.textContent=e.message||'Die Berechnung konnte gerade nicht abgeschlossen werden.';er.style.display='block'}finally{calc.disabled=false;calc.textContent='MEINEN CODE BERECHNEN'}}
+go(3);updateQuickNav()}catch(e){er.textContent=e.message||'Die Berechnung konnte gerade nicht abgeschlossen werden.';er.style.display='block'}finally{calc.disabled=false;calc.textContent='MEINEN CODE BERECHNEN'}}
 </script></body></html>
