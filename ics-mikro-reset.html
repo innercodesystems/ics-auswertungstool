@@ -78,7 +78,8 @@ textarea,input{width:100%;background:#171512;color:var(--cream);border:1px solid
   </a>
 
 </div>
-  <section class="step active">
+  <div id="innerCodeReturn" style="display:none;margin:0 0 16px 0;"><a href="inner-code.html?restore=1" style="display:block;padding:12px 14px;border:1px solid #b8924f;border-radius:12px;color:#bdb5a7;text-decoration:none;font-size:13px;line-height:1.4;background:#b8924f0d;"><strong style="color:#d4a03a;">← Zurück zu meinem INNER CODE</strong><br><span style="font-size:11px;">Zurück zu deiner persönlichen Auswertung</span></a></div>
+<section class="step active">
    <div class="kicker">R · Realisieren</div><h2>Was läuft gerade in dir?</h2>
    <p class="lead">Nicht lösen. Nicht bewerten. Nur erkennen.</p>
    <div class="grid" id="feelings">
@@ -195,5 +196,6 @@ function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','
 function restart(){idx=0;oldState="";newState="";document.querySelectorAll('.choice').forEach(x=>x.classList.remove('on'));document.getElementById('action').value="";document.getElementById('ownState').value="";document.getElementById('timer').textContent="30";let b=document.getElementById('timerBtn');b.textContent="30 Sekunden erleben";b.onclick=startTimer;show()}
 show();
 </script>
-<script src="./ics-navigation-standard.js?v=20260930-nav1"></script>\n</body>
+<script src="./ics-navigation-standard.js?v=20260930-nav1"></script>\n<script>(function(){try{if(new URLSearchParams(location.search).get('from')==='inner-code'){var el=document.getElementById('innerCodeReturn');if(el)el.style.display='block'}}catch(e){}})();</script>
+</body>
 </html>
