@@ -28,7 +28,7 @@ textarea,input{width:100%;background:#171512;color:var(--cream);border:1px solid
  <div class="card">
   <div class="progress"><div class="bar" id="bar"></div></div>
 <div id="innerCodeReturn" style="display:none;margin:0 0 16px 0;"><a href="inner-code.html?restore=1" style="display:block;padding:12px 14px;border:1px solid #b8924f;border-radius:12px;color:#bdb5a7;text-decoration:none;font-size:13px;line-height:1.4;background:#b8924f0d;"><strong style="color:#d4a03a;">← Zurück zu meinem INNER CODE</strong><br><span style="font-size:11px;">Zurück zu deiner persönlichen Auswertung</span></a></div>
-<div style="
+<div id="standardReturnLinks" style="
   display:grid;
   grid-template-columns:1fr;
   gap:10px;
@@ -150,7 +150,7 @@ function selectGroup(id, setter){
 }
 selectGroup('feelings',v=>oldState=v); selectGroup('states',v=>newState=v);
 let gegenpolStart=false;
-(function(){try{let qs=new URLSearchParams(location.search),fromG=qs.get('from')==='gegenpol',r=JSON.parse(localStorage.getItem('icsGegenpolResult')||'{}');if(fromG&&r.pattern){gegenpolStart=true;oldState=r.pattern;newState=r.quality||'';let h=document.getElementById('gegenpolHandoff');h.style.display='block';document.getElementById('gegenpolHandoffText').innerHTML='<strong>Dein erkanntes Muster:</strong> '+escapeHtml(r.pattern)+'<br><strong>Dein gewählter Gegenpol:</strong> '+escapeHtml(r.quality||'bewusste neue Qualität');let own=document.getElementById('ownState');own.value=r.quality||'';document.querySelectorAll('#states .choice').forEach(b=>{if(b.textContent.trim().toLowerCase()===(r.quality||'').trim().toLowerCase())b.classList.add('on')});idx=1;}}catch(e){}})();
+(function(){try{let qs=new URLSearchParams(location.search),fromG=qs.get('from')==='gegenpol',r=JSON.parse(localStorage.getItem('icsGegenpolResult')||'{}');if(fromG&&r.pattern){gegenpolStart=true;oldState=r.pattern;newState=r.quality||'';let ir=document.getElementById('innerCodeReturn');if(ir)ir.style.display='none';let sr=document.getElementById('standardReturnLinks');if(sr){sr.style.display='block';sr.innerHTML='<a href="mein-ics.html?from=gegenpol" style="display:block;padding:12px 14px;border:1px solid #b8924f;border-radius:12px;color:#bdb5a7;text-decoration:none;font-size:13px;line-height:1.4;background:#b8924f0d;"><strong style="color:#d4a03a;">← Zurück zu Mein ICS</strong><br><span style="font-size:11px;">Zurück zu deinem aktuellen Gegenpol</span></a>'}let h=document.getElementById('gegenpolHandoff');h.style.display='block';document.getElementById('gegenpolHandoffText').innerHTML='<strong>Dein erkanntes Muster:</strong> '+escapeHtml(r.pattern)+'<br><strong>Dein gewählter Gegenpol:</strong> '+escapeHtml(r.quality||'bewusste neue Qualität');let own=document.getElementById('ownState');own.value=r.quality||'';document.querySelectorAll('#states .choice').forEach(b=>{if(b.textContent.trim().toLowerCase()===(r.quality||'').trim().toLowerCase())b.classList.add('on')});idx=1;}}catch(e){}})();
 function show(){steps.forEach((s,i)=>s.classList.toggle('active',i===idx));bar.style.width=((idx+1)/steps.length*100)+'%';window.scrollTo({top:0,behavior:'smooth'})}
 function next(){if(idx===2 && document.getElementById('ownState').value.trim())newState=document.getElementById('ownState').value.trim(); if(idx<steps.length-1)idx++;show()}
 function breathe(){
