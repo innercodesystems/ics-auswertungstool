@@ -1239,5 +1239,16 @@ document.addEventListener("DOMContentLoaded", function(){
 });
 </script>
   
+<script id="ics-origin-return-v1">
+document.addEventListener("click",function(e){
+  const a=e.target.closest('a[href*="ICS_System_Check_V20_TESTMARKIERUNG.html"]');
+  if(!a)return;
+  try{
+    const u=new URL(a.href);
+    u.searchParams.set("return",location.href);
+    a.href=u.toString();
+  }catch(err){}
+});
+</script>
 </body>
 </html>
