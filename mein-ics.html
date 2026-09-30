@@ -69,7 +69,7 @@
   }
   .zeile:last-child { border-bottom: none; }
   .zeile .wert { color: var(--gold); font-weight: 600; }
-  .platzhalter {
+  .gegenpol-neu {display:none;background:#1a1815;color:#f6f1e7;border:1px solid #b8924f;border-radius:16px;padding:20px;margin-bottom:16px}.gegenpol-neu h2{font-size:13px;letter-spacing:1px;text-transform:uppercase;color:#b8924f;margin:0 0 14px}.gegenpol-neu .gp{padding:10px 0;border-bottom:1px solid #40392f}.gegenpol-neu .gp:last-child{border-bottom:0}.gegenpol-neu b{display:block;color:#b8924f;font-size:11px;letter-spacing:1px;margin-bottom:4px}.platzhalter {
     background: var(--gold-soft);
     border: 1px dashed var(--gold);
     border-radius: 14px;
@@ -132,6 +132,8 @@
     <div class="zeile"><span>Schwerpunkt</span><span class="wert" id="werteSchwerpunkt"></span></div>
   </section>
 
+  <section class="gegenpol-neu" id="cardGegenpolNeu"><h2>Dein aktueller Gegenpol</h2><div class="gp"><b>ERKANNTES MUSTER</b><span id="gpMuster"></span></div><div class="gp"><b>NEUE QUALITÄT</b><span id="gpQualitaet"></span></div><div class="gp"><b>DEIN NEUER SATZ</b><span id="gpSatz"></span></div></section>
+
   <section class="card" id="cardGegenpol" style="display:none;">
     <h2>Dein Gegenpol</h2>
     <div class="zeile"><span>Muster</span><span class="wert" id="werteMuster"></span></div>
@@ -160,7 +162,19 @@
    index.html weitergeleitet (selber Tab).
    ============================================================ */
 (function pruefeZugangUndZeigeInhalt(){
+  let gegenpolDirekt=null;
+  try{gegenpolDirekt=JSON.parse(localStorage.getItem('icsGegenpolResult')||'null')}catch(e){}
+  const vonGegenpol=new URLSearchParams(location.search).get('from')==='gegenpol';
+  if(vonGegenpol && gegenpolDirekt && gegenpolDirekt.pattern){
+    document.getElementById("inhaltsBereich").style.display="block";
+    const c=document.getElementById("cardGegenpolNeu");c.style.display="block";
+    document.getElementById("gpMuster").textContent=gegenpolDirekt.pattern||"—";
+    document.getElementById("gpQualitaet").textContent=gegenpolDirekt.quality||"—";
+    document.getElementById("gpSatz").textContent=gegenpolDirekt.sentence||"—";
+    window.ICS_GEGENPOL_DIREKT=gegenpolDirekt;
+  }
   if (typeof ICS_JOURNEY === "undefined") {
+    if(vonGegenpol && gegenpolDirekt && gegenpolDirekt.pattern)return;
     window.location.href = "index.html";
     return;
   }
@@ -174,6 +188,7 @@
   }
 
   if (!gelesen.ok || !gelesen.objekt || !gelesen.objekt.reset_check || !gelesen.objekt.ki_auswertung) {
+    if(vonGegenpol && gegenpolDirekt && gegenpolDirekt.pattern)return;
     window.location.href = "index.html";
     return;
   }
