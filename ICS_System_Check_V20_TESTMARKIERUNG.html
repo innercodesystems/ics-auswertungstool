@@ -119,8 +119,8 @@ p{line-height:1.55;color:#ddd5c9}
     <button
       type="button"
       class="back"
-      data-nav="tool-start">
-      ↩ Zum Start des Tools
+      data-nav="abort">
+      ✕ Abbrechen
     </button>
 
   </div>
@@ -239,12 +239,24 @@ function choose(v){ans[i]=v;i++;if(i<Q.length)renderQ();else result();}
   }
 }
 
-function backToToolStart(){
+function abortCheck(){
   i=0;
   ans.fill(null);
   $("flow").innerHTML="";
-  show("start");
-  window.scrollTo({top:0,behavior:"smooth"});
+  const p=new URLSearchParams(window.location.search);
+  const from=(p.get("from")||"").toLowerCase();
+  const targets={
+    inner:"https://www.innercodesystems.com/inner",
+    body:"https://www.innercodesystems.com/body",
+    action:"https://www.innercodesystems.com/action",
+    reset:"https://www.innercodesystems.com/reset",
+    orientierung:"https://www.innercodesystems.com/orientierung",
+    orientation:"https://www.innercodesystems.com/orientierung",
+    tools:"https://www.innercodesystems.com"
+  };
+  if(from && targets[from]){ window.location.href=targets[from]; return; }
+  if(document.referrer && !document.referrer.includes("ICS_System_Check_V20_TESTMARKIERUNG.html")){ window.location.href=document.referrer; return; }
+  window.location.href="https://www.innercodesystems.com";
 }
 function scores(){
   const g={inner:[],body:[],action:[],reset:[],orientation:[]};
@@ -4068,8 +4080,8 @@ document.addEventListener("click",e=>{
    return previousQuestion();
  }
 
- if(b.dataset.nav==="tool-start"){
-   return backToToolStart();
+ if(b.dataset.nav==="abort"){
+   return abortCheck();
  }
    
 if(b.dataset.act==="start"){
