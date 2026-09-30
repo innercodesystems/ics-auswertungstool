@@ -21,16 +21,6 @@
   <script>
 
 function goBack(){
-  const params=new URLSearchParams(location.search);
-  const fromMeinIcs=params.get('from')==='meinics' || !!params.get('themes');
-  if(fromMeinIcs){
-    window.location.replace('https://app.innercodesystems.com/?view=meinics');
-    return;
-  }
-  if(document.referrer && !document.referrer.includes('innercodesystems.com')){
-    history.back();
-    return;
-  }
   window.location.href='https://app.innercodesystems.com/?view=meinics';
 }
     
