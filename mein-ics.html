@@ -134,6 +134,8 @@
 
   <section class="gegenpol-neu" id="cardGegenpolNeu"><h2>Dein aktueller Gegenpol</h2><div class="gp"><b>ERKANNTES MUSTER</b><span id="gpMuster"></span></div><div class="gp"><b>NEUE QUALITÄT</b><span id="gpQualitaet"></span></div><div class="gp"><b>DEIN NEUER SATZ</b><span id="gpSatz"></span></div></section>
 
+  <section class="next-code" id="cardNextCode"><h2>Dein nächster Schritt</h2><p id="nextCodeText">Dein Gegenpol ist gewählt. Jetzt wird er durch eine konkrete Handlung verkörpert.</p><a class="primary" href="ics-mikro-reset.html?from=gegenpol">MIT MIKRO-RESET VERKÖRPERN →</a><a class="secondary" href="inner-code.html?restore=1">MEINEN INNER CODE ANSEHEN →</a></section>
+
   <section class="card" id="cardGegenpol" style="display:none;">
     <h2>Dein Gegenpol</h2>
     <div class="zeile"><span>Muster</span><span class="wert" id="werteMuster"></span></div>
@@ -172,6 +174,8 @@
     document.getElementById("gpQualitaet").textContent=gegenpolDirekt.quality||"—";
     document.getElementById("gpSatz").textContent=gegenpolDirekt.sentence||"—";
     window.ICS_GEGENPOL_DIREKT=gegenpolDirekt;
+    document.getElementById("cardNextCode").style.display="block";
+    document.getElementById("nextCodeText").textContent="Du hast "+(gegenpolDirekt.quality||"eine neue Qualität")+" gewählt. Jetzt übersetzen wir diesen Code in eine konkrete Handlung.";
   }
   if (typeof ICS_JOURNEY === "undefined") {
     if(vonGegenpol && gegenpolDirekt && gegenpolDirekt.pattern)return;
