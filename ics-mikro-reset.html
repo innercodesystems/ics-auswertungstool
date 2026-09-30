@@ -16,7 +16,7 @@ h1{text-align:center;font-family:Georgia,serif;font-weight:400;font-size:38px;ma
 textarea,input{width:100%;background:#171512;color:var(--cream);border:1px solid var(--line);border-radius:14px;padding:14px;font:inherit;outline:none}textarea{min-height:95px;resize:vertical}textarea:focus,input:focus{border-color:var(--gold)}
 .breathe{width:150px;height:150px;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;margin:24px auto;background:#b8924f10;box-shadow:0 0 45px #b8924f22;transition:transform 4s ease}.breathe.go{transform:scale(1.22)}
 .timer{text-align:center;font-family:Georgia,serif;font-size:46px;color:var(--gold);margin:10px}.quote{text-align:center;font-family:Georgia,serif;font-size:23px;line-height:1.45;padding:18px 5px}.micro{background:#171512;border-left:2px solid var(--gold);padding:16px;border-radius:10px;margin:15px 0;line-height:1.5}.progress{height:3px;background:#302b24;margin:0 0 22px;border-radius:9px;overflow:hidden}.bar{height:100%;width:12%;background:var(--gold);transition:.3s}
-.small{text-align:center;color:#817a70;font-size:12px;margin-top:18px}.result strong{color:var(--gold)}@media(max-width:520px){.grid{grid-template-columns:1fr}h1{font-size:33px}.card{padding:20px}}
+.handoff{display:none;margin:0 0 18px;padding:16px;border:1px solid #b8924f88;border-radius:16px;background:#b8924f0d}.handoff b{display:block;color:var(--gold);font-size:12px;letter-spacing:.12em;margin-bottom:7px}.handoff p{margin:0;color:#ddd5c8;line-height:1.5}.small{text-align:center;color:#817a70;font-size:12px;margin-top:18px}.result strong{color:var(--gold)}@media(max-width:520px){.grid{grid-template-columns:1fr}h1{font-size:33px}.card{padding:20px}}
 </style>
 </head>
 <body>
@@ -80,6 +80,7 @@ textarea,input{width:100%;background:#171512;color:var(--cream);border:1px solid
 
 </div>
   
+<div class="handoff" id="gegenpolHandoff"><b>AUS DEINEM GEGENPOL</b><p id="gegenpolHandoffText"></p></div>
 <section class="step active">
    <div class="kicker">R · Realisieren</div><h2>Was läuft gerade in dir?</h2>
    <p class="lead">Nicht lösen. Nicht bewerten. Nur erkennen.</p>
@@ -148,6 +149,7 @@ function selectGroup(id, setter){
  });
 }
 selectGroup('feelings',v=>oldState=v); selectGroup('states',v=>newState=v);
+(function(){try{let qs=new URLSearchParams(location.search),fromG=qs.get('from')==='gegenpol',r=JSON.parse(localStorage.getItem('icsGegenpolResult')||'{}');if(fromG&&r.pattern){oldState=r.pattern;newState=r.quality||'';let h=document.getElementById('gegenpolHandoff');h.style.display='block';document.getElementById('gegenpolHandoffText').innerHTML='<strong>Dein erkanntes Muster:</strong> '+escapeHtml(r.pattern)+'<br><strong>Dein gewählter Gegenpol:</strong> '+escapeHtml(r.quality||'bewusste neue Qualität');let own=document.getElementById('ownState');own.value=r.quality||'';document.querySelectorAll('#states .choice').forEach(b=>{if(b.textContent.trim().toLowerCase()===(r.quality||'').trim().toLowerCase())b.classList.add('on')});let lead=document.querySelector('.step.active .lead');if(lead)lead.textContent='Dein Muster ist bereits aus dem Gegenpol übernommen. Nimm es kurz wahr – du musst es nicht neu formulieren.'}}catch(e){}})();
 function show(){steps.forEach((s,i)=>s.classList.toggle('active',i===idx));bar.style.width=((idx+1)/steps.length*100)+'%';window.scrollTo({top:0,behavior:'smooth'})}
 function next(){if(idx===2 && document.getElementById('ownState').value.trim())newState=document.getElementById('ownState').value.trim(); if(idx<steps.length-1)idx++;show()}
 function breathe(){
