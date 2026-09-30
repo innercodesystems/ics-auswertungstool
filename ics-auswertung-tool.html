@@ -1037,6 +1037,12 @@ function speichereKiAuswertungJourney(matches, freitextVorhanden, kennzahlen){
       };
       localStorage.setItem('ics_wayfinder_result_v1', JSON.stringify(result));
       localStorage.setItem('ics_auswertung_result_v1', JSON.stringify(result));
+      const meinIcsLink = document.getElementById('journeyMeinIcsLink');
+      if (meinIcsLink) {
+        const payload = btoa(unescape(encodeURIComponent(JSON.stringify(result))))
+          .replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+        meinIcsLink.href = 'https://app.innercodesystems.com/?view=meinics&from=auswertung&icsresult=' + encodeURIComponent(payload);
+      }
     } catch(e) {}
     gegenpolWrap.style.display = 'block';
   } else {
