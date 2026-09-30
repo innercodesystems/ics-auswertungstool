@@ -1255,7 +1255,7 @@ document.addEventListener("click",function(e){
   const p=new URLSearchParams(location.search);
   if(p.get('from')!=='inner-code') return;
   const a=document.createElement('a');
-  a.href='inner-code.html';
+  a.href='inner-code.html?restore=1';
   a.textContent='← Zurück zu meinem INNER CODE';
   a.setAttribute('aria-label','Zurück zu meinem INNER CODE');
   a.style.cssText='position:fixed;left:18px;bottom:20px;z-index:9999;background:#171612;color:#f6f1e7;border:1px solid #b8924f;border-radius:999px;padding:12px 16px;text-decoration:none;font:700 14px/1.2 Arial,sans-serif;box-shadow:0 8px 28px rgba(0,0,0,.28)';
