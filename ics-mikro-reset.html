@@ -212,7 +212,7 @@ function saveToMeinIcs(){
   localStorage.setItem('icsMicroResetResult',JSON.stringify(r));
   let g={pattern:r.pattern,quality:r.quality,sentence:"Ich erkenne mein altes Muster – und wähle jetzt "+r.quality+".",action:r.action,savedAt:Date.now()};
   localStorage.setItem('icsGegenpolResult',JSON.stringify(g));
-  window.open('https://innercodesystems.github.io/ics-auswertungstool/mein-ics.html?from=mikro-reset&v=202610010930','_blank','noopener');
+  window.open('mein-ics.html?from=mikro-reset&v=202610011000','_blank','noopener');
  }catch(e){}
 }
 function backToInnerCode(){location.href='inner-code.html?restore=1'}
