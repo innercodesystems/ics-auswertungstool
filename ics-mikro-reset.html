@@ -134,7 +134,9 @@ textarea,input{width:100%;background:#171512;color:var(--cream);border:1px solid
    <div class="kicker">Gestaltungsmodus</div><h2>Dein Mikro-RESET ist gesetzt.</h2>
    <div class="micro" id="summary"></div>
    <p class="quote">Nicht warten, bis du dich anders fühlst.<br><strong>Handle einmal aus dem neuen Zustand.</strong></p>
-   <button class="btn" onclick="restart()">Neuen Mikro-RESET starten</button>
+   <button class="btn" onclick="saveToMeinIcs()">In Mein ICS speichern</button>
+   <button class="btn ghost" onclick="backToInnerCode()">Zurück zu meinem INNER CODE</button>
+   <button class="btn ghost" onclick="restart()">Neuen Mikro-RESET starten</button>
   </section>
  </div>
  <div class="small">INNER CODE SYSTEMS · Mikro-RESET · Eigenständige Reflexionsübung<br>Kein Ersatz für medizinische oder psychotherapeutische Behandlung.</div>
@@ -193,10 +195,27 @@ function startTimer(){
 }
 function finish(){
  let a=document.getElementById('action').value.trim()||"Ich wähle jetzt eine konkrete kleine Handlung.";
+ window.icsMicroResetResult={
+  pattern:oldState||"mein bisheriger Zustand",
+  quality:newState||"bewusstes Gestalten",
+  action:a,
+  completedAt:new Date().toISOString()
+ };
  document.getElementById('summary').innerHTML=
- "<strong>Erkannt:</strong> "+(oldState||"mein bisheriger Zustand")+"<br><br><strong>Neu gewählt:</strong> "+(newState||"bewusstes Gestalten")+"<br><br><strong>Meine Handlung:</strong> "+escapeHtml(a);
+ "<strong>Erkannt:</strong> "+escapeHtml(window.icsMicroResetResult.pattern)+"<br><br><strong>Neu gewählt:</strong> "+escapeHtml(window.icsMicroResetResult.quality)+"<br><br><strong>Meine Handlung:</strong> "+escapeHtml(a);
  next()
 }
+function saveToMeinIcs(){
+ try{
+  let r=window.icsMicroResetResult;
+  if(!r)return;
+  localStorage.setItem('icsMicroResetResult',JSON.stringify(r));
+  let g={pattern:r.pattern,quality:r.quality,sentence:"Ich erkenne mein altes Muster – und wähle jetzt "+r.quality+".",action:r.action,savedAt:Date.now()};
+  localStorage.setItem('icsGegenpolResult',JSON.stringify(g));
+  location.href='mein-ics.html?from=mikro-reset';
+ }catch(e){}
+}
+function backToInnerCode(){location.href='inner-code.html?restore=1'}
 function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
 function restart(){idx=0;oldState="";newState="";document.querySelectorAll('.choice').forEach(x=>x.classList.remove('on'));document.getElementById('action').value="";document.getElementById('ownState').value="";document.getElementById('timer').textContent="30";let b=document.getElementById('timerBtn');b.textContent="30 Sekunden erleben";b.onclick=startTimer;show()}
 show();
