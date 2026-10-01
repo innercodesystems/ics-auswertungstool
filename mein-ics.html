@@ -181,7 +181,7 @@
     window.ICS_GEGENPOL_DIREKT=gegenpolDirekt;
     document.getElementById("cardNextCode").style.display="block";
     document.getElementById("nextCodeText").textContent=quelle==="mikro-reset"?"Dein Mikro-RESET ist gespeichert. Jetzt zählt deine gewählte Handlung im Alltag.":"Du hast "+(gegenpolDirekt.quality||"eine neue Qualität")+" gewählt. Jetzt übersetzen wir diesen Code in eine konkrete Handlung.";
-    if(quelle==="mikro-reset"){const p=document.querySelector("#cardNextCode .primary");if(p)p.style.display="none";}
+    if(quelle==="mikro-reset"){const p=document.querySelector("#cardNextCode .primary");if(p)p.style.display="none";const s=document.querySelector("#cardNextCode .secondary");if(s)s.style.display="none";}
   }
   if (typeof ICS_JOURNEY === "undefined") {
     if(vonGegenpol && gegenpolDirekt && gegenpolDirekt.pattern)return;
