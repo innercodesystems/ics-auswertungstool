@@ -80,7 +80,7 @@ textarea,input{width:100%;background:#171512;color:var(--cream);border:1px solid
 
 </div>
   
-<div class="handoff" id="gegenpolHandoff"><b>AUS DEINEM GEGENPOL</b><p id="gegenpolHandoffText"></p></div>
+<div class="handoff" id="gegenpolHandoff"><b>AUS DEINEM GEGENPOL</b><p id="gegenpolHandoffText"></p><p id="gegenpolFocus" style="margin-top:10px;color:#f6f1e7;font-weight:700"></p></div>
 <section class="step active">
    <div class="kicker">R · Realisieren</div><h2>Was läuft gerade in dir?</h2>
    <p class="lead">Nicht lösen. Nicht bewerten. Nur erkennen.</p>
@@ -149,9 +149,10 @@ function selectGroup(id, setter){
  });
 }
 selectGroup('feelings',v=>oldState=v); selectGroup('states',v=>newState=v);
-let gegenpolStart=false;
-(function(){try{let qs=new URLSearchParams(location.search),fromG=qs.get('from')==='gegenpol',r=JSON.parse(localStorage.getItem('icsGegenpolResult')||'{}');if(fromG&&r.pattern){gegenpolStart=true;oldState=r.pattern;newState=r.quality||'';let ir=document.getElementById('innerCodeReturn');if(ir)ir.style.display='none';let sr=document.getElementById('standardReturnLinks');if(sr){sr.style.display='block';sr.innerHTML='<a href="mein-ics.html?from=gegenpol" style="display:block;padding:12px 14px;border:1px solid #b8924f;border-radius:12px;color:#bdb5a7;text-decoration:none;font-size:13px;line-height:1.4;background:#b8924f0d;"><strong style="color:#d4a03a;">← Zurück zu Mein ICS</strong><br><span style="font-size:11px;">Zurück zu deinem aktuellen Gegenpol</span></a>'}let h=document.getElementById('gegenpolHandoff');h.style.display='block';document.getElementById('gegenpolHandoffText').innerHTML='<strong>Dein erkanntes Muster:</strong> '+escapeHtml(r.pattern)+'<br><strong>Dein gewählter Gegenpol:</strong> '+escapeHtml(r.quality||'bewusste neue Qualität');let own=document.getElementById('ownState');own.value=r.quality||'';document.querySelectorAll('#states .choice').forEach(b=>{if(b.textContent.trim().toLowerCase()===(r.quality||'').trim().toLowerCase())b.classList.add('on')});idx=1;}}catch(e){}})();
-function show(){steps.forEach((s,i)=>s.classList.toggle('active',i===idx));bar.style.width=((idx+1)/steps.length*100)+'%';window.scrollTo({top:0,behavior:'smooth'})}
+let gegenpolStart=false, gegenpolQuality='';
+(function(){try{let qs=new URLSearchParams(location.search),fromG=qs.get('from')==='gegenpol',r=JSON.parse(localStorage.getItem('icsGegenpolResult')||'{}');if(fromG&&r.pattern){gegenpolStart=true;oldState=r.pattern;newState=r.quality||'';gegenpolQuality=newState;let ir=document.getElementById('innerCodeReturn');if(ir)ir.style.display='none';let sr=document.getElementById('standardReturnLinks');if(sr){sr.style.display='block';sr.innerHTML='<a href="mein-ics.html?from=gegenpol" style="display:block;padding:12px 14px;border:1px solid #b8924f;border-radius:12px;color:#bdb5a7;text-decoration:none;font-size:13px;line-height:1.4;background:#b8924f0d;"><strong style="color:#d4a03a;">← Zurück zu Mein ICS</strong><br><span style="font-size:11px;">Zurück zu deinem aktuellen Gegenpol</span></a>'}let h=document.getElementById('gegenpolHandoff');h.style.display='block';document.getElementById('gegenpolHandoffText').innerHTML='<strong>Dein erkanntes Muster:</strong> '+escapeHtml(r.pattern)+'<br><strong>Dein gewählter Gegenpol:</strong> '+escapeHtml(r.quality||'bewusste neue Qualität');let gf=document.getElementById('gegenpolFocus');if(gf)gf.textContent='Dieser Mikro-RESET führt dich jetzt gezielt in '+(r.quality||'deinen neuen Zustand')+'.';let own=document.getElementById('ownState');own.value=r.quality||'';document.querySelectorAll('#states .choice').forEach(b=>{if(b.textContent.trim().toLowerCase()===(r.quality||'').trim().toLowerCase())b.classList.add('on')});idx=1;}}catch(e){}})();
+function show(){steps.forEach((s,i)=>s.classList.toggle('active',i===idx));bar.style.width=((idx+1)/steps.length*100)+'%';personalizeGegenpolStep();window.scrollTo({top:0,behavior:'smooth'})}
+function personalizeGegenpolStep(){if(!gegenpolStart||!gegenpolQuality)return;let q=gegenpolQuality.trim();if(idx===1){let h=steps[1].querySelector('h2'),p=steps[1].querySelector('.lead'),tx=document.getElementById('breathText');if(h)h.textContent='Schaffe Raum für '+q+'.';if(p)p.textContent='Dein altes Muster ist gerade nur ein Zustand. Mit jedem Atemzug öffnest du bewusst Raum für '+q+'.';if(tx&&document.getElementById('breathStart').style.display!=='none')tx.textContent='Atme ein – und öffne Raum für '+q+'.'}if(idx===2){let h=steps[2].querySelector('h2'),p=steps[2].querySelector('.lead');if(h)h.textContent=q+' ist bereits gewählt.';if(p)p.textContent='Du musst nicht noch einmal wählen. Spüre kurz, wie sich '+q+' für dich anfühlt.';document.getElementById('ownState').value=q;newState=q}if(idx===3){let h=steps[3].querySelector('h2'),p=steps[3].querySelector('.lead'),v=document.getElementById('visionText');if(h)h.textContent='Erlebe '+q+' für einen Moment.';if(p)p.textContent='Stell dir eine konkrete Szene vor, in der du bereits aus '+q+' handelst.';if(v)v.textContent='Wie atmest du? Wie stehst du? Was tust oder sagst du aus '+q+' anders?'}if(idx===4){let h=steps[4].querySelector('h2'),p=steps[4].querySelector('.lead'),a=document.getElementById('action');if(h)h.textContent='Mach '+q+' jetzt sichtbar.';if(p)p.textContent='Welche kleine Handlung beweist heute, dass du '+q+' wirklich gewählt hast?';if(a&&!a.value)a.placeholder='Meine konkrete Handlung aus '+q+' ist …'}}
 function next(){if(idx===2 && document.getElementById('ownState').value.trim())newState=document.getElementById('ownState').value.trim(); if(idx<steps.length-1)idx++;show()}
 function breathe(){
   let n=0,
@@ -163,17 +164,17 @@ function breathe(){
   document.getElementById('breathStart').style.display='none';
   function cycle(){
     if(n>=3){
-      tx.textContent="Spüre: Du hast Raum zwischen Reiz und Reaktion geschaffen.";
+      tx.textContent=gegenpolStart&&gegenpolQuality?"Spüre "+gegenpolQuality+". Du hast gerade bewusst einen neuen Zustand gewählt.":"Spüre: Du hast Raum zwischen Reiz und Reaktion geschaffen.";
       el.classList.remove('go');
       nextBtn.style.display='block';
       return;
     }
 
-    tx.textContent="Einatmen …";
+    tx.textContent=gegenpolStart&&gegenpolQuality?"Einatmen – Raum für "+gegenpolQuality+" …":"Einatmen …";
     el.classList.add('go');
 
     setTimeout(()=>{
-      tx.textContent="Ausatmen …";
+      tx.textContent=gegenpolStart&&gegenpolQuality?"Ausatmen – altes Muster lockern …":"Ausatmen …";
       el.classList.remove('go');
 
       setTimeout(()=>{
