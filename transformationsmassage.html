@@ -1548,6 +1548,29 @@ a.card:hover{
   50%{transform:scale(1.12);filter:drop-shadow(0 0 9px rgba(212,160,58,.48))}
 }
 @media (prefers-reduced-motion:reduce){.ics-new-header-logo{animation:none}}
+
+/* MOBILE POLISH · 2026-10-03 */
+@media(max-width:600px){
+  html,body{max-width:100%;overflow-x:hidden}
+  .content{padding-left:20px!important;padding-right:20px!important}
+  .section{padding-top:58px!important;padding-bottom:58px!important}
+  .section-title{font-size:clamp(34px,10vw,44px)!important;line-height:1.08!important;overflow-wrap:anywhere}
+  .section-intro{font-size:15px!important;line-height:1.7!important}
+  .session{gap:30px!important}
+  .session-copy h2{font-size:38px!important;line-height:1.08!important;overflow-wrap:anywhere}
+  .session-step{grid-template-columns:44px minmax(0,1fr)!important;gap:14px!important;padding:20px 18px!important;width:100%;min-width:0}
+  .session-step-number{width:42px!important;height:42px!important}
+  .session-step strong{font-size:25px!important;line-height:1.15!important;overflow-wrap:anywhere}
+  .session-step p{font-size:14px!important;line-height:1.65!important;overflow-wrap:anywhere}
+  .paths-intro{display:block!important;margin-bottom:30px!important}
+  .paths-featured,.paths-small{grid-template-columns:minmax(0,1fr)!important;gap:14px!important}
+  .path-main,.path-side,.path-small{width:100%;min-width:0;min-height:0!important;padding:26px 22px!important}
+  .path-main h3,.path-side h3,.path-small h3{font-size:30px!important;line-height:1.12!important;overflow-wrap:anywhere;word-break:normal}
+  .path-main p,.path-side p,.path-small p{font-size:14px!important;line-height:1.65!important;overflow-wrap:anywhere}
+  .path-main .path-link,.path-side .path-link,.path-small .path-link{margin-top:22px!important;padding-top:0!important}
+  .ics-system{padding:28px 22px!important}
+}
+
 </style>
 </head>
 
