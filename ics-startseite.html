@@ -1180,6 +1180,25 @@
 
 
 <!-- =========================================
+     PRODUKTWELT · BÜCHER & DIGITALE BEGLEITER
+========================================= -->
+<section id="ics-produktwelt-static">
+  <div class="ics-content">
+    <div class="ics-final-cta ics-product-gateway">
+      <div class="ics-product-gateway-copy">
+        <div class="ics-section-kicker">BÜCHER · WORKBOOKS · DIGITALE BEGLEITER</div>
+        <h3>Wissen wird wertvoll, wenn du damit arbeitest.</h3>
+        <p>Entdecke INNER CODE, Workbooks und digitale Begleiter, die dich beim Reflektieren, Verstehen und bewussten Anwenden unterstützen.</p>
+        <a class="ics-gold-button" href="produkte.html">Produktwelt entdecken →</a>
+      </div>
+      <div class="ics-product-gateway-visual">
+        <img src="ics-inner-code-report-vorschau.png" alt="INNER CODE – 99 Inner Codes Workbook">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================
      BLOCK 04 · TOOLS
 ========================================= -->
 
@@ -1880,27 +1899,6 @@ document.querySelectorAll('a[href^="https://"], a[href^="http://"]').forEach(fun
         </div>
       </div>`;
     toolsSection.insertAdjacentElement('beforebegin',section);
-  }
-
-  /* STARTSEITE · Produktwelt als ruhiger, hochwertiger Einstieg */
-  if(toolsSection && !document.getElementById('ics-produktwelt-einstieg')){
-    const productSection=document.createElement('section');
-    productSection.id='ics-produktwelt-einstieg';
-    productSection.innerHTML=`
-      <div class="ics-content">
-        <div class="ics-final-cta ics-product-gateway">
-          <div class="ics-product-gateway-copy">
-            <div class="ics-section-kicker">BÜCHER · WORKBOOKS · DIGITALE BEGLEITER</div>
-            <h3>Wissen wird wertvoll, wenn du damit arbeitest.</h3>
-            <p>Entdecke INNER CODE, Workbooks und digitale Begleiter, die dich beim Reflektieren, Verstehen und bewussten Anwenden unterstützen.</p>
-            <a class="ics-gold-button" href="produkte.html">Produktwelt entdecken →</a>
-          </div>
-          <div class="ics-product-gateway-visual" aria-hidden="true">
-            <img src="ics-inner-code-report-vorschau.png" alt="">
-          </div>
-        </div>
-      </div>`;
-    toolsSection.insertAdjacentElement('beforebegin',productSection);
   }
 
   /* STARTSEITE · vier schlanke Hauptzugänge statt einzelner Kompasse */
