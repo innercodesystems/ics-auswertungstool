@@ -1572,7 +1572,9 @@ a.card:hover{
 }
 
 
-/* GERMAN AUTO HYPHENATION · MOBILE */
+
+
+/* MOBILE TYPOGRAPHY · NO HYPHENATION */
 @media(max-width:600px){
   h1,h2,h3,
   .section-title,
@@ -1581,11 +1583,19 @@ a.card:hover{
   .path-main h3,
   .path-side h3,
   .path-small h3{
-    -webkit-hyphens:auto;
-    hyphens:auto;
-    overflow-wrap:normal!important;
+    -webkit-hyphens:none!important;
+    hyphens:none!important;
     word-break:normal!important;
+    overflow-wrap:normal!important;
   }
+  .session-copy h2{font-size:34px!important;line-height:1.1!important;letter-spacing:-.015em}
+  .path-main h3{font-size:28px!important;line-height:1.12!important;letter-spacing:-.012em}
+  .path-side h3,.path-small h3{font-size:27px!important;line-height:1.13!important}
+}
+@media(max-width:390px){
+  .session-copy h2{font-size:31px!important}
+  .path-main h3{font-size:26px!important}
+  .path-side h3,.path-small h3{font-size:25px!important}
 }
 
 </style>
