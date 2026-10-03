@@ -118,4 +118,5 @@ function results(){let {W,K,T}=calc(),wr=Object.entries(W).sort((a,b)=>b[1]-a[1]
 function review(){let html=S.a.map((a,i)=>`<div class="path"><b class="gold">${i+1} · ${qs[i][0]}</b><p><b>${qs[i][2]}</b></p><p>${a.text?esc(a.text):'<span class="hint">Keine Notiz</span>'}</p><span class="small">Intensität ${a.score}/5 ${a.heart?' · ♥ gemerkt':''}</span></div>`).join('');app.innerHTML=`<section class="card"><h2>Deine 30 Antworten</h2>${html}<button class="btn" onclick="results()">ZUR AUSWERTUNG</button></section>`}
 function esc(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))} function resetAll(){if(confirm('Alle Antworten wirklich löschen und neu beginnen?')){localStorage.removeItem('ics30');location.reload()}}
 home();
-</script><script src="./ics-navigation-standard.js?v=20260930-nav1"></script>\n</body></html>
+</script><script src="./ics-navigation-standard.js?v=20260930-nav1"></script>\n<div style="text-align:center;padding:24px 16px;font-size:12px;color:#777"><a href="https://www.innercodesystems.com/impressum.html" style="color:inherit">Impressum</a> · <a href="https://www.innercodesystems.com/datenschutz.html" style="color:inherit">Datenschutz</a></div>
+</body></html>
