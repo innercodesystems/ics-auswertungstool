@@ -1,4 +1,5 @@
 window.ICS_SEARCH_INDEX=[
+  {title:"Transformationsmassage",area:"BODY · Körperarbeit",text:"Achtsame Berührung, Körperwahrnehmung und ein persönlicher Raum zum Ankommen und Spüren.",keywords:"transformationsmassage massage berührung körper körperarbeit entspannung wahrnehmung regulation body persönliche sitzung",url:"transformationsmassage.html"},
 {title:"Bücher & digitale Begleiter",area:"ICS · Produkte",text:"Bücher, Workbooks, Apps und digitale Begleiter von Inner Code Systems.",keywords:"produkte produkt buch bücher workbook workbooks app apps digital begleiter 99 codes inner code",url:"produkte.html"},
 {title:"99 Inner Codes",area:"Buch · Workbook",text:"99 Codes für Bewusstsein, innere Klarheit, Reflexion und bewusste Veränderung.",keywords:"99 inner codes buch workbook klarheit selbstverständnis glaubenssätze muster erkennen heilen verkörpern gestalten peter wicklein",url:"produkte.html"},
 {title:"99 Inner Codes App",area:"App · Digitaler Begleiter",text:"Digitale Ergänzung zur Welt der 99 Inner Codes und Teil der wachsenden ICS Werkzeugwelt.",keywords:"99 codes app digital tagescode impulse reflexion codes begleiter",url:"produkte.html#app"},
