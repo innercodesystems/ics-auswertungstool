@@ -13,9 +13,9 @@
 </head><body>
 <header class="top"><div class="brand">INNER CODE SYSTEMS</div><a class="back" href="transformationsmassage.html">← ZUR MASSAGE</a></header>
 <section class="hero"><div class="heroin"><div class="ey">ICS · TRANSFORMATIONSMASSAGE · TESTBEREICH</div><h1>Die Reise der Transformationsmassage</h1><p>Die Originalkarten der Transformationsmassage – vollständig, klar und ohne nachgebaute Doppelansicht.</p></div></section>
-<nav class="tabs"><a href="#reise">01–10 · REISE</a><a href="#griffe">11–14 · GRIFFE</a></nav>
+<nav class="tabs"><a href="#reise">REISE</a><a href="#griffe">11–14 · GRIFFE</a></nav>
 <main class="wrap">
-<section id="reise"><div class="intro"><h2>01–10 · Die innere Reise</h2><p>Verbindung · Erdung · Erkennen · Loslassen · Neu wählen · Vertrauen · Ausrichten</p></div><div id="reiseCards" class="cards"></div></section>
+<section id="reise"><div class="intro"><h2>Die Transformationsreise</h2><p>Verbindung · Erdung · Erkennen · Loslassen · Neu wählen · Vertrauen · Ausrichten</p></div><div id="reiseCards" class="cards"></div></section>
 <section id="griffe" class="chapter"><h2>11–14 · Die Massagegriffe</h2><p>Handkante · Kroko-Griff · Handknöchel · Daumen</p><div id="griffCards" class="cards"></div></section>
 <div class="note"><strong>Verstehen. Spüren. Wandeln.</strong><p>Testbereich · bewusst noindex bis zur Freigabe.</p></div>
 </main>
@@ -23,7 +23,6 @@
 <script>
 const IMG=[
 "TM_001_Mein_Herz_grüßt_dein_Herz.png","TM_002_Lichtbaum.png","TM_003_Schatzkammer_öffnen.png","TM_004_Releasing.png","TM_005_Timeline.png","TM_006_Transformieren.png",
-"TM_07_Reise_zurück_zu_dir_selbst.png","TM_08_Die_14_Griffe_Übersicht.png","TM_09_Transformationsmassage_Übersicht.png",
 "TM_010_Zielsetzung.png","TM_011_Handkantengriff.png","TM_012_Kroko_Griff.png","TM_013_Handknöchelgriff.png","TM_014_Daumengriff.png"];
 const D=[
 ["001","MEIN HERZ GRÜSST DEIN HERZ","VERBINDEN","Verbindung schaffen."],
@@ -32,9 +31,6 @@ const D=[
 ["004","RELEASING","LOSLASSEN","Alte Spannungen freigeben."],
 ["005","TIMELINE","TRANSFORMIEREN","Die eigene Geschichte neu betrachten."],
 ["006","TRANSFORMIEREN","TRANSFORMIEREN","Aus einer alten Erfahrung entsteht eine neue Möglichkeit."],
-["007","REISE ZURÜCK ZU DIR SELBST","REISE","Originalkarte der Transformationsmassage."],
-["008","DIE 14 GRIFFE · ÜBERSICHT","ÜBERSICHT","Originalübersicht der 14 Griffe."],
-["009","TRANSFORMATIONSMASSAGE · ÜBERSICHT","ÜBERSICHT","Originalübersicht der Transformationsmassage."],
 ["010","ZIELSETZUNG","ZIELSETZUNG","Bewusst ausrichten. Klarheit schaffen. Dranbleiben."],
 ["011","HANDKANTENGRIFF","DIE GRIFFE","Lösen von Spannungen. Energiefluss aktivieren. Tiefe Entspannung."],
 ["012","KROKO-GRIFF","DIE GRIFFE","Tiefen lösen. Verspannungen lockern. Energie freisetzen."],
@@ -43,8 +39,8 @@ const D=[
 ];
 const reise=document.getElementById("reiseCards"),griffe=document.getElementById("griffCards"),dlg=document.getElementById("dlg"),original=document.getElementById("original"),fallback=document.getElementById("fallback"),modalTitle=document.getElementById("modalTitle"),prev=document.getElementById("prev"),next=document.getElementById("next");let n=0;
 function makeCard(x,i){const a=document.createElement("article");a.className="card";a.innerHTML='<div class="visual"><img loading="lazy" src="'+encodeURI(IMG[i])+'" alt="Originalkarte TM '+x[0]+' · '+x[1]+'"><div class="missing" hidden>TM '+x[0]+'<br>'+x[1]+'</div></div><div class="body"><div class="kind">TM '+x[0]+' · '+x[2]+'</div><h3>'+x[1]+'</h3><button class="open">ORIGINALKARTE ANSEHEN</button></div>';const im=a.querySelector("img"),miss=a.querySelector(".missing");im.onerror=()=>{im.hidden=true;miss.hidden=false};a.onclick=()=>openCard(i);return a}
-D.forEach((x,i)=>(i<10?reise:griffe).appendChild(makeCard(x,i)));
-function openCard(i){n=i;const x=D[i];modalTitle.textContent="TM "+x[0]+" · "+x[1];fallback.hidden=true;original.hidden=false;original.src=encodeURI(IMG[i]);original.alt="Originalkarte TM "+x[0]+" · "+x[1];original.onerror=()=>{original.hidden=true;fallback.hidden=false;fallback.innerHTML="<h2>TM "+x[0]+" · "+x[1]+"</h2><div class='goal'>"+x[3]+"</div><p>Die Originalgrafik ist in diesem Teststand noch nicht im Repository hinterlegt.</p>"};prev.style.visibility=i?"visible":"hidden";next.textContent=i===13?"Schließen":"Weiter →";if(!dlg.open)dlg.showModal()}
-document.querySelector(".x").onclick=()=>dlg.close();prev.onclick=()=>openCard(n-1);next.onclick=()=>n===13?dlg.close():openCard(n+1);dlg.onclick=e=>{if(e.target===dlg)dlg.close()};
-let sx=0;dlg.addEventListener("touchstart",e=>sx=e.changedTouches[0].screenX,{passive:true});dlg.addEventListener("touchend",e=>{const d=e.changedTouches[0].screenX-sx;if(Math.abs(d)>60){if(d<0&&n<13)openCard(n+1);if(d>0&&n>0)openCard(n-1)}},{passive:true});
+D.forEach((x,i)=>(i<7?reise:griffe).appendChild(makeCard(x,i)));
+function openCard(i){n=i;const x=D[i];modalTitle.textContent="TM "+x[0]+" · "+x[1];fallback.hidden=true;original.hidden=false;original.src=encodeURI(IMG[i]);original.alt="Originalkarte TM "+x[0]+" · "+x[1];original.onerror=()=>{original.hidden=true;fallback.hidden=false;fallback.innerHTML="<h2>TM "+x[0]+" · "+x[1]+"</h2><div class='goal'>"+x[3]+"</div><p>Die Originalgrafik ist in diesem Teststand noch nicht im Repository hinterlegt.</p>"};prev.style.visibility=i?"visible":"hidden";next.textContent=i===D.length-1?"Schließen":"Weiter →";if(!dlg.open)dlg.showModal()}
+document.querySelector(".x").onclick=()=>dlg.close();prev.onclick=()=>openCard(n-1);next.onclick=()=>n===D.length-1?dlg.close():openCard(n+1);dlg.onclick=e=>{if(e.target===dlg)dlg.close()};
+let sx=0;dlg.addEventListener("touchstart",e=>sx=e.changedTouches[0].screenX,{passive:true});dlg.addEventListener("touchend",e=>{const d=e.changedTouches[0].screenX-sx;if(Math.abs(d)>60){if(d<0&&n<D.length-1)openCard(n+1);if(d>0&&n>0)openCard(n-1)}},{passive:true});
 </script></body></html>
