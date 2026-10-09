@@ -801,4 +801,405 @@ window.ICS_BODY_SIGNALS = [
     action: "Schließe eine Tätigkeit ab, bevor du die nächste beginnst.",
     reset: "Wie fühlt sich konzentriertes Arbeiten an?"
   }
+,
+  {
+    category: "Kopf",
+    title: "Hinterkopfdruck",
+    body: "Wann spürst du den Druck am Hinterkopf?",
+    inner: "Beobachte Sitzhaltung, Nackenbewegung und Pausen.",
+    action: "Wechsle behutsam die Haltung und ruhe dich kurz aus.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Kopf",
+    title: "Pochender Kopfschmerz",
+    body: "Wie beginnt das Pochen und wie stark ist es?",
+    inner: "Achte auf Begleitsymptome und wiederkehrende Auslöser.",
+    action: "Suche Ruhe; plötzlich stärkster Kopfschmerz ist ein Notfall.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Kopf",
+    title: "Schweregefühl im Kopf",
+    body: "Zu welcher Tageszeit fühlt sich der Kopf schwer an?",
+    inner: "Prüfe Schlaf, Belastung und ausreichendes Trinken.",
+    action: "Gönne dir eine kurze reizfreie Pause.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Augen",
+    title: "Verschwommenes Sehen nach Bildschirmzeit",
+    body: "Wann wird das Sehen unscharf und wie lange dauert es?",
+    inner: "Beobachte Bildschirmdauer und ob die Unschärfe nach Ruhe verschwindet.",
+    action: "Unterbrich die Bildschirmarbeit; neue oder anhaltende Sehstörungen zeitnah abklären.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Augen",
+    title: "Zuckendes Augenlid",
+    body: "Wie häufig zuckt das Lid?",
+    inner: "Beobachte Schlaf, Koffein und Augenbelastung.",
+    action: "Mache eine kurze Pause und reduziere Bildschirmreize.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Ohren",
+    title: "Druckgefühl im Ohr",
+    body: "Ist ein Ohr oder sind beide betroffen?",
+    inner: "Beobachte Zusammenhang mit Erkältung oder Druckwechsel.",
+    action: "Vermeide Manipulation am Ohr; anhaltende Beschwerden abklären.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Ohren",
+    title: "Geräuschempfindlichkeit",
+    body: "Welche Geräusche empfindest du als unangenehm?",
+    inner: "Prüfe Lautstärke und Reizdichte deiner Umgebung.",
+    action: "Suche eine ruhigere Umgebung; plötzliche Hörveränderung ärztlich abklären.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Nase & Atemwege",
+    title: "Verstopfte Nase",
+    body: "Wann ist die Nasenatmung eingeschränkt?",
+    inner: "Beobachte Umgebung, Jahreszeit und mögliche Reizstoffe.",
+    action: "Sorge für angenehme Raumluft und trinke ausreichend.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Nase & Atemwege",
+    title: "Trockene Nase",
+    body: "Wann bemerkst du Trockenheit?",
+    inner: "Prüfe trockene Heizungsluft oder häufige Reizung.",
+    action: "Vermeide Reizstoffe und achte auf angenehme Luftfeuchtigkeit.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Mund & Kiefer",
+    title: "Empfindliches Zahnfleisch",
+    body: "Wann tritt die Empfindlichkeit auf?",
+    inner: "Beobachte Veränderungen beim Putzen oder Essen.",
+    action: "Reinige sanft; Blutungen oder anhaltende Beschwerden zahnärztlich abklären.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Mund & Kiefer",
+    title: "Nächtliches Zähnepressen",
+    body: "Bemerkst du morgens Kiefermüdigkeit?",
+    inner: "Achte auf Kieferanspannung tagsüber.",
+    action: "Löse tagsüber bewusst den Zahnkontakt; bei Beschwerden zahnärztlich beraten lassen.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Hals",
+    title: "Verspannte Halsvorderseite",
+    body: "Wann spürst du die Spannung vorne am Hals?",
+    inner: "Beobachte Kopfhaltung und begleitende Symptome.",
+    action: "Richte den Kopf sanft auf; Schwellungen oder Schluckprobleme abklären.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Nacken & Schulter",
+    title: "Schmerz beim Schulterheben",
+    body: "Bei welcher Bewegung tritt Schmerz auf?",
+    inner: "Gab es ungewohnte Belastung oder eine Verletzung?",
+    action: "Bewege die Schulter nur im angenehmen Bereich; anhaltende Schmerzen abklären.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Nacken & Schulter",
+    title: "Knacken der Schulter",
+    body: "Ist das Knacken schmerzhaft oder schmerzfrei?",
+    inner: "Beobachte, bei welchen Bewegungen es auftritt.",
+    action: "Vermeide erzwungenes Knacken; schmerzhaftes Knacken abklären.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Brustkorb",
+    title: "Verspannte Zwischenrippenmuskeln",
+    body: "Bei welcher Bewegung fällt die Spannung auf?",
+    inner: "Gab es Husten oder ungewohnte körperliche Aktivität?",
+    action: "Bewege dich sanft; neue Brustschmerzen oder Atemnot sofort abklären.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Atmung",
+    title: "Schnelle Atmung in Ruhe",
+    body: "Wann atmest du schneller als gewöhnlich?",
+    inner: "Beobachte, ob Fieber, Belastung oder andere Symptome vorliegen.",
+    action: "Setze dich ruhig hin; neue deutliche Atemnot erfordert sofortige medizinische Hilfe.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Atmung",
+    title: "Trockener Husten",
+    body: "Seit wann besteht der Husten?",
+    inner: "Beobachte Luftqualität, Infektzeichen und Dauer.",
+    action: "Trinke nach Bedarf; anhaltenden Husten ärztlich abklären.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Atmung",
+    title: "Räusperzwang",
+    body: "Wann musst du dich häufig räuspern?",
+    inner: "Beobachte Sprechen, trockene Luft und Mahlzeiten.",
+    action: "Trinke kleine Schlucke Wasser und schone die Stimme.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Herz & Kreislauf",
+    title: "Wärmegefühl im Gesicht",
+    body: "Wann wird dein Gesicht warm?",
+    inner: "Achte auf Temperatur, Bewegung und Begleitzeichen.",
+    action: "Suche bei Bedarf einen kühleren Raum und beobachte den Verlauf.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Herz & Kreislauf",
+    title: "Schweißausbruch ohne Belastung",
+    body: "Wann beginnt das Schwitzen?",
+    inner: "Beobachte Temperatur, Mahlzeiten und weitere Symptome.",
+    action: "Ruh dich aus; kalter Schweiß mit Brustschmerz oder Atemnot ist ein Notfall.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Bauch & Verdauung",
+    title: "Druck im Oberbauch",
+    body: "Wann und wo tritt der Druck auf?",
+    inner: "Beobachte Mahlzeiten und mögliche Begleitbeschwerden.",
+    action: "Iss bei Bedarf kleinere Portionen; starke oder anhaltende Schmerzen abklären.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Bauch & Verdauung",
+    title: "Druck im Unterbauch",
+    body: "Wo sitzt der Druck und wie verändert er sich?",
+    inner: "Beobachte Verdauung und weitere Beschwerden.",
+    action: "Schone dich; zunehmende oder starke Schmerzen medizinisch abklären.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Bauch & Verdauung",
+    title: "Aufstoßen",
+    body: "Wann musst du häufiger aufstoßen?",
+    inner: "Beobachte Essgeschwindigkeit und kohlensäurehaltige Getränke.",
+    action: "Iss langsamer und beobachte, ob das hilft.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Bauch & Verdauung",
+    title: "Schnelles Sättigungsgefühl",
+    body: "Nach welcher Essmenge fühlst du dich satt?",
+    inner: "Beobachte, ob sich dein gewohntes Sättigungsgefühl verändert hat.",
+    action: "Notiere Veränderungen; anhaltend frühe Sättigung ärztlich abklären.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Bauch & Verdauung",
+    title: "Bauchkrämpfe",
+    body: "Wo treten Krämpfe auf und wie stark sind sie?",
+    inner: "Beobachte zeitliche Zusammenhänge und Warnzeichen.",
+    action: "Suche eine bequeme Position; starke oder anhaltende Krämpfe abklären.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Rücken",
+    title: "Schmerz beim langen Stehen",
+    body: "Wann beginnt der Schmerz?",
+    inner: "Beobachte Standdauer, Schuhe und Positionswechsel.",
+    action: "Wechsle die Position und gehe kurz umher, soweit angenehm.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Rücken",
+    title: "Schmerz beim Vorbeugen",
+    body: "Wie weit kannst du dich angenehm vorbeugen?",
+    inner: "Beobachte, ob der Schmerz neu ist oder ausstrahlt.",
+    action: "Vermeide schmerzhafte Bewegungen; neue neurologische Ausfälle dringend abklären.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Hüfte & Becken",
+    title: "Seitlicher Hüftschmerz",
+    body: "Bei welcher Bewegung oder Lage tritt Schmerz auf?",
+    inner: "Beobachte Gehbelastung und Schlafposition.",
+    action: "Entlaste die schmerzhafte Seite; anhaltende Beschwerden abklären.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Hüfte & Becken",
+    title: "Leistenziehen",
+    body: "Wann spürst du ein Ziehen in der Leiste?",
+    inner: "Gab es Sport, Heben oder ungewohnte Bewegung?",
+    action: "Reduziere belastende Bewegungen; starke oder anhaltende Schmerzen abklären.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Hüfte & Becken",
+    title: "Steißbeindruck beim Sitzen",
+    body: "Wie lange kannst du angenehm sitzen?",
+    inner: "Beobachte Sitzfläche und Dauer.",
+    action: "Verändere die Sitzposition und stehe regelmäßig auf.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Arme & Hände",
+    title: "Kribbeln im Unterarm",
+    body: "Wo beginnt das Kribbeln?",
+    inner: "Beobachte Armhaltung und ob Taubheit hinzukommt.",
+    action: "Wechsle die Position; anhaltende Gefühlsstörungen abklären.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Arme & Hände",
+    title: "Schwacher Griff",
+    body: "Wann fällt dir das Greifen schwer?",
+    inner: "Ist die Schwäche neu, plötzlich oder einseitig?",
+    action: "Plötzliche Schwäche ist ein Notfall; sonst Belastung reduzieren und abklären.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Arme & Hände",
+    title: "Handschmerz beim Tippen",
+    body: "Nach welcher Tätigkeit beginnt der Schmerz?",
+    inner: "Beobachte Tastaturposition und Pausen.",
+    action: "Unterbrich das Tippen und lockere die Hände sanft.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Beine & Füße",
+    title: "Fersenschmerz morgens",
+    body: "Wann schmerzt die Ferse beim Auftreten?",
+    inner: "Beobachte Schuhe und Belastung am Vortag.",
+    action: "Beginne mit wenigen vorsichtigen Schritten; anhaltende Schmerzen abklären.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Beine & Füße",
+    title: "Schmerz an der Fußaußenseite",
+    body: "Bei welcher Belastung tritt der Schmerz auf?",
+    inner: "Gab es Umknicken oder neue Schuhe?",
+    action: "Entlaste den Fuß; nach Verletzung oder bei starker Schwellung abklären.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Beine & Füße",
+    title: "Knieknacken",
+    body: "Ist das Knacken mit Schmerzen verbunden?",
+    inner: "Beobachte Bewegung und Schwellung.",
+    action: "Bewege das Knie sanft; schmerzhaftes Knacken oder Blockieren abklären.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Beine & Füße",
+    title: "Knieschmerz beim Treppensteigen",
+    body: "Beim Hoch- oder Runtergehen stärker?",
+    inner: "Beobachte Belastung und Schwellung.",
+    action: "Nutze bei Bedarf das Geländer und reduziere schmerzhafte Belastung.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Beine & Füße",
+    title: "Schienbeinschmerz nach Bewegung",
+    body: "Wann beginnt der Schmerz am Schienbein?",
+    inner: "Gab es mehr Lauf- oder Gehbelastung als üblich?",
+    action: "Reduziere die Belastung; punktuellen oder anhaltenden Schmerz abklären.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Beine & Füße",
+    title: "Wadenkrampf nachts",
+    body: "Wie häufig tritt der Krampf auf?",
+    inner: "Beobachte Bewegung, Medikamente und Flüssigkeitszufuhr.",
+    action: "Bewege den Fuß vorsichtig; wiederkehrende Krämpfe abklären.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Haut",
+    title: "Gerötete Haut nach Reibung",
+    body: "Wo tritt die Rötung auf?",
+    inner: "Beobachte Kleidung und mechanische Reizung.",
+    action: "Verringere Reibung und beobachte, ob die Haut sich beruhigt.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Haut",
+    title: "Spannungsgefühl der Kopfhaut",
+    body: "Wann fühlt sich die Kopfhaut gespannt an?",
+    inner: "Beobachte Frisur, Pflegeprodukte und Hautveränderungen.",
+    action: "Löse straffe Frisuren und vermeide reizende Produkte.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Schlaf & Erholung",
+    title: "Morgendliches Zerschlagenheitsgefühl",
+    body: "Wie lange hält das Gefühl nach dem Aufstehen an?",
+    inner: "Beobachte Schlafqualität und Regelmäßigkeit.",
+    action: "Beginne den Morgen ruhig; anhaltende Erschöpfung medizinisch abklären.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Schlaf & Erholung",
+    title: "Unruhige Träume",
+    body: "Wie fühlst du dich nach dem Aufwachen?",
+    inner: "Beobachte Abendroutine und Schlafunterbrechungen.",
+    action: "Notiere belastende Träume kurz und gestalte einen ruhigen Tagesbeginn.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Schlaf & Erholung",
+    title: "Abendliche Wachheit",
+    body: "Wann wirst du abends besonders wach?",
+    inner: "Beobachte Licht, Koffein und Aktivität.",
+    action: "Reduziere helles Licht und anregende Tätigkeiten vor dem Schlafen.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Energie & Alltag",
+    title: "Müdigkeit nach Besprechungen",
+    body: "Wie fühlst du dich direkt nach längeren Gesprächen?",
+    inner: "Beobachte Dauer, Pausen und Reizbelastung.",
+    action: "Plane zwischen Terminen eine kurze Erholungspause.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Energie & Alltag",
+    title: "Körperliche Unruhe beim Warten",
+    body: "Wo spürst du die Unruhe?",
+    inner: "Beobachte Erwartungen und äußere Reize.",
+    action: "Stelle beide Füße auf den Boden und nimm drei natürliche Atemzüge.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Energie & Alltag",
+    title: "Erschöpfung nach sozialen Kontakten",
+    body: "Wann bemerkst du den Energieabfall?",
+    inner: "Beobachte Dauer und Intensität sozialer Situationen.",
+    action: "Plane eine kurze stille Phase zum Auftanken.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Wahrnehmung",
+    title: "Anspannung bei Zeitdruck",
+    body: "Wo zeigt sich Zeitdruck in deinem Körper?",
+    inner: "Beobachte, welche Aufgaben wirklich dringend sind.",
+    action: "Priorisiere den nächsten kleinen Schritt und lockere die Schultern.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Wahrnehmung",
+    title: "Körpergefühl nach langem Autofahren",
+    body: "Welche Bereiche fühlen sich steif an?",
+    inner: "Beobachte Fahrdauer und Sitzhaltung.",
+    action: "Mache bei sicherem Halt eine kurze Geh- und Bewegungspause.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  },
+  {
+    category: "Wahrnehmung",
+    title: "Schwierigkeit, Durst zu bemerken",
+    body: "Wann fällt dir auf, dass du wenig getrunken hast?",
+    inner: "Beobachte Trinkgewohnheiten über den Tag.",
+    action: "Stelle Wasser sichtbar bereit und trinke nach deinem Bedarf.",
+    reset: "Was hat sich nach dem bewussten Beobachten oder der kleinen Pause verändert?"
+  }
 ];
