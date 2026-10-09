@@ -400,4 +400,405 @@ window.ICS_BODY_SIGNALS = [
     action: "Setz dich sicher hin und beobachte. Neues, anhaltendes oder deutlich zunehmendes Zittern medizinisch abklären.",
     reset: "Nimmt das Zittern nach Ruhe, Wärme oder Essen ab?"
   }
+,
+  {
+    category: "Kopf",
+    title: "Spannung an den Schläfen",
+    body: "Wann tritt die Spannung auf und wie lange hält sie an?",
+    inner: "Gab es viel Bildschirmzeit, wenig Pausen oder Kieferpressen?",
+    action: "Entspanne den Kiefer und gönne dir zwei Minuten Bildschirmruhe.",
+    reset: "Was verändert sich nach der kurzen Pause?"
+  },
+  {
+    category: "Kopf",
+    title: "Druck an der Stirn",
+    body: "Wie stark ist der Druck und was begleitet ihn?",
+    inner: "Wie waren Schlaf, Flüssigkeitszufuhr und Reizbelastung heute?",
+    action: "Trinke etwas Wasser und reduziere für einige Minuten äußere Reize.",
+    reset: "Ist der Druck unverändert oder anders wahrnehmbar?"
+  },
+  {
+    category: "Augen",
+    title: "Brennende Augen",
+    body: "Wann beginnen die Augen zu brennen?",
+    inner: "Gab es trockene Luft, Bildschirmarbeit oder andere Auslöser?",
+    action: "Blinzle bewusst und gönne deinen Augen eine Bildschirmpause.",
+    reset: "Wie fühlen sich die Augen danach an?"
+  },
+  {
+    category: "Augen",
+    title: "Lichtempfindlichkeit",
+    body: "Bei welchem Licht fällt die Empfindlichkeit besonders auf?",
+    inner: "Ist sie neu oder mit Kopfschmerz oder Sehstörungen verbunden?",
+    action: "Suche einen angenehm beleuchteten Raum auf; neue starke Beschwerden ärztlich abklären.",
+    reset: "Was verbessert oder verschlechtert die Wahrnehmung?"
+  },
+  {
+    category: "Gesicht",
+    title: "Angespannte Gesichtsmuskeln",
+    body: "Welche Gesichtspartie fühlt sich angespannt an?",
+    inner: "Merkst du unbewusstes Stirnrunzeln oder Zusammenbeißen?",
+    action: "Lass Stirn, Augenbrauen und Lippen für sechs Atemzüge weich werden.",
+    reset: "Welche Partie entspannt sich zuerst?"
+  },
+  {
+    category: "Mund & Kiefer",
+    title: "Trockener Mund",
+    body: "Wann bemerkst du die Trockenheit besonders?",
+    inner: "Hast du genug getrunken oder atmest du häufig durch den Mund?",
+    action: "Trinke bei Bedarf Wasser; anhaltende Mundtrockenheit ärztlich besprechen.",
+    reset: "Verändert sich die Trockenheit über den Tag?"
+  },
+  {
+    category: "Hals",
+    title: "Kloßgefühl im Hals",
+    body: "Wann tritt das Gefühl auf und kannst du normal schlucken?",
+    inner: "Gibt es Situationen, in denen du es stärker bemerkst?",
+    action: "Atme ruhig und beobachte; Schluck- oder Atemprobleme ärztlich abklären.",
+    reset: "Wann lässt das Gefühl nach?"
+  },
+  {
+    category: "Hals",
+    title: "Heisere Stimme",
+    body: "Seit wann ist die Stimme heiser?",
+    inner: "Wie viel hast du gesprochen und gab es einen Infekt?",
+    action: "Schone deine Stimme und trinke ausreichend; anhaltende Heiserkeit abklären.",
+    reset: "Wie klingt die Stimme nach einer Sprechpause?"
+  },
+  {
+    category: "Nacken & Schulter",
+    title: "Einseitige Nackensteife",
+    body: "Auf welcher Seite und bei welcher Bewegung spürst du die Steife?",
+    inner: "Gab es eine ungewohnte Haltung oder Belastung?",
+    action: "Wechsle vorsichtig die Haltung, ohne in den Schmerz zu dehnen.",
+    reset: "Welche Bewegung ist angenehm möglich?"
+  },
+  {
+    category: "Nacken & Schulter",
+    title: "Schultern hochgezogen",
+    body: "Wann bemerkst du, dass die Schultern hochstehen?",
+    inner: "Welche Tätigkeit verlangt gerade viel Konzentration?",
+    action: "Lass beide Schultern beim Ausatmen bewusst sinken.",
+    reset: "Wie fühlt sich der Schultergürtel danach an?"
+  },
+  {
+    category: "Brustkorb",
+    title: "Steifer Brustkorb",
+    body: "Bei welchen Bewegungen fühlt sich der Brustkorb unbeweglich an?",
+    inner: "Gab es langes Sitzen oder eine ungewohnte Belastung?",
+    action: "Richte dich sanft auf und atme ohne Druck; neue Brustschmerzen sofort medizinisch abklären.",
+    reset: "Wird die Bewegung leichter?"
+  },
+  {
+    category: "Atmung",
+    title: "Häufiges Seufzen",
+    body: "In welchen Situationen seufzt du häufiger?",
+    inner: "Wie fühlt sich deine Atmung zwischen den Seufzern an?",
+    action: "Beobachte drei natürliche Atemzüge, ohne sie zu erzwingen.",
+    reset: "Was fällt dir am Atemrhythmus auf?"
+  },
+  {
+    category: "Atmung",
+    title: "Atem anhalten",
+    body: "Bei welchen Tätigkeiten hältst du unbewusst die Luft an?",
+    inner: "Passiert es besonders bei Konzentration oder Anstrengung?",
+    action: "Unterbrich kurz die Tätigkeit und lasse den Atem natürlich fließen.",
+    reset: "Kannst du die nächste Aufgabe mit ruhigerem Atem beginnen?"
+  },
+  {
+    category: "Herz & Kreislauf",
+    title: "Kalte Hände",
+    body: "Sind beide Hände kalt oder nur eine?",
+    inner: "Gab es Kälte, langes Sitzen oder andere Veränderungen?",
+    action: "Wärme die Hände sanft; plötzlich einseitige Veränderungen abklären.",
+    reset: "Wie schnell kehrt angenehme Wärme zurück?"
+  },
+  {
+    category: "Herz & Kreislauf",
+    title: "Kalte Füße",
+    body: "Wann fühlen sich die Füße besonders kalt an?",
+    inner: "Wie lange warst du unbewegt und wie warm ist die Umgebung?",
+    action: "Bewege die Zehen und ziehe bei Bedarf warme Socken an.",
+    reset: "Ändert sich das Wärmegefühl?"
+  },
+  {
+    category: "Herz & Kreislauf",
+    title: "Kreislaufgefühl beim Aufstehen",
+    body: "Wird dir beim Aufstehen kurz schwarz vor Augen?",
+    inner: "Wie schnell stehst du auf und wie geht es dir insgesamt?",
+    action: "Setze dich bei Schwindel hin und stehe langsam auf; wiederkehrende Beschwerden abklären.",
+    reset: "Hilft ein langsamer Positionswechsel?"
+  },
+  {
+    category: "Bauch & Verdauung",
+    title: "Völlegefühl nach dem Essen",
+    body: "Wann und nach welchen Mahlzeiten entsteht das Völlegefühl?",
+    inner: "Wie schnell isst du und wie groß sind die Portionen?",
+    action: "Mache nach dem Essen einen ruhigen kurzen Spaziergang, sofern angenehm.",
+    reset: "Wie verändert sich das Gefühl im Verlauf?"
+  },
+  {
+    category: "Bauch & Verdauung",
+    title: "Wechselnder Appetit",
+    body: "Wann ist dein Appetit stärker oder schwächer?",
+    inner: "Wie regelmäßig isst du und wie ist dein Tagesrhythmus?",
+    action: "Beobachte Hunger und Sättigung ohne Bewertung; anhaltende Veränderungen abklären.",
+    reset: "Erkennst du wiederkehrende Zeiten?"
+  },
+  {
+    category: "Bauch & Verdauung",
+    title: "Bauchgrummeln",
+    body: "Wann treten die Geräusche auf?",
+    inner: "Gibt es einen Zusammenhang mit Mahlzeiten oder bestimmten Lebensmitteln?",
+    action: "Beobachte den Verlauf ohne sofortige Deutung.",
+    reset: "Was fällt dir beim nächsten Essen auf?"
+  },
+  {
+    category: "Bauch & Verdauung",
+    title: "Unregelmäßiger Stuhlgang",
+    body: "Wie hat sich dein gewohnter Rhythmus verändert?",
+    inner: "Wie sehen Bewegung, Trinken und Ernährung derzeit aus?",
+    action: "Notiere Veränderungen; Blut im Stuhl oder anhaltende Beschwerden ärztlich abklären.",
+    reset: "Erkennst du einen zeitlichen Zusammenhang?"
+  },
+  {
+    category: "Rücken",
+    title: "Steifheit am Morgen",
+    body: "Welche Rückenregion fühlt sich nach dem Aufstehen steif an?",
+    inner: "Wie lange dauert es, bis Bewegung leichter wird?",
+    action: "Beginne mit sanfter Bewegung im schmerzfreien Bereich.",
+    reset: "Wie verändert sich die Steifheit nach einigen Minuten?"
+  },
+  {
+    category: "Rücken",
+    title: "Verspannung zwischen Schulterblättern",
+    body: "Wann spürst du die Spannung besonders?",
+    inner: "Wie lange sitzt du ohne Haltungswechsel?",
+    action: "Stehe auf und bewege die Schultern langsam.",
+    reset: "Welche Haltung fühlt sich freier an?"
+  },
+  {
+    category: "Rücken",
+    title: "Müdigkeit im unteren Rücken",
+    body: "Bei welcher Tätigkeit ermüdet der Rücken?",
+    inner: "Wie lange hältst du dieselbe Position?",
+    action: "Wechsle zwischen Sitzen, Stehen und Gehen.",
+    reset: "Welche Position entlastet dich?"
+  },
+  {
+    category: "Hüfte & Becken",
+    title: "Steife Hüften nach Sitzen",
+    body: "Wann bemerkst du die Steifheit beim Aufstehen?",
+    inner: "Wie lange saßt du zuvor?",
+    action: "Gehe einige Schritte in angenehmem Tempo.",
+    reset: "Wie frei fühlt sich die Bewegung danach an?"
+  },
+  {
+    category: "Hüfte & Becken",
+    title: "Gesäßverspannung",
+    body: "Ist die Spannung einseitig oder beidseitig?",
+    inner: "Gab es langes Sitzen oder ungewohnte Belastung?",
+    action: "Wechsle die Sitzposition und gehe kurz umher.",
+    reset: "Was verändert sich beim Gehen?"
+  },
+  {
+    category: "Hüfte & Becken",
+    title: "Beckenspannung",
+    body: "Wo genau nimmst du Spannung wahr?",
+    inner: "Tritt sie bei Ruhe, Bewegung oder bestimmten Positionen auf?",
+    action: "Suche eine bequeme Haltung und entspanne bewusst den Bauch.",
+    reset: "Kannst du den Bereich ohne Anstrengung wahrnehmen?"
+  },
+  {
+    category: "Arme & Hände",
+    title: "Schwere Arme",
+    body: "Wann fühlen sich die Arme schwer an?",
+    inner: "Gab es körperliche Anstrengung oder monotone Arbeit?",
+    action: "Lege eine kurze Pause ein; plötzlich einseitige Schwäche ist ein Notfall.",
+    reset: "Lässt die Schwere nach der Pause nach?"
+  },
+  {
+    category: "Arme & Hände",
+    title: "Steife Finger am Morgen",
+    body: "Welche Finger sind betroffen und wie lange hält die Steife an?",
+    inner: "Ist die Steifheit neu oder wiederkehrend?",
+    action: "Bewege die Finger sanft; anhaltende Schwellung oder Schmerzen abklären.",
+    reset: "Wann werden die Finger beweglicher?"
+  },
+  {
+    category: "Arme & Hände",
+    title: "Daumenbelastung",
+    body: "Bei welchen Griffen spürst du den Daumen?",
+    inner: "Wie viel nutzt du Handy, Maus oder wiederholte Greifbewegungen?",
+    action: "Entlaste die Hand und wechsle die Tätigkeit.",
+    reset: "Welche Bewegung bleibt angenehm?"
+  },
+  {
+    category: "Arme & Hände",
+    title: "Ellenbogenspannung",
+    body: "Bei welchen Bewegungen tritt die Spannung auf?",
+    inner: "Gab es wiederholtes Greifen, Heben oder Tippen?",
+    action: "Unterbrich die belastende Bewegung und lockere den Arm.",
+    reset: "Wie reagiert der Ellenbogen auf die Pause?"
+  },
+  {
+    category: "Beine & Füße",
+    title: "Wadenanspannung",
+    body: "Wann und wo spürst du Spannung in der Wade?",
+    inner: "Gab es ungewohnte Bewegung oder langes Stehen?",
+    action: "Bewege den Fuß sanft; plötzlich einseitige Schwellung oder Schmerzen dringend abklären.",
+    reset: "Wird die Spannung bei leichter Bewegung anders?"
+  },
+  {
+    category: "Beine & Füße",
+    title: "Steife Sprunggelenke",
+    body: "Wann fühlt sich das Gelenk steif an?",
+    inner: "Gab es langes Sitzen oder eine Verletzung?",
+    action: "Kreise den Fuß langsam im angenehmen Bewegungsbereich.",
+    reset: "Welche Richtung fühlt sich leichter an?"
+  },
+  {
+    category: "Beine & Füße",
+    title: "Müde Fußsohlen",
+    body: "Wann werden die Fußsohlen müde?",
+    inner: "Wie lange standest oder gingst du heute?",
+    action: "Entlaste die Füße und wechsle bei Bedarf die Schuhe.",
+    reset: "Was verändert sich nach der Entlastung?"
+  },
+  {
+    category: "Beine & Füße",
+    title: "Druck an den Zehen",
+    body: "Welche Zehen sind betroffen?",
+    inner: "Drücken Schuhe oder gab es viel Gehbelastung?",
+    action: "Prüfe den Sitz der Schuhe und bewege die Zehen vorsichtig.",
+    reset: "Lässt der Druck ohne Schuhe nach?"
+  },
+  {
+    category: "Beine & Füße",
+    title: "Schwere Oberschenkel",
+    body: "Wann tritt das Schweregefühl auf?",
+    inner: "Gab es Training, Treppensteigen oder langes Sitzen?",
+    action: "Mache eine kurze Erholungspause; neue deutliche Schwäche abklären.",
+    reset: "Wie fühlen sich die Beine nach Ruhe an?"
+  },
+  {
+    category: "Haut",
+    title: "Trockene Haut",
+    body: "Wo ist die Haut besonders trocken?",
+    inner: "Gibt es Kälte, häufiges Waschen oder neue Pflegeprodukte?",
+    action: "Nutze eine verträgliche Pflege und beobachte die Haut.",
+    reset: "Wie reagiert die Haut in den nächsten Tagen?"
+  },
+  {
+    category: "Haut",
+    title: "Juckreiz ohne sichtbare Ursache",
+    body: "Wann und wo tritt der Juckreiz auf?",
+    inner: "Gab es neue Produkte, Kleidung oder Umgebungsreize?",
+    action: "Vermeide Kratzen und beobachte mögliche Auslöser; anhaltenden Juckreiz abklären.",
+    reset: "Tritt der Juckreiz in bestimmten Situationen häufiger auf?"
+  },
+  {
+    category: "Haut",
+    title: "Gänsehaut ohne Kälte",
+    body: "Wann bemerkst du Gänsehaut?",
+    inner: "Begleiten Musik, Gefühle oder Temperaturwechsel das Empfinden?",
+    action: "Nimm den Moment wahr, ohne eine feste Bedeutung zuzuschreiben.",
+    reset: "Was war unmittelbar davor?"
+  },
+  {
+    category: "Schlaf & Erholung",
+    title: "Unruhiger Schlaf",
+    body: "Woran merkst du, dass dein Schlaf unruhig ist?",
+    inner: "Wie sehen Licht, Geräusche und Abendroutine aus?",
+    action: "Gestalte die letzte halbe Stunde vor dem Schlafen möglichst reizarm.",
+    reset: "Was hilft dir beim Zur-Ruhe-Kommen?"
+  },
+  {
+    category: "Schlaf & Erholung",
+    title: "Müdigkeit trotz Schlaf",
+    body: "Wie erholt fühlst du dich morgens?",
+    inner: "Wie regelmäßig schläfst du und gibt es nächtliche Unterbrechungen?",
+    action: "Notiere Schlafdauer und Tagesmüdigkeit; anhaltende starke Müdigkeit abklären.",
+    reset: "Welche Muster zeigen sich über mehrere Tage?"
+  },
+  {
+    category: "Schlaf & Erholung",
+    title: "Schwierigkeiten beim Abschalten",
+    body: "Was beschäftigt dich kurz vor dem Schlafen?",
+    inner: "Welche Gedanken oder Aufgaben möchtest du noch festhalten?",
+    action: "Schreibe drei offene Punkte für morgen auf.",
+    reset: "Ist der Kopf danach etwas ruhiger?"
+  },
+  {
+    category: "Energie & Alltag",
+    title: "Energieloch am Nachmittag",
+    body: "Zu welcher Uhrzeit fällt deine Energie ab?",
+    inner: "Wie waren Schlaf, Mahlzeiten, Bewegung und Pausen?",
+    action: "Mache fünf Minuten Pause mit Tageslicht und sanfter Bewegung.",
+    reset: "Was gibt dir spürbar neue Energie?"
+  },
+  {
+    category: "Energie & Alltag",
+    title: "Überforderung durch Geräusche",
+    body: "Welche Geräusche empfindest du als besonders belastend?",
+    inner: "Wie viele Reize wirken gerade gleichzeitig auf dich ein?",
+    action: "Suche für zwei Minuten eine ruhigere Umgebung.",
+    reset: "Wie verändert sich deine Anspannung?"
+  },
+  {
+    category: "Energie & Alltag",
+    title: "Unruhe bei Pausen",
+    body: "Was bemerkst du, wenn du kurz nichts tust?",
+    inner: "Fühlt sich Ruhe ungewohnt oder unangenehm an?",
+    action: "Bleibe für drei natürliche Atemzüge sitzen, ohne etwas leisten zu müssen.",
+    reset: "Was wird in der Pause sichtbar?"
+  },
+  {
+    category: "Energie & Alltag",
+    title: "Anspannung vor Terminen",
+    body: "Wo im Körper bemerkst du die Anspannung?",
+    inner: "Was erwartest du von dem bevorstehenden Termin?",
+    action: "Plane einen kurzen Übergang und atme ruhig aus.",
+    reset: "Was brauchst du, um vorbereitet und präsent zu sein?"
+  },
+  {
+    category: "Wahrnehmung",
+    title: "Unruhe im Bauch bei Entscheidungen",
+    body: "Wann bemerkst du das Gefühl?",
+    inner: "Welche Informationen fehlen dir noch für die Entscheidung?",
+    action: "Schreibe die nächste kleine, reversible Handlung auf.",
+    reset: "Wird die Entscheidung dadurch überschaubarer?"
+  },
+  {
+    category: "Wahrnehmung",
+    title: "Gefühl innerer Getriebenheit",
+    body: "Wie zeigt sich das Getriebensein körperlich?",
+    inner: "Wie viele Aufgaben versuchst du gleichzeitig zu erledigen?",
+    action: "Wähle bewusst nur die nächste Aufgabe.",
+    reset: "Was verändert sich, wenn du das Tempo reduzierst?"
+  },
+  {
+    category: "Wahrnehmung",
+    title: "Schwierigkeit, Hunger zu spüren",
+    body: "Wann fällt es dir schwer, Hunger wahrzunehmen?",
+    inner: "Wie regelmäßig unterbrichst du deinen Tag für Mahlzeiten?",
+    action: "Halte kurz inne und achte auf körperliche Signale, ohne sie zu erzwingen.",
+    reset: "Welche Signale kannst du heute erkennen?"
+  },
+  {
+    category: "Wahrnehmung",
+    title: "Schwierigkeit, Müdigkeit zu bemerken",
+    body: "Woran erkennst du rückblickend Erschöpfung?",
+    inner: "Welche frühen Zeichen übergehst du im Alltag?",
+    action: "Plane eine kurze Pause vor dem nächsten Leistungstief.",
+    reset: "Welches Warnsignal möchtest du künftig früher beachten?"
+  },
+  {
+    category: "Wahrnehmung",
+    title: "Anspannung beim Multitasking",
+    body: "Wo spürst du die Anspannung während mehrerer Aufgaben?",
+    inner: "Welche Aufgabe ist gerade wirklich wichtig?",
+    action: "Schließe eine Tätigkeit ab, bevor du die nächste beginnst.",
+    reset: "Wie fühlt sich konzentriertes Arbeiten an?"
+  }
 ];
