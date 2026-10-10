@@ -207,7 +207,8 @@ function render(){
   }
   const shown=matches.slice(0,visibleCount);
   currentResultIds=shown.map(x=>x.id);
-  hint.textContent=matches.length?shown.length+' von '+matches.length+' passenden Codes'+(q&&topicCategories.length&&!matches.some(x=>searchTerms.some(t=>(x.old+' '+x.neo+' '+x.cat).toLowerCase().includes(t))))?' aus verwandten Themen':'')+'. Wähle einen aus oder entdecke weitere.':'Kein Treffer – versuche ein anderes Wort oder Thema.';
+  const relatedFallback=q && topicCategories.length && !matches.some(x=>searchTerms.some(t=>(x.old+' '+x.neo+' '+x.cat).toLowerCase().includes(t)));
+  hint.textContent=matches.length ? shown.length+' von '+matches.length+' passenden Codes'+(relatedFallback?' aus verwandten Themen':'')+'. Wähle einen aus oder entdecke weitere.' : 'Kein Treffer – versuche ein anderes Wort oder Thema.';
   grid.innerHTML=shown.length?shown.map(x=>`<div class="item" data-id="${x.id}" onclick="openItem(${x.id})"><div class="tag">${x.cat}</div><div class="old">${x.old}</div><div class="arrow">↓</div><div class="new">${x.neo}</div></div>`).join(''):`<div class="empty">Kein passender Code gefunden. Probiere ein anderes Wort oder wähle ein anderes Thema.</div>`;
   if(matches.length>shown.length || shown.length>3){
     grid.insertAdjacentHTML('beforeend',`<div style="grid-column:1/-1;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;padding:12px">
