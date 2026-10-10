@@ -1827,7 +1827,7 @@ body{padding-bottom:92px}
   }
 
   const linkedBelief=new URLSearchParams(location.search).get('ics_gs');
-  if(linkedBelief && /^GS-\\d{3}$/.test(linkedBelief)){
+  if(linkedBelief && /^GS-[0-9]{3}$/.test(linkedBelief)){
     const target=details.find(d=>d.id===linkedBelief);
     if(target){
       clearSearch(false);
