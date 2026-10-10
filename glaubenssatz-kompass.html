@@ -1826,6 +1826,15 @@ body{padding-bottom:92px}
     }
   }
 
+  const linkedTerm=new URLSearchParams(location.search).get('ics_suche');
+  if(linkedTerm && input){
+    input.value=linkedTerm.slice(0,120);
+    doSearch();
+    if(!details.some(d=>!d.classList.contains('hidden-by-search'))){
+      clearSearch(false);
+      if(status)status.textContent='Kein direkter Texttreffer für „'+linkedTerm.slice(0,80)+'“. Du kannst verwandte Glaubenssätze entdecken.';
+    }
+  }
   if (btn) btn.addEventListener('click', doSearch);
   if (input) input.addEventListener('keydown', e => {
     if (e.key === 'Enter') doSearch();
