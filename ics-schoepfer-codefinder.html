@@ -21,13 +21,18 @@
   <script>
 
 function goBack(){
-  const fallback='https://www.innercodesystems.com/tool-bibliothek.html';
+  const website='https://www.innercodesystems.com/tool-bibliothek.html';
+  const app='https://app.innercodesystems.com/?view=meinics';
   try {
     const ref=document.referrer?new URL(document.referrer):null;
-    const sameICS=ref&&(/(^|\\.)innercodesystems\\.com$/.test(ref.hostname)||ref.hostname==='innercodesystems.github.io');
-    if(sameICS&&ref.href!==location.href){window.location.href=ref.href;return;}
-  } catch(e){}
-  window.location.href=fallback;
+    if(ref && ref.hostname==='app.innercodesystems.com'){window.location.href=app;return;}
+    if(ref && (ref.hostname==='www.innercodesystems.com'||ref.hostname==='innercodesystems.com'||ref.hostname==='innercodesystems.github.io') && ref.href!==location.href){
+      window.location.href=ref.href;return;
+    }
+    // Persönliche Themen können aus der App stammen; bei direktem Einstieg bleibt die App erreichbar.
+    if(new URLSearchParams(location.search).has('themes')){window.location.href=app;return;}
+  }catch(e){}
+  window.location.href=website;
 }
     
 const raw=[
