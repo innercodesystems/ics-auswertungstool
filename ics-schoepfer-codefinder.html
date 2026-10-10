@@ -8,7 +8,7 @@
 
 <div class="hero">
   
-<div class="brand">INNER CODE SYSTEMS</div><h1>Schöpfer-Codefinder</h1><p class="lead">Vom Überlebensmodus in den Schöpfermodus. Finde einen Gedanken oder ein Muster, das dich gerade beschäftigt – und entdecke eine neue bewusste Richtung.</p><div class="search"><input id="q" placeholder="Was beschäftigt dich? z. B. Angst, Beziehung, Geld …"><button class="btn" onclick="render()">Finden</button><button class="btn alt" onclick="randomItem()">Impuls</button></div></div><p id="finderHint" style="text-align:center;color:var(--muted);margin:0 auto 20px;max-width:650px;line-height:1.6">Wähle ein Thema oder gib ein Wort ein. Entdecke drei passende Codes. Mit „Weitere Codes“ kannst du jederzeit mehr entdecken.</p><div id="cats" class="cats"></div><div id="grid" class="grid"></div>
+<div class="brand">INNER CODE SYSTEMS</div><h1>Schöpfer-Codefinder</h1><p class="lead">Vom Überlebensmodus in den Schöpfermodus. Finde einen Gedanken oder ein Muster, das dich gerade beschäftigt – und entdecke eine neue bewusste Richtung.</p><div class="search"><input id="q" placeholder="Was beschäftigt dich? z. B. Angst, Beziehung, Geld …"><button class="btn" onclick="searchCodes()">Finden</button><button class="btn alt" onclick="randomItem()">Impuls</button></div></div><p id="finderHint" style="text-align:center;color:var(--muted);margin:0 auto 20px;max-width:650px;line-height:1.6">Wähle ein Thema oder gib ein Wort ein. Entdecke drei passende Codes. Mit „Weitere Codes“ kannst du jederzeit mehr entdecken.</p><div id="cats" class="cats"></div><div id="grid" class="grid"></div>
   
 <div style="margin-top:35px;text-align:center;">
   <a class="btn alt codefinder-back" href="https://www.innercodesystems.com/tool-bibliothek.html" style="display:inline-block;text-decoration:none;">
@@ -127,6 +127,7 @@ t=>[`Bei „${t}“ muss ich fremden Erwartungen folgen.`,`Ich darf meine Werte 
 Object.entries(expansionThemes).forEach(([cat,themes])=>themes.forEach(t=>categoryPerspectives[cat].forEach(f=>{const [old,neo]=f(t);raw.push([cat,old,neo])})));
 const data=raw.map((x,i)=>({id:i+1,cat:x[0],old:x[1],neo:x[2]}));let visibleCount=3;let active='Alle';const cats=['Alle',...new Set(data.map(x=>x.cat))];
 function resetFinder(){visibleCount=3;render()}
+function searchCodes(){active="Alle";visibleCount=3;makeCats();render()}
 function makeCats(){document.getElementById('cats').innerHTML=cats.map(c=>`<button class="cat ${c===active?'active':''}" onclick="active='${c.replaceAll("'","\\'")}';makeCats();resetFinder()">${c}</button>`).join('')}
 let currentResultIds=[];
 function render(){
@@ -140,7 +141,7 @@ function render(){
     hint.textContent='Wähle zuerst ein Thema, suche nach einem Begriff oder klicke auf „Impuls“ für einen einzelnen Code.';
     return;
   }
-  const matches=data.filter(x=>(active==='Alle'||x.cat===active)&&(!q||terms.some(t=>(x.old+' '+x.neo+' '+x.cat).toLowerCase().includes(t))));
+  const matches=data.filter(x=>(q || active==='Alle'||x.cat===active)&&(!q||terms.some(t=>(x.old+' '+x.neo+' '+x.cat).toLowerCase().includes(t))));
   // Bei einer Suche die inhaltlich treffendsten Codes zuerst zeigen.
   // Ohne Suchbegriff bleibt die bisherige Reihenfolge unverändert.
   if(q && terms.length){
@@ -190,6 +191,7 @@ if(personal){
   hero.insertAdjacentHTML('afterend','<div style="max-width:720px;margin:0 auto 24px;padding:16px 18px;border:1px solid rgba(184,146,79,.5);border-radius:16px;background:rgba(184,146,79,.08);"><div class="brand">AUS DEINER ICS-AUSWERTUNG</div><p style="margin:8px 0 0;color:var(--muted);">Wir zeigen dir zuerst Codes, die zu deinen aktuellen Themen <strong style="color:var(--cream);">'+personal.replace(/[<>]/g,'')+'</strong> passen.</p></div>');
 }
 makeCats();render();
+document.getElementById("q").addEventListener("input",searchCodes);
 </script><script src="./ics-navigation-standard.js?v=20260930-nav1"></script><script>
 /* Dieser Codefinder hat zwei feste, sichere Rückwege; keine gespeicherte Fremd-Herkunft verwenden. */
 if(window.ICSNavigation) window.ICSNavigation.abort=goBack;
