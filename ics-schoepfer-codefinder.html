@@ -8,7 +8,7 @@
 
 <div class="hero">
   
-<div class="brand">INNER CODE SYSTEMS</div><h1>Schöpfer-Codefinder</h1><p class="lead">Vom Überlebensmodus in den Schöpfermodus. Finde einen Gedanken oder ein Muster, das dich gerade beschäftigt – und entdecke eine neue bewusste Richtung.</p><div class="search"><input id="q" placeholder="Was beschäftigt dich? z. B. Angst, Beziehung, Geld …"><button class="btn" onclick="render()">Finden</button><button class="btn alt" onclick="randomItem()">Impuls</button></div></div><p id="finderHint" style="text-align:center;color:var(--muted);margin:0 auto 20px;max-width:650px;line-height:1.6">Wähle ein Thema oder gib ein Wort ein. Wir zeigen dir höchstens sechs passende Codes – nicht die ganze Sammlung.</p><div id="cats" class="cats"></div><div id="grid" class="grid"></div>
+<div class="brand">INNER CODE SYSTEMS</div><h1>Schöpfer-Codefinder</h1><p class="lead">Vom Überlebensmodus in den Schöpfermodus. Finde einen Gedanken oder ein Muster, das dich gerade beschäftigt – und entdecke eine neue bewusste Richtung.</p><div class="search"><input id="q" placeholder="Was beschäftigt dich? z. B. Angst, Beziehung, Geld …"><button class="btn" onclick="render()">Finden</button><button class="btn alt" onclick="randomItem()">Impuls</button></div></div><p id="finderHint" style="text-align:center;color:var(--muted);margin:0 auto 20px;max-width:650px;line-height:1.6">Wähle ein Thema oder gib ein Wort ein. Wir zeigen dir eine kleine Auswahl. Weitere passende Codes bleiben verfügbar.</p><div id="cats" class="cats"></div><div id="grid" class="grid"></div>
   
 <div style="margin-top:35px;text-align:center;">
   <button class="btn alt" onclick="goBack()">
@@ -21,7 +21,13 @@
   <script>
 
 function goBack(){
-  window.location.href='https://app.innercodesystems.com/?view=meinics';
+  const fallback='https://www.innercodesystems.com/tool-bibliothek.html';
+  try {
+    const ref=document.referrer?new URL(document.referrer):null;
+    const sameICS=ref&&(/(^|\\.)innercodesystems\\.com$/.test(ref.hostname)||ref.hostname==='innercodesystems.github.io');
+    if(sameICS&&ref.href!==location.href){window.location.href=ref.href;return;}
+  } catch(e){}
+  window.location.href=fallback;
 }
     
 const raw=[
