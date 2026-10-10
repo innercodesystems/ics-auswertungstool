@@ -133,6 +133,27 @@ let currentResultIds=[];
 function render(){
   const q=document.getElementById('q').value.trim().toLowerCase();
   const terms=q.split(/[·,;|]+|\s+/).map(s=>s.trim()).filter(s=>s.length>2);
+  // Verwandte Suchbegriffe: Nutzer dürfen ihre Alltagssprache verwenden.
+  const relatedWords={
+    mutlosigkeit:['selbstzweifel','selbstvertrauen','unsicherheit','zweifel','angst','zuversicht','vertrauen'],
+    mutlos:['selbstzweifel','selbstvertrauen','unsicherheit','zweifel','angst','zuversicht'],
+    hoffnungslosigkeit:['zweifel','zukunft','neubeginn','zuversicht','vertrauen'],
+    einsamkeit:['nähe','zugehörigkeit','verbindung','beziehung'],
+    traurig:['abschied','verlust','gefühle','loslassen'],
+    traurigkeit:['abschied','verlust','loslassen'],
+    überfordert:['überforderung','erschöpfung','pausen','prioritäten'],
+    überforderung:['erschöpfung','pausen','prioritäten'],
+    unsicherheit:['zweifel','selbstvertrauen','vertrauen','ungewissheit'],
+    selbstzweifel:['selbstvertrauen','anerkennung','wert','zweifel'],
+    ängste:['angst','verlustangst','unsicherheit','sorgen'],
+    angst:['verlustangst','unsicherheit','sorgen','zweifel'],
+    wut:['grenzen','respekt','bedürfnisse'],
+    stress:['leistungsdruck','überforderung','anspannung','pausen'],
+    antriebslosigkeit:['erschöpfung','energie','neubeginn','motivation'],
+    eifersucht:['vertrauen','verlustangst','beziehung'],
+    enttäuschung:['erwartungen','vertrauen','loslassen']
+  };
+  const searchTerms=[...new Set(terms.flatMap(t=>[t,...(relatedWords[t]||[])]))];
   const grid=document.getElementById('grid');
   const hint=document.getElementById('finderHint');
   if(!q&&active==='Alle'){
@@ -141,7 +162,7 @@ function render(){
     hint.textContent='Wähle zuerst ein Thema, suche nach einem Begriff oder klicke auf „Impuls“ für einen einzelnen Code.';
     return;
   }
-  const matches=data.filter(x=>(q || active==='Alle'||x.cat===active)&&(!q||terms.some(t=>(x.old+' '+x.neo+' '+x.cat).toLowerCase().includes(t))));
+  const matches=data.filter(x=>(q || active==='Alle'||x.cat===active)&&(!q||searchTerms.some(t=>(x.old+' '+x.neo+' '+x.cat).toLowerCase().includes(t))));
   // Bei einer Suche die inhaltlich treffendsten Codes zuerst zeigen.
   // Ohne Suchbegriff bleibt die bisherige Reihenfolge unverändert.
   if(q && terms.length){
@@ -151,7 +172,7 @@ function render(){
       if(old.includes(q)) points+=12;
       if(neo.includes(q)) points+=10;
       if(cat.includes(q)) points+=3;
-      for(const term of terms){
+      for(const term of searchTerms){
         if(old.includes(term)) points+=5;
         if(neo.includes(term)) points+=4;
         if(cat.includes(term)) points+=1;
