@@ -1,5 +1,5 @@
 // ICS Partneranfragen · eigenständiger Cloudflare Worker
-// Bindings: RESEND_API_KEY (Secret), FROM_EMAIL (verified sender), TO_EMAIL (optional)
+// Bindings: RESEND_API_KEY (Secret), FROM_EMAIL (verified sender), TO_EMAIL (optional), TURNSTILE_SECRET_KEY (Secret)
 // Deployment is deliberately separate from the existing PayPal / reports worker.
 const ORIGIN = 'https://www.innercodesystems.com';
 const json = (data,status=200,origin=ORIGIN)=>new Response(JSON.stringify(data),{status,headers:{'content-type':'application/json; charset=utf-8','access-control-allow-origin':origin,'vary':'Origin','cache-control':'no-store'}});
@@ -24,6 +24,19 @@ export default {async fetch(request,env){
   if(size>12000)return json({ok:false,error:'Request too large'},413);
   let input;try{input=await request.json()}catch{return json({ok:false,error:'Invalid JSON'},400)}
   if(input.website_confirm)return json({ok:true}); // honeypot
+  if(!env.TURNSTILE_SECRET_KEY)return json({ok:false,error:'Sicherheitsprüfung nicht konfiguriert.'},503);
+  const token=safe(input.turnstile_token,2048);
+  if(!token)return json({ok:false,error:'Bitte Sicherheitsprüfung abschließen.'},403);
+  let verification;
+  try{
+    const body=new URLSearchParams({secret:env.TURNSTILE_SECRET_KEY,response:token});
+    const ip=request.headers.get('CF-Connecting-IP');
+    if(ip)body.set('remoteip',ip);
+    const checked=await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify',{method:'POST',body});
+    if(!checked.ok)throw new Error('Siteverify HTTP '+checked.status);
+    verification=await checked.json();
+  }catch(e){console.error('Turnstile verification failed',String(e));return json({ok:false,error:'Sicherheitsprüfung derzeit nicht verfügbar. Bitte erneut versuchen.'},503)}
+  if(!verification.success||verification.hostname!=='www.innercodesystems.com')return json({ok:false,error:'Sicherheitsprüfung fehlgeschlagen. Bitte erneut versuchen.'},403);
   const name=safe(input.name,120),email=safe(input.email,200),work=safe(input.work,180),region=safe(input.region,120),website=safe(input.website,250),type=safe(input.type,100),message=safe(input.message,3000);
   if(!name||!work||!message||!input.privacy||!/^\S+@\S+\.\S+$/.test(email))return json({ok:false,error:'Bitte Pflichtfelder prüfen.'},400);
   const lines=[['Name',name],['E-Mail',email],['Tätigkeit',work],['Region',region],['Website',website],['Interesse',type],['Nachricht',message]];
