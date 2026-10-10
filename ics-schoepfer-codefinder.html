@@ -26,6 +26,14 @@ function backDestination(){
   const params=new URLSearchParams(location.search);
   const from=(params.get('from')||'').toLowerCase();
   if(from==='app'||from==='meinics'||params.has('themes')) return app;
+  if(from==='tool-bibliothek') return website;
+  const origin=params.get('return');
+  if(origin){
+    try{
+      const target=new URL(origin,location.origin);
+      if(['www.innercodesystems.com','innercodesystems.com'].includes(target.hostname) && !target.pathname.endsWith('/ics-schoepfer-codefinder.html')) return target.href;
+    }catch(e){}
+  }
   try{
     const ref=document.referrer?new URL(document.referrer):null;
     if(ref && ref.origin!==location.origin || ref && ref.pathname!==location.pathname){
