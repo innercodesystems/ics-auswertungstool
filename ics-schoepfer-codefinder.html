@@ -8,7 +8,7 @@
 
 <div class="hero">
   
-<div class="brand">INNER CODE SYSTEMS</div><h1>Schöpfer-Codefinder</h1><p class="lead">Vom Überlebensmodus in den Schöpfermodus. Finde einen Gedanken oder ein Muster, das dich gerade beschäftigt – und entdecke eine neue bewusste Richtung.</p><div class="search"><input id="q" placeholder="Was beschäftigt dich? z. B. Angst, Beziehung, Geld …"><button class="btn" onclick="render()">Finden</button><button class="btn alt" onclick="randomItem()">Impuls</button></div></div><p id="finderHint" style="text-align:center;color:var(--muted);margin:0 auto 20px;max-width:650px;line-height:1.6">Wähle ein Thema oder gib ein Wort ein. Wir zeigen dir eine kleine Auswahl. Weitere passende Codes bleiben verfügbar.</p><div id="cats" class="cats"></div><div id="grid" class="grid"></div>
+<div class="brand">INNER CODE SYSTEMS</div><h1>Schöpfer-Codefinder</h1><p class="lead">Vom Überlebensmodus in den Schöpfermodus. Finde einen Gedanken oder ein Muster, das dich gerade beschäftigt – und entdecke eine neue bewusste Richtung.</p><div class="search"><input id="q" placeholder="Was beschäftigt dich? z. B. Angst, Beziehung, Geld …"><button class="btn" onclick="render()">Finden</button><button class="btn alt" onclick="randomItem()">Impuls</button></div></div><p id="finderHint" style="text-align:center;color:var(--muted);margin:0 auto 20px;max-width:650px;line-height:1.6">Wähle ein Thema oder gib ein Wort ein. Entdecke drei passende Codes. Mit „Weitere Codes“ kannst du jederzeit mehr entdecken.</p><div id="cats" class="cats"></div><div id="grid" class="grid"></div>
   
 <div style="margin-top:35px;text-align:center;">
   <a class="btn alt codefinder-back" href="https://www.innercodesystems.com/tool-bibliothek.html" style="display:inline-block;text-decoration:none;">
@@ -59,8 +59,8 @@ const expansionFrames=[
 (t)=>[`Ich muss bei ${t} so weitermachen wie bisher.`,`Ich darf bei ${t} heute eine neue, passende Entscheidung treffen.`]
 ];
 Object.entries(expansionThemes).forEach(([cat,themes])=>themes.forEach(t=>expansionFrames.forEach(f=>{const [old,neo]=f(t);raw.push([cat,old,neo])})));
-const data=raw.map((x,i)=>({id:i+1,cat:x[0],old:x[1],neo:x[2]}));let active='Alle';const cats=['Alle',...new Set(data.map(x=>x.cat))];
-function makeCats(){document.getElementById('cats').innerHTML=cats.map(c=>`<button class="cat ${c===active?'active':''}" onclick="active='${c.replaceAll("'","\\'")}';makeCats();render()">${c}</button>`).join('')}
+const data=raw.map((x,i)=>({id:i+1,cat:x[0],old:x[1],neo:x[2]}));let visibleCount=3;let active='Alle';const cats=['Alle',...new Set(data.map(x=>x.cat))];
+function resetFinder(){visibleCount=3;render()}\nfunction makeCats(){document.getElementById('cats').innerHTML=cats.map(c=>`<button class="cat ${c===active?'active':''}" onclick="active='${c.replaceAll("'","\\'")}';makeCats();resetFinder()">${c}</button>`).join('')}
 let currentResultIds=[];
 function render(){
   const q=document.getElementById('q').value.trim().toLowerCase();
@@ -74,10 +74,11 @@ function render(){
     return;
   }
   const matches=data.filter(x=>(active==='Alle'||x.cat===active)&&(!q||terms.some(t=>(x.old+' '+x.neo+' '+x.cat).toLowerCase().includes(t))));
-  const shown=matches.slice(0,6);
+  const shown=matches.slice(0,visibleCount);
   currentResultIds=shown.map(x=>x.id);
-  hint.textContent=matches.length?shown.length+' von '+matches.length+' passenden Codes. Wähle einen aus – du musst nicht alle ansehen.':'Kein Treffer – versuche ein anderes Wort oder Thema.';
+  hint.textContent=matches.length?shown.length+' von '+matches.length+' passenden Codes. Wähle einen aus oder entdecke weitere.':'Kein Treffer – versuche ein anderes Wort oder Thema.';
   grid.innerHTML=shown.length?shown.map(x=>`<div class="item" data-id="${x.id}" onclick="openItem(${x.id})"><div class="tag">${x.cat}</div><div class="old">${x.old}</div><div class="arrow">↓</div><div class="new">${x.neo}</div></div>`).join(''):`<div class="empty">Kein passender Code gefunden. Probiere ein anderes Wort oder wähle ein anderes Thema.</div>`;
+  if(matches.length>shown.length) grid.insertAdjacentHTML('beforeend',`<div style="grid-column:1/-1;text-align:center;padding:12px"><button class="btn alt" onclick="visibleCount+=3;render()">Weitere passende Codes anzeigen ↓</button></div>`);
 }
 let currentItemId=null;
 function openItem(id){currentItemId=id;const x=data.find(y=>y.id===id);const code=x.neo.replace(/[.!?]$/,'');document.getElementById('detail').innerHTML=`<div class="tag">${x.cat}</div><h2>Dein Schöpfer-Code</h2><div class="section"><div class="label">ÜBERLEBENSMODUS</div><div class="quote">„${x.old}“</div></div><div class="section"><div class="label">SCHÖPFERMODUS</div><div class="quote"><b>„${x.neo}“</b></div></div><div class="section"><div class="label">SPÜRE</div><p>Was verändert sich in dir, wenn du den neuen Satz langsam liest und nicht sofort bewertest?</p></div><div class="section"><div class="label">ENTSCHEIDE</div><p>Welche kleine Entscheidung würde heute eher zu diesem Schöpfermodus passen?</p></div><div class="section"><div class="label">HANDLE</div><p>Setze innerhalb der nächsten 24 Stunden eine kleine, konkrete Handlung um, die zu „${code}“ passt.</p></div><div class="choice-actions"><button class="btn" onclick="chooseCode(${x.id})">✓ Das trifft mich – übernehmen</button><button class="btn reject" onclick="rejectCode(${x.id})">✕ Trifft nicht zu – nächsten Code zeigen</button></div><div class="choice-note">Wähle nur, was sich für dich wirklich stimmig anfühlt.</div>`;document.getElementById('modal').classList.add('show')}
@@ -90,7 +91,7 @@ function finishSelection(){if(!selectedCodes.length){goBack();return}const encod
 let rejectedIds=new Set();
 function rejectCode(id){rejectedIds.add(id);selectedCodes=selectedCodes.filter(x=>x.id!==id);let pool=currentResultIds.filter(x=>!rejectedIds.has(x)&&!selectedCodes.some(y=>y.id===x));if(!pool.length){showChoiceSummary();return}openItem(pool[0])}
 function showNoMatch(){showChoiceSummary()}
-function closeModal(){document.getElementById('modal').classList.remove('show')}function randomItem(){openItem(data[Math.floor(Math.random()*data.length)].id)}document.getElementById('q').addEventListener('input',render);
+function closeModal(){document.getElementById('modal').classList.remove('show')}function randomItem(){openItem(data[Math.floor(Math.random()*data.length)].id)}document.getElementById('q').addEventListener('input',resetFinder);
 const params=new URLSearchParams(location.search);
 const personal=params.get('themes');
 if(personal){
