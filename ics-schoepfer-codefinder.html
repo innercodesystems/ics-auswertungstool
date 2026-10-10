@@ -60,7 +60,8 @@ const expansionFrames=[
 ];
 Object.entries(expansionThemes).forEach(([cat,themes])=>themes.forEach(t=>expansionFrames.forEach(f=>{const [old,neo]=f(t);raw.push([cat,old,neo])})));
 const data=raw.map((x,i)=>({id:i+1,cat:x[0],old:x[1],neo:x[2]}));let visibleCount=3;let active='Alle';const cats=['Alle',...new Set(data.map(x=>x.cat))];
-function resetFinder(){visibleCount=3;render()}\nfunction makeCats(){document.getElementById('cats').innerHTML=cats.map(c=>`<button class="cat ${c===active?'active':''}" onclick="active='${c.replaceAll("'","\\'")}';makeCats();resetFinder()">${c}</button>`).join('')}
+function resetFinder(){visibleCount=3;render()}
+function makeCats(){document.getElementById('cats').innerHTML=cats.map(c=>`<button class="cat ${c===active?'active':''}" onclick="active='${c.replaceAll("'","\\'")}';makeCats();resetFinder()">${c}</button>`).join('')}
 let currentResultIds=[];
 function render(){
   const q=document.getElementById('q').value.trim().toLowerCase();
