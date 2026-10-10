@@ -71,10 +71,11 @@ const expansionThemes={
 'Veränderung & Loslassen':['Altes lösen','Übergänge','Kontrollverlust','Neubeginn','Gewohnheiten verändern','Abschied','Unbekanntes','Identität wandeln','Geduld im Wandel','Schritt für Schritt'],
 'Leben & Orientierung':['Sinn','Lebensrichtung','Freude','Neugier','Vision','Selbstvertrauen','Werte','Neuanfang','Dankbarkeit','eigener Weg']};
 const expansionFrames=[
-(t)=>[`Ich muss ${t} vollständig im Griff haben.`,`Ich darf ${t} bewusst betrachten und den nächsten stimmigen Schritt wählen.`],
-(t)=>[`Bei ${t} darf ich keine Unsicherheit zeigen.`,`Ich kann ${t} begegnen, ohne schon alle Antworten zu haben.`],
-(t)=>[`Erst wenn ${t} geklärt ist, kann ich ruhig sein.`,`Ich darf Ruhe finden und ${t} anschließend klarer betrachten.`],
-(t)=>[`Ich muss bei ${t} so weitermachen wie bisher.`,`Ich darf bei ${t} heute eine neue, passende Entscheidung treffen.`]
+  // Einheitliche, grammatisch saubere Formulierungen auch bei Stichworten wie „Nein sagen“ oder „Schlaf“.
+  (t)=>[`Beim Thema „${t}“ muss ich alles unter Kontrolle haben.`,`Beim Thema „${t}“ darf ich unterscheiden, was ich beeinflussen kann und was nicht.`],
+  (t)=>[`Beim Thema „${t}“ darf niemand merken, dass ich unsicher bin.`,`Auch beim Thema „${t}“ darf ich offen sein, Fragen stellen und meinen eigenen Weg finden.`],
+  (t)=>[`Solange das Thema „${t}“ ungelöst ist, darf ich nicht zur Ruhe kommen.`,`Ich darf zur Ruhe kommen, auch wenn beim Thema „${t}“ noch nicht alles geklärt ist.`],
+  (t)=>[`Beim Thema „${t}“ muss ich an meinen bisherigen Mustern festhalten.`,`Beim Thema „${t}“ kann ich heute einen kleinen, bewussten Schritt anders gehen.`]
 ];
 Object.entries(expansionThemes).forEach(([cat,themes])=>themes.forEach(t=>expansionFrames.forEach(f=>{const [old,neo]=f(t);raw.push([cat,old,neo])})));
 const data=raw.map((x,i)=>({id:i+1,cat:x[0],old:x[1],neo:x[2]}));let visibleCount=3;let active='Alle';const cats=['Alle',...new Set(data.map(x=>x.cat))];
