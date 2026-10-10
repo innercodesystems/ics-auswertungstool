@@ -1826,8 +1826,18 @@ body{padding-bottom:92px}
     }
   }
 
+  const linkedBelief=new URLSearchParams(location.search).get('ics_gs');
+  if(linkedBelief && /^GS-\\d{3}$/.test(linkedBelief)){
+    const target=details.find(d=>d.id===linkedBelief);
+    if(target){
+      clearSearch(false);
+      target.open=true;
+      if(status)status.textContent='Passender Glaubenssatz aus dem Schöpfer-Codefinder geöffnet.';
+      requestAnimationFrame(()=>target.scrollIntoView({behavior:'smooth',block:'start'}));
+    }
+  }
   const linkedTerm=new URLSearchParams(location.search).get('ics_suche');
-  if(linkedTerm && input){
+  if(linkedTerm && !linkedBelief && input){
     input.value=linkedTerm.slice(0,120);
     doSearch();
     if(!details.some(d=>!d.classList.contains('hidden-by-search'))){
