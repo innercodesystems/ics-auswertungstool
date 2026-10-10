@@ -93,6 +93,24 @@ function render(){
     return;
   }
   const matches=data.filter(x=>(active==='Alle'||x.cat===active)&&(!q||terms.some(t=>(x.old+' '+x.neo+' '+x.cat).toLowerCase().includes(t))));
+  // Bei einer Suche die inhaltlich treffendsten Codes zuerst zeigen.
+  // Ohne Suchbegriff bleibt die bisherige Reihenfolge unverändert.
+  if(q && terms.length){
+    const score=x=>{
+      const old=x.old.toLowerCase(),neo=x.neo.toLowerCase(),cat=x.cat.toLowerCase();
+      let points=0;
+      if(old.includes(q)) points+=12;
+      if(neo.includes(q)) points+=10;
+      if(cat.includes(q)) points+=3;
+      for(const term of terms){
+        if(old.includes(term)) points+=5;
+        if(neo.includes(term)) points+=4;
+        if(cat.includes(term)) points+=1;
+      }
+      return points;
+    };
+    matches.sort((a,b)=>score(b)-score(a)||a.id-b.id);
+  }
   const shown=matches.slice(0,visibleCount);
   currentResultIds=shown.map(x=>x.id);
   hint.textContent=matches.length?shown.length+' von '+matches.length+' passenden Codes. Wähle einen aus oder entdecke weitere.':'Kein Treffer – versuche ein anderes Wort oder Thema.';
