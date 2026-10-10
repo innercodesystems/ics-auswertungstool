@@ -246,6 +246,22 @@ function showRelatedCategory(id){
   render();
   document.getElementById('grid').scrollIntoView({behavior:'smooth',block:'start'});
 }
+// Ähnliche Codes auf Basis gemeinsamer aussagekräftiger Begriffe ermitteln.
+// Bestehende IDs und die aktuelle Suche bleiben dabei unverändert.
+function relatedCodeSuggestions(x){
+  const stop=new Set(['ich','mich','mir','mein','meine','meinen','muss','darf','kann','nicht','alles','immer','heute','wenn','auch','eine','einen','einem','und','oder','das','die','der','den','dem','mit','bei','für','von','auf','aus','ist','sein','werden','habe','haben','ohne','erst','dass','was','wie','mehr','weniger','selbst','schritt','thema','bewusst','neue','neuen','neuer','eigenen','meiner','meinem','meine','anderen','etwas','wieder','schon','noch','alle','müssen','können','dürfen']);
+  const words=t=>new Set((t.toLocaleLowerCase('de-DE').match(/[a-zäöüß]{4,}/g)||[]).filter(w=>!stop.has(w)));
+  const base=words(x.old+' '+x.neo);
+  const candidates=data.filter(y=>y.id!==x.id&&y.cat===x.cat).map(y=>{
+    const w=words(y.old+' '+y.neo);
+    let score=0;
+    base.forEach(term=>{if(w.has(term))score+=2});
+    return {item:y,score};
+  }).sort((a,b)=>b.score-a.score||a.item.id-b.item.id);
+  const best=candidates.filter(y=>y.score>0).slice(0,3);
+  if(best.length<3)best.push(...candidates.filter(y=>!best.some(z=>z.item.id===y.item.id)).slice(0,3-best.length));
+  return '<div class="section"><div class="label">VERWANDTE SCHÖPFER-CODES</div><p style="color:var(--muted);font-size:.9rem">Weitere Gedanken aus diesem Themenbereich, die zu deinem Code passen könnten:</p><div style="display:grid;gap:9px">'+best.map(({item})=>'<button class="btn alt" style="text-align:left;white-space:normal;line-height:1.45" onclick="openItem('+item.id+')">'+item.neo+'</button>').join('')+'</div></div>';
+}
 function relatedICSPaths(x){
   const topic=x.cat;
   const links=[
@@ -255,7 +271,7 @@ function relatedICSPaths(x){
   ];
   return '<div class="section"><div class="label">DEINE WEITEREN ICS-WEGE</div><p style="color:var(--muted);line-height:1.5">Dieses Thema gehört zu <b>'+topic+'</b>. Entdecke weitere Perspektiven in den vorhandenen ICS-Tools. Die Inhalte dort sind noch nicht einzeln mit diesem Code verknüpft.</p><div style="display:flex;gap:9px;flex-wrap:wrap">'+links.map(([name,path,desc])=>'<a class="btn alt" style="text-decoration:none;font-size:.86rem;padding:11px" title="'+desc+'" target="_blank" rel="noopener noreferrer" href="https://www.innercodesystems.com/'+path+'">'+name+' ↗</a>').join('')+'<div style="margin-top:12px"><button class="btn alt" type="button" style="font-size:.86rem;padding:11px" onclick="showRelatedCategory('+x.id+')">Weitere Schöpfer-Codes zu diesem Thema ↓</button></div></div>';
 }
-function openItem(id){currentItemId=id;const x=data.find(y=>y.id===id);const code=x.neo.replace(/[.!?]$/,'');document.getElementById('detail').innerHTML=`<div class="tag">${x.cat}</div><h2>Dein Schöpfer-Code</h2><div class="section"><div class="label">ÜBERLEBENSMODUS</div><div class="quote">„${x.old}“</div></div><div class="section"><div class="label">SCHÖPFERMODUS</div><div class="quote"><b>„${x.neo}“</b></div></div><div class="section"><div class="label">SPÜRE</div><p>Was verändert sich in dir, wenn du den neuen Satz langsam liest und nicht sofort bewertest?</p></div><div class="section"><div class="label">ENTSCHEIDE</div><p>Welche kleine Entscheidung würde heute eher zu diesem Schöpfermodus passen?</p></div><div class="section"><div class="label">HANDLE</div><p>Setze innerhalb der nächsten 24 Stunden eine kleine, konkrete Handlung um, die zu „${code}“ passt.</p></div>${relatedICSPaths(x)}<div class="choice-actions"><button class="btn" onclick="chooseCode(${x.id})">✓ Das trifft mich – übernehmen</button><button class="btn reject" onclick="rejectCode(${x.id})">✕ Trifft nicht zu – nächsten Code zeigen</button></div><div class="choice-note">Wähle nur, was sich für dich wirklich stimmig anfühlt.</div>`;document.getElementById('modal').classList.add('show')}
+function openItem(id){currentItemId=id;const x=data.find(y=>y.id===id);const code=x.neo.replace(/[.!?]$/,'');document.getElementById('detail').innerHTML=`<div class="tag">${x.cat}</div><h2>Dein Schöpfer-Code</h2><div class="section"><div class="label">ÜBERLEBENSMODUS</div><div class="quote">„${x.old}“</div></div><div class="section"><div class="label">SCHÖPFERMODUS</div><div class="quote"><b>„${x.neo}“</b></div></div><div class="section"><div class="label">SPÜRE</div><p>Was verändert sich in dir, wenn du den neuen Satz langsam liest und nicht sofort bewertest?</p></div><div class="section"><div class="label">ENTSCHEIDE</div><p>Welche kleine Entscheidung würde heute eher zu diesem Schöpfermodus passen?</p></div><div class="section"><div class="label">HANDLE</div><p>Setze innerhalb der nächsten 24 Stunden eine kleine, konkrete Handlung um, die zu „${code}“ passt.</p></div>${relatedCodeSuggestions(x)}${relatedICSPaths(x)}<div class="choice-actions"><button class="btn" onclick="chooseCode(${x.id})">✓ Das trifft mich – übernehmen</button><button class="btn reject" onclick="rejectCode(${x.id})">✕ Trifft nicht zu – nächsten Code zeigen</button></div><div class="choice-note">Wähle nur, was sich für dich wirklich stimmig anfühlt.</div>`;document.getElementById('modal').classList.add('show')}
 let selectedCodes=[];
 function chooseCode(id){const x=data.find(y=>y.id===id);if(!x)return;rejectedIds.delete(id);const payload={id:x.id,category:x.cat,survival:x.old,creator:x.neo,selectedAt:new Date().toISOString()};if(!selectedCodes.some(y=>y.id===id))selectedCodes.push(payload);showNextAfterChoice(id)}
 function showNextAfterChoice(id){const handled=new Set([...rejectedIds,...selectedCodes.map(x=>x.id)]);const pool=currentResultIds.filter(x=>!handled.has(x));if(!pool.length){showChoiceSummary();return}openItem(pool[0])}
