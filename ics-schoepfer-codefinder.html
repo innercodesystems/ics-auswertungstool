@@ -303,5 +303,17 @@ function abortCodefinder(){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 if(window.ICSNavigation) window.ICSNavigation.abort=abortCodefinder;
+function bindCodefinderAbort(){
+  const button=document.querySelector('[data-ics-abort]');
+  if(!button)return;
+  const replacement=button.cloneNode(true);
+  replacement.addEventListener('click',function(event){
+    event.preventDefault();
+    abortCodefinder();
+  });
+  button.replaceWith(replacement);
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bindCodefinderAbort);
+else bindCodefinderAbort();
 </script>
 </body></html>
