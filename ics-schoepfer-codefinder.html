@@ -130,6 +130,26 @@ function resetFinder(){visibleCount=3;render()}
 function searchCodes(){active="Alle";visibleCount=3;makeCats();render()}
 function makeCats(){document.getElementById('cats').innerHTML=cats.map(c=>`<button class="cat ${c===active?'active':''}" onclick="active='${c.replaceAll("'","\\'")}';makeCats();resetFinder()">${c}</button>`).join('')}
 let currentResultIds=[];
+// ICS Suchwort-Katalog: Alltagssprache, Gefühle und typische Suchanliegen.
+// Kategorien werden nur als Rückfall verwendet, wenn kein konkreter Code den Begriff enthält.
+const icsSearchTopics={
+  "Gedanken & Sorgen":["grübeln","gedankenkarussell","kopfkarussell","überdenken","zerdenken","sorgen","besorgnis","befürchtung","panik","angstzustand","nervosität","innere unruhe","rastlosigkeit","kontrollzwang","kontrollbedürfnis","perfektionismus","fehlerangst","versagensangst","katastrophendenken","schwarzmalerei","pessimismus","gedankenspirale","sich verrückt machen","schlaflose gedanken","negative gedanken","zwangsgedanken","sorgenfalle","gedankendruck","unsicher fühlen","ungewissheit","zukunftsangst","zweifeln","zweifel","ängstlichkeit","befangen"],
+  "Beziehung & Verbindung":["einsam","einsamkeit","alleinsein","verlassenheit","verlassen werden","verlustangst","eifersucht","misstrauen","streit","konflikt","partnerschaft","ehe","trennung","scheidung","nähe","distanz","bindung","bindungsangst","beziehungsangst","harmoniebedürfnis","konfliktscheu","liebeskummer","herzschmerz","enttäuschung","zurückweisung","abweisung","missverständnis","kommunikation","vertrauensbruch","verletzung","vergebung","familienstreit","zugehörigkeit","anerkannt werden","zuneigung","verbundenheit"],
+  "Selbstwert & Identität":["mutlosigkeit","mutlos","minderwertigkeit","wertlosigkeit","wertlos","nicht gut genug","ich bin nicht gut genug","selbstkritik","selbsthass","selbstzweifel","unselbstständig","scham","schüchternheit","schüchtern","unselbstsicher","selbstbewusstsein","selbstvertrauen","selbstachtung","selbstliebe","selbstannahme","selbstakzeptanz","unsichtbar fühlen","nicht gesehen","sich vergleichen","vergleichsdruck","anerkennungsdrang","bestätigung suchen","impostor","hoch stapler","hochstaplergefühl","identitätskrise","sich selbst finden","sich verbiegen","authentisch sein","zu wenig sein","sich klein machen","mangelnder mut"],
+  "Arbeit & Leistung":["stress","arbeitsstress","zeitdruck","termindruck","leistungsdruck","überforderung","überlastung","ausgebrannt","burnout","erschöpfung im job","arbeitsangst","jobangst","kündigung","karriere","beruf","arbeit","chef","kollegen","team","delegieren","prokrastination","aufschieben","aufgabenstau","perfektionsdruck","erfolgsdruck","fehlermachen","fehler machen","arbeitsbelastung","produktivität","arbeitsmotivation","fokusverlust","multitasking","überstunden","pausenlos","funktionieren müssen","dauerfunktionieren","pflichtgefühl"],
+  "Grenzen & Bedürfnisse":["nein sagen","nicht nein sagen können","people pleasing","es allen recht machen","anpassung","überanpassung","ausgenutzt","ausnutzung","grenzüberschreitung","grenzenlos","abgrenzung","selbstaufgabe","selbstschutz","bedürfnisse","bedürfnis","rücksicht","respektlosigkeit","wut","ärger","frust","frustration","unterdrückte wut","schuldgefühle","schlechtes gewissen","konflikt vermeiden","rechtfertigen","druck von außen","fremdbestimmung","sich behaupten","eigene meinung","nicht gehört werden","nicht ernst genommen","übergriffig","verletzte grenzen","raum brauchen","rücksichtslos"],
+  "Entscheidungen & Klarheit":["entscheidungsschwäche","unentschlossen","unentschlossenheit","entscheidung","entscheidungsangst","entscheidung treffen","falsche entscheidung","zweifel","unsicherheit","ratlosigkeit","verwirrung","orientierungslos","unklarheit","klarheit","prioritäten","priorisieren","feststecken","stillstand","blockade","blockiert","aufschieben","prokrastinieren","abwägen","hin und her","ambivalenz","dilemma","sackgasse","richtungslos","überfordert mit entscheidungen","zweite meinung","bauchgefühl","intuition","sich entscheiden","zweifeln","nächster schritt","neuanfang wagen"],
+  "Geld & Sicherheit":["geldsorgen","geldangst","finanzangst","existenzangst","existenzsorgen","schulden","verschuldung","armutsangst","mangel","mangeldenken","finanzielle freiheit","finanzielle sicherheit","sicherheit","geld","finanzen","einkommen","verdienst","gehalt","preis","wert","teuer","sparen","ausgaben","investition","investieren","risiko","rücklagen","wohlstand","fülle","überfluss","geld verdienen","geld annehmen","geld verlieren","finanzstress","kontostand","rechnungen","reichtum"],
+  "Körper & Energie":["müdigkeit","müde","erschöpft","erschöpfung","antriebslosigkeit","energielos","energielosigkeit","kraftlos","kraftlosigkeit","schlafmangel","schlafstörung","schlaflosigkeit","schlaf","stresssymptome","anspannung","verspannung","ruhe","unruhe","regeneration","erholung","pause","pausen","körpergefühl","körperwahrnehmung","körpervertrauen","körperbild","selbstfürsorge","gesundheit","bewegungsmangel","bewegung","überlastung","übermüdung","ausruhen","ausbrennen","atem","atmen","atemnot"],
+  "Veränderung & Loslassen":["loslassen","nicht loslassen können","abschied","trauer","traurigkeit","traurig","verlust","veränderungsangst","angst vor veränderung","neuanfang","neustart","umbruch","wandel","wechsel","umziehen","trennung verarbeiten","vergangenheit","verzeihen","vergebung","festhalten","alte muster","gewohnheiten","gewohnheit ändern","neues wagen","angst vor neuem","abschließen","akzeptanz","akzeptieren","veränderung","kontrollverlust","übergang","lebenskrise","krise","rückschlag","scheitern","veränderungsdruck","unsicherer neubeginn"],
+  "Leben & Orientierung":["sinnlosigkeit","sinnkrise","sinnsuche","lebenssinn","lebensaufgabe","berufung","vision","ziele","zielklarheit","richtung","orientierung","lebensweg","lebensfreude","freude","glück","zufriedenheit","dankbarkeit","leere","innere leere","hoffnungslosigkeit","hoffnung","mut","zuversicht","motivation","lebenslust","lebensqualität","selbstverwirklichung","träume","träumen","werte","wertorientierung","authentizität","zukunft","perspektive","perspektivlosigkeit","lebensentscheidung","neugier"]
+};
+function normalizeSearch(v){return v.toLocaleLowerCase('de-DE').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/ß/g,'ss').trim()}
+function findTopicCategories(query){
+  const q=normalizeSearch(query);
+  if(q.length<3)return [];
+  return Object.entries(icsSearchTopics).filter(([cat,words])=>words.some(w=>{const term=normalizeSearch(w);return q===term || (q.length>=5 && term.includes(q)) || (term.length>=5 && q.includes(term))})).map(([cat])=>cat);
+}
 function render(){
   const q=document.getElementById('q').value.trim().toLowerCase();
   const terms=q.split(/[·,;|]+|\s+/).map(s=>s.trim()).filter(s=>s.length>2);
@@ -162,7 +182,11 @@ function render(){
     hint.textContent='Wähle zuerst ein Thema, suche nach einem Begriff oder klicke auf „Impuls“ für einen einzelnen Code.';
     return;
   }
-  const matches=data.filter(x=>(q || active==='Alle'||x.cat===active)&&(!q||searchTerms.some(t=>(x.old+' '+x.neo+' '+x.cat).toLowerCase().includes(t))));
+  let matches=data.filter(x=>(q || active==='Alle'||x.cat===active)&&(!q||searchTerms.some(t=>(x.old+' '+x.neo+' '+x.cat).toLowerCase().includes(t))));
+  const topicCategories=q?findTopicCategories(q):[];
+  if(q && !matches.length && topicCategories.length){
+    matches=data.filter(x=>topicCategories.includes(x.cat));
+  }
   // Bei einer Suche die inhaltlich treffendsten Codes zuerst zeigen.
   // Ohne Suchbegriff bleibt die bisherige Reihenfolge unverändert.
   if(q && terms.length){
@@ -183,7 +207,7 @@ function render(){
   }
   const shown=matches.slice(0,visibleCount);
   currentResultIds=shown.map(x=>x.id);
-  hint.textContent=matches.length?shown.length+' von '+matches.length+' passenden Codes. Wähle einen aus oder entdecke weitere.':'Kein Treffer – versuche ein anderes Wort oder Thema.';
+  hint.textContent=matches.length?shown.length+' von '+matches.length+' passenden Codes'+(q&&topicCategories.length&&!matches.some(x=>searchTerms.some(t=>(x.old+' '+x.neo+' '+x.cat).toLowerCase().includes(t))))?' aus verwandten Themen':'')+'. Wähle einen aus oder entdecke weitere.':'Kein Treffer – versuche ein anderes Wort oder Thema.';
   grid.innerHTML=shown.length?shown.map(x=>`<div class="item" data-id="${x.id}" onclick="openItem(${x.id})"><div class="tag">${x.cat}</div><div class="old">${x.old}</div><div class="arrow">↓</div><div class="new">${x.neo}</div></div>`).join(''):`<div class="empty">Kein passender Code gefunden. Probiere ein anderes Wort oder wähle ein anderes Thema.</div>`;
   if(matches.length>shown.length || shown.length>3){
     grid.insertAdjacentHTML('beforeend',`<div style="grid-column:1/-1;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;padding:12px">
