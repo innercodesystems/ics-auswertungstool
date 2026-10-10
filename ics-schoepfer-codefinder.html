@@ -23,18 +23,19 @@
 function goBack(){
   const website='https://www.innercodesystems.com/tool-bibliothek.html';
   const app='https://app.innercodesystems.com/?view=meinics';
-  try {
-    const ref=document.referrer?new URL(document.referrer):null;
-    if(ref && ref.hostname==='app.innercodesystems.com'){window.location.href=app;return;}
-    if(ref && (ref.hostname==='www.innercodesystems.com'||ref.hostname==='innercodesystems.com'||ref.hostname==='innercodesystems.github.io') && ref.href!==location.href){
-      window.location.href=ref.href;return;
-    }
-    // Persönliche Themen können aus der App stammen; bei direktem Einstieg bleibt die App erreichbar.
-    if(new URLSearchParams(location.search).has('themes')){window.location.href=app;return;}
-  }catch(e){}
-  window.location.href=website;
+  const params=new URLSearchParams(location.search);
+  const from=(params.get('from')||'').toLowerCase();
+  let destination=website;
+  if(from==='app'||from==='meinics'||params.has('themes')) destination=app;
+  else {
+    try {
+      const ref=document.referrer?new URL(document.referrer):null;
+      if(ref && ref.hostname==='app.innercodesystems.com') destination=app;
+    }catch(e){}
+  }
+  window.location.assign(destination);
 }
-    
+
 const raw=[
 ['Gedanken & Sorgen','Ich muss alles kontrollieren.','Ich konzentriere mich auf das, was ich wirklich beeinflussen kann.'],['Gedanken & Sorgen','Was, wenn alles schiefgeht?','Ich richte meinen Blick auf das, was ich jetzt vorbereiten und gestalten kann.'],['Gedanken & Sorgen','Ich muss sofort eine Lösung finden.','Ich darf erst Klarheit schaffen und dann handeln.'],['Gedanken & Sorgen','Ich kann nicht aufhören zu grübeln.','Ich unterbreche die Schleife und kehre zu dem zurück, was jetzt real ist.'],['Gedanken & Sorgen','Meine Gedanken sind bestimmt wahr.','Ich kann meine Gedanken beobachten, ohne ihnen automatisch zu folgen.'],['Gedanken & Sorgen','Ich muss alles verstehen.','Ich darf auch durch Erfahrung Klarheit gewinnen.'],['Gedanken & Sorgen','Ich darf nichts übersehen.','Ich kann sorgfältig sein, ohne permanent in Alarmbereitschaft zu bleiben.'],['Gedanken & Sorgen','Ich brauche absolute Sicherheit.','Ich kann mit ausreichender Klarheit den nächsten Schritt wählen.'],['Gedanken & Sorgen','Ich denke lieber noch länger darüber nach.','Ich prüfe, ob mir wirklich Information fehlt oder ob ich Entscheidung vermeide.'],['Gedanken & Sorgen','Ich muss wissen, wie es ausgeht.','Ich brauche nicht das ganze Ergebnis zu kennen, um den nächsten Schritt zu gehen.'],['Gedanken & Sorgen','Bestimmt passiert wieder etwas.','Ich begegne dem, was tatsächlich geschieht, statt dem, was ich befürchte.'],['Gedanken & Sorgen','Ich muss vorbereitet sein auf alles.','Ich bereite das Wesentliche vor und vertraue mir im Umgang mit dem Rest.'],['Gedanken & Sorgen','Ich komme aus meinen Gedanken nicht heraus.','Ich bringe meine Aufmerksamkeit bewusst zurück in meinen Körper und ins Jetzt.'],['Gedanken & Sorgen','Ich darf mich nicht entspannen.','Ich darf Sicherheit auch ohne permanente Wachsamkeit erleben.'],['Gedanken & Sorgen','Ich muss das Problem im Kopf lösen.','Ich kann Klarheit auch durch Spüren, Sprechen und Handeln gewinnen.'],
 ['Beziehung & Verbindung','Ich muss es allen recht machen.','Ich darf verbunden bleiben und gleichzeitig bei mir sein.'],['Beziehung & Verbindung','Ich darf niemanden enttäuschen.','Ich darf ehrlich entscheiden, auch wenn jemand anderes etwas anderes möchte.'],['Beziehung & Verbindung','Ich darf diese Person nicht verlieren.','Ich kann Verbindung wünschen, ohne mich selbst festzuhalten.'],['Beziehung & Verbindung','Er oder sie müsste sich ändern.','Ich richte meinen Blick auf meinen eigenen Handlungsspielraum.'],['Beziehung & Verbindung','Ich muss die Beziehung retten.','Ich darf ehrlich wahrnehmen, was zwischen uns tatsächlich möglich ist.'],['Beziehung & Verbindung','Ich brauche die Zustimmung des anderen.','Ich darf zuerst prüfen, was für mich stimmig ist.'],['Beziehung & Verbindung','Wenn der andere glücklich ist, geht es mir gut.','Ich übernehme Verantwortung für mein eigenes Erleben.'],['Beziehung & Verbindung','Ich muss gebraucht werden.','Ich darf wertvoll sein, ohne unentbehrlich zu sein.'],['Beziehung & Verbindung','Ich sage lieber nichts, damit kein Streit entsteht.','Ich kann respektvoll aussprechen, was für mich wichtig ist.'],['Beziehung & Verbindung','Ich muss festhalten.','Ich darf Verbindung Raum geben statt sie zu kontrollieren.'],['Beziehung & Verbindung','Ohne ihn oder sie schaffe ich es nicht.','Ich kann Nähe leben und gleichzeitig auf meinen eigenen Füßen stehen.'],['Beziehung & Verbindung','Ich muss mich anpassen, damit wir verbunden bleiben.','Echte Verbindung darf auch meine Wahrheit enthalten.'],['Beziehung & Verbindung','Der andere bestimmt, wie ich mich fühle.','Ich nehme meine Reaktion wahr und entscheide, wie ich damit umgehen möchte.'],['Beziehung & Verbindung','Ich muss mich erklären, damit man mich versteht.','Ich darf mich klar ausdrücken, ohne mich endlos zu rechtfertigen.'],['Beziehung & Verbindung','Ich brauche eine Antwort vom anderen.','Ich darf auch ohne sofortige Antwort bei mir bleiben.'],
@@ -104,5 +105,8 @@ if(personal){
   hero.insertAdjacentHTML('afterend','<div style="max-width:720px;margin:0 auto 24px;padding:16px 18px;border:1px solid rgba(184,146,79,.5);border-radius:16px;background:rgba(184,146,79,.08);"><div class="brand">AUS DEINER ICS-AUSWERTUNG</div><p style="margin:8px 0 0;color:var(--muted);">Wir zeigen dir zuerst Codes, die zu deinen aktuellen Themen <strong style="color:var(--cream);">'+personal.replace(/[<>]/g,'')+'</strong> passen.</p></div>');
 }
 makeCats();render();
-</script><script src="./ics-navigation-standard.js?v=20260930-nav1"></script>
+</script><script src="./ics-navigation-standard.js?v=20260930-nav1"></script><script>
+/* Dieser Codefinder hat zwei feste, sichere Rückwege; keine gespeicherte Fremd-Herkunft verwenden. */
+if(window.ICSNavigation) window.ICSNavigation.abort=goBack;
+</script>
 </body></html>
