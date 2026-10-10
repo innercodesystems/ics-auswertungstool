@@ -97,7 +97,12 @@ function render(){
   currentResultIds=shown.map(x=>x.id);
   hint.textContent=matches.length?shown.length+' von '+matches.length+' passenden Codes. Wähle einen aus oder entdecke weitere.':'Kein Treffer – versuche ein anderes Wort oder Thema.';
   grid.innerHTML=shown.length?shown.map(x=>`<div class="item" data-id="${x.id}" onclick="openItem(${x.id})"><div class="tag">${x.cat}</div><div class="old">${x.old}</div><div class="arrow">↓</div><div class="new">${x.neo}</div></div>`).join(''):`<div class="empty">Kein passender Code gefunden. Probiere ein anderes Wort oder wähle ein anderes Thema.</div>`;
-  if(matches.length>shown.length) grid.insertAdjacentHTML('beforeend',`<div style="grid-column:1/-1;text-align:center;padding:12px"><button class="btn alt" onclick="visibleCount+=3;render()">Weitere passende Codes anzeigen ↓</button></div>`);
+  if(matches.length>shown.length || shown.length>3){
+    grid.insertAdjacentHTML('beforeend',`<div style="grid-column:1/-1;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;padding:12px">
+      ${shown.length>3?'<button class="btn alt" onclick="visibleCount=Math.max(3,visibleCount-3);render()">↑ Weniger anzeigen</button>':''}
+      ${matches.length>shown.length?'<button class="btn alt" onclick="visibleCount+=3;render()">Weitere passende Codes anzeigen ↓</button>':''}
+    </div>`);
+  }
 }
 let currentItemId=null;
 function openItem(id){currentItemId=id;const x=data.find(y=>y.id===id);const code=x.neo.replace(/[.!?]$/,'');document.getElementById('detail').innerHTML=`<div class="tag">${x.cat}</div><h2>Dein Schöpfer-Code</h2><div class="section"><div class="label">ÜBERLEBENSMODUS</div><div class="quote">„${x.old}“</div></div><div class="section"><div class="label">SCHÖPFERMODUS</div><div class="quote"><b>„${x.neo}“</b></div></div><div class="section"><div class="label">SPÜRE</div><p>Was verändert sich in dir, wenn du den neuen Satz langsam liest und nicht sofort bewertest?</p></div><div class="section"><div class="label">ENTSCHEIDE</div><p>Welche kleine Entscheidung würde heute eher zu diesem Schöpfermodus passen?</p></div><div class="section"><div class="label">HANDLE</div><p>Setze innerhalb der nächsten 24 Stunden eine kleine, konkrete Handlung um, die zu „${code}“ passt.</p></div><div class="choice-actions"><button class="btn" onclick="chooseCode(${x.id})">✓ Das trifft mich – übernehmen</button><button class="btn reject" onclick="rejectCode(${x.id})">✕ Trifft nicht zu – nächsten Code zeigen</button></div><div class="choice-note">Wähle nur, was sich für dich wirklich stimmig anfühlt.</div>`;document.getElementById('modal').classList.add('show')}
