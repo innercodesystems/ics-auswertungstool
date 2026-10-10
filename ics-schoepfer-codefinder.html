@@ -293,6 +293,15 @@ restoreFinderState();makeCats();render();
 document.getElementById("q").addEventListener("input",searchCodes);
 </script><script src="./ics-navigation-standard.js?v=20260930-nav1"></script><script>
 /* Dieser Codefinder hat zwei feste, sichere Rückwege; keine gespeicherte Fremd-Herkunft verwenden. */
-if(window.ICSNavigation) window.ICSNavigation.abort=goBack;
+function abortCodefinder(){
+  closeModal();
+  document.getElementById('q').value='';
+  active='Alle';
+  visibleCount=3;
+  makeCats();
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+if(window.ICSNavigation) window.ICSNavigation.abort=abortCodefinder;
 </script>
 </body></html>
