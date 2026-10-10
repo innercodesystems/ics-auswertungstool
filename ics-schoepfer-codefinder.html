@@ -70,14 +70,61 @@ const expansionThemes={
 'Körper & Energie':['Erschöpfung ernst nehmen','Pausen','Körpersignale','Schlaf','Bewegung','Anspannung lösen','Energie einteilen','Regeneration','Tempo reduzieren','Körpervertrauen'],
 'Veränderung & Loslassen':['Altes lösen','Übergänge','Kontrollverlust','Neubeginn','Gewohnheiten verändern','Abschied','Unbekanntes','Identität wandeln','Geduld im Wandel','Schritt für Schritt'],
 'Leben & Orientierung':['Sinn','Lebensrichtung','Freude','Neugier','Vision','Selbstvertrauen','Werte','Neuanfang','Dankbarkeit','eigener Weg']};
-const expansionFrames=[
-  // Einheitliche, grammatisch saubere Formulierungen auch bei Stichworten wie „Nein sagen“ oder „Schlaf“.
-  (t)=>[`Beim Thema „${t}“ muss ich alles unter Kontrolle haben.`,`Beim Thema „${t}“ darf ich unterscheiden, was ich beeinflussen kann und was nicht.`],
-  (t)=>[`Beim Thema „${t}“ darf niemand merken, dass ich unsicher bin.`,`Auch beim Thema „${t}“ darf ich offen sein, Fragen stellen und meinen eigenen Weg finden.`],
-  (t)=>[`Solange das Thema „${t}“ ungelöst ist, darf ich nicht zur Ruhe kommen.`,`Ich darf zur Ruhe kommen, auch wenn beim Thema „${t}“ noch nicht alles geklärt ist.`],
-  (t)=>[`Beim Thema „${t}“ muss ich an meinen bisherigen Mustern festhalten.`,`Beim Thema „${t}“ kann ich heute einen kleinen, bewussten Schritt anders gehen.`]
-];
-Object.entries(expansionThemes).forEach(([cat,themes])=>themes.forEach(t=>expansionFrames.forEach(f=>{const [old,neo]=f(t);raw.push([cat,old,neo])})));
+// Vier unterschiedliche Perspektiven je Thema: Druck, Selbstwert, Ruhe und Handlung.
+// Kategorien erhalten eigene, passende Aussagen statt identischer Universalsätze.
+const categoryPerspectives={
+'Gedanken & Sorgen':[
+t=>[`Wenn ich an „${t}“ denke, muss ich sofort eine Lösung finden.`,`Ich kann den Gedanken wahrnehmen und erst prüfen, was jetzt wirklich zu tun ist.`],
+t=>[`Dass mich „${t}“ beschäftigt, zeigt, dass ich nicht stark genug bin.`,`Auch mit offenen Fragen kann ich mir selbst vertrauen.`],
+t=>[`Wegen „${t}“ darf ich nicht entspannen.`,`Ich darf meinem Kopf eine Pause gönnen, ohne das Thema zu verdrängen.`],
+t=>[`Ich muss mich weiter im Kreis um „${t}“ drehen.`,`Ich wähle einen hilfreichen Gedanken und lasse den Rest für heute stehen.`]],
+'Beziehung & Verbindung':[
+t=>[`Bei „${t}“ muss ich dafür sorgen, dass alles harmonisch bleibt.`,`Ich darf ehrlich sein, auch wenn nicht sofort Einigkeit entsteht.`],
+t=>[`Wenn „${t}“ schwierig wird, stimmt etwas mit mir nicht.`,`Mein Wert hängt nicht davon ab, wie andere reagieren.`],
+t=>[`Ich muss „${t}“ sofort klären, sonst verliere ich die Verbindung.`,`Ich darf mir Zeit nehmen und dennoch in Verbindung bleiben.`],
+t=>[`Bei „${t}“ muss ich meine Bedürfnisse zurückstellen.`,`Ich kann meine Bedürfnisse freundlich und deutlich aussprechen.`]],
+'Selbstwert & Identität':[
+t=>[`Bei „${t}“ muss ich beweisen, dass ich gut genug bin.`,`Mein Wert ist nicht an einen Beweis gebunden.`],
+t=>[`Wenn mir „${t}“ schwerfällt, bin ich weniger wert.`,`Ich darf lernen, ohne mich dabei abzuwerten.`],
+t=>[`Ich muss beim Thema „${t}“ so sein, wie andere mich erwarten.`,`Ich darf meine eigene Haltung entdecken und zeigen.`],
+t=>[`Erst wenn „${t}“ gelingt, kann ich stolz auf mich sein.`,`Ich erkenne heute auch kleine, ehrliche Schritte an.`]],
+'Arbeit & Leistung':[
+t=>[`Bei „${t}“ muss ich immer mehr leisten.`,`Ich darf Wirkung vor bloße Anstrengung stellen.`],
+t=>[`Wenn „${t}“ nicht perfekt läuft, habe ich versagt.`,`Ein unvollkommener Schritt kann wertvoll und ausreichend sein.`],
+t=>[`Für „${t}“ darf ich keine Pause brauchen.`,`Erholung gehört zu verantwortungsvollem Handeln.`],
+t=>[`Ich muss „${t}“ allein bewältigen.`,`Ich darf Unterstützung nutzen und Prioritäten setzen.`]],
+'Grenzen & Bedürfnisse':[
+t=>[`Bei „${t}“ darf ich niemanden enttäuschen.`,`Ich darf klar sein, ohne die Gefühle anderer kontrollieren zu müssen.`],
+t=>[`Wenn ich bei „${t}“ für mich einstehe, bin ich egoistisch.`,`Meine Bedürfnisse verdienen ebenso Beachtung wie die anderer.`],
+t=>[`Ich muss „${t}“ lange aushalten, bevor ich etwas sage.`,`Ich darf frühzeitig und respektvoll benennen, was für mich stimmt.`],
+t=>[`Bei „${t}“ muss ich mich rechtfertigen.`,`Ich kann meine Grenze ruhig formulieren und dabei bleiben.`]],
+'Entscheidungen & Klarheit':[
+t=>[`Bei „${t}“ darf ich keinen Fehler machen.`,`Ich darf mit den Informationen entscheiden, die heute verfügbar sind.`],
+t=>[`Wenn ich bei „${t}“ zweifle, kann ich mir nicht vertrauen.`,`Zweifel dürfen da sein, ohne meine Handlungsfähigkeit zu bestimmen.`],
+t=>[`Vor „${t}“ muss ich absolute Gewissheit haben.`,`Klarheit kann auch durch den nächsten kleinen Schritt entstehen.`],
+t=>[`Ich muss bei „${t}“ alle Möglichkeiten offenhalten.`,`Ich darf eine Richtung wählen und später bewusst nachjustieren.`]],
+'Geld & Sicherheit':[
+t=>[`Bei „${t}“ muss ich ständig mit dem Schlimmsten rechnen.`,`Ich darf Zahlen prüfen und daraus sachliche Entscheidungen ableiten.`],
+t=>[`Wie ich mit „${t}“ umgehe, bestimmt meinen persönlichen Wert.`,`Mein Selbstwert ist größer als mein finanzieller Status.`],
+t=>[`Wegen „${t}“ darf ich mich nie sicher fühlen.`,`Ich kann Sicherheit durch Übersicht und passende Schritte stärken.`],
+t=>[`Bei „${t}“ darf ich keine Fragen stellen.`,`Ich darf nachfragen, vergleichen und mir Zeit für Entscheidungen nehmen.`]],
+'Körper & Energie':[
+t=>[`Bei „${t}“ muss mein Körper einfach funktionieren.`,`Ich darf die Signale meines Körpers ernst nehmen.`],
+t=>[`Wenn mir „${t}“ schwerfällt, bin ich schwach.`,`Mein Körper braucht Fürsorge, keinen Leistungsbeweis.`],
+t=>[`Für „${t}“ habe ich keine Zeit.`,`Ich darf kleine Momente für Regeneration einplanen.`],
+t=>[`Ich muss bei „${t}“ über meine Grenzen gehen.`,`Ich wähle heute ein Tempo, das zu meinen Möglichkeiten passt.`]],
+'Veränderung & Loslassen':[
+t=>[`Bei „${t}“ muss ich wissen, wie alles ausgeht.`,`Ich darf mich verändern, ohne den ganzen Weg zu kennen.`],
+t=>[`Wenn „${t}“ mich verunsichert, bin ich nicht bereit.`,`Unsicherheit darf ein Teil von Wachstum sein.`],
+t=>[`Ich muss bei „${t}“ am Vertrauten festhalten.`,`Ich kann würdigen, was war, und trotzdem Neues zulassen.`],
+t=>[`Bei „${t}“ muss ich sofort alles umstellen.`,`Ich darf Veränderungen in tragfähigen Schritten gestalten.`]],
+'Leben & Orientierung':[
+t=>[`Bei „${t}“ muss ich die eine richtige Antwort finden.`,`Ich darf meinen Weg erkunden, statt ihn sofort festzulegen.`],
+t=>[`Wenn „${t}“ unklar ist, bin ich gescheitert.`,`Orientierung entsteht auch durch Erfahrung und neue Fragen.`],
+t=>[`Erst wenn „${t}“ geklärt ist, darf ich zufrieden sein.`,`Ich darf schon heute Momente von Sinn und Freude erleben.`],
+t=>[`Bei „${t}“ muss ich fremden Erwartungen folgen.`,`Ich darf meine Werte prüfen und eine eigene Richtung wählen.`]]
+};
+Object.entries(expansionThemes).forEach(([cat,themes])=>themes.forEach(t=>categoryPerspectives[cat].forEach(f=>{const [old,neo]=f(t);raw.push([cat,old,neo])})));
 const data=raw.map((x,i)=>({id:i+1,cat:x[0],old:x[1],neo:x[2]}));let visibleCount=3;let active='Alle';const cats=['Alle',...new Set(data.map(x=>x.cat))];
 function resetFinder(){visibleCount=3;render()}
 function makeCats(){document.getElementById('cats').innerHTML=cats.map(c=>`<button class="cat ${c===active?'active':''}" onclick="active='${c.replaceAll("'","\\'")}';makeCats();resetFinder()">${c}</button>`).join('')}
