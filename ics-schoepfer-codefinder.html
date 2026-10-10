@@ -21,13 +21,23 @@
   <script>
 
 function backDestination(){
+  const website='https://www.innercodesystems.com/tool-bibliothek.html';
+  const app='https://app.innercodesystems.com/?view=meinics';
   const params=new URLSearchParams(location.search);
   const from=(params.get('from')||'').toLowerCase();
-  if(from==='app'||from==='meinics'||params.has('themes')) return 'https://app.innercodesystems.com/?view=meinics';
-  try {if(document.referrer&&new URL(document.referrer).hostname==='app.innercodesystems.com') return 'https://app.innercodesystems.com/?view=meinics';}catch(e){}
-  return 'https://www.innercodesystems.com/tool-bibliothek.html';
+  if(from==='app'||from==='meinics'||params.has('themes')) return app;
+  try{
+    const ref=document.referrer?new URL(document.referrer):null;
+    if(ref && ref.origin!==location.origin || ref && ref.pathname!==location.pathname){
+      if(ref.hostname==='app.innercodesystems.com') return app;
+      if(['www.innercodesystems.com','innercodesystems.com','innercodesystems.github.io'].includes(ref.hostname)){
+        if(ref.pathname!==location.pathname && !ref.pathname.endsWith('/ics-gestaltungs-codefinder.html')) return ref.href;
+      }
+    }
+  }catch(e){}
+  return website;
 }
-function goBack(){window.location.href=backDestination();}
+function goBack(){window.location.assign(backDestination());}
 document.querySelectorAll('.codefinder-back').forEach(link=>link.href=backDestination());
 
 const raw=[
