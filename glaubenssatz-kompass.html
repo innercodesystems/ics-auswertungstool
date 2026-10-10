@@ -1833,14 +1833,16 @@ body{padding-bottom:92px}
       clearSearch(false);
       target.open=true;
       if(status)status.textContent='Passender Glaubenssatz aus dem Schöpfer-Codefinder geöffnet.';
-      // Erst nach dem vollständigen Seitenaufbau zum Ziel springen.
-      // Ein früher Scroll wird bei langen Seiten durch spätere Layoutänderungen zurückgesetzt.
       const jumpToBelief=()=>{
         target.open=true;
-        target.scrollIntoView({behavior:'instant',block:'start'});
+        target.classList.remove('hidden-by-search');
+        target.scrollIntoView({behavior:'auto',block:'start'});
       };
-      if(document.readyState==='complete')jumpToBelief();
-      else window.addEventListener('load',()=>setTimeout(jumpToBelief,180),{once:true});
+      // Wiederholter Abgleich schützt vor späteren Layoutänderungen und Scroll-Restoration.
+      requestAnimationFrame(()=>requestAnimationFrame(jumpToBelief));
+      window.addEventListener('load',()=>setTimeout(jumpToBelief,250),{once:true});
+      setTimeout(jumpToBelief,900);
+      setTimeout(jumpToBelief,1800);
     }
   }
   const linkedTerm=new URLSearchParams(location.search).get('ics_suche');
