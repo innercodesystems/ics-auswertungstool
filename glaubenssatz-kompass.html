@@ -2104,5 +2104,32 @@ document.addEventListener('click', function(e){
  });
  setTimeout(updateWorldLinks,60);
 })();
-</script><script src="./ics-navigation-standard.js?v=20260930-nav1"></script>\n<div style="text-align:center;padding:24px 16px;font-size:12px;color:#777"><a href="https://www.innercodesystems.com/impressum.html" style="color:inherit">Impressum</a> · <a href="https://www.innercodesystems.com/datenschutz.html" style="color:inherit">Datenschutz</a></div>
+</script><script src="./ics-navigation-standard.js?v=20260930-nav1"></script><script>
+(function(){
+  function resetBeliefSelection(){
+    document.querySelectorAll('details.entry[open]').forEach(function(entry){entry.open=false;});
+    document.querySelectorAll('details.entry.hidden-by-search, .category.hidden-by-search').forEach(function(el){el.classList.remove('hidden-by-search');});
+    const search=document.getElementById('beliefSearch');
+    if(search)search.value='';
+    const status=document.getElementById('searchStatus');
+    if(status)status.textContent='Alle 50 Glaubenssätze werden angezeigt.';
+    const url=new URL(location.href);
+    url.searchParams.delete('ics_gs');
+    url.searchParams.delete('ics_suche');
+    history.replaceState(history.state,'',url.pathname+url.search+url.hash);
+    const start=document.getElementById('startauswahl');
+    if(start)start.scrollIntoView({behavior:'smooth',block:'start'});
+    else window.scrollTo({top:0,behavior:'smooth'});
+  }
+  window.ICSNavigation=window.ICSNavigation||{};
+  window.ICSNavigation.abort=resetBeliefSelection;
+  document.addEventListener('click',function(event){
+    const button=event.target.closest('[data-ics-abort]');
+    if(!button)return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    resetBeliefSelection();
+  },true);
+})();
+</script>\n<div style="text-align:center;padding:24px 16px;font-size:12px;color:#777"><a href="https://www.innercodesystems.com/impressum.html" style="color:inherit">Impressum</a> · <a href="https://www.innercodesystems.com/datenschutz.html" style="color:inherit">Datenschutz</a></div>
 </body></html>
