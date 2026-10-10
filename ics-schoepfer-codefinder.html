@@ -275,7 +275,7 @@ function matchedBeliefs(x){
 function linkedBeliefHTML(x){
   const matches=matchedBeliefs(x);
   if(!matches.length)return '';
-  return '<div class="section"><div class="label">MÖGLICHERWEISE PASSENDE GLAUBENSSÄTZE</div><p style="color:var(--muted);font-size:.9rem">Aus dem bestehenden ICS Glaubenssatz-Kompass · anhand gemeinsamer Begriffe vorgeschlagen, nicht persönlich diagnostiziert.</p><div style="display:grid;gap:8px">'+matches.map(b=>'<a class="btn alt" style="text-decoration:none;text-align:left;white-space:normal" target="_blank" rel="noopener noreferrer" href="https://www.innercodesystems.com/glaubenssatz-kompass.html?ics_gs='+b.id+'">'+b.title+' ↗</a>').join('')+'</div></div>';
+  return '<div class="section"><div class="label">MÖGLICHERWEISE PASSENDE GLAUBENSSÄTZE</div><p style="color:var(--muted);font-size:.9rem">Aus dem bestehenden ICS Glaubenssatz-Kompass · anhand gemeinsamer Begriffe vorgeschlagen, nicht persönlich diagnostiziert.</p><div style="display:grid;gap:8px">'+matches.map(b=>'<a class="btn alt" style="text-decoration:none;text-align:left;white-space:normal" target="_blank" rel="noopener noreferrer" href="https://www.innercodesystems.com/glaubenssatz-kompass.html?ics_gs='+b.id+'&ics_from='+encodeURIComponent(location.href)+'">'+b.title+' ↗</a>').join('')+'</div></div>';
 }
 function relatedICSPaths(x){
   const topic=x.cat;
