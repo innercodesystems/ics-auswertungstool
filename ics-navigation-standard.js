@@ -43,27 +43,7 @@
   if(typeof window.ICSNavigation.abort!=='function'){
     window.ICSNavigation.abort=defaultAbort;
   }
-  function makeButton(label,attribute,action){
-    const button=document.createElement('button');
-    button.type='button';
-    button.setAttribute(attribute,'1');
-    button.textContent=label;
-    button.style.cssText='padding:9px 13px;min-height:42px;border:1px solid rgba(184,146,79,.65);border-radius:999px;background:rgba(26,24,21,.96);color:#f6f1e7;font:600 14px system-ui;cursor:pointer;box-shadow:0 4px 18px rgba(0,0,0,.18)';
-    button.addEventListener('click',function(e){e.preventDefault();action();});
-    return button;
-  }
-  function install(){
-    if(!document.body)return;
-    const abortExists=!!document.querySelector('[data-ics-abort]');
-    const backExists=!!document.querySelector('[data-ics-back]');
-    if(abortExists&&backExists)return;
-    const bar=document.createElement('nav');
-    bar.setAttribute('aria-label','ICS Werkzeugnavigation');
-    bar.style.cssText='position:fixed;right:12px;top:12px;z-index:9999;display:flex;flex-wrap:wrap;gap:7px;max-width:calc(100vw - 24px)';
-    if(!abortExists)bar.appendChild(makeButton('✕ Abbrechen','data-ics-abort',function(){window.ICSNavigation.abort();}));
-    if(!backExists)bar.appendChild(makeButton('← Zurück','data-ics-back',function(){window.ICSNavigation.back();}));
-    if(bar.children.length)document.body.appendChild(bar);
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install);
-  else install();
+  // Keine global schwebenden Buttons: Navigation wird in jedem Tool
+  // passend zum vorhandenen Header platziert, um mobile Überlagerungen
+  // und doppelte Zurück-Buttons zu vermeiden.
 })();
