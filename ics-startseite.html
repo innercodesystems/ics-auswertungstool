@@ -946,7 +946,11 @@
 .ics-product-gateway:hover .ics-product-gateway-visual img{transform:translateY(-4px)}
 @media(max-width:760px){.ics-product-gateway{grid-template-columns:1fr;gap:24px}.ics-product-gateway-visual{height:220px;order:-1}.ics-product-gateway-visual img{max-height:220px}}
 </style>
-</head>
+<style id="ics-sticky-site-header-v1">
+/* Nur Sichtbarkeit: bestehende Gestaltung und Navigation bleiben erhalten. */
+@media (min-width:701px){body > header{position:sticky;top:0;z-index:800}}
+@media (max-width:700px){body > header{position:sticky;top:0;z-index:800}}
+</style></head>
 
 <body id="top">
 
