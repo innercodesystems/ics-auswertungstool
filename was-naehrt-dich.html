@@ -73,10 +73,28 @@ h2{font-size:28px;margin:0 0 8px}
 .deep-section-label{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:800;margin-bottom:10px}
 .route-links{display:grid;gap:10px;margin-top:16px}.route-link{display:block;padding:14px 16px;border-radius:14px;background:var(--gold);color:#1a1815!important;text-decoration:none;font-weight:800}.route-link.secondary{background:transparent;color:var(--cream)!important;border:1px solid rgba(184,146,79,.55)}
 </style>
+<style id="ics-nourish-header">
+.ics-nourish-header{position:sticky;top:0;z-index:950;background:#1a1815;border-bottom:1px solid rgba(212,160,58,.3)}
+.ics-nourish-header-inner{max-width:860px;margin:auto;padding:10px 16px;min-height:62px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.ics-nourish-brand{font-size:12px;letter-spacing:.09em;font-weight:800;color:#d4a03a;text-decoration:none}
+.ics-nourish-menu-btn{display:flex;align-items:center;justify-content:center;width:44px;height:44px;flex:0 0 44px;border:1px solid rgba(212,160,58,.55);border-radius:9px;background:#26211a;color:#f6f1e7;font-size:25px;cursor:pointer}
+.ics-nourish-menu{display:none;position:absolute;top:100%;right:max(16px,calc((100% - 860px)/2));width:min(300px,calc(100vw - 32px));max-height:calc(100dvh - 65px);overflow-y:auto;background:#242019;border:1px solid rgba(212,160,58,.4);border-radius:0 0 12px 12px;box-shadow:0 15px 30px #0006;padding:16px}
+.ics-nourish-menu.open{display:flex;flex-direction:column;gap:14px}
+.ics-nourish-menu a{color:#f6f1e7;text-decoration:none;font-size:13px;font-weight:700}
+.ics-nourish-menu a:hover{color:#d4a03a}
+</style>
 </head>
 <body>
+<header class="ics-nourish-header">
+<div class="ics-nourish-header-inner">
+<a class="ics-nourish-brand" href="ics-startseite.html">● INNER CODE SYSTEMS</a>
+<button id="icsNourishMenuButton" class="ics-nourish-menu-btn" type="button" aria-label="Menü öffnen" aria-controls="icsNourishMenu" aria-expanded="false">☰</button>
+</div>
+<nav id="icsNourishMenu" class="ics-nourish-menu" aria-label="ICS Navigation">
+<a href="ics-startseite.html">START</a><a href="inner.html">INNER</a><a href="body.html">BODY</a><a href="action.html">ACTION</a><a href="reset.html">RESET</a><a href="orientierung.html">ORIENTIERUNG</a><a href="persoenliche-begleitung.html">BEGLEITUNG</a><a href="ics-akademie.html">AKADEMIE</a><a href="tool-bibliothek.html">TOOL-BIBLIOTHEK</a><a href="https://app.innercodesystems.com/">MEIN ICS</a>
+</nav>
+</header>
 <div class="wrap">
-  <div class="brand"><span class="brand-dot"></span> INNER CODE SYSTEMS</div>
 
   <section id="start" class="hero">
     <div class="kicker">90-Sekunden-Check</div>
@@ -451,5 +469,16 @@ document.getElementById('restartBtn').onclick=()=>{document.querySelectorAll('[d
 </script>
 <script src="./ics-navigation-standard.js?v=20260930-nav1"></script>
 <div style="text-align:center;padding:24px 16px;font-size:12px;color:#777"><a href="https://www.innercodesystems.com/impressum.html" style="color:inherit">Impressum</a> · <a href="https://www.innercodesystems.com/datenschutz.html" style="color:inherit">Datenschutz</a></div>
+<script id="ics-nourish-menu-script">
+(function(){
+const b=document.getElementById('icsNourishMenuButton'),m=document.getElementById('icsNourishMenu');
+if(!b||!m)return;
+function close(){m.classList.remove('open');b.textContent='☰';b.setAttribute('aria-expanded','false')}
+b.addEventListener('click',function(){const open=m.classList.toggle('open');b.textContent=open?'×':'☰';b.setAttribute('aria-expanded',String(open))});
+m.querySelectorAll('a').forEach(a=>a.addEventListener('click',close));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+document.addEventListener('click',e=>{if(!m.contains(e.target)&&!b.contains(e.target))close()});
+})();
+</script>
 </body>
 </html>
