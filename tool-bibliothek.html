@@ -874,7 +874,13 @@ h1{
 @media (prefers-reduced-motion:reduce){.ics-new-header-logo{animation:none}}
 </style>
 
-<style id="ics-sticky-site-header-v1">body > header{position:sticky;top:0;z-index:800}</style></head>
+<style id="ics-sticky-site-header-v1">
+body > header{position:sticky;top:0;z-index:800}
+@media(max-width:700px){
+ body{padding-top:var(--ics-library-header-height,74px)}
+ body > header.header{position:fixed;top:0;left:0;right:0;width:100%;z-index:900}
+}
+</style></head>
 
 <body id="top">
 
@@ -2121,5 +2127,18 @@ document.addEventListener("DOMContentLoaded", function(){
 });
 </script>
   
-</body>
+<script id="ics-library-header-height-v1">
+(function(){
+ function init(){
+  var header=document.querySelector('body > header.header');
+  if(!header)return;
+  function measure(){document.body.style.setProperty('--ics-library-header-height',header.offsetHeight+'px')}
+  measure();
+  if(window.ResizeObserver)new ResizeObserver(measure).observe(header);
+  else window.addEventListener('resize',measure);
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);
+ else init();
+})();
+</script></body>
 </html>
