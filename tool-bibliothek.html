@@ -874,14 +874,7 @@ h1{
 @media (prefers-reduced-motion:reduce){.ics-new-header-logo{animation:none}}
 </style>
 
-<style id="ics-sticky-site-header-v1">
-/* Desktop: bestehendes Sticky-Verhalten. */
-body > header.header{position:sticky;top:0;z-index:800}
-@media(max-width:700px){
- body{padding-top:var(--ics-library-header-height,74px)}
- body > header.header{position:fixed!important;top:0!important;left:0!important;right:0!important;width:100%;z-index:900;transform:none!important;-webkit-transform:none!important}
-}
-</style></head>
+</head>
 
 <body id="top">
 
@@ -2128,23 +2121,5 @@ document.addEventListener("DOMContentLoaded", function(){
 });
 </script>
   
-<script id="ics-library-header-height-v1">
-(function(){
- function init(){
-  var header=document.querySelector('body > header.header');
-  if(!header)return;
-  function measure(){
-   document.body.style.setProperty('--ics-library-header-height',header.offsetHeight+'px');
-  }
-  measure();
-  if(window.ResizeObserver){
-   new ResizeObserver(measure).observe(header);
-  }else{
-   window.addEventListener('resize',measure);
-  }
- }
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);
- else init();
-})();
-</script></body>
+</body>
 </html>
