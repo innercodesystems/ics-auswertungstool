@@ -1599,7 +1599,15 @@ a.card:hover{
 }
 
 </style>
-<style id="ics-sticky-site-header-v1">body > header{position:sticky;top:0;z-index:800}</style></head>
+<style id="ics-sticky-site-header-v1">body > header{position:sticky;top:0;z-index:800}</style><style id="ics-massage-mobile-header-stable">
+@media(max-width:700px){
+ html,body{height:100%;height:100dvh;overflow:hidden}
+ body{display:flex;flex-direction:column;min-height:0}
+ body > header.header{position:relative;flex:0 0 78px;height:78px;min-height:78px;max-height:78px;padding:0 5%;z-index:950}
+ body > .ics-massage-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+ body > .mobile-menu.open{position:relative;flex:0 0 auto;max-height:calc(100dvh - 78px);overflow-y:auto;z-index:949}
+}
+</style></head>
 
 <body id="top">
 
@@ -1657,7 +1665,7 @@ a.card:hover{
 
   </nav>
 
-  <button class="menu-button" id="menuButton" aria-label="Menü öffnen">
+  <button class="menu-button" id="icsMenuButton" aria-label="Menü öffnen">
     ☰
   </button>
 
@@ -1676,6 +1684,7 @@ a.card:hover{
 </div>
 
 
+<div class="ics-massage-scroll" id="icsMassageScroll">
 <!-- =========================================
      HERO
 ========================================= -->
@@ -2679,7 +2688,7 @@ document.querySelectorAll('a[href]').forEach(function(link){
 <script>
 document.addEventListener("DOMContentLoaded", function(){
 
-  const button = document.getElementById("menuButton");
+  const button = document.getElementById("icsMenuButton");
   const menu = document.getElementById("mobileMenu");
 
   if(!button || !menu) return;
@@ -2699,5 +2708,6 @@ document.addEventListener("DOMContentLoaded", function(){
 });
 </script>
   
+</div>
 </body>
 </html>
