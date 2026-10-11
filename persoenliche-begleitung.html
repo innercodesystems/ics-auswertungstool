@@ -837,6 +837,10 @@
 @media (prefers-reduced-motion:reduce){.ics-new-header-logo{animation:none}}
 </style>
 <style id="ics-begleitung-mobile-header-stable">
+@media(min-width:701px){
+ body > header.site-header{position:sticky;top:0;z-index:950}
+}
+
 @media(max-width:700px){
  html,body{height:100%;height:100dvh;overflow:hidden}
  body{display:flex;flex-direction:column;min-height:0}
