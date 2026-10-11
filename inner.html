@@ -682,7 +682,11 @@ a.card:hover{
 }
 @media (prefers-reduced-motion:reduce){.ics-new-header-logo{animation:none}}
 </style>
-</head>
+<style id="ics-sticky-site-header-v1">
+/* Nur Sichtbarkeit: bestehende Gestaltung und Navigation bleiben erhalten. */
+@media (min-width:701px){body > header{position:sticky;top:0;z-index:800}}
+@media (max-width:700px){body > header{position:sticky;top:0;z-index:800}}
+</style></head>
 
 <body id="top">
   
