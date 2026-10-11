@@ -948,10 +948,15 @@
 </style>
 <style id="ics-sticky-site-header-v1">
 /* Nur Sichtbarkeit: bestehende Gestaltung und Navigation bleiben erhalten. */
-/* Der Startseiten-Header liegt innerhalb der Hero-Section.
-   Beim Scrollen wird er als feste Zeile oben gehalten. */
-.ics-home-hero > .ics-topbar{position:sticky;top:0;z-index:800}
-@supports not (position:sticky){.ics-home-hero > .ics-topbar{position:relative}}
+/* Startseiten-Header aus der kurzen Hero-Section heraus an den Viewport heften.
+   So bleibt er auch nach der Hero-Section beim Scrollen erreichbar. */
+.ics-home-hero > .ics-topbar{position:relative}
+body.ics-home-header-fixed{padding-top:var(--ics-home-header-height,112px)}
+body.ics-home-header-fixed .ics-home-hero > .ics-topbar{
+ position:fixed;top:0;left:50%;transform:translateX(-50%);
+ width:min(100%,1380px);z-index:900;
+ box-shadow:0 3px 14px rgba(26,24,21,.10)
+}
 </style></head>
 
 <body id="top">
@@ -2042,5 +2047,21 @@ document.addEventListener("DOMContentLoaded", function(){
 });
 </script>
   
-</body>
+<script id="ics-home-header-fixed-v1">
+(function(){
+ function init(){
+  var header=document.querySelector('.ics-home-hero > .ics-topbar');
+  if(!header)return;
+  var observer=window.ResizeObserver?new ResizeObserver(function(){
+   document.body.style.setProperty('--ics-home-header-height',header.offsetHeight+'px');
+  }):null;
+  document.body.style.setProperty('--ics-home-header-height',header.offsetHeight+'px');
+  document.body.classList.add('ics-home-header-fixed');
+  if(observer)observer.observe(header);
+  else window.addEventListener('resize',function(){document.body.style.setProperty('--ics-home-header-height',header.offsetHeight+'px')});
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);
+ else init();
+})();
+</script></body>
 </html>
