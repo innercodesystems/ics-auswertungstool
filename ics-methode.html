@@ -1169,7 +1169,14 @@ h1{
 
 </style>
 
-<style id="ics-sticky-site-header-v1">body > header{position:sticky;top:0;z-index:800}</style></head>
+<style id="ics-sticky-site-header-v1">body > header{position:sticky;top:0;z-index:800}</style><style id="ics-methode-menu-fix">
+.ics-methode-menu-button{display:flex;align-items:center;justify-content:center;flex:0 0 44px;width:44px;height:44px;border:1px solid #d4a03a66;border-radius:8px;background:#fffaf0;color:#1a1a1a;font-size:25px;cursor:pointer;margin-left:14px}
+.ics-methode-menu{display:none;position:fixed;top:74px;right:0;left:0;z-index:810;background:#fffaf0;border-bottom:1px solid #d4a03a66;box-shadow:0 12px 25px #1a1a1a20;padding:15px 5%;max-height:calc(100dvh - 74px);overflow-y:auto}
+.ics-methode-menu.open{display:flex;flex-direction:column;gap:14px}
+.ics-methode-menu a{color:#1a1a1a;text-decoration:none;font-size:13px;font-weight:700}
+@media(max-width:950px){body > header.header .ics-shared-menu-button{display:none!important}}
+</style>
+</head>
 
 <body id="top">
 
@@ -1229,8 +1236,11 @@ MEIN ICS
 </a>
 
 </nav>
-
+<button id="icsMethodeMenuButton" class="ics-methode-menu-button" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="icsMethodeMenu">☰</button>
 </header>
+<nav id="icsMethodeMenu" class="ics-methode-menu" aria-label="Mobile Navigation">
+<a href="ics-startseite.html">START</a><a href="inner.html">INNER</a><a href="body.html">BODY</a><a href="action.html">ACTION</a><a href="reset.html">RESET</a><a href="orientierung.html">ORIENTIERUNG</a><a href="persoenliche-begleitung.html">BEGLEITUNG</a><a href="ics-akademie.html">AKADEMIE</a><a href="https://app.innercodesystems.com/">MEIN ICS</a>
+</nav>
 
 
 <!-- =========================================
@@ -2379,5 +2389,15 @@ document.addEventListener("DOMContentLoaded",function(){
 
 </script>
 
+<script id="ics-methode-menu-script">
+(function(){
+ const b=document.getElementById('icsMethodeMenuButton'),m=document.getElementById('icsMethodeMenu');
+ if(!b||!m)return;
+ function close(){m.classList.remove('open');b.textContent='☰';b.setAttribute('aria-expanded','false')}
+ b.addEventListener('click',function(){const open=m.classList.toggle('open');b.textContent=open?'×':'☰';b.setAttribute('aria-expanded',String(open))});
+ m.querySelectorAll('a').forEach(a=>a.addEventListener('click',close));
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+})();
+</script>
 </body>
 </html>
