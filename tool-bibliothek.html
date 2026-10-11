@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ICS Tool-Bibliothek | Inner Code Systems</title>
+<title>TEST · ICS Tool-Bibliothek | Inner Code Systems</title>
 
 <style>
 
@@ -874,30 +874,17 @@ h1{
 @media (prefers-reduced-motion:reduce){.ics-new-header-logo{animation:none}}
 </style>
 
-<style id="ics-sticky-site-header-v2">
-/* Wie auf INNER/BODY/ACTION: vorhandenen Header sticky halten. */
-body > header.header{position:sticky;top:0;z-index:800}
+<style id="ics-mobile-scroll-isolation-test">
 @media(max-width:700px){
-  /* Mobile Höhe und Menüposition unabhängig vom Scrollen konstant halten. */
-  body > header.header{
-    height:74px;
-    min-height:74px;
-    max-height:74px;
-    padding:0 5%;
-    box-sizing:border-box;
-    align-items:center;
-    flex-wrap:nowrap;
-  }
-  body > header.header > .menu-button{
-    width:44px;
-    height:44px;
-    min-width:44px;
-    min-height:44px;
-    margin:0;
-    padding:0;
-    flex-shrink:0;
-    align-self:center;
-  }
+ html,body{height:100%;height:100dvh;overflow:hidden!important;margin:0}
+ body{display:flex;flex-direction:column;min-height:0}
+ body > header.header{position:relative!important;top:auto!important;flex:0 0 74px;height:74px;min-height:74px;max-height:74px;padding:0 5%;z-index:900}
+ body > header.header > .menu-button{flex:0 0 44px;width:44px;height:44px;padding:0;margin:0;align-self:center}
+ body > .ics-library-scroll-test{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain}
+ body > .ics-library-scroll-test > .mobile-menu{position:relative}
+ /* Das Menü bleibt unter dem festen Header, unabhängig vom Scrollbereich. */
+ body > .mobile-menu{position:relative;flex:0 0 auto;max-height:calc(100dvh - 74px);overflow-y:auto;z-index:899}
+ body > .ics-shared-mobile-menu{position:relative;flex:0 0 auto;max-height:calc(100dvh - 74px);overflow-y:auto;z-index:899}
 }
 </style>
 </head>
@@ -977,6 +964,8 @@ MEIN ICS
 <a href="https://app.innercodesystems.com/">MEIN ICS</a>
 
 </div>
+<div class="ics-library-scroll-test" id="icsLibraryScrollTest">
+
 
 
 <!-- =========================================
@@ -2147,5 +2136,6 @@ document.addEventListener("DOMContentLoaded", function(){
 });
 </script>
   
+</div>
 </body>
 </html>
