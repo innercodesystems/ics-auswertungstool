@@ -45,12 +45,22 @@ h1,h2,h3{font-family:"Playfair Display",serif;margin-top:0}h1{font-size:clamp(48
 .day-detail-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 @media(max-width:700px){.day{grid-template-columns:48px minmax(0,1fr);padding:20px;gap:12px}.day-number{width:46px;height:46px}.day h3{font-size:21px}.day-status{grid-column:2;grid-row:2}.day-toggle{grid-column:1/-1;grid-row:3}.day-detail{grid-row:4}.day-detail-grid{grid-template-columns:1fr}.mini-card{padding:18px}.day-pdf .button{width:100%;box-sizing:border-box}}
 </style>
+<style id="ics-reset-mobile-scroll-stable">
+@media(max-width:700px){
+ html,body{height:100%;height:100dvh;overflow:hidden!important}
+ body{display:flex;flex-direction:column;min-height:0}
+ body > header.header{position:relative!important;top:auto!important;flex:0 0 auto;z-index:950}
+ body > .ics-reset-page-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain}
+ body > .ics-shared-mobile-menu.open{position:relative;flex:0 0 auto;max-height:calc(100dvh - 82px);overflow-y:auto;z-index:949}
+}
+</style>
 </head>
 <body id="top">
 <header class="header">
 <a class="brand" href="ics-startseite.html"><span class="brand-mark">ICS</span><span><span class="brand-main">INNER CODE SYSTEMS</span><br><span class="brand-sub">BEWUSST · KLAR · WIRKSAM</span></span></a>
 <nav class="nav"><a href="ics-startseite.html">START</a><a href="inner.html">INNER</a><a href="body.html">BODY</a><a href="action.html">ACTION</a><a class="active" href="reset.html">RESET</a><a href="orientierung.html">ORIENTIERUNG</a><a href="https://app.innercodesystems.com/">MEIN ICS</a></nav>
 </header>
+<div class="ics-reset-page-scroll" id="icsResetPageScroll">
 
 <section class="hero"><div class="hero-inner"><div>
 <div class="kicker">INNER CODE SYSTEMS · DEIN NÄCHSTER SCHRITT</div>
@@ -86,6 +96,7 @@ h1,h2,h3{font-family:"Playfair Display",serif;margin-top:0}h1{font-size:clamp(48
 <section class="section"><div class="content"><div class="next"><div class="section-kicker">DEIN NÄCHSTER SCHRITT</div><h2>Nach sieben Tagen entscheidest du, was du weiterführen möchtest.</h2><p class="section-intro">Du kannst deine Erkenntnisse in MEIN ICS weiterführen, die RESET-Welt vertiefen oder über den Code Finder herausfinden, welches Thema als Nächstes zu dir passt.</p><div class="next-actions"><a class="button gold" href="ics-finder.html">Code Finder öffnen</a><a class="button secondary" href="reset.html">Zur RESET-Welt</a><a class="button secondary" href="https://app.innercodesystems.com/">Zu MEIN ICS</a></div></div></div></section>
 
 <footer class="footer"><div class="footer-inner"><div class="footer-top"><div><strong>INNER CODE SYSTEMS</strong><p>Bewusst wahrnehmen. Klarer erkennen. Neu entscheiden. Im Alltag verankern.</p></div><div class="footer-links"><a href="nachschlagewerk-test.html">Nachschlagewerk</a><a href="ics-akademie.html">ICS Akademie</a><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></div></div><div class="footer-bottom"><span>© 2026 Inner Code Systems · Peter Wicklein</span><a href="#top">Nach oben ↑</a></div></div></footer>
+</div>
 
 <script>
 const key='ics-reset-7tage-fortschritt';
