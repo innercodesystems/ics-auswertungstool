@@ -878,7 +878,7 @@ h1{
 body > header{position:sticky;top:0;z-index:800}
 @media(max-width:700px){
  body{padding-top:var(--ics-library-header-height,74px)}
- body > header.header{position:fixed!important;top:0!important;left:0!important;right:0!important;width:100%;z-index:900;transform:translate3d(0,0,0);-webkit-transform:translate3d(0,0,0);backface-visibility:hidden;-webkit-backface-visibility:hidden;contain:layout paint;isolation:isolate}
+ body > header.header{position:fixed!important;top:0!important;left:0!important;right:0!important;width:100%;z-index:900;transform:translate3d(0,var(--ics-header-scroll-correction,0px),0);-webkit-transform:translate3d(0,var(--ics-header-scroll-correction,0px),0);backface-visibility:hidden;-webkit-backface-visibility:hidden;isolation:isolate}
 }
 </style></head>
 
@@ -2135,6 +2135,30 @@ document.addEventListener("DOMContentLoaded", function(){
   function measure(){document.body.style.setProperty('--ics-library-header-height',header.offsetHeight+'px')}
   measure();
   if(window.ResizeObserver)new ResizeObserver(measure).observe(header);
+  // Mobile Browser können fixed-Elemente beim Ein-/Ausblenden ihrer Leisten
+  // visuell verschieben. Den tatsächlich gemessenen Abstand zu top:0 ausgleichen.
+  var correction=0,queued=false;
+  function stabilize(){
+   queued=false;
+   if(!window.matchMedia('(max-width:700px)').matches){
+    correction=0;
+    header.style.removeProperty('--ics-header-scroll-correction');
+    return;
+   }
+   var drift=header.getBoundingClientRect().top;
+   if(Math.abs(drift)>0.5){
+    correction=Math.max(-120,Math.min(120,correction-drift));
+    header.style.setProperty('--ics-header-scroll-correction',correction+'px');
+   }
+  }
+  function schedule(){if(!queued){queued=true;requestAnimationFrame(stabilize)}}
+  window.addEventListener('scroll',schedule,{passive:true});
+  window.addEventListener('resize',schedule,{passive:true});
+  if(window.visualViewport){
+   window.visualViewport.addEventListener('scroll',schedule,{passive:true});
+   window.visualViewport.addEventListener('resize',schedule,{passive:true});
+  }
+  schedule();
   else window.addEventListener('resize',measure);
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);
