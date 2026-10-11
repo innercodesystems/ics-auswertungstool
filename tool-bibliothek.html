@@ -878,7 +878,7 @@ h1{
 body > header{position:sticky;top:0;z-index:800}
 @media(max-width:700px){
  body{padding-top:var(--ics-library-header-height,74px)}
- body > header.header{position:fixed;top:0;left:0;right:0;width:100%;z-index:900}
+ body > header.header{position:fixed!important;top:0!important;left:0!important;right:0!important;width:100%;z-index:900;transform:translate3d(0,0,0);-webkit-transform:translate3d(0,0,0);backface-visibility:hidden;-webkit-backface-visibility:hidden;contain:layout paint;isolation:isolate}
 }
 </style></head>
 
