@@ -882,6 +882,9 @@ h1{
  body > header.header > .menu-button{flex:0 0 44px;width:44px;height:44px;padding:0;margin:0;align-self:center}
  body > .ics-library-scroll-test{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain}
  body > .ics-library-scroll-test > .mobile-menu{position:relative}
+ /* Das Menü bleibt unter dem festen Header, unabhängig vom Scrollbereich. */
+ body > .mobile-menu{position:relative;flex:0 0 auto;max-height:calc(100dvh - 74px);overflow-y:auto;z-index:899}
+ body > .ics-shared-mobile-menu{position:relative;flex:0 0 auto;max-height:calc(100dvh - 74px);overflow-y:auto;z-index:899}
 }
 </style>
 </head>
@@ -948,7 +951,6 @@ MEIN ICS
 
 </header>
 
-<div class="ics-library-scroll-test" id="icsLibraryScrollTest">
 <div class="mobile-menu" id="mobileMenu">
 
 <a href="https://innercodesystems.github.io/ics-auswertungstool/ics-startseite.html">START</a>
@@ -962,6 +964,8 @@ MEIN ICS
 <a href="https://app.innercodesystems.com/">MEIN ICS</a>
 
 </div>
+<div class="ics-library-scroll-test" id="icsLibraryScrollTest">
+
 
 
 <!-- =========================================
