@@ -23,12 +23,22 @@ footer{padding:34px 24px;text-align:center;border-top:1px solid rgba(212,160,58,
 
 .practice{background:#fffdf8}.practice-types{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:32px}.practice-type{padding:24px 16px;border:1px solid rgba(212,160,58,.3);border-radius:16px;background:#faf6ec}.practice-type h3{margin:0 0 8px;font:400 21px/1.15 Georgia,serif}.practice-type p{margin:0;color:#81796e;font-size:13px;line-height:1.55}.practice-type .status{display:inline-block;margin-top:14px;color:#ad812e;font-size:11px;font-weight:800;letter-spacing:.08em}.topics{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.topic{padding:8px 11px;border-radius:999px;background:#f5eedf;color:#706960;font-size:11px}.archive-note{margin-top:28px;padding:20px 22px;border-radius:14px;background:#1a1815;color:#c8c0b5;line-height:1.65}.archive-note strong{color:#d4a03a}@media(max-width:800px){.practice-types{grid-template-columns:1fr 1fr}}@media(max-width:430px){.practice-types{grid-template-columns:1fr}}
 </style>
-<style id="ics-sticky-site-header-v1">body > header{position:sticky;top:0;z-index:800}</style></head>
+<style id="ics-sticky-site-header-v1">body > header{position:sticky;top:0;z-index:800}</style><style id="ics-hd-header-menu">
+.ics-hd-header-actions{display:flex;align-items:center;gap:12px}
+.ics-hd-menu-button{width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:#fffdf8;border:1px solid #d4a03a66;border-radius:9px;color:#1a1815;font-size:24px;cursor:pointer}
+.ics-hd-menu{display:none;position:fixed;top:78px;left:0;right:0;z-index:25;background:#fffdf8;border-bottom:1px solid #d4a03a66;box-shadow:0 12px 25px #1a18151f;max-height:calc(100dvh - 78px);overflow-y:auto;padding:18px 5%}
+.ics-hd-menu.open{display:flex;flex-direction:column;gap:16px}
+.ics-hd-menu a{font-size:13px;font-weight:700;color:#1a1815;text-decoration:none}
+@media(max-width:500px){.ics-hd-header-actions{gap:6px}.ics-hd-header-actions .back{font-size:11px;padding:8px}.ics-hd-menu-button{width:40px;height:40px;flex-shrink:0}.brand strong{font-size:14px}.brand small{font-size:7px}}
+</style></head>
 <body>
 <header>
 <a class="brand" href="ics-akademie.html"><span><strong>INNER CODE SYSTEMS</strong><small>ICS AKADEMIE</small></span></a>
-<a class="back" href="ics-akademie.html">← Zur Akademie</a>
+<div class="ics-hd-header-actions"><a class="back" href="ics-akademie.html">← Zur Akademie</a><button type="button" id="icsHdMenuButton" class="ics-hd-menu-button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="icsHdMenu">☰</button></div>
 </header>
+<nav id="icsHdMenu" class="ics-hd-menu" aria-label="ICS Hauptnavigation">
+<a href="ics-startseite.html">START</a><a href="inner.html">INNER</a><a href="body.html">BODY</a><a href="action.html">ACTION</a><a href="reset.html">RESET</a><a href="orientierung.html">ORIENTIERUNG</a><a href="persoenliche-begleitung.html">BEGLEITUNG</a><a href="ics-akademie.html">AKADEMIE</a><a href="https://app.innercodesystems.com/">MEIN ICS</a>
+</nav>
 <main>
 <section class="hero"><div class="eyebrow">PERSÖNLICHKEIT · HUMAN DESIGN</div><h1>Deine Energie verstehen. Deinen eigenen Weg bewusster leben.</h1><p>Human Design ist ein System zur Selbstreflexion. Es beschreibt unterschiedliche energetische Grundmuster und lädt dazu ein, die eigene Entscheidungsweise, Wahrnehmung und Interaktion mit anderen bewusster zu beobachten.</p></section>
 <section class="intro"><div class="intro-inner"><div class="eyebrow">DER EINSTIEG</div><h2>Human Design nicht als Schublade – sondern als Experiment.</h2><p>Im Human Design wird aus Geburtsdatum, Geburtszeit und Geburtsort eine sogenannte BodyGraph-Grafik erstellt. Sie wird innerhalb des Systems anhand verschiedener Elemente gelesen. Für ICS steht dabei nicht das Etikett im Mittelpunkt, sondern die Frage: Was davon hilft dir, dich selbst bewusster wahrzunehmen und stimmigere Entscheidungen zu treffen?</p></div></section>
@@ -58,4 +68,13 @@ footer{padding:34px 24px;text-align:center;border-top:1px solid rgba(212,160,58,
 <section class="cta"><div class="eyebrow">DEIN NÄCHSTER SCHRITT</div><h2>Entdecke Human Design zuerst als Beobachtung deiner selbst.</h2><p>Beginne mit Typ, Strategie und Autorität. Beobachte im Alltag, was für dich nachvollziehbar und hilfreich ist, statt dich an Beschreibungen anzupassen.</p><a class="btn" href="ics-akademie.html">Zurück zur ICS Akademie</a> <a class="btn" href="nachschlagewerk-test.html">Zum ICS Nachschlagewerk</a></section>
 </main>
 <footer>INNER CODE SYSTEMS · Bewusst verstehen · neu gestalten<br><a href="https://www.innercodesystems.com/impressum.html">Impressum</a> · <a href="https://www.innercodesystems.com/datenschutz.html">Datenschutz</a></footer>
-</body></html>
+<script id="ics-hd-menu-script">
+(function(){
+const b=document.getElementById('icsHdMenuButton'),m=document.getElementById('icsHdMenu');
+if(!b||!m)return;
+function close(){m.classList.remove('open');b.textContent='☰';b.setAttribute('aria-expanded','false')}
+b.addEventListener('click',function(){const open=m.classList.toggle('open');b.textContent=open?'×':'☰';b.setAttribute('aria-expanded',String(open))});
+m.querySelectorAll('a').forEach(a=>a.addEventListener('click',close));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+})();
+</script></body></html>
