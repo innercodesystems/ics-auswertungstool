@@ -39,8 +39,8 @@ header{padding:16px 20px;border-bottom:1px solid #6e512c88;display:flex;justify-
 </div>
 </section>
 <p class="hint">Design-Demo · keine KI-Verbindung · keine Datenübertragung</p>
-<div class="demo"><strong>Was wir hier testen:</strong> Optik, mobile Bedienung und das Gefühl eines eigenen ICS KI-Begleiters. Die Master Engines sind in dieser Demo nicht eingebaut und bleiben geschützt.</div>
-</main>
+<button class="tab" id="resultButton" style="width:100%;margin-top:16px">Demo-Ergebnis ansehen →</button><div class="demo"><strong>Was wir hier testen:</strong> Optik, mobile Bedienung und das Gefühl eines eigenen ICS KI-Begleiters. Die Master Engines sind in dieser Demo nicht eingebaut und bleiben geschützt.</div>
+<section id="result" style="display:none;max-width:760px;margin:0 auto 70px;padding:0 18px"><div style="border:1px solid #8a6738;border-radius:20px;background:#15120e;padding:24px"><div class="eyebrow" style="text-align:left">DEIN ERGEBNIS</div><h2 style="font:normal 30px Georgia,serif;color:#edc987">Dein Klarheits-Moment</h2><p><b style="color:#dcb870">DEIN INNER CODE</b><br>Ich darf klar sehen, bewusst wählen und meinen nächsten Schritt gehen.</p><hr style="border:0;border-top:1px solid #49371f"><p><b style="color:#dcb870">DEINE ERKENNTNIS</b><br>Hier erscheint später die aus deinem Gespräch entstandene Erkenntnis.</p><p><b style="color:#dcb870">DEINE ENTSCHEIDUNG</b><br>Hier steht deine bewusst gewählte Entscheidung.</p><p><b style="color:#dcb870">DEINE MIKRO-HANDLUNG</b><br>Ein konkreter erster Schritt innerhalb der nächsten 24 Stunden.</p><div class="tabs" style="margin-bottom:0"><button class="tab" onclick="go('ACTION Mentor')">Mit ACTION weiter</button><button class="tab" onclick="go('RESET-Begleiter')">RESET starten</button><button class="tab" onclick="closeResult()">Abschließen</button><button class="tab" onclick="alert('Später nur mit deiner ausdrücklichen Zustimmung.')">In MEIN ICS speichern</button></div></div></section></main>
 <script>
 const copy={
 "Klarheits-Kompass":"Was beschäftigt dich gerade?\n\nSchreib einfach, was dir durch den Kopf geht. Ein Satz reicht.",
@@ -51,5 +51,8 @@ const copy={
 const name=document.getElementById("systemName"),welcome=document.getElementById("welcome"),messages=document.getElementById("messages"),input=document.getElementById("input");
 document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));t.classList.add("active");name.textContent=t.dataset.name;messages.querySelectorAll(".user,.demo-reply").forEach(x=>x.remove());welcome.innerText=copy[t.dataset.name];input.value=""});
 document.getElementById("send").onclick=()=>{const v=input.value.trim();if(!v)return;const u=document.createElement("div");u.className="bubble user";u.textContent=v;messages.append(u);const a=document.createElement("div");a.className="bubble ai demo-reply";a.textContent="Danke. In der nächsten Stufe antwortet hier die echte ICS Engine mit genau einer passenden nächsten Frage.";messages.append(a);input.value="";a.scrollIntoView({behavior:"smooth",block:"end"})};
+document.getElementById("resultButton").onclick=()=>{const r=document.getElementById("result");r.style.display="block";r.scrollIntoView({behavior:"smooth"})};
+function closeResult(){document.getElementById("result").style.display="none"}
+function go(target){const t=[...document.querySelectorAll(".tab[data-name]")].find(x=>x.dataset.name===target);if(t){t.click();closeResult();document.querySelector(".chat").scrollIntoView({behavior:"smooth"})}}
 </script>
 </body></html>
