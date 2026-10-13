@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>ICS KI-LAB – Design-Demo</title>
+<style>
+:root{--bg:#0b0a08;--panel:#15120e;--gold:#b8924f;--gold2:#e6c27c;--cream:#f6f1e7;--muted:#bdb2a2;--line:#70552f}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -10%,#34240f,#0b0a08 38%);color:var(--cream);font-family:Arial,Helvetica,sans-serif;min-height:100vh}
+header{padding:16px 20px;border-bottom:1px solid #6e512c88;display:flex;justify-content:space-between;align-items:center;gap:12px}header strong{font:14px Georgia,serif;letter-spacing:.15em;color:var(--gold2)}header span{font-size:11px;border:1px solid var(--line);padding:6px 9px;border-radius:20px;color:var(--gold2)}
+.wrap{max-width:760px;margin:auto;padding:42px 18px 70px}.eyebrow{text-align:center;color:var(--gold2);font-size:11px;letter-spacing:.2em;font-weight:bold}.title{text-align:center;font:normal clamp(34px,8vw,58px)/1.05 Georgia,serif;color:#edc987;margin:12px 0}.intro{text-align:center;color:var(--muted);line-height:1.6;max-width:570px;margin:0 auto 28px}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:25px 0}.tab{border:1px solid #604725;background:#15120e;color:#c9baa5;border-radius:9px;padding:10px 5px;font-size:11px}.tab.active{border-color:#d3a85e;color:#f3d79f;background:#251b0e}
+.chat{border:1px solid #71542e;border-radius:20px;background:linear-gradient(180deg,#18140f,#100e0b);overflow:hidden;box-shadow:0 25px 70px #0008}.chathead{padding:18px 20px;border-bottom:1px solid #49371f;display:flex;justify-content:space-between;align-items:center}.chathead b{font-family:Georgia,serif;color:#efd099}.status{font-size:11px;color:#bfa779}.messages{padding:25px 18px;min-height:330px}.bubble{max-width:88%;padding:15px 17px;border-radius:15px;line-height:1.55;font-size:15px;margin-bottom:15px}.ai{background:#211a11;border:1px solid #594221;border-top-left-radius:4px}.user{background:#312714;margin-left:auto;border:1px solid #80633b;border-top-right-radius:4px}.small{font-size:12px;color:#a99d8d;margin-bottom:8px}.composer{border-top:1px solid #49371f;padding:14px;display:flex;gap:8px;background:#100e0b}textarea{resize:none;flex:1;background:#211d17;color:var(--cream);border:1px solid #624a2b;border-radius:10px;padding:13px;font:15px Arial;min-height:52px}button{cursor:pointer}.send{border:0;border-radius:10px;background:linear-gradient(125deg,#f0d08b,#b88b43);color:#171107;font-weight:bold;padding:0 18px}.hint{text-align:center;color:#83796d;font-size:11px;margin-top:12px}.demo{margin-top:28px;border-left:3px solid var(--gold);background:#1b160f;padding:15px 17px;color:#cdbfa9;font-size:13px;line-height:1.55}
+@media(max-width:560px){.wrap{padding-top:30px}.tabs{grid-template-columns:repeat(2,1fr)}.messages{min-height:300px}.bubble{max-width:94%}}
+</style>
+</head>
+<body>
+<header><strong>INNER CODE SYSTEMS</strong><span>KI-LAB · DESIGN-DEMO</span></header>
+<main class="wrap">
+<div class="eyebrow">ICS KI-BEGLEITER</div>
+<h1 class="title">Dein Klarheits-Kompass</h1>
+<p class="intro"><strong>Vertrau dem Prozess.</strong><br>Manche Fragen können zunächst ungewöhnlich wirken. Ich folge deinen Antworten – nicht einem vorgefertigten Fragebogen.</p>
+<div class="tabs">
+<button class="tab active" data-name="Klarheits-Kompass">KLARHEIT</button>
+<button class="tab" data-name="RESET-Begleiter">RESET</button>
+<button class="tab" data-name="ACTION Mentor">ACTION</button>
+<button class="tab" data-name="Content Creator">CONTENT</button>
+</div>
+<section class="chat">
+<div class="chathead"><b id="systemName">Klarheits-Kompass</b><span class="status">● DEMO</span></div>
+<div class="messages" id="messages">
+<div class="small">INNER CODE SYSTEMS</div>
+<div class="bubble ai" id="welcome">Was beschäftigt dich gerade?<br><br>Schreib einfach, was dir durch den Kopf geht. Ein Satz reicht.</div>
+</div>
+<div class="composer">
+<textarea id="input" placeholder="Deine Antwort …" aria-label="Deine Antwort"></textarea>
+<button class="send" id="send">Weiter →</button>
+</div>
+</section>
+<p class="hint">Design-Demo · keine KI-Verbindung · keine Datenübertragung</p>
+<div class="demo"><strong>Was wir hier testen:</strong> Optik, mobile Bedienung und das Gefühl eines eigenen ICS KI-Begleiters. Die Master Engines sind in dieser Demo nicht eingebaut und bleiben geschützt.</div>
+</main>
+<script>
+const copy={
+"Klarheits-Kompass":"Was beschäftigt dich gerade?\n\nSchreib einfach, was dir durch den Kopf geht. Ein Satz reicht.",
+"RESET-Begleiter":"Welches Verhalten, welcher Gedanke oder welches Gefühl taucht bei dir immer wieder auf, obwohl du es gerne verändern möchtest?",
+"ACTION Mentor":"Was möchtest du gerade wirklich umsetzen?",
+"Content Creator":"Was möchtest du heute in Content verwandeln? Du kannst mit einem Gedanken, Erlebnis, Foto, Video oder ein paar Stichpunkten beginnen."
+};
+const name=document.getElementById("systemName"),welcome=document.getElementById("welcome"),messages=document.getElementById("messages"),input=document.getElementById("input");
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));t.classList.add("active");name.textContent=t.dataset.name;messages.querySelectorAll(".user,.demo-reply").forEach(x=>x.remove());welcome.innerText=copy[t.dataset.name];input.value=""});
+document.getElementById("send").onclick=()=>{const v=input.value.trim();if(!v)return;const u=document.createElement("div");u.className="bubble user";u.textContent=v;messages.append(u);const a=document.createElement("div");a.className="bubble ai demo-reply";a.textContent="Danke. In der nächsten Stufe antwortet hier die echte ICS Engine mit genau einer passenden nächsten Frage.";messages.append(a);input.value="";a.scrollIntoView({behavior:"smooth",block:"end"})};
+</script>
+</body></html>
