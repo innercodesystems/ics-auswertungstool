@@ -153,7 +153,8 @@ window.ICS = window.ICS || {};
 
     memory.gespraeche.unshift({
       zeit: analyse.zeit,
-      text: analyse.text.slice(0, 500),
+      // Raw text is optional and requires separate transcript consent.
+      text: ICS.mentorConsent?.allows("transcripts") ? analyse.text.slice(0, 500) : null,
       muster: analyse.musterIds,
       thema: analyse.thema ? analyse.thema.id : null,
       intensitaet: analyse.intensitaet
