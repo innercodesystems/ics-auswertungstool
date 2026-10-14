@@ -312,3 +312,18 @@ button:hover{
     align-items:flex-end;
   }
 }
+
+
+/* ICS Mentor 2.0 consent settings – test only */
+.ics-memory-settings{background:#fff;border:1px solid #e6d8b9;border-radius:18px;padding:22px;margin-bottom:20px;line-height:1.55}
+.ics-memory-settings h2{font-size:22px;margin-bottom:10px}
+.ics-memory-settings p{margin-bottom:12px}
+.ics-memory-choice{display:flex;align-items:flex-start;gap:10px;margin:12px 0;font-size:15px}
+.ics-memory-choice input{margin-top:4px;flex-shrink:0}
+.ics-memory-choice small{color:#6b665d}
+.ics-memory-hint{font-size:13px;color:#615b52}
+.ics-memory-actions{display:flex;flex-wrap:wrap;gap:8px}
+.ics-memory-actions button{padding:10px 13px;background:#fff;border:1px solid #c8a45d;border-radius:10px;color:#1c1c1c;cursor:pointer}
+.ics-memory-actions button:first-child{background:#c8a45d;color:#1c1c1c}
+#ics-memory-status{font-size:13px;margin-top:12px;margin-bottom:0}
+@media(max-width:600px){.ics-memory-settings{padding:16px}.ics-memory-actions button{width:100%}}
