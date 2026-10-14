@@ -34,6 +34,8 @@
       consent.revoke();
       consent.deleteMemories();
       refresh("Lokale Mentor-Erinnerungen gelöscht und Speicherung deaktiviert.");
+      // Clear the current in-memory conversation as well as persisted memory.
+      window.location.reload();
     } catch (_) { refresh("Löschen konnte nicht abgeschlossen werden."); }
   });
   refresh();
