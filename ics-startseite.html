@@ -1905,7 +1905,44 @@ document.querySelectorAll('a[href^="https://"], a[href^="http://"]').forEach(fun
   const appUrl='https://app.innercodesystems.com/';
   const promptWorldUrl='https://innercodesystems.github.io/ics-auswertungstool/prompt-world.html';
 
-  /* AKADEMIE · Desktop Navigation */
+  /* ics-nav-cleanup-v1 · klare Hauptnavigation */
+  if(desktopNav){
+    const links=Array.from(desktopNav.querySelectorAll(':scope > a'));
+    const byText=(label)=>links.find(a=>(a.textContent||'').trim().toUpperCase()===label);
+    const start=byText('START');
+    const akademie=byText('AKADEMIE');
+    const wegweiser=byText('WEGWEISER');
+    const mein=desktopNav.querySelector('.ics-mein');
+
+    ['INNER','BODY','ACTION','RESET','ORIENTIERUNG','BEGLEITUNG','TRIBE TO TRIBE'].forEach(label=>{
+      const a=byText(label); if(a) a.remove();
+    });
+
+    if(!desktopNav.querySelector('.ics-worlds-menu')){
+      const worlds=document.createElement('div');
+      worlds.className='ics-worlds-menu';
+      worlds.innerHTML='<button type="button" class="ics-worlds-toggle">WELTEN <span>⌄</span></button><div class="ics-worlds-dropdown"><a href="inner.html">INNER · Klarheit</a><a href="body.html">BODY · Energie</a><a href="action.html">ACTION · Umsetzung</a><a href="reset.html">RESET · Veränderung</a><a href="orientierung.html">ORIENTIERUNG · Richtung</a></div>';
+      if(akademie) desktopNav.insertBefore(worlds,akademie); else desktopNav.appendChild(worlds);
+    }
+
+    let ki=desktopNav.querySelector('a[href*="prompt-world.html"]');
+    if(!ki){
+      ki=document.createElement('a'); ki.href=promptWorldUrl; ki.textContent='KI-WELT';
+    }
+    if(mein) desktopNav.insertBefore(ki,mein); else desktopNav.appendChild(ki);
+    if(wegweiser && mein) desktopNav.insertBefore(wegweiser,ki);
+
+    if(!document.getElementById('ics-nav-cleanup-style')){
+      const s=document.createElement('style'); s.id='ics-nav-cleanup-style';
+      s.textContent='.ics-worlds-menu{position:relative}.ics-worlds-toggle{appearance:none;border:0;background:transparent;color:#1A1A1A;font:700 11px Arial,Helvetica,sans-serif;letter-spacing:.04em;padding:8px 0;cursor:pointer}.ics-worlds-toggle span{color:#D4A03A;margin-left:3px}.ics-worlds-dropdown{display:none;position:absolute;top:100%;left:-18px;z-index:2000;min-width:220px;padding:10px;background:#fffdf8;border:1px solid rgba(212,160,58,.22);border-radius:10px;box-shadow:0 14px 34px rgba(26,26,26,.14)}.ics-worlds-dropdown a{display:block!important;padding:10px 11px;white-space:nowrap;border-radius:6px}.ics-worlds-dropdown a:hover{background:rgba(212,160,58,.08)}.ics-worlds-menu:hover .ics-worlds-dropdown,.ics-worlds-menu:focus-within .ics-worlds-dropdown,.ics-worlds-menu.open .ics-worlds-dropdown{display:block}';
+      document.head.appendChild(s);
+    }
+    const toggle=desktopNav.querySelector('.ics-worlds-toggle');
+    const worlds=desktopNav.querySelector('.ics-worlds-menu');
+    if(toggle&&worlds) toggle.addEventListener('click',()=>worlds.classList.toggle('open'));
+  }
+
+    /* AKADEMIE · Desktop Navigation */
   const desktopNav=document.querySelector('.ics-nav');
   if(desktopNav && !desktopNav.querySelector('a[href*="ics-akademie.html"]')){
     const link=document.createElement('a');
@@ -1934,7 +1971,23 @@ document.querySelectorAll('a[href^="https://"], a[href^="http://"]').forEach(fun
     mobileNav.insertBefore(link,mein || null);
   }
 
-  /* PROMPT WORLD · Mobile Navigation */
+  /* Mobile Navigation · kompakt, Welten als eigener Block */
+  if(mobileNav){
+    const mlinks=Array.from(mobileNav.querySelectorAll(':scope > a'));
+    const mbyText=(label)=>mlinks.find(a=>(a.textContent||'').trim().toUpperCase()===label);
+    ['INNER','BODY','ACTION','RESET','ORIENTIERUNG','BEGLEITUNG','TRIBE TO TRIBE'].forEach(label=>{
+      const a=mbyText(label); if(a) a.remove();
+    });
+    if(!mobileNav.querySelector('.ics-mobile-worlds')){
+      const block=document.createElement('div');
+      block.className='ics-mobile-worlds';
+      block.innerHTML='<div style="color:#D4A03A;font-size:11px;font-weight:800;letter-spacing:.12em;margin-bottom:9px">WELTEN</div><div style="display:grid;gap:10px;padding-left:10px"><a href="inner.html">INNER · Klarheit</a><a href="body.html">BODY · Energie</a><a href="action.html">ACTION · Umsetzung</a><a href="reset.html">RESET · Veränderung</a><a href="orientierung.html">ORIENTIERUNG · Richtung</a></div>';
+      const ma=mbyText('AKADEMIE');
+      if(ma) mobileNav.insertBefore(block,ma); else mobileNav.prepend(block);
+    }
+  }
+
+    /* PROMPT WORLD · Mobile Navigation */
   if(mobileNav && !mobileNav.querySelector('a[href*="prompt-world.html"]')){
     const link=document.createElement('a');
     link.href=promptWorldUrl;
