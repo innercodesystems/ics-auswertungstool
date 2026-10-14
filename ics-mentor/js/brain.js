@@ -31,7 +31,13 @@ window.ICS = window.ICS || {};
       if (!ICS.mentorConsent?.allows("insights")) return leererSpeicher();
       const roh = localStorage.getItem(STORAGE_KEY);
       if(!roh) return leererSpeicher();
-      return Object.assign(leererSpeicher(), JSON.parse(roh));
+      const memory = Object.assign(leererSpeicher(), JSON.parse(roh));
+      // An insights-only choice must never expose legacy conversation excerpts.
+      if (!ICS.mentorConsent?.allows("transcripts")) {
+        memory.gespraeche = (Array.isArray(memory.gespraeche) ? memory.gespraeche : [])
+          .map(item => ({ ...item, text: null }));
+      }
+      return memory;
     } catch(e){
       return leererSpeicher();
     }
