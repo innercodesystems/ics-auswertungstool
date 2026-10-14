@@ -945,6 +945,15 @@
 .ics-product-gateway-visual img{display:block;max-width:100%;max-height:280px;width:auto;height:auto;object-fit:contain;filter:drop-shadow(0 18px 24px rgba(0,0,0,.28));transition:transform .45s ease}
 .ics-product-gateway:hover .ics-product-gateway-visual img{transform:translateY(-4px)}
 @media(max-width:760px){.ics-product-gateway{grid-template-columns:1fr;gap:24px}.ics-product-gateway-visual{height:220px;order:-1}.ics-product-gateway-visual img{max-height:220px}}
+
+/* ICS Hauptnavigation – statisch, ohne JavaScript-Abhängigkeit */
+.ics-worlds-menu{position:relative;display:flex;align-items:center}
+.ics-worlds-toggle{border:0;background:transparent;color:#1a1a1a;font-size:11px;font-weight:700;letter-spacing:.04em;cursor:pointer;padding:10px 0}
+.ics-worlds-dropdown{display:none;position:absolute;top:100%;left:-16px;z-index:3000;min-width:225px;background:#fffdf8;border:1px solid #d4a03a55;border-radius:9px;padding:10px;box-shadow:0 12px 28px #0002}
+.ics-worlds-dropdown a{display:block;padding:10px 12px;white-space:nowrap}
+.ics-worlds-menu:hover .ics-worlds-dropdown,.ics-worlds-menu:focus-within .ics-worlds-dropdown{display:block}
+.ics-mobile-worlds summary{font-size:13px;font-weight:700;letter-spacing:.04em;cursor:pointer;color:#1a1a1a}
+.ics-mobile-worlds a{display:block;margin:13px 0 0 14px}
 </style>
 <style id="ics-sticky-site-header-v1">
 /* Nur Sichtbarkeit: bestehende Gestaltung und Navigation bleiben erhalten. */
@@ -1011,22 +1020,21 @@ body.ics-home-header-fixed .ics-home-hero > .ics-topbar{
         </a>
 
        <nav class="ics-nav" aria-label="ICS Navigation">
-
-<a class="ics-start-active" href="https://innercodesystems.github.io/ics-auswertungstool/ics-startseite.html">START</a>
-<a href="https://innercodesystems.github.io/ics-auswertungstool/inner.html">INNER</a>
-<a href="https://innercodesystems.github.io/ics-auswertungstool/body.html">BODY</a>
-<a href="https://innercodesystems.github.io/ics-auswertungstool/action.html">ACTION</a>
-<a href="https://innercodesystems.github.io/ics-auswertungstool/reset.html">RESET</a>
-<a href="https://innercodesystems.github.io/ics-auswertungstool/orientierung.html">ORIENTIERUNG</a>
-<a href="https://innercodesystems.github.io/ics-auswertungstool/persoenliche-begleitung.html">BEGLEITUNG</a>
-<a href="https://innercodesystems.github.io/ics-auswertungstool/ics-akademie.html">AKADEMIE</a>
+<a class="ics-start-active" href="ics-startseite.html">START</a>
+<div class="ics-worlds-menu">
+  <button type="button" class="ics-worlds-toggle" aria-expanded="false" aria-controls="icsWorldsDropdown">WELTEN ▾</button>
+  <div class="ics-worlds-dropdown" id="icsWorldsDropdown">
+    <a href="inner.html">INNER · Klarheit</a>
+    <a href="body.html">BODY · Energie</a>
+    <a href="action.html">ACTION · Umsetzung</a>
+    <a href="reset.html">RESET · Veränderung</a>
+    <a href="orientierung.html">ORIENTIERUNG · Richtung</a>
+  </div>
+</div>
+<a href="ics-akademie.html">AKADEMIE</a>
 <a href="ics-wegweiser-vorschau.html">WEGWEISER</a>
-<a href="tribe-to-tribe.html">TRIBE TO TRIBE</a>
-
-<a class="ics-mein" href="https://app.innercodesystems.com/">
-  MEIN ICS
-</a>
-
+<a href="prompt-world.html">KI-WELT</a>
+<a class="ics-mein" href="https://app.innercodesystems.com/">MEIN ICS</a>
 </nav>
 
 <button class="ics-menu-button" id="icsMenuButton" aria-label="Menü öffnen">
@@ -1036,17 +1044,18 @@ body.ics-home-header-fixed .ics-home-hero > .ics-topbar{
 </header>
 
 <div class="ics-mobile-menu" id="icsMobileMenu">
-  <a href="https://innercodesystems.github.io/ics-auswertungstool/ics-startseite.html">START</a>
-  <a href="https://innercodesystems.github.io/ics-auswertungstool/inner.html">INNER</a>
-  <a href="https://innercodesystems.github.io/ics-auswertungstool/body.html">BODY</a>
-  <a href="https://innercodesystems.github.io/ics-auswertungstool/action.html">ACTION</a>
-  <a href="https://innercodesystems.github.io/ics-auswertungstool/reset.html">RESET</a>
-<a href="https://innercodesystems.github.io/ics-auswertungstool/orientierung.html">ORIENTIERUNG</a>
-<a href="https://innercodesystems.github.io/ics-auswertungstool/persoenliche-begleitung.html">BEGLEITUNG</a>
-<a href="https://innercodesystems.github.io/ics-auswertungstool/ics-akademie.html">AKADEMIE</a>
+<a href="ics-startseite.html">START</a>
+<details class="ics-mobile-worlds"><summary>WELTEN</summary>
+  <a href="inner.html">INNER · Klarheit</a>
+  <a href="body.html">BODY · Energie</a>
+  <a href="action.html">ACTION · Umsetzung</a>
+  <a href="reset.html">RESET · Veränderung</a>
+  <a href="orientierung.html">ORIENTIERUNG · Richtung</a>
+</details>
+<a href="ics-akademie.html">AKADEMIE</a>
 <a href="ics-wegweiser-vorschau.html">WEGWEISER</a>
-<a href="tribe-to-tribe.html">TRIBE TO TRIBE</a>
-  <a class="ics-mein-mobile" href="https://app.innercodesystems.com/">MEIN ICS</a>
+<a href="prompt-world.html">KI-WELT</a>
+<a class="ics-mein-mobile" href="https://app.innercodesystems.com/">MEIN ICS</a>
 </div>
 
       <div class="ics-hero-grid">
@@ -1904,95 +1913,6 @@ document.querySelectorAll('a[href^="https://"], a[href^="http://"]').forEach(fun
   const toolsUrl='https://innercodesystems.github.io/ics-auswertungstool/tool-bibliothek.html';
   const appUrl='https://app.innercodesystems.com/';
   const promptWorldUrl='https://innercodesystems.github.io/ics-auswertungstool/prompt-world.html';
-
-  /* ics-nav-cleanup-v2 · klare Hauptnavigation */
-  const desktopNav=document.querySelector('.ics-nav');
-  if(desktopNav){
-    const links=Array.from(desktopNav.querySelectorAll(':scope > a'));
-    const byText=(label)=>links.find(a=>(a.textContent||'').trim().toUpperCase()===label);
-    const akademie=byText('AKADEMIE');
-    const wegweiser=byText('WEGWEISER');
-    const mein=desktopNav.querySelector('.ics-mein');
-
-    ['INNER','BODY','ACTION','RESET','ORIENTIERUNG','BEGLEITUNG','TRIBE TO TRIBE'].forEach(label=>{
-      const a=byText(label); if(a) a.remove();
-    });
-
-    if(!desktopNav.querySelector('.ics-worlds-menu')){
-      const worlds=document.createElement('div');
-      worlds.className='ics-worlds-menu';
-      worlds.innerHTML='<button type="button" class="ics-worlds-toggle">WELTEN <span>⌄</span></button><div class="ics-worlds-dropdown"><a href="inner.html">INNER · Klarheit</a><a href="body.html">BODY · Energie</a><a href="action.html">ACTION · Umsetzung</a><a href="reset.html">RESET · Veränderung</a><a href="orientierung.html">ORIENTIERUNG · Richtung</a></div>';
-      if(akademie) desktopNav.insertBefore(worlds,akademie); else desktopNav.appendChild(worlds);
-    }
-
-    let ki=desktopNav.querySelector('a[href*="prompt-world.html"]');
-    if(!ki){ki=document.createElement('a');ki.href=promptWorldUrl;ki.textContent='KI-WELT';}
-    if(mein) desktopNav.insertBefore(ki,mein); else desktopNav.appendChild(ki);
-    if(wegweiser && mein) desktopNav.insertBefore(wegweiser,ki);
-
-    if(!document.getElementById('ics-nav-cleanup-style')){
-      const s=document.createElement('style');s.id='ics-nav-cleanup-style';
-      s.textContent='.ics-worlds-menu{position:relative}.ics-worlds-toggle{appearance:none;border:0;background:transparent;color:#1A1A1A;font:700 11px Arial,Helvetica,sans-serif;letter-spacing:.04em;padding:8px 0;cursor:pointer}.ics-worlds-toggle span{color:#D4A03A;margin-left:3px}.ics-worlds-dropdown{display:none;position:absolute;top:100%;left:-18px;z-index:2000;min-width:220px;padding:10px;background:#fffdf8;border:1px solid rgba(212,160,58,.22);border-radius:10px;box-shadow:0 14px 34px rgba(26,26,26,.14)}.ics-worlds-dropdown a{display:block!important;padding:10px 11px;white-space:nowrap;border-radius:6px}.ics-worlds-dropdown a:hover{background:rgba(212,160,58,.08)}.ics-worlds-menu:hover .ics-worlds-dropdown,.ics-worlds-menu:focus-within .ics-worlds-dropdown,.ics-worlds-menu.open .ics-worlds-dropdown{display:block}';
-      document.head.appendChild(s);
-    }
-    const toggle=desktopNav.querySelector('.ics-worlds-toggle');
-    const worlds=desktopNav.querySelector('.ics-worlds-menu');
-    if(toggle&&worlds)toggle.addEventListener('click',()=>worlds.classList.toggle('open'));
-  }
-
-    /* AKADEMIE · Desktop Navigation */
-  const desktopNav=document.querySelector('.ics-nav');
-  if(desktopNav && !desktopNav.querySelector('a[href*="ics-akademie.html"]')){
-    const link=document.createElement('a');
-    link.href=akademieUrl;
-    link.textContent='AKADEMIE';
-    const mein=desktopNav.querySelector('.ics-mein');
-    desktopNav.insertBefore(link,mein || null);
-  }
-
-  /* PROMPT WORLD · Desktop Navigation */
-  if(desktopNav && !desktopNav.querySelector('a[href*="prompt-world.html"]')){
-    const link=document.createElement('a');
-    link.href=promptWorldUrl;
-    link.textContent='KI-WELT';
-    const mein=desktopNav.querySelector('.ics-mein');
-    desktopNav.insertBefore(link,mein || null);
-  }
-
-  /* AKADEMIE · Mobile Navigation */
-  const mobileNav=document.querySelector('.ics-mobile-menu');
-  if(mobileNav && !mobileNav.querySelector('a[href*="ics-akademie.html"]')){
-    const link=document.createElement('a');
-    link.href=akademieUrl;
-    link.textContent='AKADEMIE';
-    const mein=mobileNav.querySelector('.ics-mein-mobile');
-    mobileNav.insertBefore(link,mein || null);
-  }
-
-  /* Mobile Navigation · kompakt, Welten als eigener Block */
-  if(mobileNav){
-    const mlinks=Array.from(mobileNav.querySelectorAll(':scope > a'));
-    const mbyText=(label)=>mlinks.find(a=>(a.textContent||'').trim().toUpperCase()===label);
-    ['INNER','BODY','ACTION','RESET','ORIENTIERUNG','BEGLEITUNG','TRIBE TO TRIBE'].forEach(label=>{
-      const a=mbyText(label); if(a) a.remove();
-    });
-    if(!mobileNav.querySelector('.ics-mobile-worlds')){
-      const block=document.createElement('div');
-      block.className='ics-mobile-worlds';
-      block.innerHTML='<div style="color:#D4A03A;font-size:11px;font-weight:800;letter-spacing:.12em;margin-bottom:9px">WELTEN</div><div style="display:grid;gap:10px;padding-left:10px"><a href="inner.html">INNER · Klarheit</a><a href="body.html">BODY · Energie</a><a href="action.html">ACTION · Umsetzung</a><a href="reset.html">RESET · Veränderung</a><a href="orientierung.html">ORIENTIERUNG · Richtung</a></div>';
-      const ma=mbyText('AKADEMIE');
-      if(ma) mobileNav.insertBefore(block,ma); else mobileNav.prepend(block);
-    }
-  }
-
-    /* PROMPT WORLD · Mobile Navigation */
-  if(mobileNav && !mobileNav.querySelector('a[href*="prompt-world.html"]')){
-    const link=document.createElement('a');
-    link.href=promptWorldUrl;
-    link.textContent='KI-WELT';
-    const mein=mobileNav.querySelector('.ics-mein-mobile');
-    mobileNav.insertBefore(link,mein || null);
-  }
 
   /* STARTSEITE · sichtbarer Akademie-Einstieg */
   const toolsSection=document.getElementById('tools');
