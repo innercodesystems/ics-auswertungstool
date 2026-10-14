@@ -1903,6 +1903,7 @@ document.querySelectorAll('a[href^="https://"], a[href^="http://"]').forEach(fun
   const meditationenUrl='https://innercodesystems.github.io/ics-auswertungstool/meditationen.html';
   const toolsUrl='https://innercodesystems.github.io/ics-auswertungstool/tool-bibliothek.html';
   const appUrl='https://app.innercodesystems.com/';
+  const promptWorldUrl='https://innercodesystems.github.io/ics-auswertungstool/prompt-world.html';
 
   /* AKADEMIE · Desktop Navigation */
   const desktopNav=document.querySelector('.ics-nav');
@@ -1914,12 +1915,30 @@ document.querySelectorAll('a[href^="https://"], a[href^="http://"]').forEach(fun
     desktopNav.insertBefore(link,mein || null);
   }
 
+  /* PROMPT WORLD · Desktop Navigation */
+  if(desktopNav && !desktopNav.querySelector('a[href*="prompt-world.html"]')){
+    const link=document.createElement('a');
+    link.href=promptWorldUrl;
+    link.textContent='KI-WELT';
+    const mein=desktopNav.querySelector('.ics-mein');
+    desktopNav.insertBefore(link,mein || null);
+  }
+
   /* AKADEMIE · Mobile Navigation */
   const mobileNav=document.querySelector('.ics-mobile-menu');
   if(mobileNav && !mobileNav.querySelector('a[href*="ics-akademie.html"]')){
     const link=document.createElement('a');
     link.href=akademieUrl;
     link.textContent='AKADEMIE';
+    const mein=mobileNav.querySelector('.ics-mein-mobile');
+    mobileNav.insertBefore(link,mein || null);
+  }
+
+  /* PROMPT WORLD · Mobile Navigation */
+  if(mobileNav && !mobileNav.querySelector('a[href*="prompt-world.html"]')){
+    const link=document.createElement('a');
+    link.href=promptWorldUrl;
+    link.textContent='KI-WELT';
     const mein=mobileNav.querySelector('.ics-mein-mobile');
     mobileNav.insertBefore(link,mein || null);
   }
