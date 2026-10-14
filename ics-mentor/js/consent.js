@@ -23,6 +23,7 @@ ICS.mentorConsent = (function () {
   }
   function allows(kind) { return get()[kind] === true && (!hasLegacy() || legacyApproved()); }
   function set(options) {
+    if (!hasLegacy() && !legacyApproved()) approveLegacy();
     const next = {
       version: 1,
       insights: options?.insights === true,
