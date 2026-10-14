@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ICS Digital Mentor</title>
-  <link rel="stylesheet" href="css/mentor.css?v=16">
+  <link rel="stylesheet" href="css/mentor.css?v=17">
 </head>
 <body>
   <main class="mentor-page">
@@ -14,6 +14,20 @@
       <h1>ICS Digital Mentor</h1>
       <p class="mentor-intro">Mehr als Antworten. Ein Gespräch für Klarheit, Selbstwahrnehmung und deinen nächsten bewussten Schritt.</p>
     </header>
+
+    <section class="ics-memory-settings" id="ics-memory-settings" aria-labelledby="ics-memory-title">
+      <h2 id="ics-memory-title">Deine Erinnerungen</h2>
+      <p>Du entscheidest, ob der Mentor Erkenntnisse dauerhaft in diesem Browser merkt. Ohne Zustimmung kannst du ganz normal mit ihm sprechen.</p>
+      <label class="ics-memory-choice"><input id="ics-memory-insights" type="checkbox"> Wichtige Erkenntnisse, Muster und Themen merken</label>
+      <label class="ics-memory-choice"><input type="checkbox" disabled> Frühere vollständige Gesprächsverläufe speichern <small>(folgt später, derzeit nicht verfügbar)</small></label>
+      <p class="ics-memory-hint">Wenn du zustimmst, können bereits vorhandene lokale Mentor-Erinnerungen wieder verwendet werden. „Gespräch neu starten“ löscht diese nicht.</p>
+      <div class="ics-memory-actions">
+        <button id="ics-memory-save" type="button">Auswahl speichern</button>
+        <button id="ics-memory-revoke" type="button">Einwilligung widerrufen</button>
+        <button id="ics-memory-delete" type="button">Lokale Erinnerungen löschen</button>
+      </div>
+      <p id="ics-memory-status" role="status" aria-live="polite"></p>
+    </section>
 
     <section class="mentor-card">
       <div class="mentor-status">
@@ -85,6 +99,7 @@ Sondern darum, dich besser zu verstehen.
 <script src="js/core/analyse.js?v=4"></script>
 <script src="js/core/engine.js?v=1"></script>
 <script src="js/mentor.js?v=41"></script>
+<script src="js/consent-ui.js?v=1"></script>
   
 </body>
 </html>
