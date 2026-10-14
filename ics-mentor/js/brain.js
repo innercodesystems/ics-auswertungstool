@@ -28,6 +28,7 @@ window.ICS = window.ICS || {};
 
   function laden(){
     try {
+      if (!ICS.mentorConsent?.allows("insights")) return leererSpeicher();
       const roh = localStorage.getItem(STORAGE_KEY);
       if(!roh) return leererSpeicher();
       return Object.assign(leererSpeicher(), JSON.parse(roh));
@@ -37,6 +38,7 @@ window.ICS = window.ICS || {};
   }
 
   function speichern(memory){
+    if (!ICS.mentorConsent?.allows("insights")) return;
     memory.letzteAktualisierung = new Date().toISOString();
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(memory));
@@ -115,6 +117,7 @@ window.ICS = window.ICS || {};
   }
 
   function aktualisieren(gespraech, analyse){
+    if (!ICS.mentorConsent?.allows("insights")) return {memory: leererSpeicher(), hypothese: null};
     const memory = laden();
     const faktor = analyse.intensitaet >= 65 ? 14 : 9;
 
