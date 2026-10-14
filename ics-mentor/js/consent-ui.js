@@ -13,6 +13,11 @@
   }
   document.getElementById("ics-memory-save").addEventListener("click", function () {
     try {
+      if (insights.checked && consent.hasLegacy() && !consent.legacyApproved()) {
+        const agreed = window.confirm("In diesem Browser gibt es frühere Mentor-Erinnerungen. Möchtest du diese ausdrücklich wieder für den Mentor freigeben? Abbrechen lässt die bisherigen Daten unangetastet und deaktiviert die Erinnerung.");
+        if (agreed) consent.approveLegacy();
+        else { consent.blockLegacy(); consent.revoke(); refresh("Alte Erinnerungen wurden nicht übernommen. Speicherung bleibt deaktiviert."); return; }
+      }
       consent.set({ insights: insights.checked, transcripts: false });
       refresh("Einstellung gespeichert. " + (insights.checked
         ? "Vorhandene lokale Mentor-Daten können nun wieder verwendet werden."
