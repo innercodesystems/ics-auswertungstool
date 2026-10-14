@@ -4,6 +4,7 @@ ICS.PROFIL_KEY = "ICS_MENTOR_PROFILE_V1";
 
 ICS.profilLaden = function(){
   try{
+    if (!ICS.mentorConsent?.allows("insights")) return {gespraeche:0,muster:{},themen:{},letzteAktualisierung:null};
     const gespeichert = localStorage.getItem(ICS.PROFIL_KEY);
     if(!gespeichert){
       return {
@@ -26,6 +27,7 @@ ICS.profilLaden = function(){
 
 ICS.profilSpeichern = function(profil){
   try{
+    if (!ICS.mentorConsent?.allows("insights")) return;
     localStorage.setItem(ICS.PROFIL_KEY, JSON.stringify(profil));
   }catch(error){
     console.warn("ICS Profil konnte nicht gespeichert werden.", error);
