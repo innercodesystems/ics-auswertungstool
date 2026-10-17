@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>ICS KI-LAB – Klarheits-Kompass V1.3 Test</title>
+
+<style>
+:root{
+  --bg:#0b0a08;
+  --panel:#15120e;
+  --gold:#b8924f;
+  --gold2:#e6c27c;
+  --cream:#f6f1e7;
+  --muted:#bdb2a2;
+  --line:#70552f
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:radial-gradient(circle at 50% -10%,#34240f,#0b0a08 38%);
+  color:var(--cream);
+  font-family:Arial,Helvetica,sans-serif;
+  min-height:100vh
+}
+
+header{
+  padding:16px 20px;
+  border-bottom:1px solid #6e512c88;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px
+}
+
+header strong{
+  font:14px Georgia,serif;
+  letter-spacing:.15em;
+  color:var(--gold2)
+}
+
+header span{
+  font-size:11px;
+  border:1px solid var(--line);
+  padding:6px 9px;
+  border-radius:20px;
+  color:var(--gold2)
+}
+
+.wrap{
+  max-width:760px;
+  margin:auto;
+  padding:42px 18px 70px
+}
+
+.eyebrow{
+  text-align:center;
+  color:var(--gold2);
+  font-size:11px;
+  letter-spacing:.2em;
+  font-weight:bold
+}
+
+.title{
+  text-align:center;
+  font:normal clamp(34px,8vw,58px)/1.05 Georgia,serif;
+  color:#edc987;
+  margin:12px 0
+}
+
+.intro{
+  text-align:center;
+  color:var(--muted);
+  line-height:1.6;
+  max-width:570px;
+  margin:0 auto 28px
+}
+
+.tabs{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
+  margin:25px 0
+}
+
+.tab{
+  border:1px solid #604725;
+  background:#15120e;
+  color:#c9baa5;
+  border-radius:9px;
+  padding:10px 5px;
+  font-size:11px;
+  cursor:pointer
+}
+
+.tab.active{
+  border-color:#d3a85e;
+  color:#f3d79f;
+  background:#251b0e
+}
+
+.chat{
+  border:1px solid #71542e;
+  border-radius:20px;
+  background:linear-gradient(180deg,#18140f,#100e0b);
+  overflow:hidden;
+  box-shadow:0 25px 70px #0008
+}
+
+.chathead{
+  padding:18px 20px;
+  border-bottom:1px solid #49371f;
+  display:flex;
+  justify-content:space-between;
+  align-items:center
+}
+
+.chathead b{
+  font-family:Georgia,serif;
+  color:#efd099
+}
+
+.status{
+  font-size:11px;
+  color:#bfa779
+}
+
+.status.live{
+  color:#d9bd7d
+}
+
+.messages{
+  padding:25px 18px;
+  min-height:330px
+}
+
+.bubble{
+  max-width:88%;
+  padding:15px 17px;
+  border-radius:15px;
+  line-height:1.55;
+  font-size:15px;
+  margin-bottom:15px;
+  white-space:pre-wrap
+}
+
+.ai{
+  background:#211a11;
+  border:1px solid #594221;
+  border-top-left-radius:4px
+}
+
+.user{
+  background:#312714;
+  margin-left:auto;
+  border:1px solid #80633b;
+  border-top-right-radius:4px
+}
+
+.thinking{
+  opacity:.72;
+  font-style:italic
+}
+
+.small{
+  font-size:12px;
+  color:#a99d8d;
+  margin-bottom:8px
+}
+
+.composer{
+  border-top:1px solid #49371f;
+  padding:14px;
+  display:flex;
+  gap:8px;
+  background:#100e0b
+}
+
+textarea{
+  resize:none;
+  flex:1;
+  background:#211d17;
+  color:var(--cream);
+  border:1px solid #624a2b;
+  border-radius:10px;
+  padding:13px;
+  font:15px Arial;
+  min-height:52px
+}
+
+textarea:focus{
+  outline:1px solid #b8924f
+}
+
+.send{
+  cursor:pointer;
+  border:0;
+  border-radius:10px;
+  background:linear-gradient(125deg,#f0d08b,#b88b43);
+  color:#171107;
+  font-weight:bold;
+  padding:0 18px
+}
+
+.send:disabled{
+  opacity:.45;
+  cursor:default
+}
+
+.hint{
+  text-align:center;
+  color:#83796d;
+  font-size:11px;
+  margin-top:12px;
+  line-height:1.5
+}
+
+.demo{
+  margin-top:28px;
+  border-left:3px solid var(--gold);
+  background:#1b160f;
+  padding:15px 17px;
+  color:#cdbfa9;
+  font-size:13px;
+  line-height:1.55
+}
+
+@media(max-width:560px){
+  .wrap{padding-top:30px}
+  .tabs{grid-template-columns:repeat(2,1fr)}
+  .messages{min-height:300px}
+  .bubble{max-width:94%}
+}
+.insight{margin-top:16px;border:1px solid #80633b;border-radius:14px;background:#20180f;padding:18px;line-height:1.55}.insight h2{font:23px Georgia,serif;color:#edc987;margin:5px 0 12px}.insight button{background:#d4a03a;border:0;border-radius:8px;padding:11px 15px;font-weight:bold;cursor:pointer;margin:6px 8px 0 0}.insight button.secondary{background:#322819;color:#f6f1e7;border:1px solid #80633b}.insight p{white-space:pre-wrap}.insight-result{white-space:pre-wrap;line-height:1.75;background:#17120c;border-radius:10px;padding:14px;border:1px solid #594221}.insight-actions{display:flex;flex-wrap:wrap;gap:6px}.insight-actions button{margin:0}
+.result-grid{display:grid;gap:12px;margin:14px 0}.result-card{background:#17120c;border:1px solid #594221;border-radius:12px;padding:16px}.result-card h3{color:#edc987;font:19px Georgia,serif;margin:0 0 9px}.result-card p{margin:0;white-space:pre-wrap;line-height:1.65}.result-kicker{font-size:11px;letter-spacing:.12em;color:#b8924f;text-transform:uppercase;margin-bottom:6px}.result-card:focus-within{border-color:#d4a03a}
+</style>
+</head>
+
+<body>
+
+<header>
+  <strong>INNER CODE SYSTEMS</strong>
+  <span>KI-LAB · V1.3 TEST</span>
+</header>
+
+<main class="wrap">
+
+<div class="eyebrow">ICS KI-BEGLEITER</div>
+
+<h1 class="title">Dein Klarheits-Kompass</h1>
+
+<p class="intro">
+  <strong>Vertrau dem Prozess.</strong><br>
+  Manche Fragen können zunächst ungewöhnlich wirken.
+  Ich folge deinen Antworten – nicht einem vorgegebenen Fragebogen.
+  Wir gehen immer nur einen Schritt weiter.
+</p>
+
+<div class="tabs">
+  <button class="tab active" data-name="Klarheits-Kompass">KLARHEIT</button>
+  <button class="tab" data-name="RESET-Begleiter">RESET</button>
+  <button class="tab" data-name="ACTION Mentor">ACTION</button>
+  <button class="tab" data-name="Content Creator">CONTENT</button>
+</div>
+
+<section class="chat">
+
+<div class="chathead">
+  <b id="systemName">Klarheits-Kompass</b>
+  <span class="status live" id="status">● LIVE</span>
+</div>
+
+<div class="messages" id="messages">
+  <div class="small">INNER CODE SYSTEMS</div>
+
+  <div class="bubble ai" id="welcome">Was beschäftigt dich gerade?
+
+Schreib einfach, was dir durch den Kopf geht. Ein Satz reicht.</div>
+</div>
+
+<div class="composer">
+  <textarea
+    id="input"
+    placeholder="Deine Antwort …"
+    aria-label="Deine Antwort"
+  ></textarea>
+
+  <button class="send" id="send">Weiter →</button>
+</div>
+
+</section>
+<div style="text-align:center;margin:16px 0"><button type="button" id="openInsight" class="send" style="padding:12px 18px">Erkenntnis ausarbeiten ↗</button><p class="hint">Du entscheidest selbst, wann du vom Gespräch zur Erkenntnis wechseln möchtest.</p></div>
+<section id="insight" class="insight" hidden aria-live="polite"></section>
+
+<p class="hint">
+  KI-LAB · Entwicklungsumgebung<br>
+  Gespräche werden in dieser Testversion nicht dauerhaft im ICS-System gespeichert.
+</p>
+
+<div class="demo" id="labInfo">
+  <strong>LIVE-TEST:</strong>
+  Der Klarheits-Kompass ist jetzt mit der ICS KI verbunden.
+  RESET, ACTION und CONTENT bleiben vorerst Vorschau,
+  bis ihre jeweiligen Engines angeschlossen werden.
+</div>
+
+</main>
+
+<script>
+const API =
+  "https://ics-ki.peter-wicklein.workers.dev/chat";
+
+const openings = {
+  "Klarheits-Kompass":
+    "Was beschäftigt dich gerade?\n\nSchreib einfach, was dir durch den Kopf geht. Ein Satz reicht.",
+
+  "RESET-Begleiter":
+    "Welches Verhalten, welcher Gedanke oder welches Gefühl taucht bei dir immer wieder auf, obwohl du es gerne verändern möchtest?",
+
+  "ACTION Mentor":
+    "Was möchtest du gerade wirklich umsetzen?",
+
+  "Content Creator":
+    "Was möchtest du heute in Content verwandeln? Du kannst mit einem Gedanken, Erlebnis, Foto, Video oder ein paar Stichpunkten beginnen."
+};
+
+const systemName =
+  document.getElementById("systemName");
+
+const messagesBox =
+  document.getElementById("messages");
+
+const welcome =
+  document.getElementById("welcome");
+
+const input =
+  document.getElementById("input");
+
+const send =
+  document.getElementById("send");
+
+const status =
+  document.getElementById("status");
+
+let activeSystem = "Klarheits-Kompass";
+
+let conversation = [];
+let insightOffered=false;
+let userTurns=0;
+const insightBox=document.getElementById("insight");
+
+function addBubble(text,type,extraClass=""){
+  const bubble=document.createElement("div");
+  bubble.className=`bubble ${type} ${extraClass}`.trim();
+  bubble.textContent=text;
+  messagesBox.appendChild(bubble);
+
+  bubble.scrollIntoView({
+    behavior:"smooth",
+    block:"end"
+  });
+
+  return bubble;
+}
+
+function resetConversation(){
+  conversation=[];
+  userTurns=0;
+  insightOffered=false;
+  insightBox.hidden=true;
+  insightBox.replaceChildren();
+  messagesBox.innerHTML="";
+
+  const label=document.createElement("div");
+  label.className="small";
+  label.textContent="INNER CODE SYSTEMS";
+  messagesBox.appendChild(label);
+
+  const first=document.createElement("div");
+  first.className="bubble ai";
+  first.textContent=openings[activeSystem];
+  messagesBox.appendChild(first);
+
+  input.value="";
+}
+
+document
+  .querySelectorAll(".tab[data-name]")
+  .forEach(tab=>{
+    tab.addEventListener("click",()=>{
+
+      document
+        .querySelectorAll(".tab[data-name]")
+        .forEach(x=>x.classList.remove("active"));
+
+      tab.classList.add("active");
+
+      activeSystem=tab.dataset.name;
+      systemName.textContent=activeSystem;
+
+      resetConversation();
+
+      if(activeSystem==="Klarheits-Kompass"){
+        status.textContent="● LIVE";
+        status.className="status live";
+        input.disabled=false;
+        send.disabled=false;
+        input.placeholder="Deine Antwort …";
+      }else{
+        status.textContent="● VORSCHAU";
+        status.className="status";
+        input.disabled=true;
+        send.disabled=true;
+        input.placeholder="Diese Engine wird als Nächstes angeschlossen.";
+      }
+    });
+  });
+
+async function sendMessage(){
+
+  if(activeSystem!=="Klarheits-Kompass"){
+    return;
+  }
+
+  const text=input.value.trim();
+
+  if(!text){
+    return;
+  }
+
+  addBubble(text,"user");
+
+  userTurns++;
+  conversation.push({
+    role:"user",
+    content:text
+  });
+
+  input.value="";
+  input.disabled=true;
+  send.disabled=true;
+
+  status.textContent="● DENKT …";
+
+  const thinking=
+    addBubble(
+      "Der Klarheits-Kompass denkt …",
+      "ai",
+      "thinking"
+    );
+
+  try{
+
+    const response=await fetch(API,{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        messages:conversation
+      })
+    });
+
+    const data=await response.json();
+
+    thinking.remove();
+
+    if(!response.ok || !data.ok || !data.answer){
+      throw new Error(
+        data.error || "Keine Antwort erhalten"
+      );
+    }
+
+    addBubble(data.answer,"ai");
+
+    conversation.push({
+      role:"assistant",
+      content:data.answer
+    });
+    // A meaningful reflection is a better trigger than a fixed first response.
+    // Offer after an explicit insight from turn 2, or gently after 4 turns.
+    if(!insightOffered && shouldOfferInsight()) offerInsight();
+
+    status.textContent="● LIVE";
+
+  }catch(error){
+
+    thinking.remove();
+
+    addBubble(
+      "Die Verbindung zur ICS KI konnte gerade nicht hergestellt werden. Bitte versuche es gleich noch einmal.",
+      "ai"
+    );
+
+    status.textContent="● VERBINDUNGSFEHLER";
+
+  }finally{
+
+    input.disabled=false;
+    send.disabled=false;
+    input.focus();
+
+  }
+}
+
+function shouldOfferInsight(){
+  const ownWords=conversation.filter(m=>m.role==="user").map(m=>m.content).join(" ").toLowerCase();
+  const insightSignals=[/ich (?:habe )?(?:erkannt|bemerkt|verstanden)/,/mir (?:ist|wird) klar/,/ich merke/,/eigentlich (?:möchte|brauche|will|würde)/,/ich glaube,? dass/,/ich darf/,/ich muss nicht/,/mir ist wichtig/];
+  return userTurns>=4 || (userTurns>=2 && insightSignals.some(re=>re.test(ownWords)));
+}
+
+function offerInsight(){
+  insightOffered=true;
+  insightBox.hidden=false;
+  insightBox.replaceChildren();
+  const title=document.createElement("h2");
+  title.textContent="Möchtest du aus deiner Erkenntnis einen nächsten Schritt machen?";
+  const intro=document.createElement("p");
+  intro.textContent="Du kannst dir jetzt eine kurze Zusammenfassung mit einem möglichen neuen Code und einer Mikro-Handlung erstellen lassen. Du entscheidest selbst, ob du sie anschließend für RESET verwenden möchtest.";
+  const yes=document.createElement("button");
+  yes.textContent="Erkenntnis ausarbeiten";
+  const no=document.createElement("button");
+  no.className="secondary";
+  no.textContent="Im Gespräch bleiben";
+  no.onclick=()=>{insightBox.hidden=true;insightOffered=true;};
+  yes.onclick=async()=>{
+    yes.disabled=true;
+    yes.textContent="Wird erstellt …";
+    try{
+      const response=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:[...conversation,{role:"user",content:"Bitte fasse unser bisheriges Gespräch behutsam zusammen: (1) meine mögliche Kernerkenntnis, (2) einen möglichen neuen hilfreichen Leitsatz, (3) genau eine kleine konkrete Handlung für heute. Erfinde nichts, stelle keine neue Frage und formuliere alles als Vorschlag, den ich selbst prüfen kann."}]})});
+      const data=await response.json();
+      if(!response.ok||!data.ok||!data.answer)throw new Error("Keine Antwort");
+      insightBox.replaceChildren();
+      const heading=document.createElement("h2");heading.textContent="Dein möglicher nächster Schritt";
+      const result=document.createElement("div");result.className="result-grid";
+      const labels=["Deine mögliche Erkenntnis","Dein neuer Leitsatz","Deine Mikro-Handlung"];
+      const raw=data.answer.trim();
+      const sections=raw.split(/(?=\\n?\\s*(?:\\*\\*)?\\s*[123][.)]\\s*(?:\\*\\*)?)/).map(s=>s.trim()).filter(Boolean);
+      if(sections.length===3){
+        sections.forEach((section,i)=>{
+          const card=document.createElement("article");card.className="result-card";
+          const h=document.createElement("h3");h.textContent=labels[i];
+          const p=document.createElement("p");p.textContent=section.replace(/^(?:\\*\\*)?\\s*[123][.)]\\s*(?:\\*\\*)?/,"").replace(/^[^:]{0,45}:\\s*/,"").replace(/\\*\\*/g,"").replace(/^["“]|["”]$/g,"").trim();
+          card.append(h,p);result.appendChild(card);
+        });
+      }else{
+        const card=document.createElement("article");card.className="result-card";
+        const h=document.createElement("h3");h.textContent="Deine persönliche Auswertung";
+        const p=document.createElement("p");p.textContent=raw;
+        card.append(h,p);result.appendChild(card);
+      }
+      const copy=document.createElement("button");copy.textContent="Für RESET kopieren";
+      copy.onclick=async()=>{try{await navigator.clipboard.writeText(data.answer);copy.textContent="Kopiert – du entscheidest, wo du es einfügst";}catch(e){copy.textContent="Kopieren nicht möglich – bitte Text markieren";}};
+      const close=document.createElement("button");close.className="secondary";close.textContent="Zurück zum Gespräch";close.onclick=()=>{insightBox.hidden=true;insightOffered=false;};
+      const reset=document.createElement("button");
+      reset.textContent="Mit RESET weiterarbeiten";
+      reset.onclick=async()=>{
+        reset.disabled=true;
+        reset.textContent="RESET-Übung wird erstellt …";
+        const consent=document.createElement("p");
+        consent.textContent="Du hast die Übergabe dieser Erkenntnis an die ICS KI für eine einmalige RESET-Übung bestätigt. Die Übung wird nicht dauerhaft im ICS-System gespeichert.";
+        try{
+          const response=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:[{role:"user",content:"Du bist der ICS RESET-Begleiter. Erstelle auf Grundlage der folgenden freiwillig übergebenen Erkenntnis eine kurze, alltagstaugliche RESET-Übung auf Deutsch. Gliedere in: 1. Wahrnehmen (eine sanfte Beobachtungsfrage), 2. Spüren (30 Sekunden Körperwahrnehmung ohne Deutung), 3. Handeln (eine konkret in maximal 5 Minuten umsetzbare Mikro-Handlung), 4. Integrieren (ein kurzer Reflexionssatz). Keine Diagnose, keine Behauptung über psychische Ursachen, keine zusätzlichen Rückfragen. Erkenntnis:\\n"+data.answer}]})});
+          const payload=await response.json();
+          if(!response.ok||!payload.ok||!payload.answer)throw Error("Keine RESET-Antwort");
+          const section=document.createElement("section");section.className="insight";
+          const h=document.createElement("h2");h.textContent="Dein persönlicher Mikro-RESET";
+          const p=document.createElement("div");p.className="result-grid";
+          const steps=payload.answer.split(/(?=\\n?\\s*(?:\\*\\*)?\\s*(?:Schritt\\s*)?[1-4][.)]\\s*(?:\\*\\*)?)/i).map(s=>s.trim()).filter(Boolean);
+          if(steps.length===4){
+            const stepNames=["Wahrnehmen","Spüren","Handeln","Integrieren"];
+            steps.forEach((step,i)=>{const card=document.createElement("article");card.className="result-card";const h=document.createElement("h3");h.textContent=stepNames[i];const body=document.createElement("p");body.textContent=step.replace(/^(?:\\*\\*)?\\s*(?:Schritt\\s*)?[1-4][.)]\\s*(?:\\*\\*)?/i,"").replace(/^.{0,25}:\\s*/,"").replace(/\\*\\*/g,"").trim();card.append(h,body);p.appendChild(card);});
+          }else{const card=document.createElement("article");card.className="result-card";const body=document.createElement("p");body.textContent=payload.answer;card.appendChild(body);p.appendChild(card);}
+          const save=document.createElement("button");save.textContent="RESET-Übung kopieren";
+          save.onclick=async()=>{try{await navigator.clipboard.writeText(payload.answer);save.textContent="Kopiert";}catch(e){save.textContent="Bitte Text manuell markieren";}};
+          section.append(h,p,save);
+          insightBox.append(consent,section);
+          reset.textContent="RESET-Übung erstellt";
+        }catch(e){reset.disabled=false;reset.textContent="RESET erneut versuchen";}
+      };
+      const actions=document.createElement("div");actions.className="insight-actions";actions.append(copy,reset,close);
+      insightBox.append(heading,result,actions);
+    }catch(e){yes.disabled=false;yes.textContent="Erneut versuchen";}
+  };
+  const actions=document.createElement("div");actions.className="insight-actions";actions.append(yes,no);
+  insightBox.append(title,intro,actions);
+  insightBox.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+
+document.getElementById("openInsight").addEventListener("click",()=>{
+  if(conversation.filter(m=>m.role==="user").length===0){
+    input.focus();
+    return;
+  }
+  offerInsight();
+});
+
+send.addEventListener("click",sendMessage);
+
+input.addEventListener("keydown",event=>{
+
+  if(
+    event.key==="Enter" &&
+    !event.shiftKey
+  ){
+    event.preventDefault();
+    sendMessage();
+  }
+
+});
+</script>
+
+</body>
+</html>
