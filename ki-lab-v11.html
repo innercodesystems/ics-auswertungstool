@@ -529,7 +529,28 @@ function offerInsight(){
       const copy=document.createElement("button");copy.textContent="Für RESET kopieren";
       copy.onclick=async()=>{try{await navigator.clipboard.writeText(data.answer);copy.textContent="Kopiert – du entscheidest, wo du es einfügst";}catch(e){copy.textContent="Kopieren nicht möglich – bitte Text markieren";}};
       const close=document.createElement("button");close.className="secondary";close.textContent="Zurück zum Gespräch";close.onclick=()=>{insightBox.hidden=true;};
-      insightBox.append(heading,result,copy,close);
+      const reset=document.createElement("button");
+      reset.textContent="Mit RESET weiterarbeiten";
+      reset.onclick=async()=>{
+        reset.disabled=true;
+        reset.textContent="RESET-Übung wird erstellt …";
+        const consent=document.createElement("p");
+        consent.textContent="Du hast die Übergabe dieser Erkenntnis an die ICS KI für eine einmalige RESET-Übung bestätigt. Die Übung wird nicht dauerhaft im ICS-System gespeichert.";
+        try{
+          const response=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:[{role:"user",content:"Du bist der ICS RESET-Begleiter. Erstelle auf Grundlage der folgenden freiwillig übergebenen Erkenntnis eine kurze, alltagstaugliche RESET-Übung auf Deutsch. Gliedere in: 1. Wahrnehmen (eine sanfte Beobachtungsfrage), 2. Spüren (30 Sekunden Körperwahrnehmung ohne Deutung), 3. Handeln (eine konkret in maximal 5 Minuten umsetzbare Mikro-Handlung), 4. Integrieren (ein kurzer Reflexionssatz). Keine Diagnose, keine Behauptung über psychische Ursachen, keine zusätzlichen Rückfragen. Erkenntnis:\\n"+data.answer}]})});
+          const payload=await response.json();
+          if(!response.ok||!payload.ok||!payload.answer)throw Error("Keine RESET-Antwort");
+          const section=document.createElement("section");section.className="insight";
+          const h=document.createElement("h2");h.textContent="Dein persönlicher Mikro-RESET";
+          const p=document.createElement("p");p.textContent=payload.answer;
+          const save=document.createElement("button");save.textContent="RESET-Übung kopieren";
+          save.onclick=async()=>{try{await navigator.clipboard.writeText(payload.answer);save.textContent="Kopiert";}catch(e){save.textContent="Bitte Text manuell markieren";}};
+          section.append(h,p,save);
+          insightBox.append(consent,section);
+          reset.textContent="RESET-Übung erstellt";
+        }catch(e){reset.disabled=false;reset.textContent="RESET erneut versuchen";}
+      };
+      insightBox.append(heading,result,copy,reset,close);
     }catch(e){yes.disabled=false;yes.textContent="Erneut versuchen";}
   };
   insightBox.append(title,intro,yes,no);
