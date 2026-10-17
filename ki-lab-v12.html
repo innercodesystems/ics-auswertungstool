@@ -478,7 +478,9 @@ async function sendMessage(){
       role:"assistant",
       content:data.answer
     });
-    if(userTurns>=1 && !insightOffered) offerInsight();
+    // A meaningful reflection is a better trigger than a fixed first response.
+    // Offer after an explicit insight from turn 2, or gently after 4 turns.
+    if(!insightOffered && shouldOfferInsight()) offerInsight();
 
     status.textContent="● LIVE";
 
@@ -502,6 +504,12 @@ async function sendMessage(){
   }
 }
 
+function shouldOfferInsight(){
+  const ownWords=conversation.filter(m=>m.role==="user").map(m=>m.content).join(" ").toLowerCase();
+  const insightSignals=[/ich (?:habe )?(?:erkannt|bemerkt|verstanden)/,/mir (?:ist|wird) klar/,/ich merke/,/eigentlich (?:möchte|brauche|will|würde)/,/ich glaube,? dass/,/ich darf/,/ich muss nicht/,/mir ist wichtig/];
+  return userTurns>=4 || (userTurns>=2 && insightSignals.some(re=>re.test(ownWords)));
+}
+
 function offerInsight(){
   insightOffered=true;
   insightBox.hidden=false;
@@ -515,7 +523,7 @@ function offerInsight(){
   const no=document.createElement("button");
   no.className="secondary";
   no.textContent="Im Gespräch bleiben";
-  no.onclick=()=>{insightBox.hidden=true;insightOffered=false;};
+  no.onclick=()=>{insightBox.hidden=true;insightOffered=true;};
   yes.onclick=async()=>{
     yes.disabled=true;
     yes.textContent="Wird erstellt …";
