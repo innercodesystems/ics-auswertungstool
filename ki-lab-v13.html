@@ -538,18 +538,29 @@ function offerInsight(){
       const result=document.createElement("div");result.className="result-grid";
       const labels=["Deine mögliche Erkenntnis","Dein neuer Leitsatz","Deine Mikro-Handlung"];
       const raw=data.answer.trim();
-      const sections=raw.split(/(?=\\n?\\s*(?:\\*\\*)?\\s*[123][.)]\\s*(?:\\*\\*)?)/).map(s=>s.trim()).filter(Boolean);
-      if(sections.length===3){
-        sections.forEach((section,i)=>{
+      // The AI may return literal backslash-n, Markdown, or numbered paragraphs.
+      const normalized=raw.replace(/\\\\n/g,"\\n").replace(/\\r/g,"");
+      const sections=normalized.split(/(?=(?:^|\\n)\\s*(?:\\*\\*)?\\s*[123][.)]\\s*)/m).map(s=>s.trim()).filter(Boolean);
+      const numbered=normalized.match(/(?:^|\\n)\\s*(?:\\*\\*)?\\s*[123][.)]\\s*/g);
+      let parts=[];
+      if(numbered && numbered.length>=3){
+        parts=normalized.split(/(?:^|\\n)\\s*(?:\\*\\*)?\\s*[123][.)]\\s*/m).map(s=>s.trim()).filter(Boolean).slice(0,3);
+      }
+      if(parts.length!==3){
+        // Handle numbered outputs separated by spaces rather than line breaks.
+        parts=normalized.split(/(?:^|\\s)(?:\\*\\*)?\\s*[123][.)]\\s*(?=(?:\\*\\*)?(?:Mögliche|Meine|Deine|Ein|Neue|Konkrete|Erkenntnis|Leitsatz|Mikro))/i).map(s=>s.trim()).filter(Boolean);
+      }
+      if(parts.length===3){
+        parts.forEach((section,i)=>{
           const card=document.createElement("article");card.className="result-card";
           const h=document.createElement("h3");h.textContent=labels[i];
-          const p=document.createElement("p");p.textContent=section.replace(/^(?:\\*\\*)?\\s*[123][.)]\\s*(?:\\*\\*)?/,"").replace(/^[^:]{0,45}:\\s*/,"").replace(/\\*\\*/g,"").replace(/^["“]|["”]$/g,"").trim();
+          const p=document.createElement("p");p.textContent=section.replace(/^\\*\\*[^:]{0,55}:\\*\\*\\s*/,"").replace(/^[^:]{0,55}:\\s*/,"").replace(/\\*\\*/g,"").trim();
           card.append(h,p);result.appendChild(card);
         });
       }else{
         const card=document.createElement("article");card.className="result-card";
         const h=document.createElement("h3");h.textContent="Deine persönliche Auswertung";
-        const p=document.createElement("p");p.textContent=raw;
+        const p=document.createElement("p");p.textContent=normalized;
         card.append(h,p);result.appendChild(card);
       }
       const copy=document.createElement("button");copy.textContent="Für RESET kopieren";
