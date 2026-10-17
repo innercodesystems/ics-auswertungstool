@@ -478,7 +478,7 @@ async function sendMessage(){
       role:"assistant",
       content:data.answer
     });
-    if(userTurns>=3 && !insightOffered) offerInsight();
+    if(userTurns>=1 && !insightOffered) offerInsight();
 
     status.textContent="● LIVE";
 
@@ -515,7 +515,7 @@ function offerInsight(){
   const no=document.createElement("button");
   no.className="secondary";
   no.textContent="Im Gespräch bleiben";
-  no.onclick=()=>{insightBox.hidden=true;};
+  no.onclick=()=>{insightBox.hidden=true;insightOffered=false;};
   yes.onclick=async()=>{
     yes.disabled=true;
     yes.textContent="Wird erstellt …";
@@ -528,7 +528,7 @@ function offerInsight(){
       const result=document.createElement("p");result.textContent=data.answer;
       const copy=document.createElement("button");copy.textContent="Für RESET kopieren";
       copy.onclick=async()=>{try{await navigator.clipboard.writeText(data.answer);copy.textContent="Kopiert – du entscheidest, wo du es einfügst";}catch(e){copy.textContent="Kopieren nicht möglich – bitte Text markieren";}};
-      const close=document.createElement("button");close.className="secondary";close.textContent="Zurück zum Gespräch";close.onclick=()=>{insightBox.hidden=true;};
+      const close=document.createElement("button");close.className="secondary";close.textContent="Zurück zum Gespräch";close.onclick=()=>{insightBox.hidden=true;insightOffered=false;};
       const reset=document.createElement("button");
       reset.textContent="Mit RESET weiterarbeiten";
       reset.onclick=async()=>{
@@ -554,6 +554,7 @@ function offerInsight(){
     }catch(e){yes.disabled=false;yes.textContent="Erneut versuchen";}
   };
   insightBox.append(title,intro,yes,no);
+  insightBox.scrollIntoView({behavior:"smooth",block:"nearest"});
 }
 
 send.addEventListener("click",sendMessage);
