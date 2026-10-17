@@ -530,7 +530,7 @@ function offerInsight(){
     yes.disabled=true;
     yes.textContent="Wird erstellt …";
     try{
-      const response=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:[...conversation,{role:"user",content:"Bitte fasse unser bisheriges Gespräch behutsam zusammen: (1) meine mögliche Kernerkenntnis, (2) einen möglichen neuen hilfreichen Leitsatz, (3) genau eine kleine konkrete Handlung für heute. Erfinde nichts, stelle keine neue Frage und formuliere alles als Vorschlag, den ich selbst prüfen kann."}]})});
+      const response=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:[...conversation,{role:"user",content:"Bitte fasse unser bisheriges Gespräch behutsam zusammen. Antworte ausschließlich in exakt drei Zeilen mit diesen eindeutigen Markierungen, ohne Markdown oder Nummerierung: ERKENNTNIS: [meine mögliche Kernerkenntnis] dann CODE: [ein möglicher neuer hilfreicher Leitsatz] dann HANDLUNG: [genau eine kleine, heute konkret umsetzbare Handlung]. Jede Markierung beginnt eine eigene Zeile. Erfinde nichts, stelle keine neue Frage und formuliere als Vorschläge, die ich selbst prüfen kann."}]})});
       const data=await response.json();
       if(!response.ok||!data.ok||!data.answer)throw new Error("Keine Antwort");
       insightBox.replaceChildren();
@@ -538,23 +538,24 @@ function offerInsight(){
       const result=document.createElement("div");result.className="result-grid";
       const labels=["Deine mögliche Erkenntnis","Dein neuer Leitsatz","Deine Mikro-Handlung"];
       const raw=data.answer.trim();
-      // The AI may return literal backslash-n, Markdown, or numbered paragraphs.
-      const normalized=raw.replace(/\\\\n/g,"\\n").replace(/\\r/g,"");
-      const sections=normalized.split(/(?=(?:^|\\n)\\s*(?:\\*\\*)?\\s*[123][.)]\\s*)/m).map(s=>s.trim()).filter(Boolean);
-      const numbered=normalized.match(/(?:^|\\n)\\s*(?:\\*\\*)?\\s*[123][.)]\\s*/g);
+      const normalized=raw.replace(/\\n/g,"\n").replace(/\r/g,"");
+      // Primary contract: explicit labels. Accept labels on one line too.
+      const marker=/(?:^|\n|\s)(ERKENNTNIS|CODE|HANDLUNG)\s*:/gi;
+      const matches=[...normalized.matchAll(marker)];
       let parts=[];
-      if(numbered && numbered.length>=3){
-        parts=normalized.split(/(?:^|\\n)\\s*(?:\\*\\*)?\\s*[123][.)]\\s*/m).map(s=>s.trim()).filter(Boolean).slice(0,3);
+      if(matches.length===3 && matches.map(m=>m[1].toUpperCase()).join(",")==="ERKENNTNIS,CODE,HANDLUNG"){
+        parts=matches.map((m,i)=>normalized.slice(m.index+m[0].length,i+1<matches.length?matches[i+1].index:normalized.length).trim());
       }
-      if(parts.length!==3){
-        // Handle numbered outputs separated by spaces rather than line breaks.
-        parts=normalized.split(/(?:^|\\s)(?:\\*\\*)?\\s*[123][.)]\\s*(?=(?:\\*\\*)?(?:Mögliche|Meine|Deine|Ein|Neue|Konkrete|Erkenntnis|Leitsatz|Mikro))/i).map(s=>s.trim()).filter(Boolean);
+      if(parts.length!==3 || parts.some(p=>!p)){
+        // Legacy response: headings such as 1. **Mögliche Kernerkenntnis:**
+        const legacy=normalized.split(/(?:^|\s)(?:\*{0,2})[123][.)]\s*(?=(?:\*{0,2})?(?:Mögliche|Meine|Deine|Ein|Neue|Konkrete|Erkenntnis|Leitsatz|Mikro))/i).map(s=>s.trim()).filter(Boolean);
+        if(legacy.length===3)parts=legacy;
       }
-      if(parts.length===3){
+      if(parts.length===3 && parts.every(Boolean)){
         parts.forEach((section,i)=>{
           const card=document.createElement("article");card.className="result-card";
           const h=document.createElement("h3");h.textContent=labels[i];
-          const p=document.createElement("p");p.textContent=section.replace(/^\\*\\*[^:]{0,55}:\\*\\*\\s*/,"").replace(/^[^:]{0,55}:\\s*/,"").replace(/\\*\\*/g,"").trim();
+          const p=document.createElement("p");p.textContent=section.replace(/^\*{0,2}[^:\n]{0,55}:\*{0,2}\s*/,"").replace(/\*\*/g,"").replace(/^["“]|["”]$/g,"").trim();
           card.append(h,p);result.appendChild(card);
         });
       }else{
