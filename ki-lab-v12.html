@@ -291,6 +291,7 @@ Schreib einfach, was dir durch den Kopf geht. Ein Satz reicht.</div>
 </div>
 
 </section>
+<div style="text-align:center;margin:16px 0"><button type="button" id="openInsight" class="send" style="padding:12px 18px">Erkenntnis ausarbeiten ↗</button><p class="hint">Du entscheidest selbst, wann du vom Gespräch zur Erkenntnis wechseln möchtest.</p></div>
 <section id="insight" class="insight" hidden aria-live="polite"></section>
 
 <p class="hint">
@@ -566,6 +567,14 @@ function offerInsight(){
   insightBox.append(title,intro,actions);
   insightBox.scrollIntoView({behavior:"smooth",block:"nearest"});
 }
+
+document.getElementById("openInsight").addEventListener("click",()=>{
+  if(conversation.filter(m=>m.role==="user").length===0){
+    input.focus();
+    return;
+  }
+  offerInsight();
+});
 
 send.addEventListener("click",sendMessage);
 
