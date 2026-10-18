@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<base href="https://www.innercodesystems.com/ics-mentor/">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ICS Digital Mentor · isolierter Übergabetest</title>
+  <link rel="stylesheet" href="css/mentor.css?v=16">
+</head>
+<body>
+  <main class="mentor-page">
+    <header class="mentor-header">
+      <div class="mentor-logo">🧠</div>
+      <p class="mentor-label">INNER CODE SYSTEMS</p>
+      <h1>ICS Digital Mentor</h1>
+      <p class="mentor-intro">Mehr als Antworten. Ein Gespräch für Klarheit, Selbstwahrnehmung und deinen nächsten bewussten Schritt.</p>
+    </header>
+
+    <section class="mentor-card">
+      <div class="mentor-status">
+        <span class="mentor-dot"></span>
+        <span>ICS Brain V10 ist bereit</span>
+        <button id="ics-profile" class="reset-button" type="button">Mein ICS Profil</button>
+        <button id="ics-reset" class="reset-button" type="button">Gespräch neu starten</button>
+      </div>
+
+      <div id="ics-messages" class="mentor-chat" aria-live="polite">
+        <div class="chat-row mentor-row">
+          <div class="chat-avatar">🧠</div>
+          <div class="chat-bubble mentor-bubble">
+<p>
+<strong>Willkommen.</strong><br><br>
+Schön, dass du hier bist.<br>
+Beschreibe einfach deine Situation in deinen eigenen Worten.<br>
+Es geht nicht um perfekte Antworten.<br>
+Sondern darum, dich besser zu verstehen.
+</p>     
+          </div>
+        </div>
+      </div>
+
+      <div id="ics-typing" class="typing-indicator" hidden>
+        <span></span><span></span><span></span> ICS Mentor denkt …
+      </div>
+
+      <div class="mentor-input-area">
+        <label class="input-label" for="ics-input">Deine Nachricht</label>
+        <textarea id="ics-input" rows="3" maxlength="1500" placeholder="Schreibe hier, was dich gerade beschäftigt …"></textarea>
+        <div class="input-footer">
+          <span id="ics-counter">0 / 1500</span>
+          <button id="ics-send" class="send-button" type="button">Nachricht senden</button>
+        </div>
+      </div>
+    </section>
+
+    <p class="mentor-note">
+      Der ICS Digital Mentor unterstützt dich bei Selbstreflexion und persönlicher Klarheit.
+      Er ersetzt keine medizinische, psychologische oder therapeutische Beratung.
+    </p>
+  </main>
+
+<script src="js/utils.js?v=10"></script>
+<script src="js/smalltalk.js?v=10"></script>
+<script src="js/emotionen.js?v=10"></script>
+<script src="js/themen.js?v=10"></script>
+<script src="js/muster.js?v=22"></script>
+<script src="js/spiegel.js?v=1"></script>
+<script src="js/verknuepfungen.js?v=3"></script>
+<script src="js/beduerfnisse.js?v=1"></script>
+<script src="js/glaubenssaetze.js?v=1"></script>
+<script src="js/innercode.js?v=2"></script>
+<script src="js/bodycode.js?v=1"></script>
+<script src="js/actioncode.js?v=1"></script>
+<script src="js/intelligenz.js?v=1"></script>
+<script src="js/schlussfolgerungen.js?v=1"></script>
+<script src="js/analysebericht.js?v=1"></script>
+<script src="js/profil.js?v=10"></script>
+<script src="js/auswertung.js?v=10"></script>
+
+<script src="js/brain.js?v=10"></script>
+<script src="js/hypothesen.js?v=2"></script>
+<script src="js/graph.js?v=1"></script>
+<script src="js/prioritaeten.js?v=1"></script>
+<script src="js/core/core.js?v=1"></script>
+<script src="js/core/analyse.js?v=4"></script>
+<script src="js/core/engine.js?v=1"></script>
+<script src="js/mentor.js?v=41"></script>
+  
+<script>
+(()=>{
+"use strict";
+const allowedOrigin="https://www.innercodesystems.com";
+let pending=null;
+const box=document.createElement("section");
+box.style.cssText="padding:16px;border:2px solid #b8924f;border-radius:12px;margin:15px auto;max-width:850px;background:#fff8e8;color:#1a1815";
+box.hidden=true;
+const heading=document.createElement("strong");heading.textContent="Klarheits-Erkenntnis empfangen · Integrationstest";
+const description=document.createElement("p");
+const take=document.createElement("button");take.type="button";take.textContent="Erkenntnis in meine nächste Nachricht übernehmen";
+take.style.cssText="padding:10px;margin:5px;border-radius:7px;border:1px solid #b8924f;cursor:pointer";
+const decline=document.createElement("button");decline.type="button";decline.textContent="Nicht verwenden";decline.style.cssText=take.style.cssText;
+box.append(heading,description,take,decline);
+const target=document.querySelector(".mentor-card");if(target)target.parentNode.insertBefore(box,target);
+window.addEventListener("message",event=>{
+ if(event.origin!==allowedOrigin||event.source!==window.parent||!event.data||event.data.type!=="ICS_MENTOR_CLARITY_CONTEXT_TEST_V1")return;
+ const d=event.data.insight;
+ if(!d||["recognition","newCode","microAction"].some(k=>typeof d[k]!=="string"||!d[k].trim()||d[k].length>10000))return;
+ pending={recognition:d.recognition,newCode:d.newCode,microAction:d.microAction};
+ description.textContent="Die Klarheits-Erkenntnis ist angekommen. Sie wird erst nach deinem Klick in das Eingabefeld übernommen und nicht automatisch als Nachricht versendet.";
+ box.hidden=false;
+});
+take.addEventListener("click",()=>{
+ if(!pending)return;
+ const input=document.getElementById("ics-input");if(!input)return;
+ const text="Ich möchte mit meiner freiwillig übergebenen Klarheits-Erkenntnis weiterarbeiten. Erkenntnis: "+pending.recognition+" Neuer Code: "+pending.newCode+" Mikro-Handlung: "+pending.microAction+" Bitte hilf mir, daraus einen konkreten nächsten Schritt zu entwickeln.";
+ input.value=text.slice(0,1500);input.dispatchEvent(new Event("input",{bubbles:true}));input.focus();box.hidden=true;pending=null;
+});
+decline.addEventListener("click",()=>{pending=null;box.hidden=true;});
+})();
+</script>
+</body>
+</html>
