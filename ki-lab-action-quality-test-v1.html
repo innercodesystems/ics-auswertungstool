@@ -705,7 +705,7 @@ function offerInsight(){
           const prompt="Du bist der ICS ACTION Mentor. Die Person hat ausdrücklich entschieden, ihre Erkenntnis für einen einmaligen ACTION-Plan zu übergeben. Nutze ausschließlich die übergebenen Angaben; erfinde keine Nutzerzahlen, Kontakte, Termine oder Erfolge. Gib genau vier Abschnitte mit den Labels PRIORITÄT:, SCHRITT:, ZEITPUNKT:, FORTSCHRITT:. PRIORITÄT: ein klarer Fokus, der das eigentliche Anliegen und die Erkenntnis aufgreift. SCHRITT: eine konkrete, realistische Handlung in maximal 10 Minuten, die unmittelbar auf das eigentliche Ziel einzahlt und ein sichtbares, nutzbares Ergebnis erzeugt. Vermeide Scheinhandlungen wie einen Namen bloß aufzuschreiben, ohne dass dadurch ein echter nächster Test, Kontakt oder eine Entscheidung vorbereitet wird. Falls das Ziel echte Rückmeldungen von Nutzern betrifft, schlage als kleinen Schritt z. B. eine konkrete Testeinladung an eine passende Person oder das Formulieren einer versandfertigen Einladung vor, statt nur ein Tool zu notieren. ZEITPUNKT: ein konkreter Zeitvorschlag als Einladung, keine Behauptung über Kalendereinträge. FORTSCHRITT: ein beobachtbares Kriterium, das genau zur vorgeschlagenen Handlung passt und mehr zeigt als eine bloße Notiz. Berücksichtige Machbarkeit und Selbstbestimmung, stelle keine Rückfrage. Jede Kategorie enthält nur einen kurzen Satz. Übergabedaten:\\n"+JSON.stringify(icsHandoff.insight);
           const response=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:[{role:"user",content:prompt}]})});
           const payload=await response.json();
-          if(!response.ok||!payload.ok||!payload.answer)throw Error("Keine ACTION-Antwort");
+          if(!response.ok||!payload.ok||!payload.answer)throw Error("ACTION-Dienst: "+(payload.error||payload.message||("HTTP "+response.status)));
           const normalized=payload.answer.trim().replace(/\\n/g,"\n").replace(/\r/g,"");
           const keys=["PRIORITÄT","SCHRITT","ZEITPUNKT","FORTSCHRITT"];
           const matches=[...normalized.matchAll(/(?:^|\n|\s)(PRIORITÄT|SCHRITT|ZEITPUNKT|FORTSCHRITT)\s*:/gi)];
@@ -746,6 +746,9 @@ function offerInsight(){
         }catch(e){
           action.disabled=false;
           action.textContent="ACTION erneut versuchen";
+          let errorNote=document.getElementById("ics-action-error");
+          if(!errorNote){errorNote=document.createElement("p");errorNote.id="ics-action-error";errorNote.className="hint";action.insertAdjacentElement("afterend",errorNote);}
+          errorNote.textContent="ACTION konnte nicht erstellt werden: "+(e&&e.message?e.message:"Unbekannter Fehler")+". Dein bisheriges Gespräch bleibt erhalten.";
         }
       };
       const actions=document.createElement("div");actions.className="insight-actions";actions.append(copy,reset,action,exportData,close);
