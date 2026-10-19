@@ -1,0 +1,24 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>ICS ACTION · Integrationstest</title><style>*{box-sizing:border-box}body{margin:0;background:#17130f;color:#f6f1e7;font:16px Arial,sans-serif}main{max-width:700px;margin:auto;padding:22px 16px 45px}small{letter-spacing:.13em;color:#d4a03a}h1,h2,h3{font-family:Georgia,serif;font-weight:normal}h1{font-size:31px}h2{font-size:27px;color:#edcb8c}h3{color:#edcb8c;font-size:22px;margin:0 0 12px}p{line-height:1.55}.card{border:1px solid #745a35;border-radius:14px;padding:20px;margin:14px 0;background:#241c15}button{background:#d4a03a;color:#17130f;border:0;border-radius:11px;font-size:17px;font-weight:bold;padding:17px;width:100%;cursor:pointer}button:disabled{opacity:.6}#output[hidden]{display:none}.small{font-size:13px;color:#c7b8a1}.error{color:#ffb7a5;white-space:pre-wrap;overflow-wrap:anywhere}</style></head><body><main><small>INNER CODE SYSTEMS · ISOLIERTER INTEGRATIONSTEST</small><h1>KLARHEIT → ACTION</h1><p>Ein Klick prüft die Übergabe einer vorbereiteten Erkenntnis an die ICS KI und die Darstellung aller vier ACTION-Felder. Kein Gespräch nötig.</p><div class="card"><strong>Vorbereitete Erkenntnis</strong><p>Ich brauche kein weiteres Tool, sondern echte Rückmeldungen zu „Was nährt dich?“.</p><p class="small">Nur Testdaten. Keine Speicherung.</p></div><button id="run">Übergabe und ACTION prüfen</button><div id="output" hidden aria-live="polite"></div></main><script>
+const API="https://ics-ki.peter-wicklein.workers.dev/chat";
+const insight={recognition:"Ich brauche kein weiteres Tool, sondern echte Rückmeldungen zu Was nährt dich?.",newCode:"Ich darf klein testen, bevor ich weiterentwickle.",microAction:"Eine Person einladen, Was nährt dich? auszuprobieren und kurz Feedback zu geben."};
+const button=document.getElementById("run"),output=document.getElementById("output");
+button.onclick=async()=>{
+button.disabled=true;button.textContent="ACTION wird erstellt …";output.hidden=false;output.replaceChildren();
+try{
+const prompt="Du bist der ICS ACTION Mentor. Verwende nur die übergebenen Informationen. Erstelle einen konkreten, wirksamen ACTION-Plan in exakt vier kurzen Abschnitten mit den Labels PRIORITÄT:, SCHRITT:, ZEITPUNKT:, FORTSCHRITT:. SCHRITT: maximal 10 Minuten und sichtbarer Fortschritt in Richtung des eigentlichen Ziels; keine bloße Notiz als Scheinhandlung. Keine erfundenen Termine oder Kontakte. Stelle keine Rückfrage. Übergabedaten:\\n"+JSON.stringify(insight);
+const response=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:[{role:"user",content:prompt}]})});
+const payload=await response.json();
+if(!response.ok||!payload.ok||!payload.answer)throw Error("ACTION-Dienst: "+(payload.error||payload.message||("HTTP "+response.status)));
+const normalized=payload.answer.trim().replace(/\\n/g,"\n").replace(/\r/g,"");
+const keys=["PRIORITÄT","SCHRITT","ZEITPUNKT","FORTSCHRITT"];
+const matches=[...normalized.matchAll(/(?:^|\n|\s)(PRIORITÄT|SCHRITT|ZEITPUNKT|FORTSCHRITT)\s*:/gi)];
+let values=[];
+if(matches.length===4&&matches.every((m,i)=>m[1].toUpperCase()===keys[i])){values=matches.map((m,i)=>normalized.slice(m.index+m[0].length,i+1<matches.length?matches[i+1].index:normalized.length).trim());}
+if(values.length!==4||values.some(v=>!v))throw Error("Vier Felder konnten nicht erkannt werden. KI-Antwort: "+normalized);
+const action={priority:values[0],nextStep:values[1],when:values[2],progress:values[3],originalText:payload.answer};
+const title=document.createElement("h2");title.textContent="Alle vier Felder übernommen";output.appendChild(title);
+["01 · Deine Priorität","02 · Dein nächster Schritt","03 · Dein Zeitpunkt","04 · Dein Fortschrittszeichen"].forEach((label,i)=>{const card=document.createElement("div");card.className="card";const h=document.createElement("h3");h.textContent=label;const p=document.createElement("p");p.textContent=values[i].replace(/\*\*/g,"");card.append(h,p);output.appendChild(card)});
+const status=document.createElement("p");status.className="small";status.textContent="✓ KI-Aufruf erfolgreich · vier Felder erkannt · ACTION-Objekt vollständig: "+Object.keys(action).length+" Eigenschaften";output.appendChild(status);button.textContent="ACTION-Integration erfolgreich";
+}catch(e){const err=document.createElement("div");err.className="card error";err.textContent="Test fehlgeschlagen: "+(e.message||String(e));output.appendChild(err);button.disabled=false;button.textContent="ACTION erneut prüfen";}
+};
+</script></body></html>
