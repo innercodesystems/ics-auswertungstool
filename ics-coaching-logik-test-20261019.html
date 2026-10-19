@@ -401,7 +401,7 @@ document
     });
   });
 
-const coachingRules={role:"system",content:"Du bist der ICS Klarheits-Kompass. Antworte auf Deutsch, freundlich, klar und knapp. Stelle pro Antwort maximal EINE Frage, niemals zwei. Stelle keine Frage erneut, wenn sie bereits beantwortet wurde. Begleite zur eigenen Erkenntnis, statt den Nutzer in langen Schleifen zu halten. Sobald Erkenntnis, Leitsatz und nächster Schritt erkennbar sind, liefere einen Abschluss mit ERKENNTNIS, INNER CODE, ENTSCHEIDUNG und MIKRO-HANDLUNG und stelle keine weitere Frage. Spätestens bei fünf Nutzernachrichten aktiv zum Abschluss übergehen, ohne Fakten zu erfinden. Bei Unklarheit nur einen kleinen Klärungsschritt anbieten."};
+
 
 async function sendMessage(){
 
@@ -450,13 +450,16 @@ async function sendMessage(){
       })
     });
 
-    const data=await response.json();
+    const raw=await response.text();
+    let data;
+    try { data=JSON.parse(raw); }
+    catch(e) { throw new Error("HTTP "+response.status+" · Antwort kein JSON · "+raw.slice(0,180)); }
 
     thinking.remove();
 
     if(!response.ok || !data.ok || !data.answer){
       throw new Error(
-        data.error || "Keine Antwort erhalten"
+        "HTTP "+response.status+" · "+(data.error || (data.ok===false?"Server meldet ok=false":"Antwortfeld fehlt"))
       );
     }
 
@@ -477,10 +480,8 @@ async function sendMessage(){
 
     thinking.remove();
 
-    addBubble(
-      "Die Verbindung zur ICS KI konnte gerade nicht hergestellt werden. Bitte versuche es gleich noch einmal.",
-      "ai"
-    );
+    console.error("ICS KI Diagnostik",error);
+    addBubble("Verbindungstest fehlgeschlagen: "+String(error?.message||error).slice(0,240),"ai");
 
     status.textContent="● VERBINDUNGSFEHLER";
 
