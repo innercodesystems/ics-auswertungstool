@@ -446,7 +446,7 @@ async function sendMessage(){
         "Content-Type":"application/json"
       },
       body:JSON.stringify({
-        messages:[coachingRules,...conversation]
+        messages:conversation.map((m,i)=>i===conversation.length-1 && m.role==='user' ? {role:'user',content:m.content+'\n\n[Gesprächsführung: Antworte bitte mit höchstens einer Frage. Berücksichtige bisherige Antworten. Wenn ein klarer nächster Schritt erkennbar ist, fasse Erkenntnis, INNER CODE, Entscheidung und Mikro-Handlung zusammen, ohne weitere Rückfrage. Keine erfundenen Details.]'} : m)
       })
     });
 
