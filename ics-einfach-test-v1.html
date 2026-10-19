@@ -280,7 +280,7 @@ Schreib einfach, was dir durch den Kopf geht. Ein Satz reicht.</div>
 </div>
 
 </section>
-<div class="main-next"><button type="button" id="openInsight" class="send">Meinen nächsten Schritt finden →</button></div>
+<div class="main-next"><button type="button" id="openInsight" class="send" hidden>Meinen nächsten Schritt finden →</button></div>
 <section id="insight" class="insight" hidden aria-live="polite"></section>
 
 <p class="hint">Testversion · Dein Gespräch bleibt auf diesem Gerät bis zu 24 Stunden erhalten. Du kannst es jederzeit löschen.</p><div style="text-align:center"><button id="clearSession" type="button" class="quiet-reset">Gespräch löschen</button></div>
@@ -330,6 +330,7 @@ let activeSystem = "Klarheits-Kompass";
 let conversation = [];
 let insightOffered=false;
 let userTurns=0;
+function syncNextButton(){document.getElementById("openInsight").hidden=!conversation.some(m=>m.role==="user");}
 const insightBox=document.getElementById("insight");
 
 function addBubble(text,type,extraClass=""){
@@ -349,6 +350,7 @@ function addBubble(text,type,extraClass=""){
 function resetConversation(){
   conversation=[];
   userTurns=0;
+  syncNextButton();
   insightOffered=false;
   insightBox.hidden=true;
   insightBox.replaceChildren();
@@ -418,6 +420,7 @@ async function sendMessage(){
     role:"user",
     content:text
   });
+  syncNextButton();
   saveSimpleSession();
 
   input.value="";
@@ -760,6 +763,7 @@ function restoreSimpleSession(){
  try{const raw=sessionStorage.getItem(simpleSessionKey);if(!raw)return;const data=JSON.parse(raw);if(!data.at||Date.now()-data.at>86400000){sessionStorage.removeItem(simpleSessionKey);return;}if(!Array.isArray(data.conversation))return;conversation=data.conversation.filter(m=>m&&["user","assistant"].includes(m.role)&&typeof m.content==="string").slice(-50);userTurns=conversation.filter(m=>m.role==="user").length;insightOffered=false;messagesBox.replaceChildren();const label=document.createElement("div");label.className="small";label.textContent="Dein bisheriges Gespräch";messagesBox.appendChild(label);for(const m of conversation){const bubble=document.createElement("div");bubble.className="bubble "+(m.role==="user"?"user":"ai");bubble.textContent=m.content;messagesBox.appendChild(bubble);} }catch(e){}
 }
 restoreSimpleSession();
+syncNextButton();
 document.getElementById("clearSession").addEventListener("click",()=>{if(!confirm("Gespräch auf diesem Gerät löschen und neu beginnen?"))return;sessionStorage.removeItem(simpleSessionKey);resetConversation();});
 window.addEventListener("pagehide",saveSimpleSession);
 
