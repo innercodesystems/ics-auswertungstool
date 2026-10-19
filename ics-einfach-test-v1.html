@@ -1,0 +1,782 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>ICS KI-LAB – Klarheits-Kompass V1.9 Auto-Übergabe Test</title>
+
+<style>
+:root{
+  --bg:#0b0a08;
+  --panel:#15120e;
+  --gold:#b8924f;
+  --gold2:#e6c27c;
+  --cream:#f6f1e7;
+  --muted:#bdb2a2;
+  --line:#70552f
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:radial-gradient(circle at 50% -10%,#34240f,#0b0a08 38%);
+  color:var(--cream);
+  font-family:Arial,Helvetica,sans-serif;
+  min-height:100vh
+}
+
+header{
+  padding:16px 20px;
+  border-bottom:1px solid #6e512c88;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px
+}
+
+header strong{
+  font:14px Georgia,serif;
+  letter-spacing:.15em;
+  color:var(--gold2)
+}
+
+header span{
+  font-size:11px;
+  border:1px solid var(--line);
+  padding:6px 9px;
+  border-radius:20px;
+  color:var(--gold2)
+}
+
+.wrap{
+  max-width:760px;
+  margin:auto;
+  padding:42px 18px 70px
+}
+
+.eyebrow{
+  text-align:center;
+  color:var(--gold2);
+  font-size:11px;
+  letter-spacing:.2em;
+  font-weight:bold
+}
+
+.title{
+  text-align:center;
+  font:normal clamp(34px,8vw,58px)/1.05 Georgia,serif;
+  color:#edc987;
+  margin:12px 0
+}
+
+.intro{
+  text-align:center;
+  color:var(--muted);
+  line-height:1.6;
+  max-width:570px;
+  margin:0 auto 28px
+}
+
+.tabs{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
+  margin:25px 0
+}
+
+.tab{
+  border:1px solid #604725;
+  background:#15120e;
+  color:#c9baa5;
+  border-radius:9px;
+  padding:10px 5px;
+  font-size:11px;
+  cursor:pointer
+}
+
+.tab.active{
+  border-color:#d3a85e;
+  color:#f3d79f;
+  background:#251b0e
+}
+
+.chat{
+  border:1px solid #71542e;
+  border-radius:20px;
+  background:linear-gradient(180deg,#18140f,#100e0b);
+  overflow:hidden;
+  box-shadow:0 25px 70px #0008
+}
+
+.chathead{
+  padding:18px 20px;
+  border-bottom:1px solid #49371f;
+  display:flex;
+  justify-content:space-between;
+  align-items:center
+}
+
+.chathead b{
+  font-family:Georgia,serif;
+  color:#efd099
+}
+
+.status{
+  font-size:11px;
+  color:#bfa779
+}
+
+.status.live{
+  color:#d9bd7d
+}
+
+.messages{
+  padding:25px 18px;
+  min-height:330px
+}
+
+.bubble{
+  max-width:88%;
+  padding:15px 17px;
+  border-radius:15px;
+  line-height:1.55;
+  font-size:15px;
+  margin-bottom:15px;
+  white-space:pre-wrap
+}
+
+.ai{
+  background:#211a11;
+  border:1px solid #594221;
+  border-top-left-radius:4px
+}
+
+.user{
+  background:#312714;
+  margin-left:auto;
+  border:1px solid #80633b;
+  border-top-right-radius:4px
+}
+
+.thinking{
+  opacity:.72;
+  font-style:italic
+}
+
+.small{
+  font-size:12px;
+  color:#a99d8d;
+  margin-bottom:8px
+}
+
+.composer{
+  border-top:1px solid #49371f;
+  padding:14px;
+  display:flex;
+  gap:8px;
+  background:#100e0b
+}
+
+textarea{
+  resize:none;
+  flex:1;
+  background:#211d17;
+  color:var(--cream);
+  border:1px solid #624a2b;
+  border-radius:10px;
+  padding:13px;
+  font:15px Arial;
+  min-height:52px
+}
+
+textarea:focus{
+  outline:1px solid #b8924f
+}
+
+.send{
+  cursor:pointer;
+  border:0;
+  border-radius:10px;
+  background:linear-gradient(125deg,#f0d08b,#b88b43);
+  color:#171107;
+  font-weight:bold;
+  padding:0 18px
+}
+
+.send:disabled{
+  opacity:.45;
+  cursor:default
+}
+
+.hint{
+  text-align:center;
+  color:#83796d;
+  font-size:11px;
+  margin-top:12px;
+  line-height:1.5
+}
+
+.demo{
+  margin-top:28px;
+  border-left:3px solid var(--gold);
+  background:#1b160f;
+  padding:15px 17px;
+  color:#cdbfa9;
+  font-size:13px;
+  line-height:1.55
+}
+
+@media(max-width:560px){
+  .wrap{padding-top:30px}
+  .tabs{grid-template-columns:repeat(2,1fr)}
+  .messages{min-height:300px}
+  .bubble{max-width:94%}
+}
+.insight{margin-top:16px;border:1px solid #80633b;border-radius:14px;background:#20180f;padding:18px;line-height:1.55}.insight h2{font:23px Georgia,serif;color:#edc987;margin:5px 0 12px}.insight button{background:#d4a03a;border:0;border-radius:8px;padding:11px 15px;font-weight:bold;cursor:pointer;margin:6px 8px 0 0}.insight button.secondary{background:#322819;color:#f6f1e7;border:1px solid #80633b}.insight p{white-space:pre-wrap}.insight-result{white-space:pre-wrap;line-height:1.75;background:#17120c;border-radius:10px;padding:14px;border:1px solid #594221}.insight-actions{display:flex;flex-wrap:wrap;gap:6px}.insight-actions button{margin:0}
+.result-grid{display:grid;gap:12px;margin:14px 0}.result-card{background:#17120c;border:1px solid #594221;border-radius:12px;padding:16px}.result-card h3{color:#edc987;font:19px Georgia,serif;margin:0 0 9px}.result-card p{margin:0;white-space:pre-wrap;line-height:1.65}.result-kicker{font-size:11px;letter-spacing:.12em;color:#b8924f;text-transform:uppercase;margin-bottom:6px}.result-card:focus-within{border-color:#d4a03a}
+.main-next{text-align:center;margin:18px 0}.main-next .send{padding:15px 22px;width:min(100%,390px);font-size:16px}.quiet-reset{background:transparent;border:0;color:#aa9d88;text-decoration:underline;padding:12px;cursor:pointer}.wrap{padding-top:24px}.title{font-size:clamp(30px,7vw,46px)}.intro{margin-bottom:20px}.messages{min-height:180px;padding:18px 12px}.bubble{max-width:96%}.insight-actions button{font-size:14px}.chathead{padding:12px 16px}header{padding:12px 16px}.result-grid{gap:8px}.result-card{padding:13px}#insight .insight-actions button.secondary{display:none}#insight .insight-actions button{flex:1 1 100%}#insight .insight-actions button:nth-child(3){order:-1}#insight .insight-actions button:nth-child(2){display:none}#insight .insight-actions button:nth-child(4){display:none}#insight .insight-actions button:nth-child(1){display:none}#insight .insight-actions button:nth-child(5){display:none}#insight .insight-actions{margin-top:14px}#insight .insight:has(.result-grid) .result-grid{margin:10px 0}#insight .insight:has(.result-grid) button{width:100%}#insight .insight:has(.result-grid) .hint{font-size:11px}</style>
+</head>
+
+<body>
+
+<header>
+  <strong>INNER CODE SYSTEMS</strong>
+  <span>VEREINFACHTER TEST</span>
+</header>
+
+<main class="wrap">
+
+<div class="eyebrow">INNER CODE SYSTEMS · TEST</div>
+
+<h1 class="title">Dein Klarheits-Kompass</h1>
+
+<p class="intro">Was beschäftigt dich gerade? Ein Satz reicht.</p>
+
+<section class="chat">
+
+<div class="chathead">
+  <b id="systemName">Klarheits-Kompass</b>
+  <span class="status live" id="status">● LIVE</span>
+</div>
+
+<div class="messages" id="messages">
+  <div class="small">INNER CODE SYSTEMS</div>
+
+  <div class="bubble ai" id="welcome">Was beschäftigt dich gerade?
+
+Schreib einfach, was dir durch den Kopf geht. Ein Satz reicht.</div>
+</div>
+
+<div class="composer">
+  <textarea
+    id="input"
+    placeholder="Deine Antwort …"
+    aria-label="Deine Antwort"
+  ></textarea>
+
+  <button class="send" id="send">Weiter →</button>
+</div>
+
+</section>
+<div class="main-next"><button type="button" id="openInsight" class="send">Meinen nächsten Schritt finden →</button></div>
+<section id="insight" class="insight" hidden aria-live="polite"></section>
+
+<p class="hint">Testversion · Dein Gespräch bleibt auf diesem Gerät bis zu 24 Stunden erhalten. Du kannst es jederzeit löschen.</p><div style="text-align:center"><button id="clearSession" type="button" class="quiet-reset">Gespräch löschen</button></div>
+
+
+
+</main>
+
+<script>
+const API =
+  "https://ics-ki.peter-wicklein.workers.dev/chat";
+
+const openings = {
+  "Klarheits-Kompass":
+    "Was beschäftigt dich gerade?\n\nSchreib einfach, was dir durch den Kopf geht. Ein Satz reicht.",
+
+  "RESET-Begleiter":
+    "Welches Verhalten, welcher Gedanke oder welches Gefühl taucht bei dir immer wieder auf, obwohl du es gerne verändern möchtest?",
+
+  "ACTION Mentor":
+    "Was möchtest du gerade wirklich umsetzen?",
+
+  "Content Creator":
+    "Was möchtest du heute in Content verwandeln? Du kannst mit einem Gedanken, Erlebnis, Foto, Video oder ein paar Stichpunkten beginnen."
+};
+
+const systemName =
+  document.getElementById("systemName");
+
+const messagesBox =
+  document.getElementById("messages");
+
+const welcome =
+  document.getElementById("welcome");
+
+const input =
+  document.getElementById("input");
+
+const send =
+  document.getElementById("send");
+
+const status =
+  document.getElementById("status");
+
+let activeSystem = "Klarheits-Kompass";
+
+let conversation = [];
+let insightOffered=false;
+let userTurns=0;
+const insightBox=document.getElementById("insight");
+
+function addBubble(text,type,extraClass=""){
+  const bubble=document.createElement("div");
+  bubble.className=`bubble ${type} ${extraClass}`.trim();
+  bubble.textContent=text;
+  messagesBox.appendChild(bubble);
+
+  bubble.scrollIntoView({
+    behavior:"smooth",
+    block:"end"
+  });
+
+  return bubble;
+}
+
+function resetConversation(){
+  conversation=[];
+  userTurns=0;
+  insightOffered=false;
+  insightBox.hidden=true;
+  insightBox.replaceChildren();
+  messagesBox.innerHTML="";
+
+  const label=document.createElement("div");
+  label.className="small";
+  label.textContent="INNER CODE SYSTEMS";
+  messagesBox.appendChild(label);
+
+  const first=document.createElement("div");
+  first.className="bubble ai";
+  first.textContent=openings[activeSystem];
+  messagesBox.appendChild(first);
+
+  input.value="";
+}
+
+document
+  .querySelectorAll(".tab[data-name]")
+  .forEach(tab=>{
+    tab.addEventListener("click",()=>{
+
+      document
+        .querySelectorAll(".tab[data-name]")
+        .forEach(x=>x.classList.remove("active"));
+
+      tab.classList.add("active");
+
+      activeSystem=tab.dataset.name;
+      systemName.textContent=activeSystem;
+
+      resetConversation();
+
+      if(activeSystem==="Klarheits-Kompass"){
+        status.textContent="● LIVE";
+        status.className="status live";
+        input.disabled=false;
+        send.disabled=false;
+        input.placeholder="Deine Antwort …";
+      }else{
+        status.textContent="● VORSCHAU";
+        status.className="status";
+        input.disabled=true;
+        send.disabled=true;
+        input.placeholder="Diese Engine wird als Nächstes angeschlossen.";
+      }
+    });
+  });
+
+async function sendMessage(){
+
+  if(activeSystem!=="Klarheits-Kompass"){
+    return;
+  }
+
+  const text=input.value.trim();
+
+  if(!text){
+    return;
+  }
+
+  addBubble(text,"user");
+
+  userTurns++;
+  conversation.push({
+    role:"user",
+    content:text
+  });
+  saveSimpleSession();
+
+  input.value="";
+  input.disabled=true;
+  send.disabled=true;
+
+  status.textContent="● DENKT …";
+
+  const thinking=
+    addBubble(
+      "Der Klarheits-Kompass denkt …",
+      "ai",
+      "thinking"
+    );
+
+  try{
+
+    const response=await fetch(API,{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        messages:conversation
+      })
+    });
+
+    const data=await response.json();
+
+    thinking.remove();
+
+    if(!response.ok || !data.ok || !data.answer){
+      throw new Error(
+        data.error || "Keine Antwort erhalten"
+      );
+    }
+
+    addBubble(data.answer,"ai");
+
+    conversation.push({
+      role:"assistant",
+      content:data.answer
+    });
+    saveSimpleSession();
+    // A meaningful reflection is a better trigger than a fixed first response.
+    // Offer after an explicit insight from turn 2, or gently after 4 turns.
+    if(!insightOffered && shouldOfferInsight()) offerInsight();
+
+    status.textContent="● LIVE";
+
+  }catch(error){
+
+    thinking.remove();
+
+    addBubble(
+      "Die Verbindung zur ICS KI konnte gerade nicht hergestellt werden. Bitte versuche es gleich noch einmal.",
+      "ai"
+    );
+
+    status.textContent="● VERBINDUNGSFEHLER";
+
+  }finally{
+
+    input.disabled=false;
+    send.disabled=false;
+    input.focus();
+
+  }
+}
+
+function shouldOfferInsight(){
+  const ownWords=conversation.filter(m=>m.role==="user").map(m=>m.content).join(" ").toLowerCase();
+  const insightSignals=[/ich (?:habe )?(?:erkannt|bemerkt|verstanden)/,/mir (?:ist|wird) klar/,/ich merke/,/eigentlich (?:möchte|brauche|will|würde)/,/ich glaube,? dass/,/ich darf/,/ich muss nicht/,/mir ist wichtig/];
+  return userTurns>=4 || (userTurns>=2 && insightSignals.some(re=>re.test(ownWords)));
+}
+
+function offerInsight(){
+  insightOffered=true;
+  insightBox.hidden=false;
+  insightBox.replaceChildren();
+  const title=document.createElement("h2");
+  title.textContent="Dein nächster Schritt";
+  const intro=document.createElement("p");
+  intro.textContent="Aus unserem Gespräch machen wir eine Erkenntnis und einen umsetzbaren Schritt.";
+  const yes=document.createElement("button");
+  yes.textContent="Ergebnis erstellen";
+  const no=document.createElement("button");
+  no.className="secondary";
+  no.textContent="Im Gespräch bleiben";
+  no.onclick=()=>{insightBox.hidden=true;insightOffered=true;};
+  yes.onclick=async()=>{
+    yes.disabled=true;
+    yes.textContent="Wird erstellt …";
+    try{
+      const response=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:[...conversation,{role:"user",content:"Bitte fasse unser bisheriges Gespräch behutsam zusammen. Antworte ausschließlich in exakt drei Zeilen mit diesen eindeutigen Markierungen, ohne Markdown oder Nummerierung: ERKENNTNIS: [meine mögliche Kernerkenntnis] dann CODE: [ein möglicher neuer hilfreicher Leitsatz] dann HANDLUNG: [genau eine kleine, heute konkret umsetzbare Handlung]. Jede Markierung beginnt eine eigene Zeile. Erfinde nichts, stelle keine neue Frage und formuliere als Vorschläge, die ich selbst prüfen kann."}]})});
+      const data=await response.json();
+      if(!response.ok||!data.ok||!data.answer)throw new Error("Keine Antwort");
+      insightBox.replaceChildren();
+      const heading=document.createElement("h2");heading.textContent="Dein möglicher nächster Schritt";
+      const result=document.createElement("div");result.className="result-grid";
+      const labels=["Deine mögliche Erkenntnis","Dein neuer Leitsatz","Deine Mikro-Handlung"];
+      const raw=data.answer.trim();
+      const normalized=raw.replace(/\\n/g,"\n").replace(/\r/g,"");
+      // Primary contract: explicit labels. Accept labels on one line too.
+      const marker=/(?:^|\n|\s)(ERKENNTNIS|CODE|HANDLUNG)\s*:/gi;
+      const matches=[...normalized.matchAll(marker)];
+      let parts=[];
+      if(matches.length===3 && matches.map(m=>m[1].toUpperCase()).join(",")==="ERKENNTNIS,CODE,HANDLUNG"){
+        parts=matches.map((m,i)=>normalized.slice(m.index+m[0].length,i+1<matches.length?matches[i+1].index:normalized.length).trim());
+      }
+      if(parts.length!==3 || parts.some(p=>!p)){
+        // Legacy response: headings such as 1. **Mögliche Kernerkenntnis:**
+        const legacy=normalized.split(/(?:^|\s)(?:\*{0,2})[123][.)]\s*(?=(?:\*{0,2})?(?:Mögliche|Meine|Deine|Ein|Neue|Konkrete|Erkenntnis|Leitsatz|Mikro))/i).map(s=>s.trim()).filter(Boolean);
+        if(legacy.length===3)parts=legacy;
+      }
+      if(parts.length===3 && parts.every(Boolean)){
+        parts.forEach((section,i)=>{
+          const card=document.createElement("article");card.className="result-card";
+          const h=document.createElement("h3");h.textContent=labels[i];
+          const p=document.createElement("p");p.textContent=section.replace(/^\*{0,2}[^:\n]{0,55}:\*{0,2}\s*/,"").replace(/\*\*/g,"").replace(/^["“]|["”]$/g,"").trim();
+          card.append(h,p);result.appendChild(card);
+        });
+      }else{
+        const card=document.createElement("article");card.className="result-card";
+        const h=document.createElement("h3");h.textContent="Deine persönliche Auswertung";
+        const p=document.createElement("p");p.textContent=normalized;
+        card.append(h,p);result.appendChild(card);
+      }
+      // Portable ICS handoff contract. Created only after the user explicitly requests insight.
+      const icsHandoff={
+        schema:"ics.handoff.v1",
+        source:"klarheits-kompass",
+        createdAt:new Date().toISOString(),
+        consentRequired:true,
+        insight:{
+          recognition:parts.length===3?parts[0]:null,
+          newCode:parts.length===3?parts[1]:null,
+          microAction:parts.length===3?parts[2]:null,
+          originalText:data.answer
+        },
+        reset:null,
+        action:null
+      };
+      // Isolated V1.9 test: user-consented local save, no production app mutation.
+      const storeKey="ICS_KLARHEIT_AUTOTEST_V2";
+      const storePanel=document.createElement("section");
+      storePanel.className="insight";
+      const storeHeading=document.createElement("h2");
+      storeHeading.textContent="Mein ICS · Testansicht";
+      const storeView=document.createElement("div");
+      storeView.className="result-grid";
+      const showStored=()=>{
+        storeView.replaceChildren();
+        let saved=null;
+        try{saved=JSON.parse(localStorage.getItem(storeKey)||"null");}catch(e){}
+        if(!saved || !saved.insight){
+          const p=document.createElement("p");p.textContent="Noch keine Erkenntnis in dieser Testversion gespeichert.";storeView.append(p);return;
+        }
+        ["recognition","newCode","microAction"].forEach((key,i)=>{
+          const card=document.createElement("article");card.className="result-card";
+          const h=document.createElement("h3");h.textContent=["Erkenntnis","Neuer Code","Mikro-Handlung"][i];
+          const p=document.createElement("p");p.textContent=saved.insight[key]||"–";
+          card.append(h,p);storeView.append(card);
+        });
+      };
+      const storeConsent=document.createElement("label");
+      storeConsent.style.display="block";
+      storeConsent.style.margin="14px 0";
+      const storeCheck=document.createElement("input");storeCheck.type="checkbox";
+      storeConsent.append(storeCheck,document.createTextNode(" Ich stimme zu, diese drei Ergebnisse lokal in diesem Testbrowser zu speichern."));
+      const storeButton=document.createElement("button");
+      storeButton.textContent="Mit Zustimmung in Mein ICS (Test) speichern";
+      storeButton.disabled=true;
+      const storeStatus=document.createElement("p");
+      storeStatus.setAttribute("role","status");
+      const validParts=parts.length===3&&parts.every(p=>typeof p==="string"&&p.trim());
+      if(!validParts){storeStatus.textContent="Eine strukturierte Übergabe ist für diese Antwort nicht möglich.";storeCheck.disabled=true;}
+      storeCheck.onchange=()=>{storeButton.disabled=!validParts||!storeCheck.checked;};
+      storeButton.onclick=()=>{
+        if(!validParts||!storeCheck.checked)return;
+        try{
+          localStorage.setItem(storeKey,JSON.stringify({
+            schema:"ics.mentor.clarity.v1",source:"klarheits-kompass",
+            savedAt:new Date().toISOString(),
+            insight:{recognition:parts[0],newCode:parts[1],microAction:parts[2]}
+          }));
+          storeStatus.textContent="✓ Lokal gespeichert. Keine Übertragung an die produktive ICS-App.";
+          showStored();
+          // Explicitly consented one-time message to the isolated integration shell only.
+          if(window.parent!==window && window.location.origin==="https://www.innercodesystems.com"){
+            window.parent.postMessage({type:"ICS_CLARITY_TEST_HANDOFF_V1",insight:{recognition:parts[0],newCode:parts[1],microAction:parts[2]}},"https://www.innercodesystems.com");
+            storeStatus.textContent="✓ Lokal gespeichert; Übergabe an die Testoberfläche gesendet.";
+          }
+        }catch(e){storeStatus.textContent="Speicherung im Browser nicht möglich.";}
+      };
+      const deleteButton=document.createElement("button");
+      deleteButton.className="secondary";deleteButton.textContent="Test-Erkenntnis löschen";
+      deleteButton.onclick=()=>{localStorage.removeItem(storeKey);storeCheck.checked=false;storeButton.disabled=true;storeStatus.textContent="Test-Erkenntnis gelöscht.";showStored();};
+      const storeNote=document.createElement("p");
+      storeNote.textContent="Isolierter Test: keine App-Verbindung, kein Cloud-Sync, keine automatische spätere Verwendung durch den Mentor.";
+      storePanel.append(storeHeading,storeConsent,storeButton,deleteButton,storeStatus,storeView,storeNote);
+      showStored();
+      const exportData=document.createElement("button");
+      exportData.className="secondary";
+      exportData.textContent="Übergabedaten kopieren";
+      exportData.title="Kopiert einen strukturierten ICS-Datensatz. Keine automatische Übertragung.";
+      exportData.onclick=async()=>{
+        try{
+          await navigator.clipboard.writeText(JSON.stringify(icsHandoff,null,2));
+          exportData.textContent="Übergabedaten kopiert";
+        }catch(e){exportData.textContent="Kopieren nicht möglich";}
+      };
+      const copy=document.createElement("button");copy.textContent="Für RESET kopieren";
+      copy.onclick=async()=>{try{await navigator.clipboard.writeText(data.answer);copy.textContent="Kopiert – du entscheidest, wo du es einfügst";}catch(e){copy.textContent="Kopieren nicht möglich – bitte Text markieren";}};
+      const close=document.createElement("button");close.className="secondary";close.textContent="Zurück zum Gespräch";close.onclick=()=>{insightBox.hidden=true;insightOffered=false;};
+      const reset=document.createElement("button");
+      reset.textContent="Mit RESET weiterarbeiten";
+      reset.onclick=async()=>{
+        reset.disabled=true;
+        reset.textContent="RESET-Übung wird erstellt …";
+        const consent=document.createElement("p");
+        consent.textContent="Du hast die Übergabe dieser Erkenntnis an die ICS KI für eine einmalige RESET-Übung bestätigt. Die Übung wird nicht dauerhaft im ICS-System gespeichert.";
+        try{
+          const response=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:[{role:"user",content:"Du bist der ICS RESET-Begleiter. Erstelle auf Grundlage der folgenden freiwillig übergebenen Erkenntnis eine kurze, alltagstaugliche RESET-Übung auf Deutsch. Antworte ausschließlich in vier Abschnitten, jeweils mit genau diesem Label am Anfang einer eigenen Zeile: WAHRNEHMEN: (eine sanfte Beobachtungsfrage), SPÜREN: (30 Sekunden Körperwahrnehmung ohne Deutung), HANDELN: (eine konkret in maximal 5 Minuten umsetzbare Mikro-Handlung), INTEGRIEREN: (ein kurzer Reflexionssatz). Keine Markdown-Nummerierung. Keine Diagnose, keine Behauptung über psychische Ursachen, keine zusätzlichen Rückfragen. Erkenntnis:\\n"+data.answer}]})});
+          const payload=await response.json();
+          if(!response.ok||!payload.ok||!payload.answer)throw Error("Keine RESET-Antwort");
+          const section=document.createElement("section");section.className="insight";
+          const h=document.createElement("h2");h.textContent="Dein persönlicher Mikro-RESET";
+          const p=document.createElement("div");p.className="result-grid";
+          const normalized=payload.answer.trim().replace(/\\n/g,"\n").replace(/\r/g,"");
+          const labels=["WAHRNEHMEN","SPÜREN","HANDELN","INTEGRIEREN"];
+          const matches=[...normalized.matchAll(/(?:^|\n|\s)(WAHRNEHMEN|SPÜREN|HANDELN|INTEGRIEREN)\s*:/gi)];
+          let steps=[];
+          if(matches.length===4 && matches.every((m,i)=>m[1].toUpperCase()===labels[i])){
+            steps=matches.map((m,i)=>normalized.slice(m.index+m[0].length,i+1<matches.length?matches[i+1].index:normalized.length).trim());
+          }
+          if(steps.length!==4 || steps.some(s=>!s)){
+            const legacy=normalized.split(/(?:^|\s)(?:\*{0,2})(?:Schritt\s*)?[1-4][.)]\s*(?=(?:\*{0,2})?(?:Wahrnehmen|Spüren|Handeln|Integrieren))/i).map(s=>s.trim()).filter(Boolean);
+            if(legacy.length===4)steps=legacy;
+          }
+          if(steps.length===4 && steps.every(Boolean)){
+            const names=["01 · Wahrnehmen","02 · Spüren","03 · Handeln","04 · Integrieren"];
+            steps.forEach((step,i)=>{
+              const card=document.createElement("article");card.className="result-card";
+              const heading=document.createElement("h3");heading.textContent=names[i];
+              const body=document.createElement("p");body.textContent=step.replace(/^\*{0,2}(?:Wahrnehmen|Spüren|Handeln|Integrieren)\s*:\*{0,2}\s*/i,"").replace(/\*\*/g,"").trim();
+              card.append(heading,body);p.appendChild(card);
+            });
+          }else{
+            const card=document.createElement("article");card.className="result-card";
+            const body=document.createElement("p");body.textContent=normalized;card.appendChild(body);p.appendChild(card);
+          }
+          icsHandoff.reset={steps:steps.length===4?{wahrnehmen:steps[0],spueren:steps[1],handeln:steps[2],integrieren:steps[3]}:null,originalText:payload.answer};
+          const save=document.createElement("button");save.textContent="RESET-Übung kopieren";
+          save.onclick=async()=>{try{await navigator.clipboard.writeText(payload.answer);save.textContent="Kopiert";}catch(e){save.textContent="Bitte Text manuell markieren";}};
+          section.append(h,p,save);
+          insightBox.append(consent,section);
+          reset.textContent="RESET-Übung erstellt";
+        }catch(e){reset.disabled=false;reset.textContent="RESET erneut versuchen";}
+      };
+      const action=document.createElement("button");
+      action.textContent="Konkreten Plan erstellen →";
+      action.onclick=async()=>{
+        action.disabled=true;
+        action.textContent="ACTION-Plan wird erstellt …";
+        try{
+          const prompt="Du bist der ICS ACTION Mentor. Verwende nur die übergebenen Informationen. Erstelle einen konkreten, wirksamen ACTION-Plan in exakt vier kurzen Abschnitten mit den Labels PRIORITÄT:, SCHRITT:, ZEITPUNKT:, FORTSCHRITT:. SCHRITT: maximal 10 Minuten und sichtbarer Fortschritt in Richtung des eigentlichen Ziels; keine bloße Notiz als Scheinhandlung. Keine erfundenen Termine oder Kontakte. Stelle keine Rückfrage. Übergabedaten:\\n"+JSON.stringify(icsHandoff.insight);
+          const response=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:[{role:"user",content:prompt}]})});
+          const payload=await response.json();
+          if(!response.ok||!payload.ok||!payload.answer)throw Error("ACTION-Dienst: "+(payload.error||payload.message||("HTTP "+response.status)));
+          const normalized=payload.answer.trim().replace(/\\n/g,"\n").replace(/\r/g,"");
+          const keys=["PRIORITÄT","SCHRITT","ZEITPUNKT","FORTSCHRITT"];
+          const matches=[...normalized.matchAll(/(?:^|\n|\s)(PRIORITÄT|SCHRITT|ZEITPUNKT|FORTSCHRITT)\s*:/gi)];
+          let values=[];
+          if(matches.length===4 && matches.every((m,i)=>m[1].toUpperCase()===keys[i])){
+            values=matches.map((m,i)=>normalized.slice(m.index+m[0].length,i+1<matches.length?matches[i+1].index:normalized.length).trim());
+          }
+          const section=document.createElement("section");section.className="insight";
+          const heading=document.createElement("h2");heading.textContent="Dein persönlicher ACTION-Plan";
+          const grid=document.createElement("div");grid.className="result-grid";
+          if(values.length===4 && values.every(Boolean)){
+            ["01 · Deine Priorität","02 · Dein nächster Schritt","03 · Dein Zeitpunkt","04 · Dein Fortschrittszeichen"].forEach((label,i)=>{
+              const card=document.createElement("article");card.className="result-card";
+              const h=document.createElement("h3");h.textContent=label;
+              const p=document.createElement("p");p.textContent=values[i].replace(/\*\*/g,"");
+              card.append(h,p);grid.appendChild(card);
+            });
+          }else{
+            const card=document.createElement("article");card.className="result-card";
+            const p=document.createElement("p");p.textContent=normalized;
+            card.appendChild(p);grid.appendChild(card);
+          }
+          icsHandoff.action={priority:values.length===4?values[0]:null,nextStep:values.length===4?values[1]:null,when:values.length===4?values[2]:null,progress:values.length===4?values[3]:null,originalText:payload.answer};
+          const note=document.createElement("p");note.className="hint";
+          note.textContent="Du hast die einmalige Übergabe an ACTION ausgelöst. Es wurde kein Kalendereintrag erstellt und nichts dauerhaft gespeichert.";
+          const progress=document.createElement("button");
+          progress.textContent="Schritt als erledigt markieren";
+          progress.onclick=()=>{
+            icsHandoff.action.completed=!icsHandoff.action.completed;
+            progress.textContent=icsHandoff.action.completed?"✓ Erledigt – wieder öffnen":"Schritt als erledigt markieren";
+            progress.setAttribute("aria-pressed",String(icsHandoff.action.completed));
+          };
+          progress.setAttribute("aria-pressed","false");
+          section.append(heading,grid,progress,note);
+          insightBox.appendChild(section);
+          action.textContent="ACTION-Plan erstellt";
+          section.scrollIntoView({behavior:"smooth",block:"nearest"});
+        }catch(e){
+          action.disabled=false;
+          action.textContent="ACTION erneut versuchen";
+          let errorNote=document.getElementById("ics-action-error");
+          if(!errorNote){errorNote=document.createElement("p");errorNote.id="ics-action-error";errorNote.className="hint";action.insertAdjacentElement("afterend",errorNote);}
+          errorNote.textContent="ACTION konnte nicht erstellt werden: "+(e&&e.message?e.message:"Unbekannter Fehler")+". Dein bisheriges Gespräch bleibt erhalten.";
+        }
+      };
+      const actions=document.createElement("div");actions.className="insight-actions";actions.append(action);
+      insightBox.append(heading,result,actions);
+    }catch(e){yes.disabled=false;yes.textContent="Erneut versuchen";}
+  };
+  const actions=document.createElement("div");actions.className="insight-actions";actions.append(yes,no);
+  insightBox.append(title,intro,actions);
+  insightBox.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+
+document.getElementById("openInsight").addEventListener("click",()=>{
+  if(conversation.filter(m=>m.role==="user").length===0){
+    input.focus();
+    return;
+  }
+  offerInsight();
+});
+
+
+// Local-only temporary conversation recovery. No remote storage or background sync.
+const simpleSessionKey="ICS_SIMPLE_KLARHEIT_SESSION_V1";
+function saveSimpleSession(){
+ try{sessionStorage.setItem(simpleSessionKey,JSON.stringify({at:Date.now(),conversation,userTurns,insightOffered,html:messagesBox.innerHTML}));}catch(e){}
+}
+function restoreSimpleSession(){
+ try{const raw=sessionStorage.getItem(simpleSessionKey);if(!raw)return;const data=JSON.parse(raw);if(!data.at||Date.now()-data.at>86400000){sessionStorage.removeItem(simpleSessionKey);return;}if(!Array.isArray(data.conversation))return;conversation=data.conversation.filter(m=>m&&["user","assistant"].includes(m.role)&&typeof m.content==="string").slice(-50);userTurns=conversation.filter(m=>m.role==="user").length;insightOffered=false;messagesBox.replaceChildren();const label=document.createElement("div");label.className="small";label.textContent="Dein bisheriges Gespräch";messagesBox.appendChild(label);for(const m of conversation){const bubble=document.createElement("div");bubble.className="bubble "+(m.role==="user"?"user":"ai");bubble.textContent=m.content;messagesBox.appendChild(bubble);} }catch(e){}
+}
+restoreSimpleSession();
+document.getElementById("clearSession").addEventListener("click",()=>{if(!confirm("Gespräch auf diesem Gerät löschen und neu beginnen?"))return;sessionStorage.removeItem(simpleSessionKey);resetConversation();});
+window.addEventListener("pagehide",saveSimpleSession);
+
+send.addEventListener("click",sendMessage);
+
+input.addEventListener("keydown",event=>{
+
+  if(
+    event.key==="Enter" &&
+    !event.shiftKey
+  ){
+    event.preventDefault();
+    sendMessage();
+  }
+
+});
+</script>
+
+</body>
+</html>
