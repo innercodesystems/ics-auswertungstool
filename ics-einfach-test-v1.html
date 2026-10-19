@@ -501,21 +501,13 @@ function offerInsight(){
   insightOffered=true;
   insightBox.hidden=false;
   insightBox.replaceChildren();
-  const title=document.createElement("h2");
-  title.textContent="Dein nächster Schritt";
-  const intro=document.createElement("p");
-  intro.textContent="Aus unserem Gespräch machen wir eine Erkenntnis und einen umsetzbaren Schritt.";
   const yes=document.createElement("button");
-  yes.textContent="Ergebnis erstellen";
-  const no=document.createElement("button");
-  no.className="secondary";
-  no.textContent="Im Gespräch bleiben";
-  no.onclick=()=>{insightBox.hidden=true;insightOffered=true;};
+  yes.textContent="Auswertung läuft …";
+  yes.disabled=true;
+  insightBox.textContent="Dein nächster Schritt wird erarbeitet …";
   yes.onclick=async()=>{
-    yes.disabled=true;
-    yes.textContent="Wird erstellt …";
     try{
-      const response=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:[...conversation,{role:"user",content:"Bitte fasse unser bisheriges Gespräch behutsam zusammen. Antworte ausschließlich in exakt drei Zeilen mit diesen eindeutigen Markierungen, ohne Markdown oder Nummerierung: ERKENNTNIS: [meine mögliche Kernerkenntnis] dann CODE: [ein möglicher neuer hilfreicher Leitsatz] dann HANDLUNG: [genau eine kleine, heute konkret umsetzbare Handlung]. Jede Markierung beginnt eine eigene Zeile. Erfinde nichts, stelle keine neue Frage und formuliere als Vorschläge, die ich selbst prüfen kann."}]})});
+      const response=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:[...conversation,{role:"user",content:"Bitte fasse unser bisheriges Gespräch behutsam zusammen. Antworte ausschließlich in exakt drei Zeilen mit diesen eindeutigen Markierungen, ohne Markdown oder Nummerierung: ERKENNTNIS: [meine mögliche Kernerkenntnis] dann CODE: [ein möglicher neuer hilfreicher Leitsatz] dann HANDLUNG: [genau eine kleine, heute konkret umsetzbare Handlung]. Jede Markierung beginnt eine eigene Zeile. Erfinde nichts, stelle keine neue Frage und formuliere als Vorschläge, die ich selbst prüfen kann. Falls das Gespräch erst eine kurze Aussage enthält, mache die begrenzte Informationslage in der Erkenntnis deutlich und schlage nur eine kleine Klärungshandlung vor."}]})});
       const data=await response.json();
       if(!response.ok||!data.ok||!data.answer)throw new Error("Keine Antwort");
       insightBox.replaceChildren();
@@ -740,8 +732,7 @@ function offerInsight(){
       insightBox.append(heading,result,actions);
     }catch(e){yes.disabled=false;yes.textContent="Erneut versuchen";}
   };
-  const actions=document.createElement("div");actions.className="insight-actions";actions.append(yes,no);
-  insightBox.append(title,intro,actions);
+  yes.onclick();
   insightBox.scrollIntoView({behavior:"smooth",block:"nearest"});
 }
 
