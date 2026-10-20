@@ -403,6 +403,7 @@ document
 
 async function sendMessage(){
 
+  if(insightOffered){return;}
   if(activeSystem!=="Klarheits-Kompass"){
     return;
   }
@@ -484,9 +485,9 @@ async function sendMessage(){
 
   }finally{
 
-    input.disabled=false;
-    send.disabled=false;
-    input.focus();
+    input.disabled=insightOffered;
+    send.disabled=insightOffered;
+    if(!insightOffered)input.focus();
 
   }
 }
@@ -499,6 +500,11 @@ function shouldOfferInsight(){
 
 async function offerInsight(){
   insightOffered=true;
+  input.disabled=true;
+  send.disabled=true;
+  input.placeholder="Gespräch abgeschlossen – dein nächster Schritt steht unten.";
+  document.getElementById("openInsight").hidden=true;
+  saveSimpleSession();
   insightBox.hidden=false;
   insightBox.replaceChildren();
   const yes=document.createElement("button");
@@ -507,7 +513,7 @@ async function offerInsight(){
   insightBox.textContent="Dein nächster Schritt wird erarbeitet …";
   yes.onclick=async()=>{
     try{
-      const response=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:[...conversation,{role:"user",content:"Wir sind nun beim Schritt ERKENNEN → HANDELN. Stelle keine weiteren Fragen und fasse unser bisheriges Gespräch behutsam zusammen. Antworte ausschließlich in exakt drei Zeilen mit diesen eindeutigen Markierungen, ohne Markdown oder Nummerierung: ERKENNTNIS: [meine mögliche Kernerkenntnis] dann CODE: [ein möglicher neuer hilfreicher Leitsatz] dann HANDLUNG: [genau eine kleine, heute konkret umsetzbare Handlung]. Jede Markierung beginnt eine eigene Zeile. Erfinde nichts, stelle keine neue Frage und formuliere als Vorschläge, die ich selbst prüfen kann. Falls das Gespräch erst eine kurze Aussage enthält, mache die begrenzte Informationslage in der Erkenntnis deutlich und schlage nur eine kleine Klärungshandlung vor."}]})});
+      const response=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:[...conversation,{role:"user",content:"Wir sind nun beim Schritt ERKENNEN → HANDELN. Stelle keine weiteren Fragen und fasse unser bisheriges Gespräch behutsam zusammen. Antworte ausschließlich in exakt drei Zeilen mit diesen eindeutigen Markierungen, ohne Markdown oder Nummerierung: ERKENNTNIS: [meine mögliche Kernerkenntnis] dann CODE: [ein möglicher neuer hilfreicher Leitsatz] dann HANDLUNG: [genau eine kleine, heute konkret umsetzbare Handlung]. Jede Markierung beginnt eine eigene Zeile. Erfinde nichts, stelle keine neue Frage und formuliere als Vorschläge, die ich selbst prüfen kann. Die HANDLUNG muss konkret, überprüfbar und direkt aus meinem Anliegen abgeleitet sein; wiederhole keine bereits beantwortete Frage und fordere mich nicht bloß auf, etwas noch einmal aufzuschreiben. Wenn ich einen digitalen Einstieg entwickle, schlage beispielsweise einen echten Test mit einer Person und einem klaren Beobachtungskriterium vor. Falls das Gespräch erst eine kurze Aussage enthält, mache die begrenzte Informationslage in der Erkenntnis deutlich und schlage nur eine kleine Klärungshandlung vor."}]})});
       const data=await response.json();
       if(!response.ok||!data.ok||!data.answer)throw new Error("Keine Antwort");
       insightBox.replaceChildren();
