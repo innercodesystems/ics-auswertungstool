@@ -748,14 +748,14 @@ document.getElementById("openInsight").addEventListener("click",()=>{
 // Local-only temporary conversation recovery. No remote storage or background sync.
 const simpleSessionKey="ICS_SIMPLE_KLARHEIT_SESSION_V1";
 function saveSimpleSession(){
- try{sessionStorage.setItem(simpleSessionKey,JSON.stringify({at:Date.now(),conversation,userTurns,insightOffered,html:messagesBox.innerHTML}));}catch(e){}
+ try{localStorage.setItem(simpleSessionKey,JSON.stringify({at:Date.now(),conversation,userTurns,insightOffered}));}catch(e){}
 }
 function restoreSimpleSession(){
- try{const raw=sessionStorage.getItem(simpleSessionKey);if(!raw)return;const data=JSON.parse(raw);if(!data.at||Date.now()-data.at>86400000){sessionStorage.removeItem(simpleSessionKey);return;}if(!Array.isArray(data.conversation))return;conversation=data.conversation.filter(m=>m&&["user","assistant"].includes(m.role)&&typeof m.content==="string").slice(-50);userTurns=conversation.filter(m=>m.role==="user").length;insightOffered=false;messagesBox.replaceChildren();const label=document.createElement("div");label.className="small";label.textContent="Dein bisheriges Gespräch";messagesBox.appendChild(label);for(const m of conversation){const bubble=document.createElement("div");bubble.className="bubble "+(m.role==="user"?"user":"ai");bubble.textContent=m.content;messagesBox.appendChild(bubble);} }catch(e){}
+ try{const raw=localStorage.getItem(simpleSessionKey)||sessionStorage.getItem(simpleSessionKey);if(!raw)return;const data=JSON.parse(raw);if(!data.at||Date.now()-data.at>86400000){localStorage.removeItem(simpleSessionKey);sessionStorage.removeItem(simpleSessionKey);return;}if(!Array.isArray(data.conversation))return;localStorage.setItem(simpleSessionKey,raw);conversation=data.conversation.filter(m=>m&&["user","assistant"].includes(m.role)&&typeof m.content==="string").slice(-50);userTurns=conversation.filter(m=>m.role==="user").length;insightOffered=false;messagesBox.replaceChildren();const label=document.createElement("div");label.className="small";label.textContent="Dein bisheriges Gespräch";messagesBox.appendChild(label);for(const m of conversation){const bubble=document.createElement("div");bubble.className="bubble "+(m.role==="user"?"user":"ai");bubble.textContent=m.content;messagesBox.appendChild(bubble);} }catch(e){}
 }
 restoreSimpleSession();
 syncNextButton();
-document.getElementById("clearSession").addEventListener("click",()=>{if(!confirm("Gespräch auf diesem Gerät löschen und neu beginnen?"))return;sessionStorage.removeItem(simpleSessionKey);resetConversation();});
+document.getElementById("clearSession").addEventListener("click",()=>{if(!confirm("Gespräch auf diesem Gerät löschen und neu beginnen?"))return;localStorage.removeItem(simpleSessionKey);sessionStorage.removeItem(simpleSessionKey);resetConversation();});
 window.addEventListener("pagehide",saveSimpleSession);
 
 send.addEventListener("click",sendMessage);
