@@ -244,7 +244,7 @@ textarea:focus{
 
 <header>
   <strong>INNER CODE SYSTEMS</strong>
-  <span>TEST · VERTIEFUNG V11</span>
+  <span>TEST · VERTIEFUNG V12</span>
 </header>
 
 <main class="wrap">
@@ -770,11 +770,14 @@ async function offerInsight(){
         try{
           const context=conversation.slice(-24).map(m=>({role:m.role,content:m.content}));
           const prompt="Du bist der persönliche ICS Mentor. Vertiefe die bereits gewonnene Erkenntnis anhand des bisherigen Gesprächs, ohne erneut bei null anzufangen. Gib zuerst eine kurze, konkrete, empathische Spiegelung (maximal 3 Sätze), dann genau EINE offene, hilfreiche Frage, die den Menschen in seiner Situation weiterbringt. Keine generischen Floskeln, keine Angebote erfinden, keine Diagnose. Antworte auf Deutsch.";
-          const response=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:[{role:"user",content:prompt},...context]})});
-          const payload=await response.json();
-          if(!response.ok||!payload.ok||!payload.answer)throw Error("Vertiefung derzeit nicht erreichbar");
+          const response=restoreDeepeningPending&&deepeningState?null:await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:[{role:"user",content:prompt},...context]})});
+          const payload=response?await response.json():{ok:true,answer:deepeningState.history[0].content};
+          if((response&&!response.ok)||!payload.ok||!payload.answer)throw Error("Vertiefung derzeit nicht erreichbar");
           body.textContent=payload.answer;
-          const deepenHistory=[{role:"assistant",content:payload.answer}];
+          const deepenHistory=restoreDeepeningPending&&deepeningState?deepeningState.history.slice():[{role:"assistant",content:payload.answer}];
+          deepeningState={history:deepenHistory};
+          restoreDeepeningPending=false;
+          saveSimpleSession();
           const answerField=document.createElement("textarea");
           answerField.placeholder="Deine Antwort zur Vertiefung …";
           answerField.setAttribute("aria-label","Deine Antwort zur Vertiefung");
@@ -792,6 +795,11 @@ async function offerInsight(){
           const transcript=document.createElement("div");
           transcript.setAttribute("aria-label","Gesprächsverlauf der Vertiefung");
           panel.insertBefore(transcript,answerField);
+          for(let j=1;j<deepenHistory.length;j++){
+            const m=deepenHistory[j];const bubble=document.createElement("p");bubble.className="insight-result";bubble.style.whiteSpace="pre-line";bubble.style.padding="14px";bubble.style.borderRadius="14px";bubble.textContent=(m.role==="user"?"DEINE ANTWORT\n":"ICS MENTOR\n")+m.content;
+            if(m.role==="user"){bubble.style.background="#382a17";bubble.style.border="1px solid #70552f";}else{bubble.style.borderLeft="3px solid #d4a03a";}
+            transcript.appendChild(bubble);
+          }
           const scrollToReply=(element)=>{requestAnimationFrame(()=>{element.scrollIntoView({behavior:"smooth",block:"start"});});};
           for(const field of [answerField]){field.style.fontSize="16px";field.style.scrollMarginTop="18px";}
           async function continueDeepening(){
@@ -827,6 +835,7 @@ async function offerInsight(){
               next.style.whiteSpace="pre-line";
               transcript.appendChild(next);
               deepenHistory.push({role:"assistant",content:payload.answer});
+              deepeningState={history:deepenHistory};
               conversation.push({role:"user",content:answer},{role:"assistant",content:payload.answer});
               saveSimpleSession();
               answerField.value="";
@@ -897,11 +906,13 @@ document.getElementById("openInsight").addEventListener("click",()=>{
 
 // Local-only temporary conversation recovery. No remote storage or background sync.
 const simpleSessionKey="ICS_SIMPLE_KLARHEIT_ABSCHLUSS_TEST";
+let deepeningState=null;
+let restoreDeepeningPending=false;
 function saveSimpleSession(){
  // Never replace a meaningful conversation with an empty page state.
  if(!conversation.some(m=>m&&m.role==="user"&&typeof m.content==="string"&&m.content.trim()))return;
  try{
-  const payload=JSON.stringify({at:Date.now(),conversation,userTurns,insightOffered});
+  const payload=JSON.stringify({at:Date.now(),conversation,userTurns,insightOffered,deepeningState});
   localStorage.setItem(simpleSessionKey,payload);
  }catch(e){}
 }
@@ -914,13 +925,15 @@ function restoreSimpleSession(){
   conversation=data.conversation.filter(m=>m&&["user","assistant"].includes(m.role)&&typeof m.content==="string").slice(-50);
   userTurns=conversation.filter(m=>m.role==="user").length;
   insightOffered=false;
+  deepeningState=data.deepeningState&&Array.isArray(data.deepeningState.history)?data.deepeningState:null;
+  restoreDeepeningPending=!!deepeningState;
   messagesBox.replaceChildren();
   const label=document.createElement("div");label.className="small";label.textContent="Dein bisheriges Gespräch";messagesBox.appendChild(label);
   for(const m of conversation){const bubble=document.createElement("div");bubble.className="bubble "+(m.role==="user"?"user":"ai");bubble.textContent=m.content;messagesBox.appendChild(bubble);}
   localStorage.setItem(simpleSessionKey,JSON.stringify(data));
   if(shouldOfferInsight()){
     // Restore the session first, then start the completion without another user action.
-    window.setTimeout(()=>{if(!insightOffered && shouldOfferInsight())offerInsight();},150);
+    window.setTimeout(async()=>{if(!insightOffered && shouldOfferInsight()){await offerInsight();if(restoreDeepeningPending){const b=Array.from(insightBox.querySelectorAll("button")).find(x=>x.textContent==="Ich möchte meine Erkenntnis vertiefen");if(b)b.click();}}},150);
   }
  }catch(e){}
 }
