@@ -244,7 +244,7 @@ textarea:focus{
 
 <header>
   <strong>INNER CODE SYSTEMS</strong>
-  <span>TEST · VERTIEFUNG V6</span>
+  <span>TEST · VERTIEFUNG V7</span>
 </header>
 
 <main class="wrap">
@@ -784,6 +784,21 @@ async function offerInsight(){
       };
       const actions=document.createElement("div");actions.className="insight-actions";actions.append(deepen,action);
       insightBox.append(heading,result,actions);
+      // Keep the transition controls directly beneath the result cards, even in mobile layouts.
+      actions.style.display="flex";
+      actions.style.flexDirection="column";
+      actions.style.gap="12px";
+      actions.style.marginTop="18px";
+      for(const btn of [deepen,action]){
+        btn.style.display="block";
+        btn.style.width="100%";
+        btn.style.minHeight="52px";
+        btn.hidden=false;
+      }
+      const marker=document.createElement("p");
+      marker.className="hint";
+      marker.textContent="Nächster Schritt: Du kannst deine Erkenntnis vertiefen oder einen konkreten Plan erstellen.";
+      insightBox.insertBefore(marker,actions);
     }catch(e){
       insightOffered=false;
       document.getElementById("composer").hidden=false;
