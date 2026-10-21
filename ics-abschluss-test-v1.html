@@ -243,7 +243,7 @@ textarea:focus{
 
 <header>
   <strong>INNER CODE SYSTEMS</strong>
-  <span>TEST · AUTO V2</span>
+  <span>TEST · ÜBERGANG V3</span>
 </header>
 
 <main class="wrap">
@@ -355,6 +355,8 @@ function resetConversation(){
   input.disabled=false;
   send.disabled=false;
   input.placeholder="Deine Antwort …";
+  const oldTransition=document.getElementById("ics-closing-transition");
+  if(oldTransition)oldTransition.remove();
   insightBox.hidden=true;
   insightBox.replaceChildren();
   messagesBox.innerHTML="";
@@ -502,7 +504,16 @@ function shouldOfferInsight(){
 }
 
 async function offerInsight(){
+  if(insightOffered)return;
   insightOffered=true;
+  // Show a natural closing transition without altering the saved conversation.
+  const previousTransition=document.getElementById("ics-closing-transition");
+  if(previousTransition)previousTransition.remove();
+  const transition=document.createElement("div");
+  transition.id="ics-closing-transition";
+  transition.className="bubble ai";
+  transition.textContent="Danke, das gibt bereits eine gute Richtung. Ich fasse jetzt zusammen, was sich aus unserem Gespräch ergibt, und schlage dir einen konkreten nächsten Schritt vor.";
+  messagesBox.appendChild(transition);
   input.disabled=true;
   send.disabled=true;
   input.placeholder="Gespräch abgeschlossen – dein nächster Schritt steht unten.";
@@ -513,7 +524,7 @@ async function offerInsight(){
   const yes=document.createElement("button");
   yes.textContent="Auswertung läuft …";
   yes.disabled=true;
-  insightBox.textContent="Dein nächster Schritt wird erarbeitet …";
+  insightBox.textContent="Deine Erkenntnis und dein nächster Schritt werden erarbeitet …";
   yes.onclick=async()=>{
     try{
       const response=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:[...conversation,{role:"user",content:"Wir sind nun beim Schritt ERKENNEN → HANDELN. Stelle keine weiteren Fragen und fasse unser bisheriges Gespräch behutsam zusammen. Antworte ausschließlich in exakt drei Zeilen mit diesen eindeutigen Markierungen, ohne Markdown oder Nummerierung: ERKENNTNIS: [meine mögliche Kernerkenntnis] dann CODE: [ein möglicher neuer hilfreicher Leitsatz] dann HANDLUNG: [genau eine kleine, heute konkret umsetzbare Handlung]. Jede Markierung beginnt eine eigene Zeile. Erfinde nichts, stelle keine neue Frage und formuliere als Vorschläge, die ich selbst prüfen kann. Die HANDLUNG muss konkret, überprüfbar und direkt aus meinem Anliegen abgeleitet sein; wiederhole keine bereits beantwortete Frage und fordere mich nicht bloß auf, etwas noch einmal aufzuschreiben. Wenn ich einen digitalen Einstieg entwickle, schlage beispielsweise einen echten Test mit einer Person und einem klaren Beobachtungskriterium vor. Falls das Gespräch erst eine kurze Aussage enthält, mache die begrenzte Informationslage in der Erkenntnis deutlich und schlage nur eine kleine Klärungshandlung vor."}]})});
