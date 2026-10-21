@@ -171,6 +171,7 @@ header span{
   margin-bottom:8px
 }
 
+.composer[hidden]{display:none !important}
 .composer{
   border-top:1px solid #49371f;
   padding:14px;
@@ -243,7 +244,7 @@ textarea:focus{
 
 <header>
   <strong>INNER CODE SYSTEMS</strong>
-  <span>TEST · ÜBERGANG V4</span>
+  <span>TEST · ÜBERGANG V5</span>
 </header>
 
 <main class="wrap">
@@ -512,17 +513,12 @@ async function offerInsight(){
   const last=bubbles[bubbles.length-1];
   if(last && /[?？]\s*$/.test(last.textContent.trim())){
     last.dataset.originalQuestion=last.textContent;
-    last.textContent="Du hast bereits eine Richtung beschrieben. Daraus lässt sich jetzt ein konkreter nächster Schritt ableiten.";
+    last.textContent="Danke, ich habe verstanden, worauf es dir ankommt. Hier findest du deine persönliche Erkenntnis und einen konkreten nächsten Schritt.";
   }
   document.getElementById("composer").hidden=true;
   // Show a natural closing transition without altering the saved conversation.
   const previousTransition=document.getElementById("ics-closing-transition");
   if(previousTransition)previousTransition.remove();
-  const transition=document.createElement("div");
-  transition.id="ics-closing-transition";
-  transition.className="bubble ai";
-  transition.textContent="Danke, das gibt bereits eine gute Richtung. Ich fasse jetzt zusammen, was sich aus unserem Gespräch ergibt, und schlage dir einen konkreten nächsten Schritt vor.";
-  messagesBox.appendChild(transition);
   input.disabled=true;
   send.disabled=true;
   input.placeholder="Gespräch abgeschlossen – dein nächster Schritt steht unten.";
