@@ -244,7 +244,7 @@ textarea:focus{
 
 <header>
   <strong>INNER CODE SYSTEMS</strong>
-  <span>TEST · VERTIEFUNG V12</span>
+  <span>TEST · VERTIEFUNG V13</span>
 </header>
 
 <main class="wrap">
@@ -770,9 +770,20 @@ async function offerInsight(){
         try{
           const context=conversation.slice(-24).map(m=>({role:m.role,content:m.content}));
           const prompt="Du bist der persönliche ICS Mentor. Vertiefe die bereits gewonnene Erkenntnis anhand des bisherigen Gesprächs, ohne erneut bei null anzufangen. Gib zuerst eine kurze, konkrete, empathische Spiegelung (maximal 3 Sätze), dann genau EINE offene, hilfreiche Frage, die den Menschen in seiner Situation weiterbringt. Keine generischen Floskeln, keine Angebote erfinden, keine Diagnose. Antworte auf Deutsch.";
-          const response=restoreDeepeningPending&&deepeningState?null:await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:[{role:"user",content:prompt},...context]})});
-          const payload=response?await response.json():{ok:true,answer:deepeningState.history[0].content};
-          if((response&&!response.ok)||!payload.ok||!payload.answer)throw Error("Vertiefung derzeit nicht erreichbar");
+          let payload=null;
+          if(restoreDeepeningPending&&deepeningState&&deepeningState.history[0]&&deepeningState.history[0].content){
+            payload={ok:true,answer:deepeningState.history[0].content};
+          }else{
+            for(let attempt=0;attempt<2;attempt++){
+              try{
+                const response=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:[{role:"user",content:prompt},...context]})});
+                const data=await response.json();
+                if(!response.ok||!data.ok||!data.answer)throw Error("ICS KI antwortet momentan nicht");
+                payload=data;break;
+              }catch(err){if(attempt===1)throw err;}
+            }
+          }
+          if(!payload||!payload.answer)throw Error("Vertiefung derzeit nicht erreichbar");
           body.textContent=payload.answer;
           const deepenHistory=restoreDeepeningPending&&deepeningState?deepeningState.history.slice():[{role:"assistant",content:payload.answer}];
           deepeningState={history:deepenHistory};
@@ -857,7 +868,7 @@ async function offerInsight(){
           deepen.textContent="Vertiefung geöffnet";
           panel.scrollIntoView({behavior:"smooth",block:"nearest"});
         }catch(e){
-          body.textContent="Die Vertiefung konnte gerade nicht geladen werden. Deine bisherige Auswertung bleibt erhalten.";
+          body.textContent="Die Vertiefung konnte gerade nicht geladen werden. Deine bisherige Auswertung bleibt erhalten. Bitte versuche es erneut. ("+(e&&e.message?e.message:"Verbindungsfehler")+")";
           deepen.disabled=false;
           deepen.textContent="Vertiefung erneut versuchen";
         }
