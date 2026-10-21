@@ -244,7 +244,7 @@ textarea:focus{
 
 <header>
   <strong>INNER CODE SYSTEMS</strong>
-  <span>TEST · ÜBERGANG V5</span>
+  <span>TEST · VERTIEFUNG V6</span>
 </header>
 
 <main class="wrap">
@@ -753,7 +753,36 @@ async function offerInsight(){
           errorNote.textContent="ACTION konnte nicht erstellt werden: "+(e&&e.message?e.message:"Unbekannter Fehler")+". Dein bisheriges Gespräch bleibt erhalten.";
         }
       };
-      const actions=document.createElement("div");actions.className="insight-actions";actions.append(action);
+      const deepen=document.createElement("button");
+      deepen.type="button";
+      deepen.textContent="Ich möchte meine Erkenntnis vertiefen";
+      deepen.onclick=async()=>{
+        deepen.disabled=true;
+        deepen.textContent="Deine Vertiefung entsteht …";
+        const panel=document.createElement("section");
+        panel.className="insight";
+        const title=document.createElement("h2");
+        title.textContent="Deine persönliche Vertiefung";
+        const body=document.createElement("p");
+        body.textContent="Ich schaue mir dein bisheriges Gespräch an …";
+        panel.append(title,body);
+        insightBox.appendChild(panel);
+        try{
+          const context=conversation.slice(-24).map(m=>({role:m.role,content:m.content}));
+          const prompt="Du bist der persönliche ICS Mentor. Vertiefe die bereits gewonnene Erkenntnis anhand des bisherigen Gesprächs, ohne erneut bei null anzufangen. Gib zuerst eine kurze, konkrete, empathische Spiegelung (maximal 3 Sätze), dann genau EINE offene, hilfreiche Frage, die den Menschen in seiner Situation weiterbringt. Keine generischen Floskeln, keine Angebote erfinden, keine Diagnose. Antworte auf Deutsch.";
+          const response=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:[{role:"user",content:prompt},...context]})});
+          const payload=await response.json();
+          if(!response.ok||!payload.ok||!payload.answer)throw Error("Vertiefung derzeit nicht erreichbar");
+          body.textContent=payload.answer;
+          deepen.textContent="Vertiefung geöffnet";
+          panel.scrollIntoView({behavior:"smooth",block:"nearest"});
+        }catch(e){
+          body.textContent="Die Vertiefung konnte gerade nicht geladen werden. Deine bisherige Auswertung bleibt erhalten.";
+          deepen.disabled=false;
+          deepen.textContent="Vertiefung erneut versuchen";
+        }
+      };
+      const actions=document.createElement("div");actions.className="insight-actions";actions.append(deepen,action);
       insightBox.append(heading,result,actions);
     }catch(e){
       insightOffered=false;
