@@ -243,7 +243,7 @@ textarea:focus{
 
 <header>
   <strong>INNER CODE SYSTEMS</strong>
-  <span>TEST · ÜBERGANG V3</span>
+  <span>TEST · ÜBERGANG V4</span>
 </header>
 
 <main class="wrap">
@@ -269,7 +269,7 @@ textarea:focus{
 Schreib einfach, was dir durch den Kopf geht. Ein Satz reicht.</div>
 </div>
 
-<div class="composer">
+<div class="composer" id="composer">
   <textarea
     id="input"
     placeholder="Deine Antwort …"
@@ -352,6 +352,7 @@ function resetConversation(){
   userTurns=0;
   syncNextButton();
   insightOffered=false;
+  document.getElementById("composer").hidden=false;
   input.disabled=false;
   send.disabled=false;
   input.placeholder="Deine Antwort …";
@@ -506,6 +507,14 @@ function shouldOfferInsight(){
 async function offerInsight(){
   if(insightOffered)return;
   insightOffered=true;
+  // Close the visible question, keeping the original dialogue in the saved conversation.
+  const bubbles=[...messagesBox.querySelectorAll(".bubble.ai")].filter(b=>b.id!=="ics-closing-transition");
+  const last=bubbles[bubbles.length-1];
+  if(last && /[?？]\s*$/.test(last.textContent.trim())){
+    last.dataset.originalQuestion=last.textContent;
+    last.textContent="Du hast bereits eine Richtung beschrieben. Daraus lässt sich jetzt ein konkreter nächster Schritt ableiten.";
+  }
+  document.getElementById("composer").hidden=true;
   // Show a natural closing transition without altering the saved conversation.
   const previousTransition=document.getElementById("ics-closing-transition");
   if(previousTransition)previousTransition.remove();
@@ -752,6 +761,8 @@ async function offerInsight(){
       insightBox.append(heading,result,actions);
     }catch(e){
       insightOffered=false;
+      document.getElementById("composer").hidden=false;
+      if(last && last.dataset.originalQuestion){last.textContent=last.dataset.originalQuestion;delete last.dataset.originalQuestion;}
       input.disabled=false;
       send.disabled=false;
       input.placeholder="Deine Antwort …";
