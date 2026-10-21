@@ -774,6 +774,58 @@ async function offerInsight(){
           const payload=await response.json();
           if(!response.ok||!payload.ok||!payload.answer)throw Error("Vertiefung derzeit nicht erreichbar");
           body.textContent=payload.answer;
+          const deepenHistory=[{role:"assistant",content:payload.answer}];
+          const answerField=document.createElement("textarea");
+          answerField.placeholder="Deine Antwort zur Vertiefung …";
+          answerField.setAttribute("aria-label","Deine Antwort zur Vertiefung");
+          answerField.rows=3;
+          answerField.style.width="100%";
+          answerField.style.marginTop="14px";
+          const continueButton=document.createElement("button");
+          continueButton.type="button";
+          continueButton.textContent="Antwort senden →";
+          continueButton.style.display="block";
+          continueButton.style.width="100%";
+          const feedback=document.createElement("p");
+          feedback.className="hint";
+          panel.append(answerField,continueButton,feedback);
+          async function continueDeepening(){
+            const answer=answerField.value.trim();
+            if(!answer){answerField.focus();return;}
+            answerField.disabled=true;continueButton.disabled=true;
+            continueButton.textContent="Deine Antwort wird berücksichtigt …";
+            feedback.textContent="";
+            const userBubble=document.createElement("p");
+            userBubble.className="insight-result";
+            userBubble.textContent=answer;
+            panel.insertBefore(userBubble,answerField);
+            deepenHistory.push({role:"user",content:answer});
+            try{
+              const followupPrompt="Du bist der persönliche ICS Mentor. Setze die laufende Vertiefung fort. Beziehe dich konkret auf die LETZTE Antwort des Menschen und den bisherigen Gesprächskontext. Gib eine kurze hilfreiche Spiegelung und genau EINE neue, sinnvolle Frage. Keine Wiederholung, keine Diagnosen, keine erfundenen Fakten. Antworte auf Deutsch.";
+              const response=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:[{role:"user",content:followupPrompt},...conversation.slice(-20),...deepenHistory]})});
+              const payload=await response.json();
+              if(!response.ok||!payload.ok||!payload.answer)throw Error("Keine Antwort erhalten");
+              const next=document.createElement("p");
+              next.className="insight-result";
+              next.textContent=payload.answer;
+              panel.insertBefore(next,answerField);
+              deepenHistory.push({role:"assistant",content:payload.answer});
+              conversation.push({role:"user",content:answer},{role:"assistant",content:payload.answer});
+              saveSimpleSession();
+              answerField.value="";
+              answerField.disabled=false;continueButton.disabled=false;
+              continueButton.textContent="Antwort senden →";
+              answerField.focus();
+            }catch(e){
+              feedback.textContent="Die Verbindung hat nicht funktioniert. Deine Antwort bleibt hier erhalten. Bitte erneut versuchen.";
+              deepenHistory.pop();
+              userBubble.remove();
+              answerField.disabled=false;continueButton.disabled=false;
+              continueButton.textContent="Erneut senden →";
+            }
+          }
+          continueButton.onclick=continueDeepening;
+          answerField.addEventListener("keydown",event=>{if(event.key==="Enter"&&!event.shiftKey){event.preventDefault();continueDeepening();}});
           deepen.textContent="Vertiefung geöffnet";
           panel.scrollIntoView({behavior:"smooth",block:"nearest"});
         }catch(e){
