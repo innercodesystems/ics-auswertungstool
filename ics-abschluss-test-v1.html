@@ -244,7 +244,7 @@ textarea:focus{
 
 <header>
   <strong>INNER CODE SYSTEMS</strong>
-  <span>TEST · VERTIEFUNG V9</span>
+  <span>TEST · VERTIEFUNG V10</span>
 </header>
 
 <main class="wrap">
@@ -789,14 +789,23 @@ async function offerInsight(){
           const feedback=document.createElement("p");
           feedback.className="hint";
           panel.append(answerField,continueButton,feedback);
+          const scrollToReply=(element)=>{requestAnimationFrame(()=>{element.scrollIntoView({behavior:"smooth",block:"start"});});};
+          for(const field of [answerField]){field.style.fontSize="16px";field.style.scrollMarginTop="18px";}
           async function continueDeepening(){
             const answer=answerField.value.trim();
             if(!answer){answerField.focus();return;}
+            answerField.blur();
+            if(document.activeElement===answerField)continueButton.focus({preventScroll:true});
             answerField.disabled=true;continueButton.disabled=true;
             continueButton.textContent="Deine Antwort wird berücksichtigt …";
             feedback.textContent="";
             const userBubble=document.createElement("p");
             userBubble.className="insight-result";
+            userBubble.style.background="#382a17";
+            userBubble.style.border="1px solid #70552f";
+            userBubble.style.borderRadius="14px";
+            userBubble.style.padding="14px";
+            userBubble.style.scrollMarginTop="18px";
             userBubble.textContent=answer;
             panel.insertBefore(userBubble,answerField);
             deepenHistory.push({role:"user",content:answer});
@@ -807,6 +816,9 @@ async function offerInsight(){
               if(!response.ok||!payload.ok||!payload.answer)throw Error("Keine Antwort erhalten");
               const next=document.createElement("p");
               next.className="insight-result";
+              next.style.borderLeft="3px solid #d4a03a";
+              next.style.padding="14px";
+              next.style.scrollMarginTop="18px";
               next.textContent=payload.answer;
               panel.insertBefore(next,answerField);
               deepenHistory.push({role:"assistant",content:payload.answer});
@@ -815,13 +827,14 @@ async function offerInsight(){
               answerField.value="";
               answerField.disabled=false;continueButton.disabled=false;
               continueButton.textContent="Antwort senden →";
-              answerField.focus();
+              scrollToReply(userBubble);
             }catch(e){
               feedback.textContent="Die Verbindung hat nicht funktioniert. Deine Antwort bleibt hier erhalten. Bitte erneut versuchen.";
               deepenHistory.pop();
               userBubble.remove();
               answerField.disabled=false;continueButton.disabled=false;
               continueButton.textContent="Erneut senden →";
+              scrollToReply(userBubble);
             }
           }
           continueButton.onclick=continueDeepening;
