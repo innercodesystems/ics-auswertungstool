@@ -330,7 +330,7 @@ let activeSystem = "Klarheits-Kompass";
 let conversation = [];
 let insightOffered=false;
 let userTurns=0;
-function syncNextButton(){document.getElementById("openInsight").hidden=!conversation.some(m=>m.role==="user");}
+function syncNextButton(){document.getElementById("openInsight").hidden=insightOffered||!conversation.some(m=>m.role==="user");}
 const insightBox=document.getElementById("insight");
 
 function addBubble(text,type,extraClass=""){
@@ -352,6 +352,9 @@ function resetConversation(){
   userTurns=0;
   syncNextButton();
   insightOffered=false;
+  input.disabled=false;
+  send.disabled=false;
+  input.placeholder="Deine Antwort …";
   insightBox.hidden=true;
   insightBox.replaceChildren();
   messagesBox.innerHTML="";
@@ -736,7 +739,15 @@ async function offerInsight(){
       };
       const actions=document.createElement("div");actions.className="insight-actions";actions.append(action);
       insightBox.append(heading,result,actions);
-    }catch(e){yes.disabled=false;yes.textContent="Erneut versuchen";}
+    }catch(e){
+      insightOffered=false;
+      input.disabled=false;
+      send.disabled=false;
+      input.placeholder="Deine Antwort …";
+      syncNextButton();
+      insightBox.textContent="Die Auswertung konnte nicht geladen werden. Bitte versuche es erneut.";
+      saveSimpleSession();
+    }
   };
   await yes.onclick();
   insightBox.scrollIntoView({behavior:"smooth",block:"nearest"});
@@ -774,6 +785,10 @@ function restoreSimpleSession(){
   const label=document.createElement("div");label.className="small";label.textContent="Dein bisheriges Gespräch";messagesBox.appendChild(label);
   for(const m of conversation){const bubble=document.createElement("div");bubble.className="bubble "+(m.role==="user"?"user":"ai");bubble.textContent=m.content;messagesBox.appendChild(bubble);}
   localStorage.setItem(simpleSessionKey,JSON.stringify(data));
+  if(shouldOfferInsight()){
+    // Resume the unfinished transition after a reload, without another user message.
+    Promise.resolve().then(()=>offerInsight());
+  }
  }catch(e){}
 }
 restoreSimpleSession();
