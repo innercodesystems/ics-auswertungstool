@@ -244,7 +244,7 @@ textarea:focus{
 
 <header>
   <strong>INNER CODE SYSTEMS</strong>
-  <span>TEST · VERTIEFUNG V7</span>
+  <span>TEST · VERTIEFUNG V8</span>
 </header>
 
 <main class="wrap">
@@ -795,10 +795,10 @@ async function offerInsight(){
         btn.style.minHeight="52px";
         btn.hidden=false;
       }
-      const marker=document.createElement("p");
-      marker.className="hint";
-      marker.textContent="Nächster Schritt: Du kannst deine Erkenntnis vertiefen oder einen konkreten Plan erstellen.";
-      insightBox.insertBefore(marker,actions);
+      const transitionHint=document.createElement("p");
+      transitionHint.className="hint";
+      transitionHint.textContent="Nächster Schritt: Du kannst deine Erkenntnis vertiefen oder einen konkreten Plan erstellen.";
+      insightBox.insertBefore(transitionHint,actions);
     }catch(e){
       insightOffered=false;
       document.getElementById("composer").hidden=false;
@@ -855,6 +855,39 @@ function restoreSimpleSession(){
 }
 restoreSimpleSession();
 syncNextButton();
+
+// Reconstructed demonstration based on the previously documented test screenshots.
+// Never overwrite an existing conversation without explicit confirmation.
+const replay=document.createElement("button");
+replay.type="button";
+replay.textContent="Dokumentiertes Testgespräch wiederherstellen";
+replay.style.cssText="display:block;width:100%;margin:16px 0;padding:16px;border:1px solid #b8924f;border-radius:12px;background:#302311;color:#f6f1e7;font-size:15px;cursor:pointer";
+const replayNote=document.createElement("p");
+replayNote.className="small";
+replayNote.textContent="Testrekonstruktion aus Screenshots – keine Wiederherstellung privater Browserdaten.";
+replay.insertAdjacentElement("afterend",replayNote);
+replay.addEventListener("click",async()=>{
+ if(conversation.some(m=>m.role==="user")&&!confirm("Aktuelles Testgespräch durch die dokumentierte Rekonstruktion ersetzen?"))return;
+ const restored=[
+ {role:"user",content:"Ich habe viele Ideen, aber ich weiß nicht, womit ich anfangen soll"},
+ {role:"assistant",content:"Das klingt, als wäre nicht der Ideenmangel das Problem, sondern die Auswahl. Welche Idee zieht dich im Moment am stärksten an – auch wenn du noch nicht weißt, ob sie die „richtige“ ist?"},
+ {role:"user",content:"Ich möchte endlich mein eigenes Business aufbauen, aber ich habe so viele Projekte gleichzeitig, dass ich nicht weiß, welches ich zuerst umsetzen soll."},
+ {role:"assistant",content:"Du möchtest dein eigenes Business aufbauen, und gerade die vielen Möglichkeiten machen den ersten Schritt schwer. Wenn du für die nächsten drei Monate nur ein Projekt wählen könntest: Welches hätte für dich den größten Wert, wenn es vorankommt?"},
+ {role:"user",content:"INNER CODE SYSTEMS soll in den nächsten drei Monaten erste regelmäßige Einnahmen erzielen. Dafür möchte ich einen einfachen persönlichen Einstieg schaffen, über den Menschen meine Angebote kennenlernen und passende Begleitung buchen können."},
+ {role:"assistant",content:"Du hast ein klares Ziel: INNER CODE SYSTEMS soll regelmäßige Einnahmen erzielen, und ein einfacher persönlicher Einstieg soll Menschen zu passenden Angeboten führen. Was wäre die kleinste erste Version dieses Einstiegs, die du tatsächlich anbieten könntest?"},
+ {role:"user",content:"Die erste Version wäre ein persönliches KI-Gespräch auf meiner ICS-Website. Der Besucher beschreibt sein Anliegen, erhält eine passende Erkenntnis und einen konkreten nächsten Schritt. Anschließend kann er bei Interesse ein persönliches Erstgespräch mit mir buchen."},
+ {role:"assistant",content:"Danke, ich habe verstanden, worauf es dir ankommt. Hier findest du deine persönliche Erkenntnis und einen konkreten nächsten Schritt."}
+ ];
+ conversation=restored;userTurns=4;insightOffered=false;
+ messagesBox.replaceChildren();
+ for(const m of conversation)addBubble(m.content,m.role==="user"?"user":"ai");
+ saveSimpleSession();
+ replay.remove();replayNote.remove();
+ await offerInsight();
+});
+const chatPanel=document.querySelector(".chat");
+if(chatPanel)chatPanel.insertAdjacentElement("afterend",replay);
+
 document.getElementById("clearSession").addEventListener("click",()=>{if(!confirm("Gespräch auf diesem Gerät löschen und neu beginnen?"))return;localStorage.removeItem(simpleSessionKey);sessionStorage.removeItem(simpleSessionKey);resetConversation();});
 window.addEventListener("pagehide",saveSimpleSession);
 
