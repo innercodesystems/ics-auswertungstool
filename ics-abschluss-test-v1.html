@@ -243,7 +243,7 @@ textarea:focus{
 
 <header>
   <strong>INNER CODE SYSTEMS</strong>
-  <span>VEREINFACHTER TEST</span>
+  <span>TEST · AUTO V2</span>
 </header>
 
 <main class="wrap">
@@ -786,8 +786,8 @@ function restoreSimpleSession(){
   for(const m of conversation){const bubble=document.createElement("div");bubble.className="bubble "+(m.role==="user"?"user":"ai");bubble.textContent=m.content;messagesBox.appendChild(bubble);}
   localStorage.setItem(simpleSessionKey,JSON.stringify(data));
   if(shouldOfferInsight()){
-    // Resume the unfinished transition after a reload, without another user message.
-    Promise.resolve().then(()=>offerInsight());
+    // Restore the session first, then start the completion without another user action.
+    window.setTimeout(()=>{if(!insightOffered && shouldOfferInsight())offerInsight();},150);
   }
  }catch(e){}
 }
