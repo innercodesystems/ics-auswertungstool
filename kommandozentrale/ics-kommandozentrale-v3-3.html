@@ -1,0 +1,141 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#171717"><title>ICS · Meine Zentrale V3.3</title><style>
+:root{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;color:#24211d;background:#fffdf8}*{box-sizing:border-box}body{margin:0}.wrap{max-width:860px;margin:auto;padding:16px 16px 75px}.hero{background:#171717;color:#fffdf8;border-radius:20px;padding:23px 21px}.eyebrow{color:#d4a03a;letter-spacing:.18em;font-size:11px;font-weight:750}.hero h1{font-family:Georgia,serif;font-size:32px;margin:10px 0 6px}.hero p{color:#e8dfd1;margin:0;font-size:14px}.head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:24px 0 12px}.head h2{font-size:18px;margin:0;font-family:Georgia,serif}.btn{border:1px solid #d8c9ae;background:#fffdf8;color:#78531a;border-radius:12px;padding:9px 12px;font:inherit;font-size:13px;cursor:pointer}.btn.primary{background:#171717;color:#fffdf8;border-color:#171717}.favgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.fav{min-width:0;text-decoration:none;color:inherit;text-align:center}.fav .symbol{height:64px;background:#f1eade;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:26px}.fav .name{font-size:12px;margin-top:6px;overflow-wrap:anywhere}.day{background:#f5f0e8;border-radius:18px;padding:16px}.day small{color:#6e6254}.task{display:flex;align-items:center;gap:9px;margin-top:11px}.task input[type=checkbox]{accent-color:#b9852e;width:19px;height:19px}.task input[type=text]{width:100%;min-width:0;border:1px solid #e3d8c8;background:white;padding:12px;border-radius:10px;font:inherit;font-size:14px}.task.done input[type=text]{text-decoration:line-through;color:#877d70}.areas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.area{border:0;text-align:left;background:#f5f0e8;border-radius:16px;padding:16px;cursor:pointer;color:#24211d}.area .ico{font-size:24px}.area strong{display:block;margin:10px 0 4px;font-size:14px}.area span{font-size:12px;color:#766c5d}.panel{margin-top:14px;padding:16px;border:1px solid #e7ddce;border-radius:16px}.panel h3{margin:0 0 10px}.linkrow{display:flex;align-items:center;gap:8px;border-bottom:1px solid #eee7dd;padding:11px 0}.linkrow:last-child{border:0}.linkrow a{flex:1;min-width:0;color:#45351c;text-decoration:none;font-size:14px;overflow-wrap:anywhere}.linkrow a small{display:block;color:#827769;margin-top:2px}.mini{border:1px solid #e1d6c5;border-radius:8px;background:white;color:#795923;padding:5px 8px;cursor:pointer}.muted{color:#786f63;font-size:12px;line-height:1.5}.hidden{display:none!important}.footer{text-align:center;color:#9a7b46;margin:30px 0;font-family:Georgia,serif}dialog{width:min(95vw,460px);border:1px solid #d7c6a9;border-radius:18px;padding:22px;background:#fffdf8}dialog::backdrop{background:#0008}dialog h3{margin-top:0}dialog label{display:block;font-size:13px;margin:12px 0 5px}dialog input,dialog select{width:100%;padding:11px;border:1px solid #d5c7b4;border-radius:10px;font:inherit}dialog menu{padding:0;display:flex;gap:8px;justify-content:flex-end;margin-bottom:0}#toast{position:fixed;bottom:15px;left:50%;transform:translateX(-50%);background:#171717;color:white;padding:10px 15px;border-radius:12px;display:none;font-size:13px;max-width:90vw}@media(min-width:600px){.favgrid{grid-template-columns:repeat(8,minmax(0,1fr))}.areas{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:360px){.favgrid{gap:6px}.fav .symbol{height:54px}.fav .name{font-size:11px}}
+</style><style>
+.syncbox{background:#fff7e8;border:1px solid #dfc58b;border-radius:16px;padding:16px;margin:18px 0}.syncbox h2{margin:0 0 8px;font:600 20px Georgia,serif}.syncbox p{font-size:13px;line-height:1.5}.syncbuttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.syncbox input{padding:11px;border:1px solid #bba47a;border-radius:10px;max-width:100%;width:330px}.syncstatus{font-size:13px;margin-top:9px;white-space:pre-wrap}
+</style><style>
+.cloud-top{max-width:860px;margin:12px auto 0;padding:0 16px}.cloud-strip{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#f5f0e8;border:1px solid #e7ddce;border-radius:14px;padding:10px 13px}.cloud-strip strong{font-size:13px}.cloud-state{font-size:12px;color:#80601f;flex:1;text-align:right}.cloud-state.good{color:#216d49}.cloud-state.warn{color:#9d4b2e}.cloud-settings{margin:0}.cloud-settings summary{list-style:none;cursor:pointer;font-size:13px;color:#77551f;font-weight:600;white-space:nowrap}.cloud-settings summary::-webkit-details-marker{display:none}.cloud-settings summary:focus-visible{outline:2px solid #d4a03a;outline-offset:4px}.cloud-settings .syncbox{margin:12px 0 0}.cloud-settings:not([open]) .syncbox{display:none}
+</style></head><body><div class="cloud-top"><div class="cloud-strip"><strong>☁️ ICS Cloud</strong><span id="cloudCompactStatus" class="cloud-state" role="status" aria-live="polite">Verbindung wird geprüft …</span><details class="cloud-settings" id="cloudSettings"><summary aria-label="Cloud-Einstellungen öffnen oder schließen">⚙ Einstellungen</summary><section class="syncbox" aria-label="Cloud-Synchronisierung"><h2>☁️ ICS Cloud-Synchronisierung V3.3</h2><p>Cloud-Schlüssel: Auf Wunsch auf diesem Gerät merken. Der Schlüssel wird nicht in GitHub gespeichert.</p><input id="syncSecret" type="password" autocomplete="off" placeholder="SYNC_SECRET eingeben"><label style="display:block;font-size:13px;margin-top:9px"><input id="rememberSecret" type="checkbox" style="width:auto"> Schlüssel auf diesem Gerät merken (nur auf privaten Geräten)</label><p class="muted">Hinweis: Bei „merken“ wird der Schlüssel im Browserspeicher abgelegt. Andere Personen mit Zugriff auf dieses Gerät/Browserprofil könnten ihn auslesen. Nicht auf gemeinsam genutzten Geräten verwenden.</p><div class="syncbuttons"><button class="btn" id="syncConnect" type="button">Verbinden & Cloud prüfen</button><button class="btn" id="syncUpload" type="button">Meine Daten in Cloud speichern</button><button class="btn" id="syncDownload" type="button">Cloud-Daten auf dieses Gerät holen</button></div><div class="syncstatus" id="syncStatus" role="status">Noch nicht verbunden. Die bisherigen lokalen Daten bleiben erhalten.</div><p><strong>Erster Start:</strong> Auf dem PC mit den vollständigen Daten zuerst „Cloud prüfen“, dann „Meine Daten in Cloud speichern“. Auf dem S26 anschließend „Cloud-Daten auf dieses Gerät holen“. Vor dem Übertragen empfiehlt sich eine JSON-Sicherung.</p><div style="border-top:1px solid #dfc58b;margin-top:12px;padding-top:12px"><strong>🔄 Automatischer Abgleich V3.3 (Testbetrieb)</strong><p>Startet nach erfolgreicher Verbindung automatisch und prüft alle 20 Sekunden, solange die Seite geöffnet ist. Bei unterschiedlichen Datenständen bleibt die Automatik zum Schutz angehalten.</p><div class="syncbuttons"><button class="btn" id="autoStart" type="button">Automatik einschalten</button><button class="btn" id="autoStop" type="button">Automatik stoppen</button></div><div class="syncstatus" id="autoStatus">Automatik ausgeschaltet.</div></div></section></details></div></div><main class="wrap"><header class="hero"><div class="eyebrow">INNER CODE SYSTEMS</div><h1>Meine Zentrale</h1><p>Dein innerer Code. Deine Richtung.</p></header><section><div class="head"><h2>Meine Favoriten</h2><button class="btn" id="editFav">Bearbeiten</button></div><div id="favorites" class="favgrid"></div></section><section><div class="head"><h2>Mein Tag</h2><button class="btn" id="resetDay">Neuer Tag</button></div><div class="day"><small id="today"></small><div id="tasks"></div><p class="muted">Deine Top 3 werden lokal gespeichert und bei aktivem Abgleich mit der Cloud synchronisiert.</p><a class="btn" href="https://calendar.google.com/" target="_blank" rel="noopener">Kalender öffnen ↗</a></div></section><section><div class="head"><h2>Meine Bereiche</h2><button class="btn" id="addLink">+ Link</button></div><div id="areas" class="areas"></div><div id="panel" class="panel hidden"></div></section><p class="footer">Verstehen. Spüren. Handeln.</p><p class="muted">V3.3 Testversion · Cloud-Abgleich bei geöffneter Seite. Bitte regelmäßig eine JSON-Sicherung exportieren.</p><button class="btn" id="export">Sicherung exportieren</button> <button class="btn" id="import">Sicherung importieren</button><input id="importFile" type="file" accept="application/json" class="hidden"></main><dialog id="editor"><form method="dialog" id="editForm"><h3 id="editTitle">Link bearbeiten</h3><label for="name">Name</label><input id="name" maxlength="45" required><label for="url">Internetadresse (https://)</label><input id="url" type="url" placeholder="https://..." required><label for="icon">Symbol (Emoji)</label><input id="icon" maxlength="5" placeholder="🔗"><label for="category">Bereich</label><select id="category"></select><label><input id="favorite" type="checkbox" style="width:auto"> In Favoriten anzeigen</label><menu><button class="btn" value="cancel">Abbrechen</button><button class="btn primary" id="save" value="save">Speichern</button></menu></form></dialog><div id="toast" role="status"></div><script>
+'use strict';
+const C=[['business','ICS Business','💼','Kunden & Buchungen'],['tools','KI & Werkzeuge','🧠','Mentor & Kompasse'],['learning','Meine Akademie','🎓','Ausbildung · Wissen · Entwicklung'],['life','Mein Leben','❤️','Routinen & Impulse'],['files','Dokumente','📁','Dateien & Ablage'],['admin','Verwaltung','⚙️','Zugänge & Einstellungen']];
+const defaults=[
+['ChatGPT','https://chatgpt.com/','💬','tools',1],['Kalender','https://calendar.google.com/','📅','admin',1],['Google Drive','https://drive.google.com/','📁','files',1],['WhatsApp','https://web.whatsapp.com/','💬','admin',1],['Gmail','https://mail.google.com/','✉️','admin',1],['ICS Website','https://www.innercodesystems.com/','🌐','business',1],['ICS App','https://app.innercodesystems.com/','📱','business',1],['ICS Report','https://code.innercodesystems.com/','📜','business',0],['Werte-Kompass','https://www.innercodesystems.com/werte-kompass.html','🧭','tools',0],['Glaubenssatz-Kompass','https://www.innercodesystems.com/glaubenssatz-kompass.html','💡','tools',0],['Was nährt dich?','https://www.innercodesystems.com/was-naehrt-dich/','🌿','life',0],['Schöpfer-Codefinder','https://www.innercodesystems.com/ics-schoepfer-codefinder.html','✨','tools',0],['Massage-Buchungen','https://cal.meetergo.com/peter-wicklein/transformationsmassage','🗓️','business',0],['ICS Kommandozentrale (online)','https://www.innercodesystems.com/kommandozentrale/ics-kommandozentrale-v2.html','🏠','admin',0]
+].map((x,i)=>({id:'default'+i,name:x[0],url:x[1],icon:x[2],category:x[3],favorite:!!x[4]}));
+const key='ics-kommando-v2-data',taskKey='ics-kommando-v2-tasks';const $=id=>document.getElementById(id);let links;try{let saved=JSON.parse(localStorage.getItem(key));links=Array.isArray(saved)?saved:defaults}catch{links=defaults}let tasks;try{let saved=JSON.parse(localStorage.getItem(taskKey));tasks=Array.isArray(saved)&&saved.length===3?saved:[{text:'',done:false},{text:'',done:false},{text:'',done:false}]}catch{tasks=[{text:'',done:false},{text:'',done:false},{text:'',done:false}]}let editing=null,editMode=false,active=null;
+function persist(){localStorage.setItem(key,JSON.stringify(links))}function persistTasks(){localStorage.setItem(taskKey,JSON.stringify(tasks))}function el(tag,cls,txt){let e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=txt;return e}function toast(t){$('toast').textContent=t;$('toast').style.display='block';setTimeout(()=>$('toast').style.display='none',2500)}function valid(url){try{let u=new URL(url);return ['https:','http:'].includes(u.protocol)}catch{return false}}
+function openLink(e,l){if(l.name==='Gmail' && /Android/i.test(navigator.userAgent)){e.preventDefault();location.href='intent://#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=com.google.android.gm;S.browser_fallback_url=https%3A%2F%2Fmail.google.com%2F;end';}}
+ function renderFav(){let box=$('favorites');box.replaceChildren();links.filter(l=>l.favorite).forEach(l=>{let a=el('a','fav');a.href=l.url;a.target='_blank';a.rel='noopener noreferrer';a.addEventListener('click',e=>openLink(e,l));a.append(el('div','symbol',l.icon||'🔗'),el('div','name',l.name));if(editMode){a.addEventListener('click',e=>{e.preventDefault();openEdit(l.id)})}box.append(a)});let add=el('button','fav');add.style.border='0';add.style.background='transparent';add.style.cursor='pointer';add.append(el('div','symbol','＋'),el('div','name','Hinzufügen'));add.onclick=()=>openEdit(null,true);box.append(add)}
+function renderTasks(){$('today').textContent=new Intl.DateTimeFormat('de-DE',{weekday:'long',day:'numeric',month:'long'}).format(new Date());let box=$('tasks');box.replaceChildren();tasks.forEach((t,i)=>{let row=el('div','task'+(t.done?' done':''));let cb=document.createElement('input');cb.type='checkbox';cb.checked=t.done;cb.setAttribute('aria-label','Priorität '+(i+1)+' erledigt');cb.onchange=()=>{tasks[i].done=cb.checked;persistTasks();row.classList.toggle('done',cb.checked)};let inp=document.createElement('input');inp.type='text';inp.placeholder='Priorität '+(i+1);inp.maxLength=150;inp.value=t.text;inp.oninput=()=>{tasks[i].text=inp.value;persistTasks()};row.append(cb,inp);box.append(row)})}
+function renderAreas(){let box=$('areas');box.replaceChildren();C.forEach(c=>{let b=el('button','area');b.append(el('div','ico',c[2]),el('strong',null,c[1]),el('span',null,c[3]));b.onclick=()=>{active=active===c[0]?null:c[0];renderPanel()};box.append(b)})}
+function move(id,d){let i=links.findIndex(l=>l.id===id),j=i+d;if(j<0||j>=links.length)return;[links[i],links[j]]=[links[j],links[i]];persist();renderFav();renderPanel()}
+function renderPanel(){let p=$('panel');p.replaceChildren();p.classList.toggle('hidden',!active);if(!active)return;let c=C.find(c=>c[0]===active);p.append(el('h3',null,c[2]+' '+c[1]));let entries=links.filter(l=>l.category===active);if(!entries.length)p.append(el('p','muted','Hier kannst du deine eigenen Links hinzufügen.'));entries.forEach(l=>{let row=el('div','linkrow');let a=el('a',null,(l.icon||'🔗')+' '+l.name);a.href=l.url;a.target='_blank';a.rel='noopener noreferrer';a.addEventListener('click',e=>openLink(e,l));row.append(a);let edit=el('button','mini','✎');edit.title='Bearbeiten';edit.onclick=()=>openEdit(l.id);row.append(edit);let up=el('button','mini','↑');up.title='Nach oben';up.onclick=()=>move(l.id,-1);row.append(up);let down=el('button','mini','↓');down.title='Nach unten';down.onclick=()=>move(l.id,1);row.append(down);let del=el('button','mini','×');del.title='Entfernen';del.onclick=()=>{if(confirm('Link „'+l.name+'“ entfernen?')){links=links.filter(x=>x.id!==l.id);persist();renderFav();renderPanel()}};row.append(del);p.append(row)});let b=el('button','btn','+ Link zu diesem Bereich');b.style.marginTop='12px';b.onclick=()=>openEdit(null,false,active);p.append(b)}
+function openEdit(id,fav=false,cat=null){editing=id;let l=links.find(x=>x.id===id);$('editTitle').textContent=l?'Link bearbeiten':'Neuen Link hinzufügen';$('name').value=l?.name||'';$('url').value=l?.url||'';$('icon').value=l?.icon||'🔗';$('category').replaceChildren();C.forEach(c=>{let o=el('option',null,c[1]);o.value=c[0];$('category').append(o)});$('category').value=l?.category||cat||'tools';$('favorite').checked=l?.favorite??fav;$('editor').showModal()}
+$('editForm').addEventListener('submit',e=>{if(e.submitter?.value!=='save')return;e.preventDefault();let name=$('name').value.trim(),url=$('url').value.trim();if(!name||!valid(url)){toast('Bitte Name und gültige http(s)-Adresse eingeben.');return}let obj={id:editing||'custom-'+Date.now(),name,url,icon:$('icon').value.trim()||'🔗',category:$('category').value,favorite:$('favorite').checked};if(editing){let i=links.findIndex(l=>l.id===editing);if(i>=0)links[i]=obj}else links.push(obj);persist();$('editor').close();renderFav();renderPanel();toast('Gespeichert')});$('editFav').onclick=()=>{editMode=!editMode;$('editFav').textContent=editMode?'Fertig':'Bearbeiten';renderFav();toast(editMode?'Favorit antippen, um ihn zu bearbeiten':'Bearbeitung beendet')};$('addLink').onclick=()=>openEdit(null);$('resetDay').onclick=()=>{if(confirm('Drei Tagesprioritäten leeren?')){tasks=[{text:'',done:false},{text:'',done:false},{text:'',done:false}];persistTasks();renderTasks()}};
+$('export').onclick=()=>{let data=JSON.stringify({version:2,links,tasks},null,2),blob=new Blob([data],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='ics-zentrale-sicherung.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)};$('import').onclick=()=>$('importFile').click();$('importFile').onchange=async e=>{let f=e.target.files?.[0];if(!f)return;try{let x=JSON.parse(await f.text());if(!Array.isArray(x.links)||!Array.isArray(x.tasks)||x.tasks.length!==3||!x.links.every(l=>l.id&&l.name&&valid(l.url)&&C.some(c=>c[0]===l.category)))throw Error('Format');if(!confirm('Aktuelle Links und Tagesprioritäten durch die Sicherung ersetzen?'))return;links=x.links;tasks=x.tasks;persist();persistTasks();renderFav();renderTasks();renderPanel();toast('Sicherung importiert')}catch{toast('Ungültige Sicherungsdatei')}finally{e.target.value=''}};renderFav();renderTasks();renderAreas();
+</script><script>
+(()=>{
+'use strict';
+const API='https://ics-kommando-sync.peter-wicklein.workers.dev/api/sync';
+const secretInput=document.getElementById('syncSecret'),status=document.getElementById('syncStatus');
+let secret=sessionStorage.getItem('ics-v3-secret')||localStorage.getItem('ics-v3-remembered-secret')||'';
+const remember=document.getElementById('rememberSecret');remember.checked=!!localStorage.getItem('ics-v3-remembered-secret');
+secretInput.value=secret;
+const say=s=>status.textContent=s;
+const payload=()=>({version:3,links,tasks,updatedAt:new Date().toISOString()});
+async function req(method,body){
+ if(!secret)throw Error('Bitte zuerst den Cloud-Schlüssel eingeben und verbinden.');
+ const r=await fetch(API,{method,headers:{'Authorization':'Bearer '+secret,...(body?{'Content-Type':'application/json'}:{})},...(body?{body:JSON.stringify(body)}:{})});
+ let j=await r.json().catch(()=>({}));
+ if(!r.ok)throw Error('Cloud-Fehler '+r.status+': '+(j.error||'Unbekannt'));
+ return j;
+}
+document.getElementById('syncConnect').onclick=async()=>{
+ secret=secretInput.value.trim();if(!secret){say('Bitte SYNC_SECRET eingeben.');return}
+ try{const x=await req('GET');sessionStorage.setItem('ics-v3-secret',secret);if(remember.checked)localStorage.setItem('ics-v3-remembered-secret',secret);else localStorage.removeItem('ics-v3-remembered-secret');say(x.data?'Verbunden. Cloud-Daten vorhanden. Noch nichts überschrieben.':'Verbunden. Cloud ist noch leer. Noch nichts überschrieben.')}
+ catch(e){secret='';sessionStorage.removeItem('ics-v3-secret');localStorage.removeItem('ics-v3-remembered-secret');say(e.message)}
+};
+document.getElementById('syncUpload').onclick=async()=>{
+ if(!secret){say('Bitte zuerst verbinden.');return}
+ try{
+ const remote=(await req('GET')).data;
+ if(remote&&!confirm('Cloud enthält bereits Daten. Wirklich durch die Daten DIESES Geräts ersetzen?'))return;
+ if(!remote&&!confirm('Lokale Links und Tagesprioritäten erstmals in die Cloud speichern?'))return;
+ await req('PUT',payload());say('Daten in Cloud gespeichert. Automatik wird geprüft.');document.getElementById('autoStart').click();
+ }catch(e){say(e.message)}
+};
+document.getElementById('syncDownload').onclick=async()=>{
+ if(!secret){say('Bitte zuerst verbinden.');return}
+ try{
+ const remote=(await req('GET')).data;
+ if(!remote){say('Cloud ist noch leer. Erst vom PC hochladen.');return}
+ if(!Array.isArray(remote.links)||!Array.isArray(remote.tasks)||remote.tasks.length!==3||!remote.links.every(l=>l.id&&l.name&&valid(l.url)&&C.some(c=>c[0]===l.category)))throw Error('Cloud-Daten haben ein ungültiges Format.');
+ if(!confirm('Lokale Links und Tagesprioritäten dieses Geräts durch die Cloud-Daten ersetzen?'))return;
+ links=remote.links;tasks=remote.tasks;persist();persistTasks();renderFav();renderTasks();renderPanel();say('Cloud-Daten erfolgreich übernommen. Automatik wird geprüft.');document.getElementById('autoStart').click();
+ }catch(e){say(e.message)}
+};
+if(secret){req('GET').then(()=>{say('✓ Automatisch verbunden.');document.getElementById('autoStart').click()}).catch(e=>{say('⚠️ Verbindung: '+e.message);sessionStorage.removeItem('ics-v3-secret');localStorage.removeItem('ics-v3-remembered-secret')})}
+remember.addEventListener('change',()=>{if(remember.checked&&secret)localStorage.setItem('ics-v3-remembered-secret',secret);else localStorage.removeItem('ics-v3-remembered-secret')});
+})();
+</script><script>
+(()=>{
+'use strict';
+const api='https://ics-kommando-sync.peter-wicklein.workers.dev/api/sync';
+const out=document.getElementById('autoStatus');
+const sig=x=>JSON.stringify({links:x.links,tasks:x.tasks});
+const local=()=>({links,tasks});
+let timer=null,busy=false,baseline=null,enabled=false;
+const status=t=>out.textContent=t;
+async function cloud(method,data){
+ const secret=sessionStorage.getItem('ics-v3-secret')||localStorage.getItem('ics-v3-remembered-secret');
+ if(!secret)throw Error('Bitte zuerst oben „Verbinden & Cloud prüfen“ verwenden.');
+ const response=await fetch(api,{method,headers:{Authorization:'Bearer '+secret,...(data?{'Content-Type':'application/json'}:{})},...(data?{body:JSON.stringify(data)}:{})});
+ const json=await response.json();
+ if(!response.ok)throw Error('Cloud '+response.status+': '+(json.error||'Fehler'));
+ return json;
+}
+function validRemote(d){return d&&Array.isArray(d.links)&&Array.isArray(d.tasks)&&d.tasks.length===3&&d.links.every(l=>l.id&&l.name&&valid(l.url)&&C.some(c=>c[0]===l.category))}
+function halt(msg){enabled=false;clearInterval(timer);timer=null;status(msg+' Automatik gestoppt.');}
+async function tick(){
+ if(!enabled||busy||document.hidden)return;
+ busy=true;
+ try{
+ const remote=(await cloud('GET')).data;
+ if(!validRemote(remote))return halt('Cloud-Daten fehlen oder sind ungültig.');
+ const rs=sig(remote),ls=sig(local());
+ if(rs===ls){baseline=rs;status('✓ Synchron. Letzte Prüfung: '+new Date().toLocaleTimeString('de-DE'));return;}
+ if(rs!==baseline&&ls!==baseline)return halt('⚠️ Änderungen auf beiden Geräten erkannt. Bitte zuerst eine JSON-Sicherung erstellen und manuell vergleichen.');
+ if(rs!==baseline){
+ links=remote.links;tasks=remote.tasks;persist();persistTasks();renderFav();renderTasks();renderPanel();baseline=rs;status('✓ Änderungen aus Cloud übernommen: '+new Date().toLocaleTimeString('de-DE'));return;
+ }
+ // Vor dem Schreiben erneut prüfen; KV bietet keine atomare Versionssperre.
+ const check=(await cloud('GET')).data;
+ if(!validRemote(check)||sig(check)!==baseline)return halt('⚠️ Cloud wurde inzwischen geändert.');
+ await cloud('PUT',{version:3,links,tasks,updatedAt:new Date().toISOString()});
+ baseline=ls;status('✓ Änderungen in Cloud gespeichert: '+new Date().toLocaleTimeString('de-DE'));
+ }catch(e){halt('⚠️ '+e.message)}finally{busy=false}
+}
+document.getElementById('autoStart').onclick=async()=>{
+ if(enabled)return;
+ try{
+ const remote=(await cloud('GET')).data;
+ if(!validRemote(remote))return status('Cloud-Daten fehlen. Erst V3 manuell synchronisieren.');
+ if(sig(remote)!==sig(local()))return status('⚠️ Datenstände unterschiedlich. Automatik pausiert. Bitte zuerst eine Sicherung exportieren und dann den gewünschten Datenstand manuell auswählen.');
+ baseline=sig(remote);enabled=true;status('Automatik aktiv. Prüfung alle 20 Sekunden.');
+ timer=setInterval(tick,20000);
+ }catch(e){status('⚠️ '+e.message)}
+};
+document.getElementById('autoStop').onclick=()=>halt('Manuell beendet.');
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)tick()});
+window.addEventListener('online',()=>tick());
+})();
+</script><script>
+(()=>{
+'use strict';
+const compact=document.getElementById('cloudCompactStatus');
+const auto=document.getElementById('autoStatus');
+const connection=document.getElementById('syncStatus');
+const settings=document.getElementById('cloudSettings');
+function refresh(){
+ const a=auto.textContent||'',c=connection.textContent||'';
+ compact.className='cloud-state';
+ if(a.includes('✓ Synchron')||a.includes('✓ Änderungen')||a.includes('Automatik aktiv')){compact.textContent='✓ Synchronisierung aktiv';compact.classList.add('good')}
+ else if(a.includes('⚠')||a.includes('gestoppt')||c.includes('⚠')||c.includes('Fehler')){compact.textContent='⚠ Abgleich prüfen';compact.classList.add('warn')}
+ else if(c.includes('Verbunden')||c.includes('Automatisch verbunden')){compact.textContent='Verbunden · Abgleich wird geprüft'}
+ else compact.textContent='Noch nicht verbunden';
+}
+const observer=new MutationObserver(refresh);
+observer.observe(auto,{childList:true,characterData:true,subtree:true});
+observer.observe(connection,{childList:true,characterData:true,subtree:true});
+refresh();
+if(!sessionStorage.getItem('ics-v3-secret')&&!localStorage.getItem('ics-v3-remembered-secret'))settings.open=true;
+})();
+</script></body></html>
