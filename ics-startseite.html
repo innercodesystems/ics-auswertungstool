@@ -944,10 +944,10 @@
 /* STARTSEITE · PRODUKTWELT */
 .ics-product-gateway{display:grid;grid-template-columns:minmax(0,1fr) 240px;align-items:center;gap:42px;overflow:hidden}
 .ics-product-gateway-copy{max-width:760px}
-.ics-product-gateway-visual{height:280px;display:flex;align-items:center;justify-content:center}
+.ics-product-gateway-visual{height:auto;min-height:280px;display:flex;align-items:center;justify-content:center;padding:8px 0}
 .ics-product-gateway-visual img{display:block;max-width:100%;max-height:280px;width:auto;height:auto;object-fit:contain;filter:drop-shadow(0 18px 24px rgba(0,0,0,.28));transition:transform .45s ease}
 .ics-product-gateway:hover .ics-product-gateway-visual img{transform:translateY(-4px)}
-@media(max-width:760px){.ics-product-gateway{grid-template-columns:1fr;gap:24px}.ics-product-gateway-visual{height:220px;order:-1}.ics-product-gateway-visual img{max-height:220px}}
+@media(max-width:760px){.ics-product-gateway{grid-template-columns:1fr;gap:28px}.ics-product-gateway-visual{height:auto;min-height:0;order:-1;padding:0 0 8px}.ics-product-gateway-visual img{max-height:220px}.ics-product-gateway-visual > div{width:100%}.ics-product-gateway-visual > div > a:last-child{max-width:100%;box-sizing:border-box}}
 
 /* ICS Hauptnavigation – statisch, ohne JavaScript-Abhängigkeit */
 .ics-worlds-menu{position:relative;display:flex;align-items:center}
