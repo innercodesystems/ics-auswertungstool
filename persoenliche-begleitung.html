@@ -835,6 +835,17 @@
   50%{transform:scale(1.12);filter:drop-shadow(0 0 9px rgba(212,160,58,.48))}
 }
 @media (prefers-reduced-motion:reduce){.ics-new-header-logo{animation:none}}
+
+/* ICS: Einfacher Begleitungsweg – mobilfreundliche Zeitleiste */
+.ics-path{max-width:780px;margin:34px auto 0;position:relative}
+.ics-path:before{content:"";position:absolute;left:23px;top:26px;bottom:44px;width:2px;background:rgba(212,160,58,.55)}
+.ics-path-item{position:relative;display:grid;grid-template-columns:48px minmax(0,1fr);gap:22px;align-items:start;padding:0 0 36px}
+.ics-path-item:last-child{padding-bottom:0}
+.ics-path-number{position:relative;z-index:1;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#D4A03A;color:#1A1A1A;border:4px solid #211e1a;font-weight:700;font-size:18px}
+.ics-path-kicker{font-size:11px!important;letter-spacing:.16em;color:#D4A03A!important;font-weight:700;margin:2px 0 8px!important}
+.ics-path-item h3{font-family:"Playfair Display",serif;font-size:clamp(22px,3vw,30px);margin:0 0 10px;color:#fffdf8}
+.ics-path-item div>p:last-child{color:#e4dbcf;line-height:1.75;margin:0;font-size:15px}
+@media(max-width:600px){.ics-path-item{gap:14px;padding-bottom:30px}.ics-path-item div>p:last-child{font-size:14px;line-height:1.65}}
 </style>
 <style id="ics-begleitung-mobile-header-stable">
 @media(min-width:701px){
@@ -1077,67 +1088,19 @@
       </div>
 
 
-      <div class="steps">
-
-        <article class="step">
-          <div class="letter">1</div>
-
-          <h3>Standort klären</h3>
-
-          <p>
-            Was ist gerade wirklich da?
-            Was belastet, blockiert oder fordert dich?
-          </p>
-        </article>
-
-
-        <article class="step">
-          <div class="letter">2</div>
-
-          <h3>Muster erkennen</h3>
-
-          <p>
-            Wir schauen hinter die Oberfläche
-            und machen Zusammenhänge sichtbar.
-          </p>
-        </article>
-
-
-        <article class="step">
-          <div class="letter">3</div>
-
-          <h3>Richtung wählen</h3>
-
-          <p>
-            Was möchtest du nicht nur vermeiden,
-            sondern stattdessen bewusst gestalten?
-          </p>
-        </article>
-
-
-        <article class="step">
-          <div class="letter">4</div>
-
-          <h3>Handeln</h3>
-
-          <p>
-            Aus Erkenntnis entsteht ein konkreter,
-            machbarer nächster Schritt.
-          </p>
-        </article>
-
-
-        <article class="step">
-          <div class="letter">5</div>
-
-          <h3>Integrieren</h3>
-
-          <p>
-            Neue Entscheidungen dürfen sich
-            im wirklichen Leben zeigen und festigen.
-          </p>
-        </article>
-
+      <div class="ics-path" aria-label="Dein Weg mit ICS in drei Schritten">
+        <div class="ics-path-item">
+          <span class="ics-path-number">1</span>
+          <div><p class="ics-path-kicker">SCHRITT EINS</p><h3>Ankommen &amp; Erkennen</h3><p>Was beschäftigt dich gerade?<br>Wir schauen gemeinsam hin und finden heraus, was dich bewegt.</p></div>
+        </div>
+        <div class="ics-path-item">
+          <span class="ics-path-number">2</span>
+          <div><p class="ics-path-kicker">SCHRITT ZWEI</p><h3>Verstehen &amp; Verändern</h3><p>Warum wiederholen sich bestimmte Gedanken oder Verhaltensweisen?<br>Du lernst, deine Muster besser zu verstehen und neue Möglichkeiten zu entdecken.</p></div>
+        </div>
+        <div class="ics-path-item">
+          <span class="ics-path-number">3</span>
+          <div><p class="ics-path-kicker">SCHRITT DREI</p><h3>Entscheiden &amp; Handeln</h3><p>Was möchtest du künftig anders machen?<br>Du findest deinen nächsten Schritt und beginnst, ihn im Alltag umzusetzen.</p></div>
+        </div>
       </div>
 
     </div>
