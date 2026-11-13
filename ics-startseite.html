@@ -1058,6 +1058,7 @@ body.ics-home-header-fixed .ics-home-hero > .ics-topbar{
     <a href="orientierung.html">ORIENTIERUNG · Richtung</a>
   </div>
 </div>
+<a href="persoenliche-begleitung.html">BEGLEITUNG</a>
 <a href="ics-akademie.html">AKADEMIE</a>
 <a href="ics-wegweiser-vorschau.html">WEGWEISER</a>
 <a href="prompt-world.html">KI-WELT</a>
@@ -1079,6 +1080,7 @@ body.ics-home-header-fixed .ics-home-hero > .ics-topbar{
   <a href="reset.html">RESET · Veränderung</a>
   <a href="orientierung.html">ORIENTIERUNG · Richtung</a>
 </details>
+<a href="persoenliche-begleitung.html">BEGLEITUNG</a>
 <a href="ics-akademie.html">AKADEMIE</a>
 <a href="ics-wegweiser-vorschau.html">WEGWEISER</a>
 <a href="prompt-world.html">KI-WELT</a>
@@ -1638,7 +1640,7 @@ rel="noopener noreferrer">
 
 <a
   class="ics-info-card ics-link-card"
-href="https://innercodesystems.github.io/ics-auswertungstool/persoenliche-begleitung.html">
+href="persoenliche-begleitung.html">
 
   <div class="ics-card-number">
     PERSÖNLICHER WEG
@@ -1764,6 +1766,18 @@ href="https://innercodesystems.github.io/ics-auswertungstool/persoenliche-beglei
 
 </section>
     
+<!-- ICS Gefühls-Code Einstieg -->
+<section id="ics-gefuehls-code-entry" aria-label="ICS Gefühls-Code" style="max-width:1100px;margin:32px auto;padding:0 20px;box-sizing:border-box;">
+  <div style="background:#1a1815;color:#f6f1e7;border:1px solid #b8924f;border-radius:20px;padding:clamp(24px,5vw,42px);text-align:center;box-shadow:0 12px 35px rgba(0,0,0,.12);">
+    <div style="color:#d4a03a;font-size:12px;font-weight:700;letter-spacing:.2em;margin-bottom:12px;">INNER CODE SYSTEMS · INNER</div>
+    <h2 style="font-family:Georgia,serif;font-size:clamp(26px,5vw,38px);line-height:1.2;color:#f6f1e7;margin:0 0 12px;">ICS GEFÜHLS-CODE</h2>
+    <p style="font-size:clamp(17px,3vw,21px);color:#d4a03a;margin:0 0 12px;">4 Minuten vom Wollen ins Haben</p>
+    <p style="max-width:590px;margin:0 auto 24px;line-height:1.7;color:#f6f1e7;">Ein Wunsch. Ein Gefühl. Vier Minuten. 21 Tage. Mit drei bewussten Atemzügen, deiner eigenen Vorstellung und einem persönlichen Kalender.</p>
+    <a href="ics-gefuehls-code.html" style="display:inline-block;background:#d4a03a;color:#1a1815;padding:14px 25px;border-radius:10px;font-weight:700;text-decoration:none;">Jetzt ins Gefühl kommen →</a>
+  </div>
+</section>
+<!-- /ICS Gefühls-Code Einstieg -->
+
   </main>
 
 <!-- =========================================
@@ -1856,7 +1870,7 @@ href="https://innercodesystems.github.io/ics-auswertungstool/persoenliche-beglei
             Tool-Bibliothek →
           </a>
 
-          <a href="https://innercodesystems.github.io/ics-auswertungstool/persoenliche-begleitung.html">
+          <a href="persoenliche-begleitung.html">
             Persönliche Begleitung →
           </a>
 
@@ -1958,19 +1972,22 @@ href="https://innercodesystems.github.io/ics-auswertungstool/persoenliche-beglei
 </script>
 
 <script>
-document.querySelectorAll('a[href^="https://"], a[href^="http://"]').forEach(function(link){
-
-  const url = new URL(link.href);
-
-  const isICSWebsite =
-    url.hostname === "innercodesystems.github.io" &&
-    url.pathname.startsWith("/ics-auswertungstool/");
-
-  if(!isICSWebsite){
-    link.setAttribute("target","_blank");
-    link.setAttribute("rel","noopener noreferrer");
+document.querySelectorAll('a[href]').forEach(function(link){
+  const url = new URL(link.getAttribute('href'), window.location.href);
+  const isMainSite = url.hostname === 'www.innercodesystems.com' || url.hostname === 'innercodesystems.com';
+  const isLegacyICS = url.hostname === 'innercodesystems.github.io' &&
+                      url.pathname.startsWith('/ics-auswertungstool/');
+  const isInternal = isMainSite || isLegacyICS || url.origin === window.location.origin;
+  if(isInternal){
+    if(isLegacyICS){
+      link.setAttribute('href', url.pathname.replace(/^\/ics-auswertungstool\//, '/') + url.search + url.hash);
+    }
+    link.removeAttribute('target');
+    link.removeAttribute('rel');
+  }else if(url.protocol === 'https:' || url.protocol === 'http:'){
+    link.setAttribute('target', '_blank');
+    link.setAttribute('rel', 'noopener noreferrer');
   }
-
 });
 </script>
 
@@ -2156,17 +2173,7 @@ document.addEventListener("DOMContentLoaded", function(){
  else init();
 })();
 </script>
-<!-- ICS Gefühls-Code Einstieg -->
-<section id="ics-gefuehls-code-entry" aria-label="ICS Gefühls-Code" style="max-width:1100px;margin:32px auto;padding:0 20px;box-sizing:border-box;">
-  <div style="background:#1a1815;color:#f6f1e7;border:1px solid #b8924f;border-radius:20px;padding:clamp(24px,5vw,42px);text-align:center;box-shadow:0 12px 35px rgba(0,0,0,.12);">
-    <div style="color:#d4a03a;font-size:12px;font-weight:700;letter-spacing:.2em;margin-bottom:12px;">INNER CODE SYSTEMS · INNER</div>
-    <h2 style="font-family:Georgia,serif;font-size:clamp(26px,5vw,38px);line-height:1.2;color:#f6f1e7;margin:0 0 12px;">ICS GEFÜHLS-CODE</h2>
-    <p style="font-size:clamp(17px,3vw,21px);color:#d4a03a;margin:0 0 12px;">4 Minuten vom Wollen ins Haben</p>
-    <p style="max-width:590px;margin:0 auto 24px;line-height:1.7;color:#f6f1e7;">Ein Wunsch. Ein Gefühl. Vier Minuten. 21 Tage. Mit drei bewussten Atemzügen, deiner eigenen Vorstellung und einem persönlichen Kalender.</p>
-    <a href="https://www.innercodesystems.com/ics-gefuehls-code.html" target="_blank" rel="noopener noreferrer" style="display:inline-block;background:#d4a03a;color:#1a1815;padding:14px 25px;border-radius:10px;font-weight:700;text-decoration:none;">Jetzt ins Gefühl kommen →</a>
-  </div>
-</section>
-<!-- /ICS Gefühls-Code Einstieg -->
+
 <script src="ics-quicksearch.js?v=20261012-29" defer></script>
 </body>
 </html>
