@@ -80,7 +80,7 @@
   }
 
   function ensureAllNavigationLinks(){
-    document.querySelectorAll('.header .nav, .ics-topbar .ics-nav, .site-header nav').forEach(ensureNavigationLinks);
+    document.querySelectorAll('.header .nav, .ics-topbar .ics-nav, .site-header nav, .mobile-menu, .ics-mobile-menu').forEach(ensureNavigationLinks);
   }
 
   function fixTransformationsmassageLinks(){
@@ -99,7 +99,12 @@
     const nav=header.querySelector('.nav, .ics-nav');
     ensureNavigationLinks(nav);
 
-    if(document.getElementById('icsMenuButton') || document.getElementById('icsSharedMenuButton')) return;
+    // Seiten mit eigener funktionierender Mobilnavigation behalten ihren vorhandenen Button.
+    // Kein zweites Hamburger-Menü in den Header einsetzen.
+    if(document.getElementById('icsMenuButton') ||
+       document.getElementById('menuButton') ||
+       document.getElementById('icsProductsMenuButton') ||
+       document.getElementById('icsSharedMenuButton')) return;
 
     const button=document.createElement('button');
     button.id='icsSharedMenuButton';
