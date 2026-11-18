@@ -1990,8 +1990,13 @@ document.querySelectorAll('a[href]').forEach(function(link){
     if(isLegacyICS){
       link.setAttribute('href', url.pathname.replace(/^\/ics-auswertungstool\//, '/') + url.search + url.hash);
     }
-    link.removeAttribute('target');
-    link.removeAttribute('rel');
+    // Explicitly requested new-tab links must stay in a new tab.
+    if(link.getAttribute('target') === '_blank'){
+      link.setAttribute('rel', 'noopener noreferrer');
+    }else{
+      link.removeAttribute('target');
+      link.removeAttribute('rel');
+    }
   }else if(url.protocol === 'https:' || url.protocol === 'http:'){
     link.setAttribute('target', '_blank');
     link.setAttribute('rel', 'noopener noreferrer');
