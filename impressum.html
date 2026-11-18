@@ -12,5 +12,13 @@
 <header class="top"><div class="wrap"><a class="brand" href="ics-startseite.html">INNER CODE SYSTEMS</a><a class="back" href="ics-startseite.html">← Zur Startseite</a></div></header>
 <main><div class="wrap"><div class="eyebrow">RECHTLICHES</div><h1>Impressum</h1><p class="intro">Angaben gemäß § 5 DDG.</p><section class="card"><h2>Anbieter</h2><p><strong>Inner Code Systems</strong><br>Mühlenstraße 24<br>88662 Überlingen<br>Deutschland</p></section><section class="card"><h2>Vertreten durch</h2><p>Peter Wicklein</p></section><section class="card"><h2>Kontakt</h2><p>E-Mail: <a href="mailto:info@innercodesystems.com">info@innercodesystems.com</a></p></section></div></main>
 <footer><div class="wrap"><div class="links"><a href="ics-startseite.html">Start</a><a href="datenschutz.html">Datenschutz</a></div><p>© 2026 INNER CODE SYSTEMS</p></div></footer>
+<script>
+(function(){
+  if(new URLSearchParams(window.location.search).get('zurueck') !== 'dein-naechster-zug') return;
+  var back=document.querySelector('a.back');
+  if(back){back.href='/dein-naechster-zug/';back.textContent='← Zurück zu „Dein nächster Zug“';}
+  document.querySelectorAll('footer a[href="impressum.html"], footer a[href="datenschutz.html"]').forEach(function(a){a.href=a.getAttribute('href')+'?zurueck=dein-naechster-zug';});
+})();
+</script>
 </body>
 </html>
