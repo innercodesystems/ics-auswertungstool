@@ -21,5 +21,13 @@
 <section class="card"><h2>Aktualität</h2><p>Diese Datenschutzerklärung wird angepasst, wenn sich Funktionen, eingesetzte Dienste oder rechtliche Anforderungen ändern.</p></section>
 </div></main>
 <footer><div class="wrap"><div class="links"><a href="ics-startseite.html">Start</a><a href="impressum.html">Impressum</a></div><p>© 2026 INNER CODE SYSTEMS</p></div></footer>
+<script>
+(function(){
+  if(new URLSearchParams(window.location.search).get('zurueck') !== 'dein-naechster-zug') return;
+  var back=document.querySelector('a.back');
+  if(back){back.href='/dein-naechster-zug/';back.textContent='← Zurück zu „Dein nächster Zug“';}
+  document.querySelectorAll('footer a[href="impressum.html"], footer a[href="datenschutz.html"]').forEach(function(a){a.href=a.getAttribute('href')+'?zurueck=dein-naechster-zug';});
+})();
+</script>
 </body>
 </html>
