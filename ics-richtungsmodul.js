@@ -24,3 +24,21 @@ document.getElementById('icsDirectionClose').addEventListener('click',()=>dialog
 })();
 
 })();
+
+(function(){
+const pages=new Set(['werte-kompass.html','glaubenssatz-kompass.html','modus-kompass.html','trigger-kompass.html','ics-entscheidungs-kompass.html','tool-bibliothek.html','ICS_System_Check_V20_TESTMARKIERUNG.html','was-naehrt-dich.html','ics-schoepfer-codefinder.html','ics-mikro-reset.html','30-fragen.html','meditationen.html','gegenpol-generator.html','7-tage-reset.html','inner.html','body.html','action.html','reset.html','orientierung.html','ics-akademie.html','ics-startseite.html','ics-methode.html','persoenliche-begleitung.html','transformationsmassage.html']);
+function apply(a){
+const raw=a.getAttribute('href');if(!raw||raw.startsWith('#')||a.hasAttribute('download')||a.dataset.icsSameTab!==undefined)return;
+try{
+const u=new URL(raw,location.href),p=u.pathname.split('/').filter(Boolean).pop()||'';
+if(u.protocol!=='https:'|| (u.origin===location.origin&&u.pathname===location.pathname))return;
+const site=['www.innercodesystems.com','innercodesystems.com','innercodesystems.github.io'].includes(u.hostname);
+const publicTarget=(site&&(pages.has(p)||['achtsamkeits-guide','was-naehrt-dich','werte-kompass','ics-todo-kalender'].includes(p)||u.pathname==='/'))||['ics-goldenes-portal.pages.dev','ics-wort-metaphernkompass.peter-wicklein.workers.dev'].includes(u.hostname);
+if(!publicTarget)return;
+a.target='_blank';a.rel='noopener noreferrer';
+}catch(e){}
+}
+document.querySelectorAll('a[href]').forEach(apply);
+document.addEventListener('click',e=>{const a=e.target.closest?.('a[href]');if(a)apply(a)},true);
+window.addEventListener('load',()=>document.querySelectorAll('a[href]').forEach(apply),{once:true});
+})();
