@@ -434,4 +434,14 @@ renderCloud();renderHistory();
 </script>
 <script src="./ics-navigation-standard.js?v=20260930-nav1"></script>
 <div style="text-align:center;padding:24px 16px;font-size:12px;color:#777"><a href="https://www.innercodesystems.com/impressum.html" style="color:inherit">Impressum</a> · <a href="https://www.innercodesystems.com/datenschutz.html" style="color:inherit">Datenschutz</a></div>
+<script>
+(function(){
+  const from = new URLSearchParams(location.search).get('ics_from');
+  if(from !== 'kompasswelt') return;
+  document.querySelectorAll('a[href$="/tool-bibliothek.html"]').forEach(a=>{
+    a.href='https://ics-goldenes-portal.pages.dev/ICS-Kompasswelt-Panorama.html';
+    a.textContent='← Zurück zur Kompasswelt';
+  });
+})();
+</script>
 </body></html>
