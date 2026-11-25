@@ -16,14 +16,14 @@
       const url=new URL(value,location.origin);
       if(url.protocol!=='https:'&&url.protocol!=='http:')return '';
       if(!(/(^|\\.)innercodesystems\\.com$/.test(url.hostname) ||
-        url.hostname==='innercodesystems.github.io'))return '';
+        url.hostname==='innercodesystems.github.io' || url.hostname==='ics-goldenes-portal.pages.dev'))return '';
       if(url.origin===location.origin && url.pathname===location.pathname)return '';
       return url.href;
     }catch(e){return '';}
   }
   const from=params.get('ics_from')||params.get('from')||'';
   const alias=aliases[from.toLowerCase()];
-  const explicit=safeOrigin(alias?new URL(alias,HOME).href:from);
+  const explicit=safeOrigin(from==='kompasswelt'?'https://ics-goldenes-portal.pages.dev/ICS-Kompasswelt-Panorama.html':alias?new URL(alias,HOME).href:from);
   const ref=safeOrigin(document.referrer);
   // A separate per-tab origin prevents unrelated tools from overwriting each other.
   const origin=explicit||ref||safeOrigin(sessionStorage.getItem(ORIGIN_KEY))||HOME;
