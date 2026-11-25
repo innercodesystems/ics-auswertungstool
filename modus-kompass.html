@@ -14,11 +14,9 @@ h1{font-family:Georgia,serif;font-size:clamp(34px,7vw,58px);line-height:1.02;mar
 <body><main class="wrap"><div class="brand">INNER CODE SYSTEMS · ICS</div>
 <section id="start" class="card"><div class="eyebrow">ICS Modus-Kompass</div><h1>Funktionierst du gerade nur noch – oder gestaltest du schon?</h1><p class="lead">Finde in wenigen Minuten heraus, wo du gerade stehst, welche ICS-Welt dir jetzt am meisten helfen kann und was dein nächster sinnvoller Schritt ist.</p><p class="small">Keine Diagnose. Kein Richtig oder Falsch. Eine Momentaufnahme für mehr Klarheit.</p><div class="row">
   <button class="btn gold" onclick="begin()">Meinen Modus entdecken</button>
-  <a class="btn ghost"
-     href="https://innercodesystems.github.io/ics-auswertungstool/tool-bibliothek.html"
-     style="text-decoration:none;display:inline-flex;align-items:center;">
-    ← Zurück zur Tool-Bibliothek
-  </a>
+  <button class="btn ghost"
+     type="button" data-ics-direction
+     style="text-decoration:none;display:inline-flex;align-items:center;">Deine Richtung</button>
 </div>
 </section>
 <section id="quiz" class="card hidden">
@@ -39,11 +37,9 @@ h1{font-family:Georgia,serif;font-size:clamp(34px,7vw,58px);line-height:1.02;mar
 <div class="row">
   <button class="btn ghost" onclick="restart()">Check später erneut machen</button>
 
-  <a class="btn ghost"
-     href="https://innercodesystems.github.io/ics-auswertungstool/tool-bibliothek.html"
-     style="text-decoration:none;display:inline-flex;align-items:center;">
-    Weitere ICS Tools entdecken →
-  </a>
+  <button class="btn ghost"
+     type="button" data-ics-direction
+     style="text-decoration:none;display:inline-flex;align-items:center;">Deine Richtung</button>
 </div>
 </div>
 </section>
@@ -95,4 +91,5 @@ let keyMap={INNER:'Verantwortung',BODY:'Standards',RESET:'Disziplin',ORIENTIERUN
 function goToRecommendation(){if(currentHref){window.open(currentHref,'_blank');return;}const b=document.getElementById('nextLink');if(b&&b.style.display!=='none'){b.click();}else{document.querySelector('.recommend').scrollIntoView({behavior:'smooth',block:'center'});}}
 function restart(){i=0;ans=[];result.classList.add('hidden');start.classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'})}
 </script><script src="./ics-navigation-standard.js?v=20260930-nav1"></script>\n<div style="text-align:center;padding:24px 16px;font-size:12px;color:#777"><a href="https://www.innercodesystems.com/impressum.html" style="color:inherit">Impressum</a> · <a href="https://www.innercodesystems.com/datenschutz.html" style="color:inherit">Datenschutz</a></div>
+<script src="./ics-richtungsmodul.js?v=2" defer></script>
 </body></html>
