@@ -100,12 +100,7 @@ user-select:none;
         Letzte Auswertung
       </button>
 
-<a
-  class="btn secondary"
-  href="https://innercodesystems.github.io/ics-auswertungstool/tool-bibliothek.html"
-  style="text-decoration:none;display:inline-flex;align-items:center;">
-  ← Zurück zur Tool-Bibliothek
-</a>
+<button type="button" class="btn secondary" data-ics-direction>Deine Richtung</button>
     </div>
 
   </div>
@@ -203,10 +198,7 @@ user-select:none;
   </p>
 
   <div class="actions">
-<a class="recBtn"
-   href="https://innercodesystems.github.io/ics-auswertungstool/tool-bibliothek.html">
-  Weitere ICS Tools entdecken →
-</a>
+<button type="button" class="btn secondary" data-ics-direction>Deine Richtung</button>
 
     <a class="recBtn secondary"
        href="https://app.innercodesystems.com/"
@@ -434,14 +426,36 @@ renderCloud();renderHistory();
 </script>
 <script src="./ics-navigation-standard.js?v=20260930-nav1"></script>
 <div style="text-align:center;padding:24px 16px;font-size:12px;color:#777"><a href="https://www.innercodesystems.com/impressum.html" style="color:inherit">Impressum</a> · <a href="https://www.innercodesystems.com/datenschutz.html" style="color:inherit">Datenschutz</a></div>
+
+<style>
+#icsDirectionAnchor{position:fixed;right:16px;bottom:max(16px,env(safe-area-inset-bottom));z-index:9000;background:#D4A03A;color:#181612;border:1px solid #e7bf72;border-radius:30px;padding:12px 18px;font:600 14px system-ui;cursor:pointer;box-shadow:0 4px 20px #0005}
+#icsDirectionDialog{box-sizing:border-box;width:min(440px,calc(100% - 24px));max-height:85dvh;overflow:auto;background:#211e19;color:#fffdf8;border:1px solid #8c703e;border-radius:20px;padding:24px;font:16px system-ui}
+#icsDirectionDialog::backdrop{background:#0009}
+#icsDirectionDialog a{display:block;color:#fffdf8;text-decoration:none;padding:14px 0;border-bottom:1px solid #655333}
+#icsDirectionDialog button{float:right;background:transparent;color:#fffdf8;border:1px solid #8c703e;border-radius:8px;padding:8px;cursor:pointer}
+#icsDirectionDialog h2{color:#e5b85d;margin:0 0 12px;font-size:24px}
+#icsDirectionDialog a:focus-visible,#icsDirectionAnchor:focus-visible{outline:3px solid #fffdf8;outline-offset:3px}
+</style>
+<button type="button" id="icsDirectionAnchor" aria-haspopup="dialog">◈ Deine Richtung</button>
+<dialog id="icsDirectionDialog" aria-labelledby="icsDirectionTitle"><button type="button" id="icsDirectionClose" aria-label="Schließen">✕</button><h2 id="icsDirectionTitle">Deine Richtung</h2><p>Wohin möchtest du als Nächstes?</p><div id="icsDirectionLinks"></div></dialog>
 <script>
 (function(){
-  const from = new URLSearchParams(location.search).get('ics_from');
-  if(from !== 'kompasswelt') return;
-  document.querySelectorAll('a[href$="/tool-bibliothek.html"]').forEach(a=>{
-    a.href='https://ics-goldenes-portal.pages.dev/ICS-Kompasswelt-Panorama.html';
-    a.textContent='← Zurück zur Kompasswelt';
-  });
+const routes=[
+{key:'kompasswelt',name:'Kompasswelt',url:'https://ics-goldenes-portal.pages.dev/ICS-Kompasswelt-Panorama.html'},
+{key:'next',name:'Glaubenssatz-Kompass',url:'https://www.innercodesystems.com/glaubenssatz-kompass.html'},
+{key:'portal',name:'Das Goldene Tor',url:'https://ics-goldenes-portal.pages.dev/'},
+{key:'website',name:'ICS kennenlernen',url:'https://www.innercodesystems.com/'}
+];
+const from=new URLSearchParams(location.search).get('ics_from');
+const first=routes.findIndex(r=>r.key===from);
+if(first>0)routes.unshift(routes.splice(first,1)[0]);
+const dialog=document.getElementById('icsDirectionDialog');
+const links=document.getElementById('icsDirectionLinks');
+routes.forEach(r=>{const a=document.createElement('a');a.href=r.url;a.textContent=r.name+' →';links.appendChild(a)});
+const open=()=>{if(!dialog.open)dialog.showModal()};
+document.getElementById('icsDirectionAnchor').addEventListener('click',open);
+document.querySelectorAll('[data-ics-direction]').forEach(b=>b.addEventListener('click',open));
+document.getElementById('icsDirectionClose').addEventListener('click',()=>dialog.close());
 })();
 </script>
 </body></html>
