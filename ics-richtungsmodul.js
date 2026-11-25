@@ -1,19 +1,37 @@
 (function(){if(document.getElementById('icsDirectionAnchor'))return;document.body.insertAdjacentHTML('beforeend',"<style>\n#icsDirectionAnchor{position:fixed;right:16px;bottom:max(16px,env(safe-area-inset-bottom));z-index:9000;background:#D4A03A;color:#181612;border:1px solid #e7bf72;border-radius:30px;padding:12px 18px;font:600 14px system-ui;cursor:pointer;box-shadow:0 4px 20px #0005}\n#icsDirectionDialog{box-sizing:border-box;width:min(440px,calc(100% - 24px));max-height:85dvh;overflow:auto;background:#211e19;color:#fffdf8;border:1px solid #8c703e;border-radius:20px;padding:24px;font:16px system-ui}\n#icsDirectionDialog::backdrop{background:#0009}\n#icsDirectionDialog a{display:block;color:#fffdf8;text-decoration:none;padding:14px 0;border-bottom:1px solid #655333}\n#icsDirectionDialog button{float:right;background:transparent;color:#fffdf8;border:1px solid #8c703e;border-radius:8px;padding:8px;cursor:pointer}\n#icsDirectionDialog h2{color:#e5b85d;margin:0 0 12px;font-size:24px}\n#icsDirectionDialog a:focus-visible,#icsDirectionAnchor:focus-visible{outline:3px solid #fffdf8;outline-offset:3px}\n</style>\n<button type=\"button\" id=\"icsDirectionAnchor\" aria-haspopup=\"dialog\">◈ Deine Richtung</button>\n<dialog id=\"icsDirectionDialog\" aria-labelledby=\"icsDirectionTitle\"><button type=\"button\" id=\"icsDirectionClose\" aria-label=\"Schließen\">✕</button><h2 id=\"icsDirectionTitle\">Deine Richtung</h2><p>Wohin möchtest du als Nächstes?</p><div id=\"icsDirectionLinks\"></div></dialog>\n");
 
 (function(){
-const routes=[
-{key:'kompasswelt',name:'Kompasswelt',url:'https://ics-goldenes-portal.pages.dev/ICS-Kompasswelt-Panorama.html'},
-{key:'next',name:'Glaubenssatz-Kompass',url:'https://www.innercodesystems.com/glaubenssatz-kompass.html'},
-{key:'portal',name:'Das Goldene Tor',url:'https://ics-goldenes-portal.pages.dev/'},
-{key:'website',name:'ICS kennenlernen',url:'https://www.innercodesystems.com/'}
-];
-const current=location.pathname.split('/').pop();
-if(current==='glaubenssatz-kompass.html'){routes[1]={key:'next',name:'Modus-Kompass',url:'https://www.innercodesystems.com/modus-kompass.html'};}
-if(current==='modus-kompass.html'){routes[1]={key:'next',name:'Trigger-Kompass',url:'https://www.innercodesystems.com/trigger-kompass.html'};}
-if(current==='trigger-kompass.html'){routes[1]={key:'next',name:'Werte-Kompass',url:'https://www.innercodesystems.com/werte-kompass.html'};}
-const from=new URLSearchParams(location.search).get('ics_from');
-const first=routes.findIndex(r=>r.key===from);
-if(first>0)routes.unshift(routes.splice(first,1)[0]);
+const base='https://www.innercodesystems.com/';
+const catalog={
+werte:['Werte-Kompass','werte-kompass.html'],glauben:['Glaubenssatz-Kompass','glaubenssatz-kompass.html'],modus:['Modus-Kompass','modus-kompass.html'],trigger:['Trigger-Kompass','trigger-kompass.html'],entscheidung:['Entscheidungs-Kompass','ics-entscheidungs-kompass.html'],wort:['Wort- & Metaphernkompass','https://ics-wort-metaphernkompass.peter-wicklein.workers.dev/'],system:['ICS System Check','ICS_System_Check_V20_TESTMARKIERUNG.html'],naehrt:['Was nährt dich?','was-naehrt-dich.html'],schoepfer:['Schöpfer-Codefinder','ics-schoepfer-codefinder.html'],mikro:['Mikro-RESET','ics-mikro-reset.html'],fragen:['30 Fragen an dich','30-fragen.html'],meditation:['Meditationen','meditationen.html'],gegenpol:['Gegenpol-Generator','gegenpol-generator.html'],sieben:['7-Tage-RESET','7-tage-reset.html'],achtsam:['Achtsamkeits-Guide','achtsamkeits-guide/'],inner:['INNER CODE','inner.html'],body:['BODY CODE','body.html'],action:['ACTION CODE','action.html'],reset:['RESET','reset.html'],orientierung:['Orientierung','orientierung.html'],akademie:['ICS Akademie','ics-akademie.html'],kompasswelt:['Kompasswelt','https://ics-goldenes-portal.pages.dev/ICS-Kompasswelt-Panorama.html'],portal:['Das Goldene Tor','https://ics-goldenes-portal.pages.dev/'],website:['ICS kennenlernen',''],bibliothek:['Weitere Anwendungen','tool-bibliothek.html']
+};
+const map={
+werte:['glauben','entscheidung','fragen','kompasswelt'],
+glauben:['mikro','wort','modus','kompasswelt'],
+modus:['schoepfer','mikro','system','kompasswelt'],
+trigger:['glauben','mikro','gegenpol','kompasswelt'],
+entscheidung:['werte','fragen','action','kompasswelt'],
+wort:['glauben','fragen','gegenpol','kompasswelt'],
+system:['inner','body','action','reset'],
+naehrt:['body','achtsam','meditation','werte'],
+schoepfer:['modus','entscheidung','action','werte'],
+mikro:['sieben','achtsam','modus','reset'],
+fragen:['werte','wort','entscheidung','inner'],
+meditation:['achtsam','naehrt','body','reset'],
+gegenpol:['trigger','wort','glauben','mikro'],
+sieben:['mikro','achtsam','modus','reset'],
+bibliothek:['system','kompasswelt','portal','website'],
+inner:['glauben','werte','wort','fragen'],
+body:['naehrt','meditation','achtsam','mikro'],
+action:['entscheidung','schoepfer','modus','werte'],
+reset:['mikro','sieben','trigger','meditation'],
+orientierung:['system','werte','entscheidung','kompasswelt'],
+akademie:['inner','system','kompasswelt','website'],
+achtsam:['meditation','naehrt','mikro','body']
+};
+const currentPath=location.pathname.replace(/\/$/,'').split('/').pop()||'';
+const current=location.hostname==='ics-wort-metaphernkompass.peter-wicklein.workers.dev'?'wort':Object.keys(catalog).find(k=>catalog[k][1]&&!catalog[k][1].startsWith('https:')&&(catalog[k][1].replace(/\/$/,'')===currentPath||catalog[k][1].replace(/\.html$/,'').replace(/\/$/,'')===currentPath));
+const routes=(map[current]||['system','kompasswelt','portal','website']).filter(k=>k!==current).map(key=>({key,name:catalog[key][0],url:new URL(catalog[key][1],base).href}));
 const dialog=document.getElementById('icsDirectionDialog');
 const links=document.getElementById('icsDirectionLinks');
 routes.forEach(r=>{const a=document.createElement('a');a.href=r.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent=r.name+' ↗';links.appendChild(a)});
