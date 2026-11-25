@@ -451,7 +451,7 @@ const first=routes.findIndex(r=>r.key===from);
 if(first>0)routes.unshift(routes.splice(first,1)[0]);
 const dialog=document.getElementById('icsDirectionDialog');
 const links=document.getElementById('icsDirectionLinks');
-routes.forEach(r=>{const a=document.createElement('a');a.href=r.url;a.textContent=r.name+' →';links.appendChild(a)});
+routes.forEach(r=>{const a=document.createElement('a');a.href=r.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent=r.name+' ↗';links.appendChild(a)});
 const open=()=>{if(!dialog.open)dialog.showModal()};
 document.getElementById('icsDirectionAnchor').addEventListener('click',open);
 document.querySelectorAll('[data-ics-direction]').forEach(b=>b.addEventListener('click',open));
