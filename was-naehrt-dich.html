@@ -102,11 +102,9 @@ h2{font-size:28px;margin:0 0 8px}
     <p class="sub">Du funktionierst. Aber bekommst du auch genug von dem, was dich wirklich stärkt? Bewerte 7 Bereiche spontan – ohne lange nachzudenken.</p>
     <p class="small">Keine Diagnose. Nur ein kurzer Spiegel für deinen aktuellen Zustand.</p>
     <button type="button" id="startBtn" class="btn btn-primary">Check starten</button>
-    <a href="https://innercodesystems.github.io/ics-auswertungstool/tool-bibliothek.html"
+    <button type="button" data-ics-direction
    class="btn btn-secondary"
-   style="display:block;width:100%;margin-top:10px;text-align:center;text-decoration:none;">
-  ← Zurück zur Tool-Bibliothek
-</a>
+   style="display:block;width:100%;margin-top:10px;text-align:center;text-decoration:none;">Deine Richtung</button>
   </section>
 
 <section id="quiz" class="hidden">
@@ -163,11 +161,9 @@ h2{font-size:28px;margin:0 0 8px}
 
 <button type="button" id="restartBtn" class="btn btn-secondary" style="width:100%;margin-top:14px">Nochmal testen</button>
 
-<a href="https://innercodesystems.github.io/ics-auswertungstool/tool-bibliothek.html"
+<button type="button" data-ics-direction
    class="btn btn-secondary"
-   style="display:block;width:100%;margin-top:10px;text-align:center;text-decoration:none;">
-  Weitere ICS Tools entdecken →
-</a>
+   style="display:block;width:100%;margin-top:10px;text-align:center;text-decoration:none;">Deine Richtung</button>
 
 <div class="footer-note">Tipp: Wenn du den Check in 7 Tagen erneut machst, erkennst du schnell, was sich verändert hat.</div>
     </div>
@@ -480,5 +476,6 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
 document.addEventListener('click',e=>{if(!m.contains(e.target)&&!b.contains(e.target))close()});
 })();
 </script>
+<script src="./ics-richtungsmodul.js?v=3" defer></script>
 </body>
 </html>
