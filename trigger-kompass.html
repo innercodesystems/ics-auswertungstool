@@ -48,7 +48,7 @@ textarea{min-height:110px}input[type=range]{width:100%;accent-color:var(--gold)}
 <div class="actions">
   <button class="btn" onclick="go(1)">Trigger verstehen</button>
   <button class="btn secondary" onclick="loadLast()">Letzte Auswertung</button>
-  <button class="btn secondary" onclick="backToLibrary()">← Zurück</button>
+  <button class="btn secondary" type="button" data-ics-direction>Deine Richtung</button>
 </div>
 </div></section>
 
@@ -58,9 +58,7 @@ textarea{min-height:110px}input[type=range]{width:100%;accent-color:var(--gold)}
 <div class="g3 grid" id="triggerChoices"></div>
 <div style="margin-top:22px"><label class="mini">Optional: Was ist passiert?</label><textarea id="situation" placeholder="Zum Beispiel: Jemand antwortet nicht, kritisiert mich, entscheidet über meinen Kopf hinweg …"></textarea></div>
 <div class="actions">
-  <button class="btn secondary" onclick="backToLibrary()">
-    ← Zurück
-  </button>
+  <button class="btn secondary" type="button" data-ics-direction>Deine Richtung</button>
 
   <button class="btn" onclick="nextReaction()">
     Weiter · meine Reaktion
@@ -75,7 +73,7 @@ textarea{min-height:110px}input[type=range]{width:100%;accent-color:var(--gold)}
 <div style="margin-top:26px"><h3>Wie stark trifft dich die Situation?</h3><div class="scale"><input id="intensity" type="range" min="1" max="10" value="6" oninput="intensityN.textContent=this.value"><strong id="intensityN">6</strong></div></div>
 <div class="actions">
   <button class="btn secondary" onclick="go(1)">← Zurück</button>
-  <button class="btn secondary" onclick="backToLibrary()">← Zurück</button>
+  <button class="btn secondary" type="button" data-ics-direction>Deine Richtung</button>
   <button class="btn" onclick="go(3)">Weiter · tiefer schauen</button>
 </div>
 </div></section>
@@ -87,7 +85,7 @@ textarea{min-height:110px}input[type=range]{width:100%;accent-color:var(--gold)}
 <h3 style="margin-top:28px">Welcher innere Satz kommt dem Gefühl am nächsten?</h3><div class="g2 grid" id="beliefChoices"></div>
 <div class="actions">
   <button class="btn secondary" onclick="go(2)">← Zurück</button>
-  <button class="btn secondary" onclick="backToLibrary()">← Zurück</button>
+  <button class="btn secondary" type="button" data-ics-direction>Deine Richtung</button>
   <button class="btn" onclick="calculate()">Meine Auswertung</button>
 </div>
 </div></section>
@@ -120,7 +118,7 @@ textarea{min-height:110px}input[type=range]{width:100%;accent-color:var(--gold)}
   <button class="btn" onclick="save()">Auswertung speichern</button>
   <button class="btn secondary" onclick="window.print()">Drucken / PDF</button>
   <button class="btn dark" onclick="restart()">Neu starten</button>
-  <button class="btn secondary" onclick="backToLibrary()">Weitere ICS Tools entdecken →</button>
+  <button class="btn secondary" type="button" data-ics-direction>Deine Richtung</button>
 </div>
 
 <div class="mini" id="saveMsg"></div>
@@ -128,9 +126,7 @@ textarea{min-height:110px}input[type=range]{width:100%;accent-color:var(--gold)}
 <div class="card" style="margin-top:18px"><h2>Deine Trigger-Muster</h2><p>Wenn du den Kompass mehrfach nutzt, können wiederkehrende Themen sichtbar werden.</p><div id="history"></div></div>
 
 <div class="actions" style="justify-content:center;margin-top:35px;">
-  <button class="btn secondary" onclick="backToLibrary()">
-    ← Zurück
-  </button>
+  <button class="btn secondary" type="button" data-ics-direction>Deine Richtung</button>
 </div>
 
 </section>
@@ -239,4 +235,5 @@ bindChoiceContainer("beliefChoices",BELIEFS);
 renderAll();renderHistory();
 </script>
 <script src="./ics-navigation-standard.js?v=20260930-nav1"></script>\n<div style="text-align:center;padding:24px 16px;font-size:12px;color:#777"><a href="https://www.innercodesystems.com/impressum.html" style="color:inherit">Impressum</a> · <a href="https://www.innercodesystems.com/datenschutz.html" style="color:inherit">Datenschutz</a></div>
+<script src="./ics-richtungsmodul.js?v=2" defer></script>
 </body></html>
