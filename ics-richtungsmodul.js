@@ -3,11 +3,12 @@
 (function(){
 const base='https://www.innercodesystems.com/';
 const catalog={
+entdecken:['ICS Entdecken','ics-entdecken.html'],
 start:['ICS Startseite','ics-startseite.html'],
 werte:['Werte-Kompass','werte-kompass.html'],glauben:['Glaubenssatz-Kompass','glaubenssatz-kompass.html'],modus:['Modus-Kompass','modus-kompass.html'],trigger:['Trigger-Kompass','trigger-kompass.html'],entscheidung:['Entscheidungs-Kompass','ics-entscheidungs-kompass.html'],wort:['Wort- & Metaphernkompass','https://ics-wort-metaphernkompass.peter-wicklein.workers.dev/'],system:['ICS System Check','ICS_System_Check_V20_TESTMARKIERUNG.html'],naehrt:['Was nährt dich?','was-naehrt-dich.html'],schoepfer:['Schöpfer-Codefinder','ics-schoepfer-codefinder.html'],mikro:['Mikro-RESET','ics-mikro-reset.html'],fragen:['30 Fragen an dich','30-fragen.html'],meditation:['Meditationen','meditationen.html'],gegenpol:['Gegenpol-Generator','gegenpol-generator.html'],sieben:['7-Tage-RESET','7-tage-reset.html'],achtsam:['Achtsamkeits-Guide','achtsamkeits-guide/'],inner:['INNER CODE','inner.html'],body:['BODY CODE','body.html'],action:['ACTION CODE','action.html'],reset:['RESET','reset.html'],orientierung:['Orientierung','orientierung.html'],akademie:['ICS Akademie','ics-akademie.html'],kompasswelt:['Kompasswelt','https://ics-goldenes-portal.pages.dev/ICS-Kompasswelt-Panorama.html'],portal:['Das Goldene Tor','https://ics-goldenes-portal.pages.dev/'],website:['ICS kennenlernen',''],bibliothek:['Weitere Anwendungen','tool-bibliothek.html']
 };
 const map={
-start:['portal','system','kompasswelt','bibliothek'],
+start:['portal','entdecken','system','kompasswelt'],
 werte:['glauben','entscheidung','fragen','kompasswelt'],
 glauben:['mikro','wort','modus','kompasswelt'],
 modus:['schoepfer','mikro','system','kompasswelt'],
@@ -22,7 +23,7 @@ fragen:['werte','wort','entscheidung','inner'],
 meditation:['achtsam','naehrt','body','reset'],
 gegenpol:['trigger','wort','glauben','mikro'],
 sieben:['mikro','achtsam','modus','reset'],
-bibliothek:['system','kompasswelt','portal','website'],
+bibliothek:['entdecken','system','kompasswelt','portal'],
 inner:['glauben','werte','wort','fragen'],
 body:['naehrt','meditation','achtsam','mikro'],
 action:['entscheidung','schoepfer','modus','werte'],
@@ -46,7 +47,7 @@ document.getElementById('icsDirectionClose').addEventListener('click',()=>dialog
 })();
 
 (function(){
-const pages=new Set(['werte-kompass.html','glaubenssatz-kompass.html','modus-kompass.html','trigger-kompass.html','ics-entscheidungs-kompass.html','tool-bibliothek.html','ICS_System_Check_V20_TESTMARKIERUNG.html','was-naehrt-dich.html','ics-schoepfer-codefinder.html','ics-mikro-reset.html','30-fragen.html','meditationen.html','gegenpol-generator.html','7-tage-reset.html','inner.html','body.html','action.html','reset.html','orientierung.html','ics-akademie.html','ics-startseite.html','ics-methode.html','persoenliche-begleitung.html','transformationsmassage.html']);
+const pages=new Set(['ics-entdecken.html','werte-kompass.html','glaubenssatz-kompass.html','modus-kompass.html','trigger-kompass.html','ics-entscheidungs-kompass.html','tool-bibliothek.html','ICS_System_Check_V20_TESTMARKIERUNG.html','was-naehrt-dich.html','ics-schoepfer-codefinder.html','ics-mikro-reset.html','30-fragen.html','meditationen.html','gegenpol-generator.html','7-tage-reset.html','inner.html','body.html','action.html','reset.html','orientierung.html','ics-akademie.html','ics-startseite.html','ics-methode.html','persoenliche-begleitung.html','transformationsmassage.html']);
 function apply(a){
 const raw=a.getAttribute('href');if(!raw||raw.startsWith('#')||a.hasAttribute('download')||a.dataset.icsSameTab!==undefined)return;
 try{
