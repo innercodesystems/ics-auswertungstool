@@ -7,6 +7,10 @@ const routes=[
 {key:'portal',name:'Das Goldene Tor',url:'https://ics-goldenes-portal.pages.dev/'},
 {key:'website',name:'ICS kennenlernen',url:'https://www.innercodesystems.com/'}
 ];
+const current=location.pathname.split('/').pop();
+if(current==='glaubenssatz-kompass.html'){routes[1]={key:'next',name:'Modus-Kompass',url:'https://www.innercodesystems.com/modus-kompass.html'};}
+if(current==='modus-kompass.html'){routes[1]={key:'next',name:'Trigger-Kompass',url:'https://www.innercodesystems.com/trigger-kompass.html'};}
+if(current==='trigger-kompass.html'){routes[1]={key:'next',name:'Werte-Kompass',url:'https://www.innercodesystems.com/werte-kompass.html'};}
 const from=new URLSearchParams(location.search).get('ics_from');
 const first=routes.findIndex(r=>r.key===from);
 if(first>0)routes.unshift(routes.splice(first,1)[0]);
