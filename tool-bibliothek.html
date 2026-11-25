@@ -2135,7 +2135,13 @@ document.addEventListener("DOMContentLoaded",function(){
       const internal=
         url.hostname==="innercodesystems.github.io";
 
-      if(internal){
+      const application=link.closest('.tool-card') || /\/(ICS_System_Check_V20_TESTMARKIERUNG|ics-methode)\.html$/i.test(url.pathname);
+      if(application){
+        url.searchParams.set("ics_from","tool-bibliothek");
+        link.href=url.href;
+        link.target="_blank";
+        link.rel="noopener noreferrer";
+      }else if(internal){
         link.target="_self";
       }else{
         link.target="_blank";
@@ -2174,5 +2180,6 @@ document.addEventListener("DOMContentLoaded", function(){
 </script>
   
 </div>
+<script src="./ics-richtungsmodul.js?v=2" defer></script>
 </body>
 </html>
